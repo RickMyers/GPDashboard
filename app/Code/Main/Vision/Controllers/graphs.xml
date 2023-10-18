@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+
+Actions that draw graphs for reports
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="graphs" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="unscannable" blocking="off" passalong="style">
+            <description>A graph of the number of members who were unscannable per technician</description>
+            <entity namespace="vision" class="consultation/forms" id="forms">
+                <parameter name="start_date" source="request" format="date" optional="true" />
+                <parameter name="technician" source="request" required="true" />
+                <parameter name="end_date" source="request" format="date" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="unreadable" blocking="off" passalong="style">
+            <description>A graph of the number of members who were unreadable by the OD per technician</description>
+            <entity namespace="vision" class="consultation/forms" id="forms">
+                <parameter name="start_date" source="request" format="date" optional="true" />
+                <parameter name="technician" source="request" required="true" />
+                <parameter name="end_date" source="request" format="date" optional="true" />
+            </entity>            
+        </action>
+
+    </actions>
+</controller>

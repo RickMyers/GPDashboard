@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+
+Queue Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="queues" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="refresh" blocking="off" output='JSON'>
+            <description>Fetches initial status of all queues</description>
+            <entity namespace="outreach" class="campaign/members" response="true" method="fetch" page="page" defaultRows="25" rows='rows'>
+                <parameter name="campaign_id" source="request" required="true" />
+                <if var="status" eq="A">
+                    <then>
+                        <parameter name='assignee' source='session' value='uid' required='true' />
+                    </then>
+                </if>
+                <parameter name="status" source="request" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="graphs" blocking="off" passalong="campaign_id">
+            <description>Dumps out the JS to build the graphs on the outreach home page</description>
+            <entity namespace="outreach" class="campaign/members" id="contacts">
+                <parameter name="campaign_id" source="request" required="true" />
+            </entity>
+        </action>
+
+    </actions>
+</controller>

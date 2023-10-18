@@ -1,0 +1,219 @@
+{
+
+	"TAB": 					{
+		"field": 	"",
+		"converter": ""
+	},
+	"DATA_SOURCE": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"DATA_SOURCE2": 		{
+		"field": 	"",
+		"converter": ""
+	},
+	"SPECIALTY": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"PHYSICIAN_LAST_NAME":  {
+		"field": 	"PROVIDERLNAME",
+		"converter": ""
+	},
+	"PHYSICIAN_FIRST_NAME": {
+		"field": 	"PROVIDERFNAME",
+		"converter": ""
+	}, 
+	"GROUP_NAME": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"TITLE": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"LICENSE_NO": 					{
+		"field": 	"LICENSEID",
+		"converter": ""
+	}, 			
+	"ADDRESS1": 					{
+		"field": 	"SERVICEADDRESS1",
+		"converter": ""
+	}, 			
+	"ADDRESS2": 					{
+		"field": 	"SERVICEADDRESS2",
+		"converter": ""
+	}, 			
+	"ADDRESS3": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"CITY": 					{
+		"field": 	"SERVICECITY",
+		"converter": ""
+	}, 				
+	"STATE": 					{
+		"field": 	"SERVICESTATE",
+		"converter": ""
+	}, 				
+	"ZIPCODE": 					{
+		"field": 	"SERVICEZIPCODE",
+		"converter": ""
+	}, 				
+	"PHONE_FORMATTED": 		{
+		"field": 	"",
+		"converter": ""
+	},
+	"PHONE_DATA": 					{
+		"field": 	"SERVICEPHONE",
+		"converter": ""
+	}, 			
+	"SUN": 					{
+		"field": 	"SVCSUNHOURS",
+		"converter": "serviceHoursCompare"
+	}, 					
+	"MON": 					{
+		"field": 	"SVCMONHOURS",
+		"converter": "serviceHoursCompare"
+	}, 					
+	"TUE": 					{
+		"field": 	"SVCTUEHOURS",
+		"converter": "serviceHoursCompare"
+	}, 					
+	"WED": 					{
+		"field": 	"SVCWEDHOURS",
+		"converter": "serviceHoursCompare"
+	}, 					
+	"THUR": 					{
+		"field": 	"SVCTHURSHOURS",
+		"converter": "serviceHoursCompare"
+	}, 				
+	"FRI": 					{
+		"field": 	"SVCFRIHOURS",
+		"converter": "serviceHoursCompare"
+	}, 					
+	"SAT": 					{
+		"field": 	"SVCSATHOURS",
+		"converter": "serviceHoursCompare"
+	}, 					
+	"COUNTY": 					{
+		"field": 	"SERVICECOUNTY",
+		"converter": ""
+	}, 				
+	"AGE_LIMIT": 					{
+		"field": 	"AGESSEEN",
+		"converter": "ageFormatCompare"
+	}, 			
+	"HOSP1": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"HOSP2": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"HOSP3": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"HOSP4": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"HOSP5": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"HOSP6": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"PANEL_STATUS": 					{
+		"field": 	"",
+		"converter": ""
+	}, 				
+	"BOARD_CERTIFIED_SPECIALTY": 					{
+		"field": 	"",
+		"converter": ""
+	}, 	
+	"PROVIDER_GENDER": 					{
+		"field": 	"GENDER",
+		"converter": ""
+	}, 				
+	"ACCEPTING_NEW_PATIENTS": 					{
+		"field": 	"ACCPT_NEW_PAT",
+		"converter": ""
+	}, 		
+	"LANG1": 					{
+		"field": 	"LANGUAGE1",
+		"converter": "languageNameCompare"
+	}, 				
+	"LANG2": 					{
+		"field": 	"LANGUAGE2",
+		"converter": "languageNameCompare"
+	}, 				
+	"LANG3": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"LANG4": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"MAID": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"TAXID": 				{
+		"field": 	"",
+		"converter": ""
+	},
+	"PRINT_NAME": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"HANDICAPPED": 					{
+		"field": 	"HANDICAP",
+		"converter": ""
+	}, 			
+	"HOSP_ACCRED": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"PROVIDER_ID": 					{
+		"field": 	"PROVIDERID",
+		"converter": ""
+	}, 			
+	"NPI": 					{
+		"field": 	"LEV1NPI",
+		"converter": ""
+	}, 					
+	"ADDR_TYPE": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"SUBCONTRACTOR": 		{
+		"field": 	"",
+		"converter": ""
+	},
+	"AGREEMENT ID 1": 		{
+		"field": 	"",
+		"converter": ""
+	},
+	"AGREEMENT ID2": 		{
+		"field": 	"",
+		"converter": ""
+	},
+	"PHONE_NUMBER": 		{
+		"field": 	"",
+		"converter": ""
+	},
+	"FAX_NUMBER": 			{
+		"field": 	"",
+		"converter": ""
+	},
+	"REGION": 				{
+		"field": 	"",
+		"converter": ""
+	}
+}

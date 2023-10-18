@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+
+Online Application related actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="application" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="extract" passalong="windowId">
+            <description>The workflow configuration page for extracting online application data and formating into our internal structure</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="response" passalong="windowId">
+            <description>The workflow configuration page for replying to an application being processed by our B2B intake pipeline</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+    </actions>
+</controller>

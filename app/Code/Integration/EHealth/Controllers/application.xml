@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!--
+
+Basic queue actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="application" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="status">
+            <description>Changes the status of the application</description>
+            <entity namespace="ehealth" class="application_forms" method="save" id="form">
+                <parameter name="id"     source="post" required="true" />
+                <parameter name="status" source="post" required="true" />
+            </entity>
+            <switch id="form" method="getStatus">
+                <case value="A">
+                    <entity namespace="ehealth" class="application_forms" method="save" retain="true">
+                        <parameter name="id"     source="post" required="true" />
+                        <parameter name="last_action" source="post" default="Archived" />
+                        <parameter name="last_action_date" source="post" format="timestamp" default="now" />
+                    </entity>
+                </case>
+                <case value="I">
+                    <entity namespace="ehealth" class="application_forms" method="save" retain="true">
+                        <parameter name="id"     source="post" required="true" />
+                        <parameter name="last_action" source="post" default="Received" />
+                        <parameter name="last_action_date" source="post" format="timestamp" default="now" />
+                    </entity>
+                    <model namespace="ehealth" class="application" method="receive">
+                        <parameter name="id"     source="post" required="true" />
+                    </model>
+                </case>                
+                <case value="D">
+                    <entity namespace="ehealth" class="application_forms" method="save" retain="true">
+                        <parameter name="id"     source="post" required="true" />
+                        <parameter name="status" value="beezel" source="post" default="I" />
+                        <parameter name="last_action" source="post" default="Declined" />
+                        <parameter name="last_action_date" source="post" format="timestamp" default="now" />
+                    </entity>
+                    <model namespace="ehealth" class="application" method="deny">
+                        <parameter name="id"     source="post" required="true" />
+                    </model>
+                </case>
+                <case value="C">
+                    <entity namespace="ehealth" class="application_forms" method="save" retain="true">
+                        <parameter name="id"     source="post" required="true" />
+                        <parameter name="last_action" source="post" default="Approved" />
+                        <parameter name="last_action_date" source="post" format="timestamp" default="now" />
+                    </entity>
+                    <model namespace="ehealth" class="application" method="approve">
+                        <parameter name="id"     source="post" required="true" />
+                    </model>                    
+                </case>                
+                <case value="N">
+                    <entity namespace="ehealth" class="application_forms" method="save">
+                        <parameter name="id"     source="post" required="true" />
+                        <parameter name="last_action" source="post" default="Reset" />
+                        <parameter name="last_action_date" source="post" format="timestamp" default="now" />
+                    </entity>
+                </case>                
+                <default>
+                    <entity namespace="ehealth" class="application_forms" method="save">
+                        <parameter name="id"     source="post" required="true" />
+                        <parameter name="last_action" source="post" default="Unknown?" />
+                        <parameter name="last_action_date" source="post" format="timestamp" default="now" />
+                    </entity>
+                </default>
+            </switch>
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="authorize">
+            <description>Sees if the person has enough credit on their credit card</description>
+            <model namespace="ehealth" class="manager" response="true" method="authorize">
+                <parameter name="form_id"   source="post" required="true" />
+                <parameter name="action"    source="post" default='AUTH' />
+                <parameter name="mode"      source="post" default='test' />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="capture">
+            <description>Makes the actual credit card charge</description>
+            <model namespace="ehealth" class="manager" response="true" method="authorize">
+                <parameter name="form_id" source="post" required="true" />
+                <parameter name="action" source="post" default='CAPTURE' />
+            </model>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="retrieve" passalong="windowId">
+            <description>This is the configuration for the workflow element that retrieves applications that have a specific status</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+              
+
+        <!-- ############################################################### -->
+        
+        <action name="extract" passalong="windowId">
+            <description>This is the configuration for the workflow element that extracts data from the proprietary E-Health XML format and puts it into our internal format for brokers</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+                          
+        <!-- ############################################################### -->
+        
+        <action name="remoteupdate" passalong="windowId">
+            <description>This is the configuration for the workflow element that updates the remote ehealth status</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="payment" passalong="windowId">
+            <description>This is the configuration for the workflow element that attempts to authorize a payment through Authorize.net</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>   
+        
+        <!-- ############################################################### -->
+        
+        <action name="x834" passalong="windowId">
+            <description>This is the configuration for the workflow element that will try to convert an eHealth application into an 834 file and attach it to the event</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>  
+        
+        <!-- ############################################################### -->
+        
+        <action name="members" passalong="windowId">
+            <description>This is the configuration for the workflow element that pulls subscriber and dependent information out of the ehealth application and attaches it to the event</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>                                   
+    </actions>
+</controller>

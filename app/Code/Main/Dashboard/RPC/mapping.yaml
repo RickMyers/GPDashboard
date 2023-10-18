@@ -1,0 +1,7 @@
+---
+isSystemActive  :
+  url             : /humble/system/active
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : []

@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<report>
+    <name>Vision Forms</name>
+    <description> Report on vision forms between a set date </description>
+    <selection>
+        <client />
+        <ipa use="client" />
+        <location use="ipa" />
+        <start_date />
+        <end_date />
+    </selection>
+    <resource method="formsExtendedInformation" />
+    <columns>
+        <column source="event_date"        name="Date"        format="date" onempty="N/A" />
+        <column source="screening_client"  name="Healthplan"  format="" onempty="" />
+        <column source="ipa_id_combo"      name="IPA"         format="" onempty="" />
+        <column source="location_id_combo" name="Location" format="" onempty="" />
+        <column source="address_id_combo"  name="Address" format="" onempty="" />
+        <column source="member_id"         name="Member ID"   format="" onempty="" />        
+        <column source="member_name"       name="Member Name" format="" onempty="" />   
+        <column source="status"            name="Form Status" format="" onempty="" />        
+        <column source="claim_status"      name="Claim Status" format="" onempty="" />                
+        <column source="technician_name"   name="Technician Name" format="" onempty="N/A" />
+        <column source="submitted"         name="Date Submitted" format="date" onempty="" />
+        <column source="reviewer_name"     name="Reviewed By" format="" onempty="" />
+        <column source="member_unscannable" name="Unscannable" format="" onempty="" />
+        <column source="images_unreadable"  name="Unreadble" format="" onempty="" />
+    </columns>
+</report>

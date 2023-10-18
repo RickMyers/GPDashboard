@@ -1,0 +1,169 @@
+---
+isSystemActive  :
+  url             : /humble/system/active
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : []
+connectionStatus:
+  url             : /argus/dashboard/connection
+  api-key         :
+  api-var         :
+  method          : GET
+  arguments       : [sessionId]
+exportService:
+  url             : /esb/export/service
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [api_key,api_user_id,scheme]
+onlineAppsQueues:
+  url             : /argus/onlineapps/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [rows,oainq,oaipq,oacaq,oaerr]        
+credentialingQueues:
+  url             : /argus/credentialing/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [rows,icq,pcq,acq]   
+qaDatabaseExportService  :
+  url             : https://qa.argusdentalvision.com/esb/export/service
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  arguments       : [scheme,sessionId]
+prodDatabaseExportService  :
+  url             : https://argusdentalvision.com/esb/export/service
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  arguments       : [scheme,sessionId]
+devDatabaseExportService  :
+  url             : http://dev.argusdentalvision.com/esb/export/service
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  arguments       : [scheme,sessionId]
+authenticationService:
+  url             : https://qa.argusdentalvision.com/esb/api/authorization
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  camel-case      : true
+  arguments       : [api_user_id,api_key]
+renderedEditForm  :
+  url             : /argus/renderer/editform
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [namespace,package,sessionId,entity,id]
+QAServer  :
+  url             : https://qa.argusdentalvision.com/paradigm/workflow/import
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  arguments       :
+    workflow      :  
+ProductionServer  :
+  url             : https://dashboard.argusdentalvision.com/paradigm/workflow/import
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  arguments       :
+    workflow      :     
+debug  :
+  url             : https://debug.argusdentalvision.com/paradigm/workflow/import
+  api-key         :
+  api-var         :
+  secure          : true
+  method          : POST
+  arguments       :
+    workflow      :           
+phoneNetworkInformation :
+  url             : https://www.hlr-lookups.com/api
+  api-key         :
+  api-var         :
+  method          : GET
+  secure          : true
+  arguments       :
+      action      :
+      username    : rmyersargus-api-3ff20478a020
+      password    : zJft-khtB-z2pq-SJ*u-%%3Y-9Q*X
+npiLookup :
+  url             : https://npiregistry.cms.hhs.gov/api/
+  api-key         :
+  api-var         :
+  method          : GET
+  secure          : true
+  arguments       :
+      version     : 2.1
+      number      :
+claimData:
+  url             : https://argusdentalapi.azurewebsites.net/api/ClaimList
+  secure          : true
+  api-key         :
+  api-var         :
+  format          : JSON
+  method          : POST
+  arguments       :
+      userName              : hedis
+      password              : NoWonder$Mind#89
+      ClaimNumber           :
+      PatientControlNumber  :
+claimList:
+  url             : https://argusdentalapi.azurewebsites.net/api/ClaimList
+  secure          : true
+  api-key         :
+  api-var         :
+  format          : JSON
+  method          : POST
+  arguments       :
+      userName    : hedis
+      password    : NoWonder$Mind#89
+      MemberID    :      
+reconcileOutstandingClaims :
+  url             : /argus/claims/reconcile
+  secure          : true
+  api-key         :
+  api-var         :
+  blocking        : false
+  method          : POST
+  arguments       :  
+currentClaimStatus :      
+  url             : /argus/claims/status
+  secure          : true
+  api-key         :
+  api-var         :
+  blocking        : false
+  method          : POST
+  arguments       :  
+      layer       :
+odCurrentClaimStatus :      
+  url             : /argus/claims/odstatus
+  secure          : true
+  api-key         :
+  api-var         :
+  blocking        : false
+  method          : POST
+  arguments       :  
+      layer       :   
+geocodeLocation   :
+  url             : https://maps.googleapis.com/maps/api/geocode/json
+  secure          : true
+  cache           : 0
+  api-key         : AIzaSyAwhRMTcWKelBwQR1HKtcstG8traG2nXr0
+  api-var         : key
+  blocking        : false
+  method          : GET 
+  arguments       : 
+      address     :  
+          

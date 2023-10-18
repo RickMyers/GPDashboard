@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+
+Archive Queue Related Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="archive" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="init">
+            <description>Lays out basic structure of the archive and complete queue</description>
+            <entity namespace="humble" class="users" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ##################################################################-->
+        
+        <action blocking="OFF" name="refresh" output='JSON'>
+            <description>This is the recurring poll action vision archive queue</description>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="archive"  id="archive"  defaultRows='10' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="signed"  id="signed"  defaultRows='10' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>            
+            
+        </action>
+    </actions>
+</controller>

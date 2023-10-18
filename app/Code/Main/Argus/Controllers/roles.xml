@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--
+
+Roles Actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="roles" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="display">
+            <description>Lists current roles</description>
+            <entity namespace="argus" class='roles' id='roles' />
+            <entity namespace="humble" class="modules" id="modules" />
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="authorize" blocking="off">
+            <description>Will add/remove authorization for a role to access a modules functionality</description>
+            <model namespace="argus" class="roles" method="authorize" polyglot='Y'>
+                <parameter name='namespace' source='post' required='true' />
+                <parameter name='user_id'   source='session' value='uid' required='true' />
+                <parameter name='authorize' source='post' required='true' />
+                <parameter name='role_id'   source='post' required='true' />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="set">
+            <description>Establishes a role to a user</description>
+            <entity namespace="argus" class='user_roles' id='roles' method='save' >
+                <parameter name='user_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </entity>
+            <model namespace="argus" class="roles" method="dashboardConfigure">
+                <parameter name='user_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="remove">
+            <description>Removes a role from a user</description>
+            <entity namespace="argus" class='user_roles' id='roles' method='nonkeysdelete' >
+                <parameter name='user_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </entity>
+            <model namespace="argus" class="roles" method="dashboardAdjust">
+                <parameter name='user_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="delete">
+            <description>Removes a role from a user</description>
+            <entity namespace="argus" class='roles' id='roles' method='delete' >
+                <parameter name='id' source='post' required='true' />
+            </entity>
+            <chain>
+                <action name="display" />
+            </chain>            
+        </action>        
+
+        <!-- ############################################################### -->  
+
+        <action name="new" event='newRoleCreated' comment="A new role has been created">
+            <description>Removes a role from a user</description>
+            <entity namespace="argus" class='roles' id='roles' method='save' >
+                <parameter name='name' value='role_name' source='post' required='true' />
+                <parameter name='default' source='post' default="N" />
+                <parameter name='immutable' source='post' default="N" />
+            </entity>
+            <chain>
+                <action name="display" />
+            </chain>
+        </action>
+
+                
+    </actions>
+</controller>

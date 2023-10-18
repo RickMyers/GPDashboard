@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+    Default Dashboard Layout for IPAs (Independent Physician Associations)
+-->
+<profile>
+    <default>
+        <graphs>
+            <graph id="20" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-1" />
+            <graph id="21" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-2" />
+            <graph id="32" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-3" />
+            <graph id="4"  namespace="dashboard" controller="user" action="home" layer="dashboard-chart-4" />
+        </graphs>
+        <apps>
+            <app id="15" />
+        </apps>
+        <options>
+        </options>
+    </default>
+</profile>
+

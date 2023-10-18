@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+
+PCP Report Generation Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="pcpreports" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+
+        <action name="list" output="JSON" blocking="Off">
+            <description>Lists the available reports</description>
+            <entity response='true' namespace="vision" class="pcp_reports"  method="fetch">
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+                        
+        <action name="gaps" blocking="Off">
+            <description>Breaks down members by whether the gap was closed</description>
+            <entity assign='data' namespace="vision" class="consultation/forms" id='forms' method="gapsClosedReport">
+                <parameter name='user_id' source='session' value='uid' default='' />
+                <parameter name='year' optional='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="readable" output="JSON" blocking="Off">
+            <description>Breaks down members by whether the screening form images were readable</description>
+            <entity assign='data' namespace="vision" class="consultation/forms" id='forms' method="readableFormsReport">
+                <parameter name='user_id' source='session' value='uid' default='' />
+                <parameter name='year' optional='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="healthplans" output="JSON" blocking="Off">
+            <description>Breaks down members by which health plan they belonged to</description>
+            <entity assign='data' namespace="vision" class="consultation/forms" id='forms' method="healthPlansReport">
+                <parameter name='user_id' source='session' value='uid' default='' />
+                <parameter name='year' optional='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="monthly" output="JSON" blocking="Off">
+            <description>Breaks down screening forms by month</description>
+            <entity assign='data' orderby="created=ASC" namespace="vision" class="consultation/forms" id='forms' method="monthlyScreeningsReport">
+                <parameter name='user_id' source='session' value='uid' default='' />
+                <parameter name='year' optional='true' />
+            </entity>
+        </action>
+
+    </actions>
+</controller>

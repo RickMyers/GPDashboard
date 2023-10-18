@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<config>
+    <argustools>
+        <version>0.0.1</version>
+        <title>Argus Tools</title>
+        <description>A collection of tools that can be run from the command line</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Tools</name>
+            <weight>50</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Tools/Models</source>
+            </models>
+            <config>
+                <source>Tools/etc</source>
+            </config>
+            <helpers>
+                <source>Tools/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Tools/Controllers</source>
+                <cache>Tools/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Tools/Schema/Install</install>
+                <update>Tools/Schema/Update</update>
+                <layout>Tools/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Tools/etc</source>
+            </configuration>
+            <views>
+                <source>Tools/Views</source>
+                <cache>Tools/Views_Cache</cache>
+            </views>
+            <images>
+                <source>Tools/Images</source>
+                <cache>Tools/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Tools/Entities</source>
+            </entities>
+            <RPC>
+                <source>Tools/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Tools/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>argustools_</prefix>
+            <mongodb>argustools</mongodb>
+            <entities>
+
+            </entities>
+        </orm>
+
+        <web>
+        </web>
+    </argustools>
+</config>

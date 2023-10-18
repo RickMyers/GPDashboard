@@ -1,0 +1,88 @@
+({
+    form:
+    {
+        id: 		"table_select_and_edit_form_&&win_id&&",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"rows_&&win_id&&",
+            longname:	"Rows",
+            type:       "select",
+            required:	false,
+            force:	false,
+            onchange:   function () {
+                if (Edits['entity-selector-&&win_id&&'].validate()) {
+                    $('#table_select_query_results_&&win_id&&').html('<h5>Fetching Rows...</h5>');
+                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').packageForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
+                        $('#table_select_query_results_&&win_id&&').html(response);
+                    }).post();
+                }
+            },
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; border-radius: 2px; font-size: 1.1em;"
+        },
+        {
+            active:	true,
+            id: 	"page_&&win_id&&",
+            longname:	"Page",
+            type:       "select",
+            required:	false,
+            force:	false,
+            onchange:   function () {
+                if (Edits['entity-selector-&&win_id&&'].validate()) {
+                    $('#table_select_query_results_&&win_id&&').html('<h5>Fetching Rows...</h5>');
+                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').packageForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
+                        $('#table_select_query_results_&&win_id&&').html(response);
+                    }).post();
+                }
+            },            
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; border-radius: 2px; font-size: 1.1em;"
+        },
+        {
+            active:	true,
+            id: 	"namespace_&&win_id&&",
+            longname:	"Module Namespace",
+            type:       "select",
+            required:	true,
+            force:	true,
+            onchange:   function (evt) {
+                (new EasyAjax('/dashboard/table/list')).add('namespace',$(evt.target).val()).then(function (response) {
+                    EasyEdits.populateSelectBox('entity_&&win_id&&',JSON.parse(response));
+                }).post();
+            },            
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; border-radius: 2px; font-size: 1.1em;"
+        },
+        {
+            active:	true,
+            id: 	"entity_&&win_id&&",
+            longname:	"Entity",
+            type:       "select",
+            required:	true,
+            force:	true,
+            onchange:   function () {
+                if (Edits['entity-selector-&&win_id&&'].validate()) {
+                    $('#table_select_query_results_&&win_id&&').html('<h5>Fetching Rows...</h5>');
+                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').packageForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
+                        $('#table_select_query_results_&&win_id&&').html(response);
+                    }).post();
+                }
+            },            
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; border-radius: 2px; font-size: 1.1em;"
+        }      
+    ]
+})
+
+

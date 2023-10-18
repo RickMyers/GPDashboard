@@ -1,0 +1,46 @@
+({
+	form:
+	{
+		id: 		"argus-current-roles",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"role_name",
+			longname:		"Role Name",
+			title:			"Name of new role",
+                        type:                   "text",
+                        required:		true,
+                        force:			true,
+			classname:		"",
+			style:			"padding: 3px; width: 150px; color: #333"
+		},
+                {
+			active:			true,
+			id: 			"new-role-submit",
+			longname:		"Submit",
+			title:			"Click when to create a new role",
+                        type:                   "button",
+                        required:		false,
+                        force:			false,
+			classname:		"",
+			style:			"",
+                        onclick:                function (evt) {
+                            if (Edits['new-role-form'].validate()) {
+                                (new EasyAjax('/argus/roles/new')).packageForm('argus-current-roles').then(function (response) {
+                                    $('#sub-container').html(response);
+                                }).post();
+                            }
+                        }
+		}                   
+	]
+})

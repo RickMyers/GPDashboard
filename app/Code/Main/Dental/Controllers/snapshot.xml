@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Snapshot Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="snapshot" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="analyze" passalong="window_id" blocking="no">
+            <description>Analyze a snapshot</description>
+            <entity namespace="dental" class="consultation_snapshots" id='image' method="load">
+                <parameter name='id' source='post' default='' required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

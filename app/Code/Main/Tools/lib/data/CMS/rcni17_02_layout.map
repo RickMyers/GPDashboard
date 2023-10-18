@@ -1,0 +1,12 @@
+[   ]   Record_Code                         [String,2,'##','02']        Designates the type of record; for a detail record, this value must always be 02
+[001]   Trading_Partner_ID                  [String,10,A,'75395']       The Trading Partner ID associated with the QHP ID Lookup Key of the enrollment record
+[   ]   SPOE_ID                             [String,10,A,'          ']  This field is to be sent as ten blanks spaces
+[   ]   Tenant_ID                           [String,3,A,'FL0']          Two-character state abbreviation plus a zero (e.g. XX0, where XX is the state code)
+[   ]   HIOS_ID                             [String,5,A,'75395']        Identifier for the Issuer as assigned via the Health Insurance Oversight System; corresponds to the first 5 characters of the QHP ID
+[   ]   QHPID_Lookup_Key                    [String,10,A,'75395FL002']  First ten characters of the QHP ID associated with the enrollment record; used to map the QHP to a Trading Partner ID on the EDI Registration Form
+[   ]   Issuer_Extract_Date                 [Now,8,'Ymd']               Date the enrollment record was extracted from the Issuer’s system
+[###]   Total_Number_of_Records             [Counter,8,num_records]     The total number of ‘01’ and ‘02’ records associated with the HIOS ID in the logical file
+[###]   Total_Number_of_Subscribers         [Counter,8,num_subscribers] Basic count of all ‘01’ records associated with the HIOS ID that have a value of Y in the Subscriber Indicator field Please note this is not a count of unique subscribers
+[###]   Total_Number_of_Dependent_Members   [Counter,8,num_dependents]  Basic count of all ‘01’ records associated with the HIOS ID that have a value of N in the Subscriber Indicator field Please note this is not a count of unique dependent members
+[###]   Total_Premium_Amount                [Counter,8,total_premium]   Last name of the qualified individual (member)
+[###]   Total_Applied_APTC_Amount           [Counter,8,total_aptc]      Basic sum of the Applied APTC Amount in all ‘01’ records associated with the HIOS ID Please note this is not a sum of active or current APTC values only; all records are to be included in the sum

@@ -1,0 +1,7 @@
+HL*{$hierarchical_level}*{$parent_hierarchical_level}*22*0~
+SBR*P*18*{$group_number}******CI~
+NM1*IL*1*{$last_name}*{$first_name}****MI*{$member_id}~
+N3*{$street_address}~
+N4*{$city}*{$state}*{$zip_code}~
+DMG*D8*{$date_of_birth}*{$gender}~
+

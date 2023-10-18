@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+
+Configuring portal navigation actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="navigation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="home">
+            <description>The introduction page</description>
+            <entity namespace="dashboard" class="navigation_options" id='options'>
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="edit">
+            <description>Edit an individual navigation option value</description>
+            <entity namespace="dashboard" class="navigation_options" id='option'>
+                <parameter name="id" source="post" required="true" />
+            </entity>
+            <entity namespace="dashboard" class="navigation" id='option_active'>
+                <parameter name="option_id" value="id" source="post" />
+            </entity>            
+            <entity namespace="argus" class="roles" id='roles'>
+            </entity>                
+        </action>
+        
+        
+        <!-- ############################################################### -->
+        
+        <action name="addrole">
+            <description></description>
+            <entity namespace="dashboard" class="navigation" method="save">
+                <parameter name="namespace" source="post" required="true" />
+                <parameter name="controller" source="post" required="true" />
+                <parameter name="action" source="post" required="true" />
+                <parameter name="option_id"  value="id" source="post" required="true" />
+                <parameter name="role_id" source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="edit" />
+            </chain>
+        </action>        
+        
+        <!-- ############################################################### -->
+
+        <action name="update">
+            <description>Updates a navigation option attributes</description>
+            <entity namespace="dashboard" class="navigation_options" method="save">
+                <parameter name='id'        source='post' required='true' />
+                <parameter name='image'     source='post' default='' />
+                <parameter name='image_style' source='post' default='' />
+                <parameter name='class'     source='post' default='' />
+                <parameter name='title'     source='post' default='' />
+                <parameter name='method'    source='post' default='' />
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->
+
+        <action name="unlink">
+            <description>Edit an individual navigation option value</description>
+            <entity namespace="dashboard" class="navigation" method="delete">
+                <parameter name="id" value="navigation_id" source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="edit" />
+            </chain>
+        </action>        
+
+        <!-- ############################################################### -->
+        
+        <action name="navoption">
+            <description>Edit an individual navigation option value</description>
+            <entity namespace="dashboard" class="navigation_options" method="save">
+                <parameter name="image"     source="post" default="" required="true" />
+                <parameter name="title"     source="post" default="" required="true" />
+                <parameter name="method"    source="post" default="" required="true" />
+                <parameter name="class"     source="post" default="" />
+                <parameter name="style"     source="post" default="" />
+                <parameter name="image_style" source="post" default="" />
+            </entity>
+            <chain>
+                <action name="home" />
+            </chain>
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="labeling">
+            <description>Shows the users selected white-label</description>
+            <entity namespace="dashboard" class="white_labels" method="users" page="page" rows="rows">
+            </entity>
+        </action>        
+        
+        
+    </actions>
+</controller>

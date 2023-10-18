@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout delimiter=",">
+    <entity namespace="vision" class="members" store="member_id"  use="health_plan_id">
+        <column name="first_name">
+            <source     name="MEMBER_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>
+        </column>
+        <column name="last_name">
+            <source     name="MEMBER_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>
+        </column>    
+        <column name="member_number">
+            <source     name="MEMBER_ID" />
+        </column>      
+        <column name="date_of_birth">
+            <source     name="MEMBER_DOB" format="date" />
+        </column>
+    </entity>
+    <entity namespace="vision" class="phone_numbers" use="member_id" store="phone_number_id">
+        <column name="phone_number">
+            <source     name="MEMBER_PHONE_NO." />
+        </column>
+    </entity>
+    <entity namespace="vision" class="member_phone_numbers" use="member_id,phone_number_id" />
+</layout>
+

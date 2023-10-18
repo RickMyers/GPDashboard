@@ -1,0 +1,3 @@
+NM1*PR*{$entity_type}*{$payor_name}*****PI*{$payor_identification_code}~
+N3*{$payor_street_address}*{$payor_street_address_2}~
+N4*{$payor_city}*{$payor_state}*{$payor_zip_code}~

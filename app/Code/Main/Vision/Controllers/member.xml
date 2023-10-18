@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+
+Member related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="member" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="info" passalong="id,window_id">
+            <description>Member input form</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="data" output="JSON">
+            <description>Member input form</description>
+            <entity namespace="vision" class="missing_members" method="load" wrapper="json_encode" response="true">
+                <parameter name="id" source="request" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="update">
+            <description>Member input form</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="missing">
+            <description>Returns the extended missing member data</description>
+            <entity namespace="vision" class="missing_members" response="true" wrapper="json_encode" method="load">
+                <parameter name="id" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="remove">
+            <description>Removes a reference from the missing members table</description>
+            <entity namespace="vision" class="missing_members"  method="delete">
+                <parameter name="id" source="post" required="true" />
+            </entity>
+        </action>
+                        
+        <!-- ############################################################### -->
+        
+        <action name="add" blocking="off">
+            <description>When we don't have a member and we need to generate a form for them</description>
+            <model namespace="vision" class="members" method="add">
+                <parameter name="*" source="post" />
+            </model>
+        </action>
+
+    </actions>
+</controller>

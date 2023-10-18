@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<config>
+    <align>
+        <version>0.0.1</version>
+        <title>Benefit Align</title>
+        <description>Integration Module for Benefit Align</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>BenefitAlign</name>
+            <weight>50</weight>
+            <required>N</required>
+            <workflow>N</workflow>
+            <package>Integration</package>
+            <use>Smarty3</use>
+        </module>
+        <structure>
+            <models>
+                <source>BenefitAlign/Models</source>
+            </models>
+            <config>
+                <source>BenefitAlign/etc</source>
+            </config>
+            <helpers>
+                <source>BenefitAlign/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>BenefitAlign/Controllers</source>
+                <cache>BenefitAlign/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>BenefitAlign/Schema/Install</install>
+                <update>BenefitAlign/Schema/Update</update>
+                <layout>BenefitAlign/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>BenefitAlign/etc</source>
+            </configuration>
+            <views>
+                <source>BenefitAlign/Views</source>
+                <cache>BenefitAlign/Views/Cache</cache>
+            </views>
+            <images>
+                <source>BenefitAlign/Images</source>
+                <cache>BenefitAlign/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>BenefitAlign/Entities</source>
+            </entities>
+            <RPC>
+                <source>BenefitAlign/RPC</source>
+            </RPC>
+            <frontend>
+                <source>BenefitAlign/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>align_</prefix>
+            <mongodb>align</mongodb>
+
+            <entities>
+
+            </entities>
+        </orm>
+    </align>
+</config>

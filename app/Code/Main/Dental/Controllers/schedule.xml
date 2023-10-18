@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Scheduling in-office events
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="schedule" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="event">
+            <description>Schedules a Tele-Dentistry event</description>
+            <entity namespace="humble" class="users" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

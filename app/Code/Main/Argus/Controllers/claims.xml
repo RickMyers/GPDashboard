@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!--
+
+Claims related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="claims" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>The home page</description>
+            <entity namespace="argus" class="user_roles" id="users" />
+            <entity namespace="vision" class="clients" id="clients" orderBy="client=ASC" />
+            <entity assign="events" namespace="vision" class="consultation_forms" method="activeEvents" />
+            <entity namespace="humble" class="user_identification" id="user" method="load" >
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->                
+        
+        <action name="analytics" blocking="off" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>The analytics page</description>
+            <entity namespace="argus" class="claims" id="claims">
+                <parameter name="year" source="request" required="true" />
+            </entity>
+            <entity namespace="argus" class="user/roles" id="role">
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### 
+             # THESE ACTIONS SUPPORT THE PERIODIC RECONCILIATION WORKFLOW  #
+             # AND ARE NOT USED BY THE USER INTERFACE, THOUGH THEY HAVE A  #
+             # SIMILAR NAME STRUCTURE.                                     #
+             ############################################################### -->
+        <action name="batch" passalong="windowId">
+            <description>Configuration page for the process component that fetches unreconciled claims and attaches them to the event object</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+                     
+        <action name="ready" passalong="windowId">
+            <description>Configuration page for the decision component that determines if there were claims ready to reconcile</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+        
+        <action name="reconciliation" passalong="windowId">
+            <description>Configuration page for the process component that spins through the claims attached to the event and checks their aldera status</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="batching">
+            <description>Takes a list of forms and builds a claim file out of them</description>
+            <comment>I should probably adjust this to use a switch statement</comment>
+            <if var="claim_type" eq="Vision">
+                <then>
+                    <model namespace="vision" class="claims" method="run">
+                        <parameter name="claim_list" value="claims" source="post" required="true" />
+                        <parameter name="number" source="post" required="true" />
+                    </model>
+                </then>
+                <else>
+                </else>
+            </if>
+        </action>
+    
+        <!-- ############################################################### -->
+        
+        <action name="list" blocking="off" passalong="totals">
+            <description>Lists claims</description>
+            <entity namespace="argus" class="claims" id='claims' page="page" rows="rows" orderby="event_date=DESC" defaultPage="1" >
+                <parameter name='uid' source='session' value='uid' default='' />
+                <parameter name='claim_type' source='post' optional="true" />
+                <parameter name='client_id' source='post' optional="true" />
+                <parameter name='provider' source='post' optional="true" />
+                <parameter name='claim_date' format="date" source='post' optional="true" />
+                <parameter name='event_date' format="date" source='post' optional="true" />
+                <parameter name='event_id' source='post' optional="true" />
+                <parameter name='member_number' source='post' optional="true" />
+                <parameter name='member_name' source='post' optional="true" />
+                <parameter name='verified' source='post' optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="services" blocking="off">
+            <description>List the services comprising a single claim</description>
+            <entity namespace="argus" class="claim_services" id="services">
+                <parameter name="claim_id" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="detail" blocking="off" passalong="window_id">
+            <description>Displays the information related to a specific claim</description>
+            <entity namespace="argus" class="claims" id="claim">
+                <parameter name="id" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="available" blocking="off">
+            <description>Returns a list of claims available for batching based upon various criteria</description>
+            <if var="type" eq="Vision">
+                <then>
+                    <entity namespace="vision" class="consultation/forms" rows="rows" page="page" response="true" method="availableClaims">
+                        <parameter name="ipa_id"        source="post" optional="true" />
+                        <parameter name="provider_id"   source="post" optional="true" />
+                        <parameter name="member_number" source="post" optional="true" />
+                        <parameter name='client_id'     source='post' optional="true" />
+                        <parameter name="event_id"      source="post" optional="true" />
+                        <parameter name="status"        source="post" optional="true" />
+                        <parameter name="member_name"   source="post" optional="true" />
+                    </entity>
+                </then>
+                <else>
+                    <if var="type" eq="Dental">
+                        <then>
+                            
+                        </then>
+                        <else>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="export" output="CSV" blocking="off" filename="claims_export.csv">
+            <description>Generates a CSV of processed claim data</description>
+            <model namespace="argus" class="claims" method="export" response="true">
+                <parameter name="provider_id" source="request" optional="true" />
+                <parameter name="member_number" source="request" optional="true" />
+                <parameter name='client_id' source='request' optional="true" />
+                <parameter name="event_id" source="request" optional="true" />
+                <parameter name="verified" value="status" source="request" optional="true" />
+                <parameter name="member_name" source="request" optional="true" />                
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="download" blocking="off" output="837"> 
+            <description>Outputs a claim file for download</description>
+            <model namespace="argus" class="claims" method="download" response="true">
+                <parameter name="claim_file" required="true" source="request" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="batchingexport" output="CSV">
+            <description>Generates a CSV of available, yet to run, claim data</description>
+            <model namespace="argus" class="claims" method="export" response="true">
+                
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="dwh" blocking="off">
+            <description>Gets claim data from the Data Warehouse</description>
+            <entity namespace="argus" class="aldera" id="claim">
+                <parameter name="user_id" value="uid" source="session" required="true"  />
+                <parameter name="claim_number" source="post" required="true"  />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="reconcile" blocking="off">
+            <description>Will reconcile unfinished claims with Aldera</description>
+            <entity namespace="argus" class="claims" id="claims"></entity>
+            <model  namespace="argus" class="claims" id="aldera"></model>
+            <entity namespace="argus" class="claims" id="entity"></entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="status" passalong="layer" blocking="off">
+            <description>Creates the Current Claim Status chart for dashboard</description>
+            <entity namespace="argus" class="claims" id="claims">
+                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="odstatus" passalong="layer" blocking="off">
+            <description>Creates the Current Claim Status chart for dashboard</description>
+            <entity namespace="argus" class="claims" id="claims">
+                
+            </entity>
+        </action>        
+    </actions>
+</controller>

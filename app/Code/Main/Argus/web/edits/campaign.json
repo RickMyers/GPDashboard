@@ -1,0 +1,89 @@
+({
+	form:
+	{
+		id: 		"hedis-calllist-upload-form-&&win_id&&",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"campaign-&&win_id&&",
+			longname:		"Individual Campaign",
+			title:			"Choose the campaign to apply the calls to",
+                        type:                   "select",
+                        required:		true,
+                        force:			true,
+			classname:		"",
+			style:			"font-size: 1.2em; padding: 3px; width: 150px"
+		},
+		{
+			active:			true,
+			id: 			"campaign_category-&&win_id&&",
+			longname:		"Campaign Category",
+			title:			"First choose the type of campaign we are applying these calls to",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+                        onchange:               function (evt) {
+                            (new EasyAjax('/dental/hedis/campaigns')).add('category_id',$(evt.target).val()).then(function (response) {
+                                var campaigns = JSON.parse(response.trim());
+                                var opts = [];
+                                opts[opts.length] = {
+                                    text: "",
+                                    value: ""
+                                }
+                                for (var i=0; i<campaigns.length; i++) {
+                                    opts[opts.length] = {
+                                        text: campaigns[i].campaign,
+                                        value: campaigns[i].id
+                                    }                                    
+                                }
+                                EasyEdits.populateSelectBox($E('campaign-&&win_id&&'),opts);
+                            }).get();
+                        },
+			classname:		"",
+			style:			"font-size: 1.2em; padding: 3px; width: 150px"
+		},
+		{
+			active:			true,
+			id: 			"add_members-&&win_id&&",
+			longname:		"Add Members",
+			title:			"Check to add these participants to our HEDIS database",
+                        type:                   "checkbox",
+                        required:		false,
+                        force:			false,
+			classname:		"",
+			style:			""
+		}, 
+                {
+			active:			true,
+			id: 			"counseling-upload-submit-&&win_id&&",
+			longname:		"Upload Button",
+			title:			"Click when you are ready to apply the calls to the campaign",
+                        type:                   "checkbox",
+                        required:		false,
+                        force:			false,
+			classname:		"",
+			style:			"",
+                        onclick:                function (evt) {
+                            if (Edits['campaign-upload-form-&&win_id&&'].validate()) {
+                                $('#counseling-upload-submit-&&win_id&&').fadeOut();
+                                $('#counseling-upload-message-&&win_id&&').fadeIn();
+                                (function (win) {
+                                    (new EasyAjax('/dental/counseling/upload')).packageForm('hedis-calllist-upload-form-&&win_id&&').addFiles('schedule',$E('counseling-schedule-&&win_id&&')).then(function (response) {
+                                        Argus.hedis.manager.unassigned.callqueue(25,1,win);
+                                    }).post()
+                                })(Desktop.window.list['&&win_id&&']);
+                            }
+                        }
+		}                   
+	]
+})

@@ -1,0 +1,7 @@
+HL*{$hierarchical_level}**20*{$has_children}~
+NM1*85*{$entity_code}*{$provider_name}*{$first_name}*{$middle_name}***XX*{$identification_code}~
+N3*{$street_address}*{$street_address_2}~
+N4*{$city}*{$state}*{$zip_code}~
+REF*EI*{$employer_identification_number}~
+REF*0B*{$license_number}~
+PER*IC*{$provider_name}*TE*{$telephone}~

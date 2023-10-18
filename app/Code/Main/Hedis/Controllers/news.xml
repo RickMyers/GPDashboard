@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+
+HEDIS News
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="news" use="Twig" author="Emi Clar" email="eclar@aflac.com">
+    <actions>
+        <action name="list">
+            <description>List today's news</description>
+            <entity namespace="hedis" class="news" id="stories" orderby="id=desc" rows="rows" page="page" defaultRows="3"></entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="article">
+            <description>Displaying Article</description>
+            <entity namespace="hedis" class="news" id="article">
+                <parameter name='id' source='request' required="true" />
+            </entity>
+            <entity namespace="argus" class="user/roles" id="user">
+                <parameter name="user_id" source="session" value="uid" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="form">
+            <description>Article Entry</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="edit">
+            <description>Edit Article</description>
+            <entity namespace="hedis" class="news" id="article">
+                <parameter name='id' source='request' required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="save">
+            <description>Save today's news</description>
+            <entity namespace="hedis" class="news" id="stories" method="save">
+                <parameter name='id' source='request' optional="true" />
+                <parameter name='title' source='request' required="true" />
+                <parameter name='author' source='session' required="true" value="uid" />
+                <parameter name='content' source='request' required="true" />
+                <parameter name='image' source='file' optional='true' />
+            </entity>
+            <chain>
+                <action name="list"></action>
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="delete">
+            <description>Delete today's news</description>
+             <entity namespace="hedis" class="news" id="stories" method="delete">
+                <parameter name='id' source='request' required="true" />
+            </entity>
+            <chain>
+                <action name="list"></action>
+            </chain>
+        </action>
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

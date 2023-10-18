@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!--
+
+Vision Administration
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="vision" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="newclient"> 
+            <description>Returns the new client form</description>
+        </action>
+        
+        <!-- ############################################################### -->
+                        
+        <action name="newipa"> 
+            <description>Returns the new IPA form</description>
+            <entity namespace="vision" class="clients" id='client'>
+                <parameter name='id' source='request' value='client_id' required="true" />
+            </entity>
+        </action>
+  
+        <!-- ############################################################### -->
+        
+        <action name="newlocation">
+            <description>Returns the new Location form</description>
+            <entity namespace="vision" class="clients" id='client'>
+                <parameter name='id' source='request' value='client_id' required="true" />
+            </entity>
+            <entity namespace="vision" class="ipas" id='ipa'>
+                <parameter name='id' source='post' value='ipa_id' required="true" />
+            </entity>        
+        </action>
+        
+        <!-- ############################################################### -->
+                
+        <action name="newaddress" passalong="location_id">
+            <description>Returns the new Address form</description>
+            <entity namespace="vision" class="clients" id='client'>
+                <parameter name='id' source='request' value='client_id' required="true" />
+            </entity>
+            <entity namespace="vision" class="ipas" id='ipa'>
+                <parameter name='id' source='request' value='ipa_id' required="true" />
+            </entity>                 
+            <entity namespace="vision" class="ipa_locations" id='location'>
+                <parameter name='id' source='request' value='location_id' required="true" />
+            </entity>
+        </action>                        
+
+        <!-- ############################################################### -->
+
+        <action name="editipa">
+          <description>Returns the edit Location form</description>
+          <entity namespace="vision" class="clients" id='client'>
+              <parameter name='id' source='request' value='client_id' required="true" />
+          </entity>
+          <entity namespace="vision" class="ipas" id='ipa'>
+              <parameter name='id' source='post'  required="true" />
+          </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="editlocation">
+          <description>Returns the edit Location form</description>
+          <entity namespace="vision" class="clients" id='client'>
+              <parameter name='id' source='request' value='client_id' required="true" />
+          </entity>
+          <entity namespace="vision" class="ipas" id='ipa'>
+              <parameter name='id' source='post' value='ipa_id' required="true" />
+          </entity>
+          <entity namespace="vision" class="ipa_locations" id='location'>
+              <parameter name='id'  source='post' required="true" />
+          </entity>          
+          <entity namespace="vision" class="ipa_location_addresses" id='address'>
+              <parameter name='id' source='post' required="true" />
+          </entity>          
+          
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="editaddress">
+          <description>Returns the edit Location form</description>
+          <entity namespace="vision" class="clients" id='client'>
+              <parameter name='id' source='request' value='client_id' required="true" />
+          </entity>
+          <entity namespace="vision" class="ipas" id='ipa'>
+              <parameter name='id' value="ipa_id" source='post' required="true" />
+          </entity>
+          <entity namespace="vision" class="ipa_locations" id='location'>
+              <parameter name="id" value='location_id' source='post' required="true" />
+          </entity> 
+          <entity namespace="vision" class="ipa_location_addresses" id='address'>
+              <parameter name='id' source='post' required="true" />
+          </entity>                  
+          <entity namespace="vision" class="address_npis" id='npi'>
+              <parameter name='address_id' value="id" source='post' required="true" />
+          </entity>             
+       </action>
+       
+       <!-- ############################################################### -->
+       
+
+    </actions>
+</controller>

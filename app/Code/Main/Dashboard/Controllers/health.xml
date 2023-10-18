@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Diagnostic and Status actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="health" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="check" blocking="OFF" output="JSON">
+            <description>JSON output of how things are going....</description>
+            <model namespace="dashboard" class="system" id='system'>
+                
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

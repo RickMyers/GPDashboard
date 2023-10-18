@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+
+All things relating to managing and creating email notifications
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="email" use="Smarty3" author="Rick Myers" email="rickmyers1969@gmail.com">
+    <actions>
+
+        <action name="templates" output="json">
+            <description>Lists the templates available</description>
+            <entity namespace="argus" class="workflow_email_templates" fields="id,description" id='templates'>
+                <parameter name="category_id" value="category" source="post" default="" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="save">
+            <description>Saves an email template</description>
+            <entity namespace="argus" class="workflow_email_templates" id='templates' method='save'>
+                <parameter name="id" source="post" default="" required="true" />
+                <parameter name="template" source="post" default="" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="template">
+            <description>Fetches the text of an email template</description>
+            <entity namespace="argus" class="workflow_email_templates" id='template' method='load'>
+                <parameter name="id" source="post" default="" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="add">
+            <description>Adds a new template</description>
+            <entity namespace="argus" class="workflow_email_templates" id='templates' method='add'>
+                <parameter name="category_id" source="post" default="" />
+                <parameter name="template" source="post" default="" />
+                <parameter name="description" source="post" default="" />
+            </entity>
+        </action>
+
+    </actions>
+</controller>

@@ -1,0 +1,55 @@
+<style type="text/css">
+    .delete-npi-icon {
+        height: 20px; cursor: pointer
+    }
+    .add-icon-button {
+        
+    }
+    .view-npi-data {
+        border: 1px solid transparent; cursor: pointer
+    }
+</style>
+<div style='white-space: nowrap; overflow: hidden'>
+    <div style='width: 400px; display: inline-block;'>
+        {%  for row in npis.fetch() %}
+            <div class='view-npi-data' npi="{{ row.npi }}">
+                <img src="/images/vision/discard.png" class="delete-npi-icon" npi_id="{{ row.id }}" address_id="{{ row.address_id }}" npi="{{ row.npi }}" /> {{ row.npi }} 
+            </div>
+        {% endfor %}
+        <form name="new_npi_form" id="new_npi_form-{{ window_id }}" onsubmit="return false">
+            <input type="hidden" name="address_id" id="address_id-{{ window_id }}" value="{{ npis.getAddressId() }} " />
+            <input type="hidden" name="window_id"  id="window_id-{{ window_id }}"  value="{{ window_id }}" />
+            <input type="text"   name="npi"        id="npi_id-{{ window_id }}"     value="" maxlength="10" />
+            <input type="button" value=" Add "     id="add-icon-button-{{ window_id }}" />
+        </form>
+    </div>
+    <div style='display: inline-block; width: 500px' id='npi-results-{{ window_id }}'>
+    </div>
+</div>    
+<script type="text/javascript">
+    $('.delete-npi-icon').on('click',function (evt) {
+        evt.stopPropagation();
+        if (confirm("Remove NPI "+this.getAttribute('npi'))) {
+            (new EasyAjax('/vision/npis/delete')).add('window_id','{{ window_id }}').add('npi_id',this.getAttribute('npi_id')).add('address_id',this.getAttribute('address_id')).then(function (response) {
+                $("#location_npi_list-{{ window_id }}").html(response);
+            }).post();
+        }
+    });
+    $('#add-icon-button-{{ window_id }}').on('click',function () {
+        (new EasyAjax('/vision/npis/add')).packageForm('new_npi_form-{{ window_id }}').then(function (response) {
+            $("#location_npi_list-{{ window_id }}").html(response);
+        }).post();
+    });
+    $('.view-npi-data').on('click',function (evt) {
+        $('.view-npi-data').css('border','1px solid transparent');
+        $(evt.target).css('border','1px dotted #333');
+        let npi = evt.target.getAttribute('npi');
+        if (npi) {
+            (new EasyAjax('/vision/npis/information')).add('npi',npi).then(function (response) {
+                $('#npi-results-{{ window_id }}').html(response);
+            }).post();
+        }
+    });
+</script>
+
+

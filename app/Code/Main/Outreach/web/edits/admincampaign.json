@@ -1,0 +1,43 @@
+({
+    form:
+    {
+        "id": 		"outreach_admin_form",
+        "drawme":	false,
+        "action":	"",
+        "onload":       function () {
+            //when form is loaded, do something
+        },
+        "method":	"post",
+        "style":	"",
+        "onenterkey":	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"outreach_admin_campaign",
+            longname:	"Outreach Campaign",
+            title:	"Campaign to Manage",
+            type:       "combo",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"width: 260px",
+            onchange: function (evt) {
+                if ($(evt.target).val()) {
+
+                }
+            }
+        },
+        {
+            active:	true,
+            id: 	"outreach_admin_campaign_combo",
+            longname:	"",
+            title:	"",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	""
+        }           
+    ]
+})

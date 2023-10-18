@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+
+Actions used in configuring HEDIS projects
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="configuration" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home">
+            <description>The main home page</description>
+            <entity namespace="argus" class="user_roles" id="user">
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </entity>
+            <if id="user" method="userHasRole" arguments="HEDIS Vision Manager" eq="TRUE"> 
+                <then>
+                    <entity namespace="vision" class="clients" id="clients" orderby="client=ASC">
+                    </entity>
+
+                    <view name="visionhome" />
+                    
+                </then>
+            </if>
+        </action>
+        
+        <!-- ############################################################### -->
+        <!-- aaron -->
+        <action name="savesub">
+            <discription>saves changes to vision_ipa_sub</discription>
+            <entity namespace='vision' class='ipa_sub' method='save'>
+                <parameter name='id' source='post' optional="true" />
+                <parameter name='sub_name' source='post' optional="true" />
+                <parameter name='ipa_parent_id' source='post' optional="true" />
+                <parameter name='sub_id' source='post' optional="true" />
+                <parameter name='sub_order_id' source='post' optional="true" />
+                <parameter name='is_enabled' source='post' optional="true" />
+                <parameter name="created_on" format="timestamp" default="now" source="request" />
+            </entity>
+        </action>
+
+
+
+        <!-- ############################################################### -->
+        
+         <action name="saveipa">
+            <discription>saves changes to vision_ipa</discription>
+            <entity namespace='vision' class='ipa' method='save'>
+                <parameter name='id' source='post' optional="true" />
+                <parameter name='ipa_id' source='post' optional="true" />
+                <parameter name='order_by_num' source='post' optional="true" />
+                <parameter name="created_on" format="timestamp" default="now" source="request" />                
+                <parameter name='ipa_name' source='post' optional="true" />
+                <parameter name='is_enabled' source='post' optional="true" />
+                
+            </entity>
+        </action>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+        <!-- #############################################   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <action name="createsubtable" output="JSON">
+            <discription>saves changes to vision_ipa</discription>
+            <entity response='true' namespace='vision' class='ipa_sub' method="createsubtable" >                
+            </entity>              
+        </action>
+
+
+        <!-- ############################################################### -->
+        
+
+        
+                
+                        
+                                
+                                                
+        <action name="campaigns">
+            <description>Lists the campaigns currently available to </description>
+            <entity namespace="dental" class="campaigns" id="campaigns" />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="addcampaign">
+            <description>Adds a new campaign to the HEDIS Dental Campaign List</description>
+            <entity namespace="dental" class="campaigns" id="campaigns" method="save">
+                <parameter name="campaign" source="post" required="true" />
+                <parameter name="category_id" source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="campaigns" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="togglecampaign">
+            <description>Toggles whether a campaign is active or not</description>
+            <entity namespace="dental" class="campaigns" id="campaigns" method="save">
+                <parameter name="id"     source="post" required="true" />
+                <parameter name="active" source="post" required="true" />
+            </entity>            
+        </action>
+        
+    </actions>
+</controller>

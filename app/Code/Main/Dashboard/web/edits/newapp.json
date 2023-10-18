@@ -1,0 +1,83 @@
+({
+    form:
+    {
+        id: 		"new-app-form-&&win_id&&",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"new_app_name_&&win_id&&",
+            longname:	"New App Name",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	""
+        },
+        {
+            active:	true,
+            id: 	"new_app_description_&&win_id&&",
+            longname:	"New App Description",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	""
+        },
+        {
+            active:	true,
+            id: 	"new_app_component_&&win_id&&",
+            longname:	"New App Component",
+            type:       "text",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	""
+        },
+        {
+            active:	true,
+            id: 	"new_app_uri_&&win_id&&",
+            longname:	"New App URI",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	""
+        },        
+        {
+            active:	true,
+            id: 	"create_new_app_button_&&win_id&&",
+            longname:	"New App Create Button",
+            onclick:    function () {
+                if (Edits['new-app-&&win_id&&'].validate()) {
+                    var form = $E('new-app-form-&&win_id&&');
+                    var roles = [];
+                    for (var i=0; i<form.elements.length; i++) {
+                        if (form.elements[i].type && (form.elements[i].type=='checkbox') && (form.elements[i].checked)) {
+                            roles[roles.length] = form.elements[i].value;
+                        }
+                    }
+                    (new EasyAjax('/dashboard/app/create')).packageForm('new-app-form-&&win_id&&').add('roles',JSON.stringify(roles)).then(function (response) {
+                        alert(response);
+                        //Desktop.window.list['&&win_id&&']._close();
+                    }).post();
+                }
+            },
+            type:       "button",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	""
+        }          
+    ]
+})
+

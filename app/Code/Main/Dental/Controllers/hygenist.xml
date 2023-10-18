@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!--
+
+Hygenist related actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="hygenist" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+
+        <action name="init">
+            <description>The Initial Queue View</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="queues" blocking="off">
+            <description>This is the recurring poll action for the HEDIS Hygenist queue monitoring app</description>
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="hqd" id="queued" defaultRows='14' defaultPage='1'>
+                <parameter name="assignee" source="session" value="uid" />
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity> 
+            <entity namespace="dental" class="campaign_results" rows="rows" page="hcc" id="counseled" defaultRows='14' defaultPage='1'>
+                <parameter name="assignee" source="session" value="uid" />
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="hoh" id="onhold" defaultRows='14' defaultPage='1'>
+                <parameter name="assignee" source="session" value="uid" />
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="hcm" id="completed" defaultRows='14' defaultPage='1'>
+                <parameter name="assignee" source="session" value="uid" />
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="progress" passalong="layer">
+            <description>The current number of contacts queued, completed, and counseled</description>
+            <entity namespace="dental" class="contact_call_schedule" id="contacts">
+                <parameter name="assignee" source="session" value="uid" />
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="calldurations" passalong="layer">
+            <description>Average call duration per hygenist</description>
+            <entity namespace="dental" class="contact_call_schedule" id="hygenists">
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        
+        
+        
+        
+        
+        <action name="hygenistavailable" passalong="layer">
+            <description>Average call duration per hygenist</description>
+            <entity namespace="dental" class="contact_call_schedule" id="hygenists">
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <action name="counselings" passalong="layer">
+            <description>Counselings per hygenist</description>
+            <entity namespace="dental" class="contact_call_schedule" id="hygenists">
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+        </action>   
+        
+        <!-- ############################################################### -->
+        
+        <action name="contacts" passalong="layer">
+            <description>Contacts completed per hygenist</description>
+            <entity namespace="dental" class="contact_call_schedule" id="hygenists">
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+        </action>                                       
+        
+        <!-- ############################################################### -->
+        
+        <action name="completions" passalong="layer">
+            <description>Completed counselings vs completed but without counselings</description>
+            <entity namespace="dental" class="contact_call_schedule" id="contacts">
+                <parameter name="assignee" source="session" value="uid" />
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>            
+        </action>
+        
+    </actions>
+</controller>

@@ -1,0 +1,71 @@
+---
+appByStatus :      
+  url             : true  #make it use the optional way of making a soap call
+  #wsdl            : https://services.ehealthinsurance.com/bo-service/v2/ws/get-application?wsdl
+  wsdl            : https://services.qa.ehealthinsurance.com/bo-service/v2/ws/get-application?wsdl
+  version         : 1.1
+  operation       : getAppByStatus
+  username        : argusws01@Argus
+  password        : Welcome1
+ # password        : argus123
+  WSS             : true
+  timestamp       : 120                   #Make viable for +/- 2 minutes
+  method          : SOAP
+  arguments       : 
+    parameters    :
+        request   :
+            status: R1
+            application-type: ALL
+            start-date:
+            end-date:
+appById    :
+  url             : 
+  #wsdl            : https://services.ehealthinsurance.com/bo-service/v2/ws/get-application?wsdl
+  wsdl            : https://services.qa.ehealthinsurance.com/bo-service/v2/ws/get-application?wsdl
+  version         : 1.1
+  operation       : getAppById
+  username        : argusws01@Argus
+  password        : Welcome1
+  #password       : argus123
+  WSS             : true
+  timestamp       : 120                  #Make viable for +/- 2 minutes
+  method          : SOAP
+  arguments       : 
+    parameters    :
+        request   :
+            application-id:
+applicationPdf   :
+  url             : true
+  #wsdl            : https://services.ehealthinsurance.com/bo-service/v2/ws/get-application?wsdl
+  wsdl            : https://services.qa.ehealthinsurance.com/bo-service/v2/ws/get-application?wsdl
+  version         : 1.1
+  operation       : getPDF
+  username        : argusws01@Argus
+  password        : Welcome1
+  #password       : argus123
+  WSS             : true
+  timestamp       : 120                  #Make viable for +/- 2 minutes
+  method          : SOAP
+  arguments       : 
+    parameters    :
+        request   :
+            application-id:
+updateApplicationStatus   :
+  url             : 
+  #wsdl            : https://services.ehealthinsurance.com/bo-service/v2/ws/status-update?wsdl
+  wsdl            : https://services.qa.ehealthinsurance.com/bo-service/v2/ws/status-update?wsdl
+  version         : 1.1
+  operation       : updateStatus
+  username        : argusws01@Argus
+  password        : Welcome1
+  #password       : argus123
+  WSS             : true
+  timestamp       : 120                  #Make viable for +/- 2 minutes
+  method          : SOAP
+  arguments       : 
+    request:
+        application-status:
+            application-id: 
+            status:
+            effective-date:
+                

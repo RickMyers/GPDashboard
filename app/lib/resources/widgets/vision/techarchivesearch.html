@@ -1,0 +1,26 @@
+
+<style type="text/css">
+    .vision-tech-search-box {
+        border-radius: 8px; height: 25px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat
+    }
+    .vision-tech-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px; height: 20px; position: relative; top: 2px
+    }
+    .vision-tech-search-field:focus {
+        outline: none;
+    }
+</style>
+<div class="vision-tech-search-box" style="display: inline-block">
+    <input class="vision-tech-search-field" type="text" style="" name="vision-tech-search-field" id="vision-tech-search-field" placeholder="Search..."/>
+</div>
+<script type="text/javascript">
+    $('#vision-tech-search-field').on("keydown",function (evt) {
+        /* We are just going to use the admin search function... it's basically the same */
+        if (evt.keyCode == 13) {
+            Argus.vision.search.page(evt.target.value);
+        }        
+    });
+</script>
+
+
+

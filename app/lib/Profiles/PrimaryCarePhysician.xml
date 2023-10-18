@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+    Default Dashboard Layout for ODs (doctors)
+-->
+<profile>
+    <default>
+        <graphs>
+            <graph id="1" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-1" />
+            <graph id="2" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-2" />
+            <graph id="3" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-3" />
+            <graph id="4" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-4"/>
+        </graphs>
+        <apps>
+            <app id="1" />
+            <app id="2" />
+        </apps>
+    </default>
+</profile>
+

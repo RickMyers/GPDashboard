@@ -1,0 +1,5 @@
+ISA*00*          *00*          *ZZ*{$submitter_id}*ZZ*{$submitter_id}*{$short_date}*{$time}*^*00501*{$control_number}*0*P*:~
+GS*BE*{$submitter_id}*{$submitter_id}*{$today}*{$time}*{$gs_control_number}*X*005010X220A1~
+ST*834*0001*005010X220A1~
+BGN*00*{$reference_id}*{$today}*{$time}*ES***2~
+N1*P5**94*562493693~N1*IN*ARG*FI*59314947~

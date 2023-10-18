@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+
+Configuration for the eligibility workflow components
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="eligibility" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="attach" passalong="windowId">
+            <description>Configuration screen for attaching member data to the event</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="output" passalong="windowId">
+            <description>Configuration screen for outputting member data from the event</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>
+
+    </actions>
+</controller>

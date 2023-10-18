@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+
+General event actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="event" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="create">
+            <description>Creates the event and redirects to the event type resource</description>
+            <entity assign="event_id" namespace='scheduler' class='events' method="save">   
+                <parameter name="start_date" value="event_start_date"  format="date" source="post" required="true" />
+                <parameter name="start_time" value="event_start_time"  format="time" source="post"  />
+                <parameter name="end_date"   value="event_end_date"    format="date" source="post"  />
+                <parameter name="end_time"   value="event_end_time"    format="time" source="post"  />
+                <parameter name="user_id"    value="uid"    source="session"  />
+                <parameter name="event_type_id"     source="post"  />
+            </entity>   
+            <redirect var="resource" add="event_id" post="true" />
+        </action>
+                
+        <!-- ############################################################################################################# -->
+        
+        <action name="save">
+            <description>Saves some field data to an event</description>
+            <entity namespace="scheduler" class="events" method="save">
+                <parameter name="id" source="post" required="true" />
+                <parameter name="screening_location" value="screening_location_combo" source="post" optional="true" />
+                <parameter name="*" source="post" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################################################################# -->
+        
+        <action name="confirm">
+            <description>Actually puts the event on the calendar</description>
+            <model namespace="scheduler" class="events" method="schedule">
+                <parameter source="post" name="event_id" required="true" />
+                <parameter source="session" value="uid" name="user_id" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################################################################# -->
+        
+        <action name="edit">
+            <description>Edits a set of event data allowing for custom screens</description>
+            <entity namespace="scheduler" class="events" id="event" method="load">
+                <parameter name="id" source="post" required="true" />
+            </entity>
+            <switch id="event" method="getEventTypeId">
+                <case value="6">
+                    <redirect href="/vision/schedule/edit" post="true" />
+                </case>   
+                <default>
+                      
+                </default>
+            </switch>
+        </action>        
+        
+        <!-- ############################################################################################################# -->
+
+        <action name="review" blocking="off" output="JSON">
+            <description>Generates the data for an event drop down list</description>
+            <entity namespace="scheduler" class="events" method="review" response="true">
+                <parameter name="year" optional="true" source="request" />
+            </entity> 
+        </action>
+                        
+        <!-- ############################################################################################################# -->
+        
+        <action name="list" blocking="off" output="JSON">
+            <description>Generates the data for an event drop down list</description>
+            <entity namespace="scheduler" class="events" method="fetch" normalize="Y" assign="events">
+
+            </entity> 
+        </action>
+        
+        <!-- ############################################################################################################# -->
+        
+        <action name="types" blocking="off" output="JSON">
+            <description>Generates a list of the types of events we handle</description>
+            <entity response="true" namespace="scheduler" class="event/types" method="fetch" orderby="namespace=DESC">
+                
+            </entity>
+        </action>
+    </actions>
+</controller>

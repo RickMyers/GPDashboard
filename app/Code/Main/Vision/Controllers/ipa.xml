@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!--
+
+High-level Actions for Ipas
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="ipa" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="offices" output="JSON">
+            <description>List of offices associated to the ipa</description>
+            <entity namespace="vision" class="ipa/locations" id='ipas' response="true" method="listOffices">
+                <parameter name='ipa_id' source='request' optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="locations" output="JSON">
+            <description>List of locations associated to the ipa</description>
+            <entity namespace="vision" class="ipa/locations" response="true" method="fetch">
+                <parameter name='ipa_id' source='request' optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="list" output="JSON">
+            <description>Creates a list of available IPAs relative to a client id</description>
+            <entity namespace="vision" class="client/ipas" id='ipas' orderby="ipa">  
+                <parameter name="client_id" source="request" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="all" output="JSON">
+            <description>Creates a list of available IPAs</description>
+            <entity namespace="vision" class="ipas"  orderby="ipa" method="fetch" response="true">  
+                <parameter name="legacy" source="request" default="N" />
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="new" >
+            <description>Creates a list of available IPAs relative to a client id</description>
+            <entity assign='ipa_id' namespace="vision" class="ipas" method="save">
+                <parameter name="ipa"       source="post" value="ipa_name" required="true" />
+            </entity>
+            <entity namespace="vision" class="client_ipas" method="save">
+                <parameter name="client_id" source="post" required="true" />
+                <parameter name="ipa_id"    source="assign" />
+            </entity>            
+            <entity assign="user_id" namespace="humble"   class="users" method="newUser">
+                <parameter name="user_name" source="request" default="UNIQUEID" />
+                <parameter name="password" source="request" format="password" default="argus1234" /> 
+            </entity>
+            <entity namespace="humble"   class="user/identification" method="save">
+                <parameter name="id" value="user_id" source="assign" />
+                <parameter name="last_name" source="post" value="ipa_name" required="true" /> 
+            </entity>            
+            <entity namespace="vision" class="ipas" method="save">
+                <parameter name="id"    source="assign"  value="ipa_id" />
+                <parameter name="user_id" source="assign" />
+            </entity>
+            <chain>  
+                <action name="list" />
+            </chain>
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action name="updateipa">
+            <description>Updates the name of an existing IPA</description>
+            <entity namespace="vision" class="ipas" method="save">
+                <parameter name='id' source='post' required="true" />
+                <parameter name='ipa' source='post' required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="remove">
+           <description>Removes an IPA location and descendents</description>
+           <entity namespace="vision" class="ipas" method="delete">
+               <parameter name='id' source='post' required="true" />
+           </entity>
+           <entity namespace="vision" class="client_ipas" method="nonkeysdelete">
+               <parameter name='ipa_id' value="id" source='post' required="true" />
+           </entity>           
+           <chain>
+               <action name="list" />
+           </chain>
+        </action>
+                       
+        <!-- ############################################################### -->
+        
+        <action name="validate" blocking="off" output="JSON">
+            <description></description>
+            <model namespace="vision" class="ipa" method="validate" response="true">
+                <parameter name="ipa_name" source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->        
+
+        <action name="refresh" output='JSON'>
+            <description>This is the recurring refresh queries for OD queues</description>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="ipa_clients"  id="clients"  defaultRows='24' defaultPage='1'  orderby="event_date=desc">
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="ipa_physicians"  id="physicians"  defaultRows='24' defaultPage='1'  orderby="reviewer=asc,modified=desc">
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>            
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='queue' output='JSON'>        
+            <description>Refreshes a single OD queue</description>
+            <!--helper namespace="humble" class='data' id='helper'>
+                <parameter name='queue_id' source='request' required='true' />
+            </helper-->
+            <entity response="true" namespace="vision" class="consultation/forms" rows="rows" page="page" defaultRows='50' defaultPage='1' method='sortedIpaForms'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+                <parameter name='physician_npi' source='post' optional="true" />
+                <parameter name='health_plan' source='post' optional="true" />
+            </entity>
+        </action>        
+
+        <!-- ############################################################### -->
+        
+        <action name='export' output='CSV' blocking="off" filename="ipa_data.csv">
+            <description>Dumps the total amount of data related to an IPA</description>
+            <entity namespace="vision" class="ipas" response="true" method="export" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="editor" blocking="off" passalong="window_id">
+            <description>The page that lets you select the health plan - IPA - location to edit the NPI associated with the selections</description>
+            <entity namespace="vision" class="clients" id="clients" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="grouping" blocking="off" passalong="window_id">
+            <description>The IPA Grouping Tool</description>
+            <entity namespace="vision" class="ipa/groups" id="groups" orderby="group=ASC" />
+            <entity namespace="vision" class="ipas" id="ipas" orderby="ipa=ASC" />
+        </action>
+        
+    </actions>
+</controller>

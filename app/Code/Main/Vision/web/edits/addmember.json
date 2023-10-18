@@ -1,0 +1,130 @@
+{
+    "form":
+    {
+        "id":       "vision_screening_new_attendee_&&event_id&&",
+        "drawme":   false,
+        "action":   "",
+        "method":		"post",
+        "style":		"",
+        "onenterkey":	"send"
+    },
+    "fields":
+    [
+        {
+            "active":	true,
+            "id": 	"health_plan_&&event_id&&",
+            "longname":	"Health Plan",
+            "title":	"",
+            "type":     "hidden",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },           
+        {
+            "active":	true,
+            "id": 	"event_id_&&event_id&&",
+            "longname":	"Event ID",
+            "title":	"",
+            "type":     "hidden",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },   
+        {
+            "active":	true,
+            "id": 	"member_number_&&event_id&&",
+            "placeholder": "",
+            "longname":	"Member ID",
+            "title":	"Plan ID of member",
+            "type":     "text",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },
+        {
+            "active":	true,
+            "id": 	"member_hba1c_&&event_id&&",
+            "placeholder": "",
+            "longname":	"",
+            "title":	"",
+            "type":     "text",
+            "classname":"",
+            "style":	""
+        },  
+        {
+            "active":	true,
+            "id": 	"member_hba1c_date_&&event_id&&",
+            "placeholder": "",
+            "longname":	"",
+            "mask":     "#^/#^/####",
+            "title":	"",
+            "type":     "text",
+            "classname":"",
+            "style":	""
+        },  
+        {
+            "active":	true,
+            "id": 	"member_fbs_&&event_id&&",
+            "placeholder": "",
+            "longname":	"Fasting Blood Sugar",
+            "title":	"",
+            "type":     "text",
+            "classname":"",
+            "style":	""
+        },    
+        {
+            "active":	true,
+            "id": 	"member_fbs_date_&&event_id&&",
+            "placeholder": "",
+            "longname":	"",
+            "mask":     "#^/#^/####",
+            "title":	"",
+            "type":     "text",
+            "classname":"",
+            "style":	""
+        },  
+        {
+            "active":	true,
+            "id": 	"diabetes_type_1_&&event_id&&",
+            "placeholder": "",
+            "longname":	"Type of Diabetes",
+            "title":	"",
+            "type":     "radio",
+            "classname":"",
+            "style":	""
+        },  
+        {
+            "active":	true,
+            "id": 	"diabetes_type_2_&&event_id&&",
+            "placeholder": "",
+            "longname":	"Type of Diabetes",
+            "title":	"",
+            "type":     "radio",
+            "classname":"",
+            "style":	""
+        }
+        ,
+        {
+            "active":	true,
+            "id": 	"add_member_button_&&event_id&&",
+            "placeholder": "",
+            "longname":	"Fasting Blood Sugar",
+            "title":	"",
+            "type":     "button",
+            "onclick":  function () {
+                if (Edits['vision_schedule_add_member_form_&&event_id&&'].validate()) {
+                    (new EasyAjax('/vision/schedule/addmember')).add('event_id','&&event_id&&').packageForm('vision_screening_new_attendee_&&event_id&&').then(function (response) {
+                        $('#new-event-member-list').html(response);
+                        $E('vision_screening_new_attendee_&&event_id&&').reset();
+                    }).post();
+                }
+            },
+            "classname":"",
+            "style":	""
+        }            
+    ]
+}
+

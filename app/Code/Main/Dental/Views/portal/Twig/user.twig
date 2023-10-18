@@ -1,0 +1,49 @@
+{% set ts = helper._getTimeStamp() %}
+<html>
+    <head>
+        <title>Teledentistry Portal</title>
+        <link rel="shortcut icon" href="/images/argus/favicon.png" />
+        <link rel='stylesheet' href='/css/bootstrap?cachebust='/>
+        <link rel='stylesheet' href='/css/theme?cachebust='/>
+        <style type="text/css">
+            #dental-portal-header {
+                padding: 10px 5px; font-family: sans-serif; font-size: 1.8em; color: ghostwhite; background-color: #333
+            }
+            #dental-portal-body {
+                position: relative;
+            }
+            #dental-portal-footer {
+                padding: 2px 5px; font-family: sans-serif; font-size: .8em; color: ghostwhite; background-color: #333
+            }
+        </style>
+        <script type="text/javascript" src='/js/jquery?cachebust={{ ts }}'></script>
+        <script type='text/javascript' src='/js/bootstrap?cachebust={{ ts }}'></script>
+        <script type='text/javascript' src='/js/vue?cachebust={{ ts }}'></script>
+        <script type='text/javascript' src='/js/common?cachebust={{ ts }}'></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(window).resize();
+            });
+            $(window).resize(function () {
+                $('#dental-portal-body').height($(document).height() - $E('dental-portal-header').offsetHeight - $E('dental-portal-footer').offsetHeight);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="dental-portal-header">
+            Argus Dental &amp; Vision Tele-Dentistry Portal
+        </div>
+        <table style='width: 100%' id="dental-portal-body">
+            <tr>
+                <td style="width: 49%; border-right: 1%; border-right-color: #cecece; background-color: ghostwhite" valign='middle'>
+
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+        <div id="dental-portal-footer">
+            &copy; Argus Dental &amp; Vision, 2017 - Present, all rights reserved
+        </div>
+    </body>
+</html>

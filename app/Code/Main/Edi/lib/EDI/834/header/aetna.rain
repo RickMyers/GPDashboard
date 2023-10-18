@@ -1,0 +1,6 @@
+ISA*00*          *00*          *ZZ*AETNA          *ZZ*AETNA          *{$short_date}*{$time}*^*00501*{$control_number}*0*P*:~
+GS*BE*AETNA*AETNA*{$date}*{$time}*{$control_number}*X*005010X220A1~
+ST*834*0001*005010X220A1~
+BGN*00*{$reference_identifier}*{$date}*{$time}*ED***2~
+N1*P5**94*562493693~
+N1*IN*ARG*FI*593149475~

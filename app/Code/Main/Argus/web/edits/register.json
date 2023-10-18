@@ -1,0 +1,84 @@
+{
+    "form":    {
+        "id":           "register-form",
+        "drawme":	false,
+        "action":	"",
+        "method":	"post",
+        "style":	"",
+        "onenterkey":	"send"
+    },
+    "fields":   [
+        {
+            "active":       true,
+            "id":           "email",
+            "longname":     "E-mail address",
+            "type":         "text",
+            "required":     true,
+            "force":        true,
+            "style":        "width: 275px"
+        },
+        {
+            "active":       true,
+            "id":           "password",
+            "longname":     "Login password",
+            "type":         "password",
+            "required":     true,
+            "verify":       "confirm",
+            "force":        true,
+            "style":        ""
+        },
+        {
+            "active":       true,
+            "id":           "confirm",
+            "longname":     "Confirm password",
+            "type":         "password",
+            "required":     true,
+            "force":        true,
+            "style":        ""
+        },
+        {
+            "active":       true,
+            "id":           "first_name",
+            "longname":     "First Name",
+            "type":         "text",
+            "required":     true,
+            "force":        true,
+            "style":        "",
+            "classname":    ""
+        },
+        {
+            "active":       true,
+            "id":           "last_name",
+            "longname":     "Last Name",
+            "required":     true,
+            "force":        true,
+            "type":         "text",
+            "style":        "",
+            "classname":    ""
+	},
+        {
+            "active":       true,
+            "id":           "name",
+            "longname":     "Your preferred name",
+            "type":         "text",
+            "required":     false,
+            "force":        false,
+            "style":        "",
+            "classname":    "",
+            "value":        ""
+	},
+	{
+            "active":       true,
+            "id":           "register-submit",
+            "longname":     "Submit Button",
+            "type":         "text",
+            "style":        "background-color: #357AE8; cursor: pointer; width: 100%" ,
+            "classname":    "",
+            "onclick":      function () {
+                if (Edits['register-form'].validate()) {
+                    $E("register-form").submit();
+                }
+            }
+        }
+    ]
+}

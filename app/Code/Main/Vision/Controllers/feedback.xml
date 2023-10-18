@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+
+Form Feedback Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="feedback" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="save" blocking="off">
+            <description>Saves some feedback data</description>
+            <entity namespace="vision" class="consultation/feedback" method="save">
+                <parameter name='form_id'               source='post' required="true" />
+                <parameter name="missing_a1c"           source="post" optional="true" />
+                <parameter name="missing_diabetes_type" source="post" optional="true" />
+                <parameter name="missing_pcp_npi"       source="post" optional="true" />
+                <parameter name="missing_event_location" source="post" optional="true" />
+                <parameter name="no_readable_images"    source="post" optional="true" />
+                <parameter name="additional_comments"   source="post" optional="true" />
+                <parameter name="image_quality"         source="post" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="load" output="JSON" blocking="off">
+            <entity namespace="vision" class="consultation/feedback" method="nonkeysload" wrapper="json_encode" response="true">
+                <parameter name='form_id' source='request' required="true" />
+            </entity>
+        </action>
+        
+    </actions>
+</controller>

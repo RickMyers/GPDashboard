@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<report name="ClientScreenings" description="A list of screenings by client">
+    <headings>
+        <heading>Vision Screenings for %%client%%.</heading>
+    </headings>  
+    <groups>
+        <group column="screening_client" sum="false" />
+    </groups>
+    <columns>
+        <column name="Member Name"        source="member_name"        format="" ifempty=""   style="" />        
+        <column name="Member ID"        source="member_id"        format="" ifempty=""   style="" />                
+        <column name="DOB"        source="dob"        format="" ifempty="N/A"   style="" /> 
+        <column name="Age"        source="age"        format="" ifempty=""   style="" />         
+        <column name="Gender"        source="gender"        format="" ifempty=""   style="" />         
+        <column name="Language"        source="language"        format="" ifempty=""   style="" /> 
+        <column name="Eligibility Start Date"        source="eligibility_start_date"        format="" ifempty=""   style="" /> 
+        <column name="Eligibility End Date"        source="eligibility_end_date"        format="" ifempty=""   style="" />         
+        
+        
+        
+    </columns>
+</report>

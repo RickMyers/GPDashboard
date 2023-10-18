@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+
+Messenger Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="messenger" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home" blocking="off">
+            <description>The main home page</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="call" blocking="off" passalong="window_id,name,with">
+            <description>The video call layout page</description>
+            <entity namespace="humble" class="user/identification" id="user" method="load">
+                <parameter name="id" value="with" source="request" required="true"/>
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="send" blocking="off" passalong="window_id">
+            <description>The JS required to send a call</description>
+        </action>
+         
+        <!-- ############################################################### -->
+        
+        <action name="receive" blocking="off" passalong="window_id">
+            <description>The JS required to receive a call</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="broadcast" blocking="off">
+            <description>Will emit to the signaling server a message</description>
+            <model namespace="dashboard" class="system" method="broadcast" response="true">
+                <parameter name="event" required="true" source="request" />
+                <parameter name="data" source="request" format="JSON" default="[]" />
+            </model>
+        </action>
+    </actions>
+</controller>

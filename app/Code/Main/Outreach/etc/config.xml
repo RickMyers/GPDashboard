@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<config>
+    <outreach>
+        <version>0.0.1</version>
+        <title>Outreach</title>
+        <description>Functionality for our Outreach App</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Outreach</name>
+            <weight>50</weight>
+            <required>N</required>
+            <workflow>Y</workflow>
+            <package>Main</package>
+            <use>Smarty3</use>
+        </module>
+        <structure>
+            <models>
+                <source>Outreach/Models</source>
+            </models>
+            <helpers>
+                <source>Outreach/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Outreach/Controllers</source>
+                <cache>Outreach/Controllers/Cache</cache>
+            </controllers>
+            <mobile>
+                <controllers>
+                    <source>Outreach/Mobile/Controllers</source>
+                    <cache>Outreach/Mobile/Controllers/Cache</cache>
+                </controllers>
+                <views>
+                    <source>Outreach/Mobile/Views</source>
+                    <cache>Outreach/Mobile/Views/Cache</cache>
+                </views>
+            </mobile>
+            <schema>
+                <install>Outreach/Schema/Install</install>
+                <update>Outreach/Schema/Update</update>
+                <layout>Outreach/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Outreach/etc</source>
+            </configuration>
+            <views>
+                <source>Outreach/Views</source>
+                <cache>Outreach/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Outreach/Images</source>
+                <cache>Outreach/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Outreach/Entities</source>
+            </entities>
+            <RPC>
+                <source>Outreach/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Outreach/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>outreach_</prefix>
+            <mongodb>outreach</mongodb>
+            <entities>
+                <campaigns polyglot="Y" />
+                <campaign_members polyglot="Y" />
+                <campaign_member_logs polyglot="Y" />
+                <participant_roles />
+                <participants />
+                <roles />
+            </entities>
+        </orm>
+        <events>
+
+        </events>
+        <web>
+            <edits>
+                <campaign>Outreach/web/edits/campaign.json</campaign>
+                <admincampaign>Outreach/web/edits/admincampaign.json</admincampaign>
+            </edits>
+            <dashboard>
+                <js>
+                    <source>Outreach/web/js/Outreach.js</source>
+                </js>
+                <css>
+                    <source>Outreach/web/css/Outreach.css</source>
+                </css>
+            </dashboard>
+        </web>
+    </outreach>
+</config>

@@ -1,0 +1,81 @@
+{% set article = article.load() %}
+{% set editor = user.userHasRole("News Editor") %}
+
+<style type="text/css">
+  .article_container {
+    padding: 40px;
+    margin: 0 auto;
+    height: 100%;
+    background-color: #CACA0033;
+  }
+
+  .article_title {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
+
+  .article_author {
+    text-align: center;
+    font-size: 1rem;
+    font-style: italic;
+  }
+
+  .article_content {
+    font-size: 1rem;
+  }
+
+  .article_editor {
+    float: right;
+  }
+
+  #edit_article, #discard_article {
+    font-size: 1rem;
+    margin: 0.5rem;
+  }
+
+</style>
+
+<div class="article_container">
+  <div class="article_title">
+    <span class="section_content">{{ article.title }}</span>
+  </div>
+
+  <div class="article_author">
+    by {{ article.first_name }} {{ article.last_name }}
+  </div>
+  <br/>
+
+  <div class="article_content">
+    {{ article.content }}
+  </div>
+  <br/>
+
+  {% if editor %}
+    <div class="article_editor">
+      <a id="edit_article" href="#">Edit Article</a>
+      <a id="discard_article" href="#">Discard Article</a>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+  $("#edit_article").on("click", function(evt) {
+    let win_id = Desktop.whoami("edit_article");
+    let win = Desktop.window.list[win_id];
+    (new EasyAjax('/hedis/news/edit')).add('id', {{ article.id }}).then(function(response) {
+      win.set(response);
+    }).post();
+  })
+
+  $("#discard_article").on("click", function(evt) {
+    if(confirm("Are you sure you want to discard this article?")) {
+      let win_id = Desktop.whoami("edit_article");
+      let win = Desktop.window.list[win_id];
+      (new EasyAjax('/hedis/news/delete')).add('id', {{ article.id }}).then(function(response) {
+        $("#office-news-data").html(response);
+        win._close();
+      }).post();
+    }
+  })
+</script>

@@ -1,0 +1,28 @@
+CREATE TABLE vision_client_ipas
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	client_id INT DEFAULT NULL,
+	ipa CHAR(128) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE INDEX (client_id, ipa)
+);
+CREATE TABLE vision_ipa_locations
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	ipa_id INT DEFAULT NULL,
+	location CHAR(128) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE INDEX (ipa_id, location)
+);
+
+CREATE TABLE vision_ipa_location_addresses
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	location_id INT DEFAULT NULL,
+	address CHAR(255) DEFAULT NULL,
+	npi CHAR(16) DEFAULT NULL,	
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+);

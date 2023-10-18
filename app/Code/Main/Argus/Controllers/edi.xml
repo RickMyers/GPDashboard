@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+
+EDI data actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="edi" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="csv834" passalong="windowId">
+            <description>Configuration of the conversion process of an 834 into CSV</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+
+
+    </actions>
+</controller>

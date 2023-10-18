@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+
+Uploading DM list action
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="upload" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="form">
+            <description>The upload member list form</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="members" blocking="off" event="outreachMemberListUploaded" comment="A member list has been uploaded" >
+            <description>Accepts a DM list to add to the database along with an optional mapping guide if the DM list isn't in the correct format></description>
+            <helper namespace="outreach" class="upload" method="members">
+                <parameter name="campaign_id" source="post" required="true" />
+                <parameter name="member_list" source="file" required="true" />
+                <parameter name="mapping_file" source="file" optional="true" />
+            </helper>
+        </action>
+        
+    </actions>
+</controller>

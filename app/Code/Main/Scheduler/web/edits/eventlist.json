@@ -1,0 +1,80 @@
+{
+    "form":
+    {
+        "id": 		"event_list_form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:         true,
+            id:             "event_year",
+            longname:       "Event Year",
+            title:          "",
+            type:           "select",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          "padding: 2px; border: 1px solid #333; border-radius: 2px; color: #333"
+        },
+        {
+            active:         true,
+            id:             "event_month",
+            longname:       "Event Month",
+            title:          "",
+            type:           "select",
+            required:       false,
+            force:          false,
+            classname:      "",
+            style:          "padding: 2px; border: 1px solid #333; border-radius: 2px; color: #333"
+        },
+        {
+            active:         true,
+            id:             "event_technician",
+            longname:       "Technician",
+            title:          "",
+            type:           "select",
+            required:       false,
+            force:          false,
+            classname:      "",
+            style:          "padding: 2px; border: 1px solid #333; border-radius: 2px; color: #333"
+        },
+        {
+            active:         true,
+            id:             "event_od",
+            longname:       "O.D. Reviewer",
+            title:          "",
+            type:           "select",
+            required:       false,
+            force:          false,
+            classname:      "",
+            style:          "padding: 2px; border: 1px solid #333; border-radius: 2px; color: #333"
+        },
+        {
+            active:         true,
+            id:             "event_list_submit",
+            longname:       "Event ID",
+            title:          "",
+            type:           "hidden",
+            required:       false,
+            force:          false,
+            classname:      "",
+            style:          "",
+            onclick:        function (evt) {
+                if (Edits['eventlist'].validate()) {
+                    (new EasyAjax('/scheduler/events/show')).packageForm('event_list_form').then(function (response) {
+                        $('#scheduler_events_list').html(response);
+                    }).post();
+                }
+            }
+        }          
+    ]
+}
+

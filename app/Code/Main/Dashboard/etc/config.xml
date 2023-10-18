@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<config>
+    <dashboard>
+        <version>0.0.1</version>
+        <title>Argus Dashboard</title>
+        <description>Dashboard related stuff</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Dashboard</name>
+            <weight>30</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Dashboard/Models</source>
+            </models>
+            <config>
+                <source>Dashboard/etc</source>
+            </config>
+            <helpers>
+                <source>Dashboard/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Dashboard/Controllers</source>
+                <cache>Dashboard/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Dashboard/Schema/Install</install>
+                <update>Dashboard/Schema/Update</update>
+                <layout>Dashboard/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Dashboard/etc</source>
+            </configuration>
+            <views>
+                <source>Dashboard/Views</source>
+                <cache>Dashboard/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Dashboard/Images</source>
+                <cache>Dashboard/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Dashboard/Entities</source>
+            </entities>
+            <RPC>
+                <source>Dashboard/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Dashboard/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>dashboard_</prefix>
+            <mongodb>Dashboard</mongodb>
+            <entities>
+                <adhoc_queries polyglot="Y" />
+                <analytical_charts />
+                <available_apps />
+                <backgrounds />
+                <charts />
+                <chart_locations />                
+                <chart_packages />
+                <chart_roles />
+                <chatrooms />
+                <chatroom_logs />
+                <chatroom_participants />
+                <controls />
+                <control_roles />
+                <desktop_available_apps />
+                <desktop_installed_apps />
+                <desktop_app_roles />
+                <features />
+               
+                <installed_apps />
+                <modules />
+                <module_features />
+                <navigation />
+                <navigation_options />
+                <navigation_roles />
+                <requests polyglot="Y" />
+                <request_attachments />
+                <request_screenshots />
+                <user_charts />
+                <white_labels />
+            </entities>
+        </orm>
+
+        <web>
+            <!-- Edits are used for separating form validation from the form -->
+            <edits>
+                <navigation>Dashboard/web/edits/navform.json</navigation>
+                <ipalogin>Dashboard/web/edits/ipalogin.json</ipalogin>
+                <login>Dashboard/web/edits/login.json</login>
+                <bugreport>Dashboard/web/edits/bugreport.json</bugreport>
+                <featurerequest>Dashboard/web/edits/featurerequest.json</featurerequest>
+                <featurefilter>Dashboard/web/edits/featurefilter.json</featurefilter>
+                <newapp>Dashboard/web/edits/newapp.json</newapp>
+                <entityselect>Dashboard/web/edits/entityselect.json</entityselect>
+            </edits>
+            <engine>
+                <js>
+                    <source>Dashboard/web/js/ckeditor/ckeditor.js</source>
+                </js>
+            </engine>
+            <activedesktop>
+                <js>
+                    <source weight='5'>Dashboard/web/js/Paradigm.config.js</source>
+                    <source weight='15'>Dashboard/web/js/Windows.js</source>
+                    <source weight='10'>Dashboard/web/js/Desktop.js</source>
+                </js>
+                <css>
+                    <source weight='10'>Dashboard/web/css/Desktop.css</source>
+                </css>
+            </activedesktop>            
+            <dashboard>
+                <js>
+                    <source weight='10'>Dashboard/web/js/Dashboard.js</source>
+                    <source weight='11'>Dashboard/web/js/Pagination.js</source>
+                    <source weight='12'>Dashboard/web/js/Heartbeat.js</source>
+                    <source weight='13'>Dashboard/web/js/handlebars-v4.7.6.js</source>
+                    <source weight='14'>Dashboard/web/js/Chart.js</source>
+                    <source weight='15'>Dashboard/web/js/cssmenu.js</source>
+                    <source weight='16'>Dashboard/web/js/EasyEffects.js</source>
+                    <source weight='17'>Dashboard/web/js/chosen/chosen.jquery.min.js</source>
+                    <source weight='18'>Dashboard/web/js/widgets.js</source>
+                </js>
+                <css>
+                    <source>Dashboard/web/css/Dashboard.css</source>
+                    <source>Dashboard/web/css/global-styles.css</source>
+                    <source>Dashboard/web/css/homepage-1.0.css</source>
+                    <source>Dashboard/web/css/cssmenu.css</source>
+                    <source>Dashboard/web/js/chosen/chosen.min.css</source>
+                </css>
+            </dashboard>
+            <print>
+                <js>
+                    <source weight='13'>Dashboard/web/js/handlebars-v4.7.6.js</source>
+                </js>
+            </print>
+        </web>
+    </dashboard>
+</config>

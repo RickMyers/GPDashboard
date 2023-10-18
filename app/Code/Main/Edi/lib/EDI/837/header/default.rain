@@ -1,0 +1,4 @@
+ISA*00*          *00*          *ZZ*{$sender_id}*ZZ*{$receiver_id}*{$interchange_date}*{$interchange_time}*^*00501*{$control_number}*1*{$prod_flag}*:~
+GS*HC*{$sending_partner_id}*{$receiving_partner_id}*{$create_date}*{$create_time}*{$group_control_number}*X*005010X224A2~
+ST*837*{$transaction_control_number}*005010X224A2~
+BHT*0019*00*{$group_control_number}*{$create_date}*{$create_time}*CH~

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+
+Miscellaneous actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="application" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="extract" passalong="windowId">
+            <description>Configuration for our extract workflow element</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="csv" passalong="windowId">
+            <description>Configuration for our extract csv workflow element</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="store" passalong="windowId">
+            <description>Configuration for our extract csv workflow element</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>        
+    </actions>
+</controller>

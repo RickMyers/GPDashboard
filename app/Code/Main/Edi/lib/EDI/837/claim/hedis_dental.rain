@@ -1,0 +1,6 @@
+CLM*{$claim_number}*{$amount}***{$location_information}*Y*C*Y*Y~
+DTP*472*D8*{$claim_date}~
+REF*D9*{$claim_number}~
+NM1*82*{$entity_code}*{$last_name}*{$first_name}****XX*{$identification_code}~
+PRV*PE*PXC*{$specialty_code}~
+REF*0B*{$license_number}~

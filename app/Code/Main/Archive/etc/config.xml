@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<config>
+    <archive>
+        <version>0.0.1</version>
+        <title>Archive Module</title>
+        <description>Manages archived tables</description>
+        <author>
+            <name>Richard Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Archive</name>
+            <weight>50</weight>
+            <required>N</required>
+            <workflow>Y</workflow>
+            <package>Main</package>
+            <use>Smarty3</use>
+        </module>
+        <structure>
+            <models>
+                <source>Archive/Models</source>
+            </models>
+            <config>
+                <source>Archive/etc</source>
+            </config>
+            <helpers>
+                <source>Archive/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Archive/Controllers</source>
+                <cache>Archive/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Archive/Schema/Install</install>
+                <update>Archive/Schema/Update</update>
+                <layout>Archive/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Archive/etc</source>
+            </configuration>
+            <views>
+                <source>Archive/Views</source>
+                <cache>Archive/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Archive/Images</source>
+                <cache>Archive/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Archive/Entities</source>
+            </entities>
+            <RPC>
+                <source>Archive/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Archive/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>archive_</prefix>
+            <mongodb>archive</mongodb>
+            <entities>
+                <argus_hedis_addresses />
+                <argus_hedis_campaign_results />
+                <argus_hedis_contact_call_schedule />
+                <argus_hedis_call_log />
+                <argus_hedis_contact_call_log />
+                <argus_hedis_members />
+                <argus_hedis_member_addresses />
+                <argus_hedis_member_phone_numbers />
+                <argus_hedis_phone_numbers />
+            </entities>
+        </orm>
+        <events>
+            
+        </events>
+        <web>
+            <edits>
+                <edit1></edit1>
+            </edits>
+            <hook>
+                <js>
+                    <source>Archive/web/js/Archive.js</source>
+                </js>
+                <css>
+                    <source>Archive/web/css/Archive.css</source>
+                </css>
+            </hook>
+        </web>
+    </archive>
+</config>

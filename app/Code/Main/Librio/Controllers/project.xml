@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+
+Project related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="project" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="new">
+            <description>The New Project Form</description>
+        </action>
+
+        <!-- ############################################################### -->
+                
+        <action name="add">
+            <description>Add a new project</description>
+            <entity namespace="librio" class="projects" method="save">
+                <parameter name='project'       source='post' required="true" />
+                <parameter name='description'   source='post' required="true" />
+                <parameter name='creator'       source='session' value='uid' required="true" />
+            </entity>
+            <redirect href="/librio/documents/home" post="true" />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="contents">
+            <description>Lists the contents of a project category</description>
+            <entity namespace="librio" class="project_categories" id='categories'>
+                <parameter name='project_id' source='post' value='id' required="true" />
+            </entity>
+        </action>
+    </actions>
+</controller>

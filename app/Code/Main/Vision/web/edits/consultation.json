@@ -1,0 +1,393 @@
+({
+    form:
+    {
+        id: 		"new-retina-consultation-form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"event_id",
+            longname:		"Event ID",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            onchange:           function (evt) {
+                var val = $(evt.target).val();
+                if (val) {
+                    Argus.vision.event.assign(val);
+                }
+            },
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"member_name",
+            longname:		"Member Name",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"client_id",
+            longname:		"Client Name",
+            title:		"",
+            type:               "select",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                (new EasyAjax('/vision/client/ipas')).add('client_id',$(evt.target).val()).then(function (response) {
+                    EasyEdits.populateSelectBox('ipa_id',JSON.parse(response));
+                }).get();
+            },
+            classname:		"",
+            style:		""
+        }, 
+        {
+            active:		true,
+            id: 		"ipa_id",
+            longname:		"IPA",
+            title:		"",
+            type:               "combo",
+            populator:          function () {
+                if ($("#client_id").val()) {
+                    (new EasyAjax('/vision/client/ipas')).add('client_id',$("#client_id").val()).then(function (response) {
+                        EasyEdits.populateSelectBox('ipa_id',JSON.parse(response),false,true);
+                    }).get();
+                }
+            },
+            required:		false,
+            force:		false,
+            onchange:           function (evt) {
+                if (+$(evt.target).val() == $(evt.target).val()) {
+                    (new EasyAjax('/vision/ipa/offices')).add('ipa_id',$(evt.target).val()).then(function (response) {
+                        EasyEdits.populateSelectBox('location_id',JSON.parse(response));
+                    }).get();
+                }
+            },            
+            classname:		"",
+            style:		""
+        }, 
+        {
+            active:		true,
+            id: 		"ipa_id_combo",
+            longname:		"IPA",
+            title:		"",
+            type:               "text",
+            readonly:           true,
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                var val = $(evt.target).val();
+                if (val) {
+                    (new EasyAjax('/vision/ipa/validate')).add('ipa_name',val).then(function (response) {
+                        console.log(response);
+                    }).post();
+                }
+            },
+            classname:		"",
+            style:		""
+        },          
+        {
+            active:		true,
+            id: 		"dv_od",
+            longname:		"OD",
+            title:		"",
+            type:               "combo",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },  
+        {
+            active:		true,
+            id: 		"dv_os",
+            longname:		"OS",
+            title:		"",
+            type:               "combo",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },     
+        {
+            active:		true,
+            id: 		"location_id_combo",
+            longname:		"Business Name",
+            title:		"The name of the location the screening/scanning took place at",
+            type:               "text",
+            required:		true,
+            force:		true,
+            readonly:           true,
+            classname:		"",
+            onchange:           function () {
+            },
+            style:		""
+        },           
+        {
+            active:		true,
+            id: 		"location_id",
+            longname:		"Business Name",
+            title:		"The name of the location the screening/scanning took place at",
+            type:               "combo",
+            required:		true,
+            force:		true,
+            classname:		"",
+            onchange:           function (evt) {
+                if (!CurrentForm.addressSearch) {
+                    CurrentForm.addressSearch = true;
+                    (new EasyAjax('/vision/client/addresses')).add('location_id',$('#location_id').val()).then(function (response) {
+                        CurrentForm.addressSearch = false;
+                        EasyEdits.populateSelectBox('address_id',JSON.parse(response));
+                    }).get();
+                }
+            },
+            style:		""
+        },         
+        {
+            active:		true,
+            id: 		"member_id",
+            longname:		"Member ID",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                if ($(evt.target).val()) {
+                    Argus.vision.member.demographics($(evt.target).val());
+                }                
+            },
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"date_of_birth",
+            longname:		"Date of Birth",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		""
+        },  
+        {
+            active:		true,
+            id: 		"event_date",
+            longname:		"Event Date",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		""
+        },   
+        {
+            active:		true,
+            id: 		"member_address",
+            longname:		"Member Address",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+            },
+            classname:		"",
+            style:		""
+        },  
+        {
+            active:		true,
+            id: 		"address_id_combo",
+            longname:		"Event Address",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            readonly:           true,
+            classname:		"",
+            style:		"",
+            onchange:           function (evt) {
+
+            }            
+        },           
+        {
+            active:		true,
+            id: 		"address_id",
+            longname:		"Event Address",
+            title:		"",
+            type:               "combo",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                if ($(evt.target).val() && ($(evt.target).val() == +$(evt.target).val()) ) {
+                    (new EasyAjax('/vision/client/npis')).add('address_id',$(evt.target).val()).then(function (response) {
+                        EasyEdits.populateSelectBox('npi_id',JSON.parse(response));
+                    }).get();
+                }
+            },
+            classname:		"",
+            style:		""          
+        },   
+        {
+            active:		true,
+            id: 		"primary_doctor",
+            longname:		"Primary Doctor",
+            title:		"",
+            type:               "combo",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },             
+        {
+            active:		true,
+            id: 		"pcp_staff_signature",
+            longname:		"Technician Signature",
+            title:		"",
+            type:               "hidden",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },   
+        
+        {
+            active:		true,
+            id: 		"gender",
+            longname:		"Clients Gender",
+            title:		"",
+            type:               "select",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"npi_id",
+            longname:		"Location NPI Number",
+            title:		"",
+            type:               "combo",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                // Argus.vision.pcp.info(evt,'Location');
+            },
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"npi_id_combo",
+            longname:		"Location NPI Number",
+            title:		"",
+            type:               "text",
+            mask:               "##########",
+            minlength:          10,
+            maxlength:          10,
+            required:		true,
+            force:		true,
+            readonly:           true,
+            onchange:           function (evt) {
+                // Argus.vision.pcp.info(evt,'Location');
+            },
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"iop_os",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            maxlength:          2,
+            mask:               "##",
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"iop_od",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            maxlength:          2,
+            mask:               "##",
+            classname:		"",
+            style:		"" 
+        },
+        {
+            active:		true,
+            id: 		"type_yrs",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            maxlength:          2,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"hba1c",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            message:            "A diagnosis can not be made without the A1C value.  You may submit the form, but it will not be reviewed until the A1C is provided",
+            required:		true,
+            force:		false,
+            mask:               "#####",
+            classname:		"",
+            style:		"text-align: right"
+        },        
+        {
+            active:		true,
+            id: 		"physician_npi",
+            longname:		"PCP NPI",
+            title:		"PCP NPI",
+            type:               "combo",
+            required:		false,
+            force:		false,
+            onchange:           function (evt) {
+                //Argus.vision.pcp.info(evt,'PCP');
+            },
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"physician_npi_combo",
+            longname:		"PCP NPI",
+            title:		"PCP NPI",
+            type:               "text",
+            required:		false,
+            force:		false,
+            onchange:           function (evt) {
+                Argus.vision.pcp.info(evt,'PCP');
+            },
+            minlength:          10,
+            maxlength:          10,
+            mask:               "##########",
+            classname:		"",
+            style:		""
+        }        
+    ]
+})

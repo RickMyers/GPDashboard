@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<component>
+    <name>Select Year</name>
+    <description>Year options</description>
+    <type>Select</type>
+    <resource id="year" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "2022",
+                "value": "2022"
+            },
+            {
+                "text": "2021",
+                "value": "2021"
+            },
+            {
+                "text": "2020",
+                "value": "2020"
+            },
+            {
+                "text": "2019",
+                "value": "2019"
+            }
+        ]
+    </content>    
+</component>

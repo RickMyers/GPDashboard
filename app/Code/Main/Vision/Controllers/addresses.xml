@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+
+Addresses
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="addresses" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="list" output="JSON">
+            <description>Creates a list of available Addresses relative to a location id</description>
+            <entity namespace="vision" class="ipa_location_addresses" id="locations">
+                <parameter name="location_id" source="request" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="new">
+            <description>Adds a new address to a client</description>
+            <entity assign="address_id" namespace="vision" class="ipa_location_addresses" method="save">
+                <parameter name="location_id"    source="post" required="true" />
+                <parameter name="address"  source="post" required="true" />
+            </entity>
+            <entity namespace="vision" class="address_npis" method="save">
+                <parameter name="address_id"    source="assign" required="true" />
+                <parameter name="npi"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>      
+        
+        <!-- ############################################################### -->
+        
+        <action name="update">
+            <description>Updates an existing address</description>
+            <entity namespace="vision" class="ipa_location_addresses" method="save">
+                <parameter name="id"    source="post" required="true" />
+                <parameter name="address"  source="post" required="true" />
+            </entity>
+            <entity namespace="vision" class="address_npis" method="save">
+                <parameter name="id" value="npi_id"   source="post" required="true" />
+                <parameter name="npi"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>                
+
+        <!-- ############################################################### -->
+        
+        <action name="remove">
+            <description>Removes an existing address and related NPIs</description>
+            <entity namespace="vision" class="ipa_location_addresses" method="delete">
+                <parameter name="id"    source="post" required="true" />
+            </entity>
+            <entity namespace="vision" class="address_npis" method="nonkeysdelete">
+                <parameter name="address_id" value="id"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>                
+        
+        <!-- ############################################################### -->
+        
+        <action name="npis">
+            <description>Lists the NPIS</description>
+            <entity namespace="vision" class="address/npis" id="npis">
+                <parameter name="address_id" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+    </actions>
+</controller>

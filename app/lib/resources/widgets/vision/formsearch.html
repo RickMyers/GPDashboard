@@ -1,0 +1,35 @@
+<style type="text/css">
+    .vision-form-search-box {
+        border-radius: 8px; height: 25px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat; vertical-align: top
+    }
+    .vision-form-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px; height: 20px; position: relative; top: 2px
+    }
+    .vision-form-search-field:focus {
+        outline: none;
+    }
+</style>
+<div style="display: inline-block; text-align: right; margin-right: 10px; letter-spacing: normal">
+    <input type="checkbox" name="search_mine_only" id="search_mine_only" value="Y" /> Only Mine
+</div>
+<div class="vision-form-search-box" style="display: inline-block; vertical-align: top">
+    <input class="vision-form-search-field" type="text" style="" name="vision-form-search-field" id="vision-form-search-field" placeholder="Search..."/>
+</div>
+<script type="text/javascript">
+    $('#vision-form-search-field').on("keydown",function (evt) {
+
+        if (evt.keyCode == 13) {
+            var win = Desktop.semaphore.checkout(true);
+            var mine_only = $("#search_mine_only").is(':checked') ? "Y" : "N";
+            (new EasyAjax('/vision/consultation/formsearch')).add('search_mine_only',mine_only).add('window_id',win.id).add('search',evt.target.value).then(function (response) {
+                (function (win,data) {
+                    return function () {
+                        win._title('Vision Form Search')._open(data);
+                    }
+                })(win,response)();
+            }).post();
+        }
+    });
+</script>
+
+

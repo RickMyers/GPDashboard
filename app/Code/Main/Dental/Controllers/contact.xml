@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Hedis Contact Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="contact" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="status">
+            <description>Configuration for a workflow component that sets the status</description>
+            <entity namespace="humble" class="users" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

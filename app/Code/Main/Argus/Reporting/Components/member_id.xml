@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<component>
+    <name>Member ID</name>
+    <description>Member ID Field</description>
+    <type>Text</type>
+    <resource id="member_id" style="text-align: center; text-transform: uppercase" /> 
+    
+</component>

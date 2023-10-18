@@ -1,0 +1,75 @@
+---
+authenticationTest:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    authenticateTestRequest :
+creditCardTransaction:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    createTransactionRequest :
+refundTransaction:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    createTransactionRequest :
+voidTransaction:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    createTransactionRequest :        
+createBillingSubscription:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    ARBCreateSubscriptionRequest :
+updateBillingSubscription:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    ARBUpdateSubscriptionRequest :    
+billingSubscription:
+  url             : https://apitest.authorize.net/xml/v1/request.api
+  api-key         : 
+  api-var         : 
+  method          : PUT
+  format          : JSON
+  arguments       :
+    ARBGetSubscriptionRequest :           
+        
+        
+        
+        
+#API Login ID: 2J33Vntt
+#Transaction Key: 3c6wLDJ83kq3Q89j
+
+#The Application Programming Interface (API) Login ID is used by the payment gateway
+#to identify you as an authorized merchant. This value is only generated once in the
+#Merchant Interface by an Account Owner. As the API Login ID is an essential key for
+#your connection to the payment gateway, you will need to contact Customer Support if
+#you ever need to have it reset. 
+
+#There are two types of keys available for your account: the Transaction Key and the
+#Signature Key. Both are used by the payment gateway to authenticate that transactions
+#submitted for your account are actually being submitted by you. The Transaction Key is
+#used, along with the API Login ID, to authenticate XML and delimited requests. The
+#Signature Key is used to authenticate payment form requests and responses        

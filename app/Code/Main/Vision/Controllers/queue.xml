@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!--
+
+Vision Queue actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="queue" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action blocking="OFF" name="init">
+            <description>Initial layout of a vision queue</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name="pcpinit">
+            <description>Initial layout of a PCP queue</description>
+        </action>
+        
+        
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name="techinit">
+            <description>Initial layout of a Tech Archive queue</description>
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name="ipainit">
+            <description>Initial layout of an IPA queue</description>
+            <entity namespace="vision" class="consultation/forms" id="pcps" />
+            <entity namespace="vision" class="ipas" id="ipas" method="nonkeysload" assign="ipa">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name="odinit">
+            <description>Initial layout of an OD queue</description>
+            <entity namespace="argus" class="user_roles" id="user">
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </entity>
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name="archive">
+            <description>Initial layout of a vision archive queue</description>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action blocking="OFF" name="poll">
+            <description>This is the recurring poll action vision queues</description>   
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="staging"  id="staging"  defaultRows='10' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="inbound"  id="inbound"  defaultRows='10' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="outbound" id="outbound" defaultRows='10' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>
+        </action>    
+        
+        <!-- ############################################################### -->
+
+        <action blocking="OFF" name="pcp" output='JSON'>
+            <description>This is the recurring poll action for pcp queue</description>   
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="page"  id="pcpqueue" orderby="event_date=DESC"  defaultRows='10' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+        </action>    
+
+
+        <!-- ############################################################### -->
+        
+        <action blocking="off" name="tech" output="JSON">
+            <description>This is the recurring poll action for the tech forms completed queue</description>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="page"  id="tech" orderby="event_date=DESC"  defaultRows='10' defaultPage='1'>
+                <parameter name='technician' source='session' value='uid' required='true' />
+            </entity>            
+        </action>
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name='refresh' output='JSON'>
+            <description>This is the priming data load for the queues and for when you trigger pagination</description>
+            <helper namespace="humble" class='data' id='helper'>
+                <parameter name='queue_id' source='request' required='true' />
+            </helper>
+            <switch id="helper" method="getQueueId">
+                <case value="inbound">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='inboundVisionPackets'>
+                    </entity>
+                </case>
+                <case value="subipa">
+                    <entity response="true" namespace="vision" class="ipa_sub" rows="rows" page="page" defaultRows='10' defaultPage='1' method='createsubtable'>
+                    </entity>
+                </case>
+                <case value="archive">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="archive"  defaultRows='10' defaultPage='1' method="archivedVisionPackets" orderby='event_date=DESC'>
+
+                    </entity>
+                </case>
+                <case value="signed">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="signed"  defaultRows='10' defaultPage='1' method="signedVisionPackets" orderby='event_date=DESC'>
+
+                    </entity>                         
+                </case>
+                <case value="mainipa">
+                    <entity response="true" namespace="vision" class="ipa_sub" rows="rows" page="page" defaultRows='10' defaultPage='1' method='createmainipatable' >
+
+                    </entity>
+                </case>
+                 <case value="npival">
+                    <entity response="true" namespace="vision" class="ipa_sub" rows="rows" page="page" defaultRows='10' defaultPage='1' method='createnpitable' >
+                       
+                    </entity>
+                </case>       
+                <case value="staging">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='stagingVisionPackets'>
+                       
+                    </entity>
+                </case>
+                <case value="outbound">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='outboundVisionPackets' orderby='event_date=DESC'>
+                    </entity>
+                </case>
+                <case value="signed">
+                    <entity orderby="event_date=DESC,created=DESC" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='signedVisionPackets'>
+                    </entity>
+                </case>
+                <case value="archived">
+                    <entity orderby="event_date=DESC,created=DESC" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='archivedVisionPackets'>
+                    </entity>
+                </case>    
+                <case value="batchsearch">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='batchpdffinder'>
+                    </entity>
+                </case> 
+                <case value="tech_completed">
+                    <entity response="true" namespace="vision" class="consultation/forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='pcpTechCompletedForms'>
+                    </entity>
+                </case>                 
+                                                    
+            </switch>
+                    
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action blocking="OFF" name="refreshbat" output="JSON">
+            <description>re-gets values of snapshot</description>
+            
+            <helper namespace="humble" class='data' id='helper'>
+                <parameter name='queue_id' source='request' required='true' />
+            </helper>
+            
+            <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" evdate="evdate" defaultRows='10' defaultPage='1' method='batchpdffinder'>
+                <parameter name="evdate" source="post" required="false" />
+                <parameter name="evloc" source="post" required="false" />                        
+            </entity>
+            
+            <!-- <entity response='true' namespace='vision' class='consultation_forms' method="batchpdffinder" /> -->
+        </action>
+        
+    </actions>
+</controller>

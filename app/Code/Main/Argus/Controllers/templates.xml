@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Template maintenance related actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="templates" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="load" output='JSON'>
+            <description>Fetches all of the current set of templates</description>
+            <entity namespace="argus" class="activity_templates" id='templates'>
+            </entity>
+            <helper namespace="argus" class="JSON" id="json" />
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

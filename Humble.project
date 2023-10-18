@@ -1,0 +1,12 @@
+{
+	"project_name":"Hedis Dashboard",
+	"project_url":"https:\/\/dev.argusdentalvision.com",
+	"factory_name":"Argus",
+	"framework_url":"https:\/\/humbleprogramming.com",
+	"module":"Argus",
+	"namespace":"argus",
+	"package":"Main",
+	"landing_page":"\/dashboard\/home\/page",
+	"author":"rmyers@aflac.com",
+        "serial_number": "WMRJ-EWEA-DKLL-KTWI"
+}

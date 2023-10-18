@@ -1,0 +1,79 @@
+({
+	form:
+	{
+		id: 		"export_entity_form",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:   
+	[
+		{
+			active:			true,
+			id: 			"export_namespace",
+			longname:		"Entity Namespace",
+			title:			"Entity Namespace",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+                        onchange:               function (evt) {
+                            if ($(evt.target).val()) {
+                                (new EasyAjax('/argus/table/entities')).add('namespace',$(evt.target).val()).then(function (response) {
+                                    EasyEdits.populateSelectBox('export_entity',JSON.parse(response));
+                                }).get();
+                            }
+                        },
+			style:			"color: #333; border: 1px solid #aaf; width: 200px; padding: 2px"
+		},
+		{
+			active:			true,
+			id: 			"export_entity",
+			longname:		"Export Entity",
+			title:			"Entity To Export",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333; border: 1px solid #aaf; width: 200px; padding: 2px"
+		},       
+		{
+			active:			true,
+			id: 			"export_condition",
+			longname:		"Export Condition",
+			title:			"Rows must meet this condition to be included",
+                        type:                   "text",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"color: #333; border: 1px solid #aaf; width: 200px; padding: 2px"
+		},                   
+		{
+			active:			true,
+			id: 			"export_submit",
+			longname:		"Export Start Button",
+			title:			"Click to begin the export",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333; width: 200px",
+                        onclick:                function (evt) {
+                            if (Edits['export-entity'].validate()) {
+                                Heartbeat.stop();
+                                (new EasyAjax('/argus/table/export')).packageForm('export_entity_form').then(function (response) {
+                                    $('#export_file').html(response);
+                                }).post();
+                            }
+                        }
+		}                
+	]
+})
+
+
+

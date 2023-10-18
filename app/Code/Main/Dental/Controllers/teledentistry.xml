@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+
+Teledentistry related actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="teledentistry" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="waitingroom" passalong="window_id">
+            <description>A virtual waiting room</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="facetime" passalong="window_id,form_id">
+            <description>The layout for the facetime camera window</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="player" passalong="window_id">
+            <description>The other peer with facetime window</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="wait" passalong='form_id'>
+            <description>A "Please Wait" placeholder</description>
+        </action>
+        <!-- ############################################################### -->
+        
+        <action name="wand" passalong="window_id,form_id">
+            <description>The layout for the wand camera window</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="snapshot" passalong="window_id,form_id">
+            <description>The layout for the window that contains images</description>
+        </action>
+                                    
+        <!-- ############################################################### -->
+        
+        <action name="test" passalong="window_id">
+            <description>Just a test page for doing the RTCPeerConnection</description>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="room" passalong="window_id">
+            <description>Opens the Hygienists waiting room. If no room exists yet, then we create it</description>
+            <entity namespace="dental" class="waiting_rooms" id='rooms' method='nonkeysload'>
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </entity>
+            <if id='rooms' method='getId' eq='true'>
+                <then>
+                    <entity namespace="dental" class="waiting_rooms" id='rooms' method='save'>
+                        <parameter name="user_id" source="session" value="uid" required="true" />
+                        <parameter name="status" source="post" default='A' />
+                    </entity>
+                </then>
+                <else>
+                    <entity namespace="dental" class="waiting_rooms" method='save'>
+                        <parameter name="hygienist" source="session" value="uid" required="true" />
+                        <parameter name="status"    source="post" default='A' />
+                    </entity>
+                </else>
+            </if>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="rooms">
+            <description>Generates a list of active rooms</description>
+            <entity namespace='dental' class='waiting_rooms' id='rooms'>
+                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="closeroom">
+            <description>Sets a room back to inactive</description>
+            <entity namespace='dental' class='waiting_rooms' id='rooms' method="save">
+                <parameter name="hygienist" value='uid' source="session" required="true" />
+                <parameter name="status" source="post"  default="I" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="upload">
+            <description>Handles the upload of xrays into a consoltation form</description>
+            <model response="true" namespace="dental" class="teledentistry" method="uploadXray">
+                <parameter name="xray" source="file" required="true" />
+                <parameter name="member_id" source="post" required="true"  />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="xrays">
+            <description>Generates a list of the xrays associated to a form</description>
+            <entity namespace="dental" class="consultation_xrays" id="xrays">
+                <parameter name="form_id" source="post" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="claim">
+            <description>Checks to see if there are any x-rays for a particular member that have no form id, and if so, tags those x-rays to the current form id</description>
+            <entity namespace="dental" class="consultation_xrays" method="claim">
+                <parameter name="form_id" source="post" required="true" />
+                <parameter name="member_id" source="post" required="true"  />
+            </entity>
+            <chain>
+                <action name="xrays" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="archive">
+            <description>The layout of the teledentistry archive queue</description>
+        </action>
+    </actions>
+</controller>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+
+Configuration and managing organizations actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="organizations" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home">
+            <description>The main display</description>
+            <entity namespace="argus" class="organizations" id='organizations'>
+            </entity>
+            <entity namespace="argus" class="organization_types" id='organization_types'>
+            </entity>      
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="new">
+            <description>Adds a new organization</description>
+            <entity namespace="argus" class="organizations" method="save">
+                <parameter name="organization" source="post" required="true" />
+                <parameter name="description" source="post" required="true" />
+                <parameter name="org_type_id" value="type"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="home" />
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="entities">
+            <description>Lists the entities within an organization</description>
+            <entity namespace="argus" class="organizations" id="organization" method="load">
+                <parameter name="id" value="organization_id" source="post" required="true" />
+            </entity>              
+            <entity namespace="argus" class="organization_entities" id="entities">
+                <parameter name="organization_id" source="post" required="true" />
+            </entity>    
+            <entity namespace="argus" class="organization_entity_types" id='entity_types'>
+            </entity>                          
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="entity">
+            <description>Adds a new entity</description>
+            <entity namespace="argus" class="organization_entities" method="save">
+                <parameter name="created_by" source="session" value="uid" required="true" />
+                <parameter name="organization_id" source="post" required="true" />
+                <parameter name="entity" source="post" required="true" />
+                <parameter name="description" source="post" required="true" />
+                <parameter name="entity_type_id" value="type"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="entities" />
+            </chain>
+        </action>                
+    </actions>
+</controller>

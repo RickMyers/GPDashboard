@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+
+Dashboard actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="page">
+            <description>The starting dashboard page</description>
+            <model namespace='argus' class='manager' id='manager'>
+                <comment>This is going to be consulted to get the name of the Nodejs socket server (signaling) to use for this server</comment>
+            </model>
+            <entity namespace="humble" class="users" id='user' method='load'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="humble" class="user/identification" id='member' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="dashboard" class="white/labels" id="whitelabel">
+            </entity>
+            <entity namespace="argus" class="user/appellations" id='appellations' >
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="argus" class="user" id='info'  >
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>            
+            <entity namespace="argus" class="appellations" id="appellation" />
+            <entity namespace="humble" class="user/permissions" id='permissions' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="argus" class="user/settings" id='settings' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace='dashboard' class='controls' id='controls'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace='argus' class='user/roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="progress" output="JSON">
+            <description>Checks the status of an upload or other action</description>
+            <model namespace="dashboard" class="controls" method="progress" response="true">
+                <parameter name='app' source='request' required='true' />
+            </model>
+        </action>
+    </actions>
+</controller>

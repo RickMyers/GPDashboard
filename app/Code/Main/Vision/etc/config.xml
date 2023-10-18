@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<config>
+    <vision>
+        <version>0.0.1</version>
+        <title>Vision Apps</title>
+        <description>Module for vision related apps</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Vision</name>
+            <weight>50</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Vision/Models</source>
+            </models>
+            <config>
+                <source>Vision/etc</source>
+            </config>
+            <helpers>
+                <source>Vision/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Vision/Controllers</source>
+                <cache>Vision/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Vision/Schema/Install</install>
+                <update>Vision/Schema/Update</update>
+                <layout>Vision/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Vision/etc</source>
+            </configuration>
+            <views>
+                <source>Vision/Views</source>
+                <cache>Vision/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Vision/Images</source>
+                <cache>Vision/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Vision/Entities</source>
+            </entities>
+            <RPC>
+                <source>Vision/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Vision/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>vision_</prefix>
+            <mongodb>Vision</mongodb>
+            <entities>
+                <addresses />
+                <address_npis polyglot='Y' />                
+                <address_types />
+                <clients />
+                <client_ipas />
+                <consultation_feedback polyglot='Y' />
+                <consultation_forms polyglot='Y' />
+                <consultation_form_comments />
+                <consultation_forms_log polyglot='Y' />
+                <event_attachments />
+                <event_locations />
+                <event_npi polyglot='Y'/>
+                <event_members polyglot='Y' />
+                <invoices polyglot='Y' />
+                <invoice_forms polyglot='Y' />
+                <ipas polyglot='Y' />
+                <ipa_groups />
+                <ipa_group_members />
+                <ipa_locations polyglot='Y' />
+                <ipa_location_addresses polyglot='Y' />
+                <ipa_physicians polyglot='Y' />
+                <form_feedback />
+                <retina_scans />
+                <locations />
+                <location_types />
+                <members polyglot="Y" />
+                <member_addresses />
+                <member_phone_numbers />
+                <missing_members polyglot="Y" />
+                <pcp_reports />
+                <phone_numbers />
+            </entities>
+        </orm>
+        <web>
+            <edits>
+                <memberupload>Vision/web/edits/memberuploadform.json</memberupload>
+                <consultation>Vision/web/edits/consultation.json</consultation> 
+                <browse>Vision/web/edits/consultationbrowse.json</browse>
+                <screening>Vision/web/edits/screening.json</screening>
+                <addmember>Vision/web/edits/addmember.json</addmember>
+                <newipa>Vision/web/edits/newipa.json</newipa>
+                <editipa>Vision/web/edits/editipa.json</editipa>
+                <newlocation>Vision/web/edits/newlocation.json</newlocation>
+                <newaddress>Vision/web/edits/newaddress.json</newaddress>
+                <newclient>Vision/web/edits/newclient.json</newclient>
+                <editaddress>Vision/web/edits/editaddress.json</editaddress>
+                <editlocation>Vision/web/edits/editlocation.json</editlocation>
+                <locationnpi>Vision/web/edits/locationnpi.json</locationnpi>
+                <ipagrouping>Vision/web/edits/ipagrouping.json</ipagrouping>
+            </edits>
+            <print>
+                <js>
+                    <source weight="10">Vision/web/js/print.js</source>
+                    <source weight="24">Vision/web/js/Transitions.js</source>  
+                    <source weight="40">Vision/web/js/Rules.js</source>  
+                    <source weight="25">Vision/web/js/StateMachine.js</source>  
+                    <source weight="30">Vision/web/js/Vision.js</source>
+                </js>
+            </print>
+            <dashboard> 
+                <js>
+                    <source weight="24">Vision/web/js/Transitions.js</source>  
+                    <source weight="25">Vision/web/js/StateMachine.js</source>  
+                    <source weight="30">Vision/web/js/Vision.js</source>
+                    <source weight="50">Vision/web/js/Rules.js</source>
+                </js>
+                <css>
+                    <source>Vision/web/css/Vision.css</source>
+                </css>
+            </dashboard>
+            <widgets>
+                <js>
+                    <source weight='90'>Vision/web/js/datetimepicker.js</source>
+                </js>
+                <css>
+                    <source weight='90'>Vision/web/css/datetimepicker.css</source>
+                </css>
+            </widgets>
+        </web>
+    </vision>
+</config>

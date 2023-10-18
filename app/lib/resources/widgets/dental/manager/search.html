@@ -1,0 +1,37 @@
+<style type="text/css">
+    .dental-manager-search-box {
+        border-radius: 8px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat        
+    }
+    .dental-manager-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px;
+    }
+    .dental-manager-search-field:focus {
+        outline: none;
+    }
+</style>
+<div class="dental-manager-search-box" style="display: inline-block">
+   <input class="dental-manager-search-field" type="text" style="" name="dental-manager-search-field" id="dental-manager-search-field" placeholder="Search..."/>
+</div>
+<div style="display: inline-block; margin-left: 30px; margin-right: 10px">
+    Campaign:&nbsp;<select name="dental_campaign" id="dental_campaign_id" style="background-color: lightcyan; padding: 2px 5px; border-radius: 5px; width: 180px; border: 1px solid #aaf; color: #333"></select>
+</div> 
+<script type="text/javascript">
+    (new EasyAjax('/dental/campaigns/active')).add('category','dental').then(function (response) {
+        EasyEdits.populateSelectBox("dental_campaign_id",JSON.parse(response));
+        $('#dental_campaign_id').trigger('change');
+    }).get();
+    $('#dental-manager-search-field').on("keydown",function (evt) {
+        if (evt.keyCode == 13) {
+            Argus.dental.search(evt.target.value);
+        }
+    });
+    $('#dental_campaign_id').on('change',function (evt) {
+        Argus.singleton.set('campaign_id',this.value);
+        Heartbeat.skip();
+        if (this.value) {
+            (new EasyAjax('/dental/manager/queues')).add('campaign_id',this.value).add('ua',Argus.singleton.get('ua')).add('qd',Argus.singleton.get('qd')).add('oh',Argus.singleton.get('oh')).add('rt',Argus.singleton.get('rt')).add('cm',Argus.singleton.get('cm')).add('ra',Argus.singleton.get('ra')).then(function (response) {
+                Argus.dental.hedis.manager.app(response);
+            }).post();
+        }
+    }); 
+</script>

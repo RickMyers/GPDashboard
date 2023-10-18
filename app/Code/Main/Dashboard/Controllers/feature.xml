@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+
+Tracks bugs and feature requests
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="feature" use="Smarty3" author="Richard Myers" email="rickmyers1969@gmail.com">
+    <actions>
+        <action name="requestform">
+            <description>The basic form for requesting a new feature</description>
+            <entity namespace="dashboard" class="modules" id='modules'>
+            </entity>
+            <entity namespace="dashboard" class="features" id='features'>
+            </entity>            
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="bugreport" blocking="off">
+            <description>Actually records the bug, creating any new modules or features, and saving a screenshot if it was passed</description>
+            <entity namespace="dashboard" class="modules" assign="module_id" method="save">
+                <parameter name="module" value="dashboard_bug_module_combo" source="post" required="true" />
+            </entity>
+            <entity namespace="dashboard" class="features" assign="feature_id" method="save">
+                <parameter name="feature" value="dashboard_bug_feature_combo" source="post" required="true" />
+            </entity>
+            <entity namespace="dashboard" class="module/features" method="save">
+                <parameter name="module_id"     source="assign" default='' />
+                <parameter name="feature_id"    source="assign" default='' />
+            </entity>
+            <entity assign="request_id" namespace="dashboard" class="requests" method="save">
+                <parameter name="request_type"  source="post"       required="true" />
+                <parameter name="submitter"     source="session"    value="uid" required="true" />
+                <parameter name="priority"      source="post"       default='' />
+                <parameter name="subject"       source="post"       default='' />
+                <parameter name="module_id"     source="assign"     default='' />
+                <parameter name="feature_id"    source="assign"     default='' />     
+                <parameter name="description"   source="post"       default='' />           
+                <parameter name="status"        source="post"       default='N' />
+                <parameter name="submitted"     source="post"       format="timestamp" default='now' />           
+            </entity>
+            <entity namespace="dashboard" class="request/screenshots" method="save">
+                <parameter name="request_id" source="assign"    default='' />
+                <parameter name="screenshot" source="post"      default='' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="request" blocking="off">
+            <description>Saves the feature request information</description>
+            <entity namespace="dashboard" class="modules" assign="module_id" method="save">
+                <parameter name="module" value="dashboard_feature_module_combo" source="post" required="true" />
+            </entity>
+            <entity namespace="dashboard" class="features" assign="feature_id" method="save">
+                <parameter name="feature" value="dashboard_feature_combo" source="post" required="true" />
+            </entity>
+            <entity namespace="dashboard" class="module/features" method="save">
+                <parameter name="module_id"     source="assign" default='' />
+                <parameter name="feature_id"    source="assign" default='' />
+            </entity>
+            <entity assign="request_id" namespace="dashboard" class="requests" method="save">
+                <parameter name="request_type"  source="post"       required="true" />
+                <parameter name="submitter"     source="session"    value="uid" required="true" />
+                <parameter name="priority"      source="post"       default='' />
+                <parameter name="subject"       source="post"       default='' />
+                <parameter name="module_id"     source="assign"     default='' />
+                <parameter name="feature_id"    source="assign"     default='' />     
+                <parameter name="description"   source="post"       default='' />           
+                <parameter name="status"        source="post"       default='N' />
+                <parameter name="submitted"     source="post"       format="timestamp" default='now' />           
+            </entity>
+            <entity namespace="dashboard" class="request/attachments" method="save">
+                <parameter name="request_id"    source="assign" default='' />
+                <parameter name="attachment"    source="file" value="feature_brd" default='' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="list" blocking="off" output="JSON">
+            <description>Lists the bugs and feature requests</description>
+            <entity namespace="dashboard" class="requests" page="page" rows="rows" method="list" response="true">
+                <parameter name="module" source="post" optional="true" />
+                <parameter name="feature" source="post" optional="true" />
+                <parameter name="status" source="post" optional="true" />
+                <parameter name="submitter" source="post" optional="true" />
+                <parameter name="priority" source="post" optional="true" />                
+            </entity>
+        </action>
+    </actions>
+</controller>

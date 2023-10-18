@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<report name="ClientScreenings" description="A list of screenings by client">
+    <headings>
+        <heading>Vision Screenings for %%client%%.</heading>
+    </headings>  
+    <groups>
+        <group column="screening_client" sum="false" />
+    </groups>
+    <columns>
+        <column name="Health Plan"        source="Health Plan"        format="" ifempty=""   style="" />
+        <column name="Event ID"        source="event_id"        format="" ifempty=""   style="" />                
+        <column name="Event Date"        source="Event Date"        format="" ifempty=""   style="" />                
+        <column name="PCP"        source="PCP"        format="" ifempty="N/A"   style="" /> 
+        <column name="PCP Address"        source="PCP Address"        format="" ifempty=""   style="" />         
+        <column name="Member Group"        source="Member Group"        format="" ifempty=""   style="" />         
+        <column name="Member Name"        source="Member Name"        format="" ifempty=""   style="" /> 
+        <column name="Member ID"        source="Member ID"        format="" ifempty=""   style="" /> 
+        <column name="Member DOB"        source="Member DOB"        format="" ifempty=""   style="" />         
+        <column name="Diabetic DX"        source="Diabetic DX"        format="" ifempty=""   style="" /> 
+        
+        <column name="Positive Exam Findings"        source="Positive Exam Findings"        format="" ifempty=""   style="" /> 
+        <column name="Image Quality"        source="Image Quality"        format="" ifempty=""   style="" /> 
+        
+        <column name="Diabetic Codes"        source="Diabetic Codes"        format="" ifempty=""   style="" /> 
+        <column name="Procedure Codes"        source="Procedure Codes"        format="" ifempty=""   style="" /> 
+        <!--
+        <column name="Member ID"        source="member_id"        format="" ifempty="N/A"   style="" />        
+        <column name="Member Name"      source="member_name"      format="" ifempty=""      style="" />
+        <column name="Birth Date"       source="date_of_birth"    format="" ifempty="N/A"   style="" />
+        <column name="Screening Date"   source="event_date"       format="" ifempty="N/A"   style="" />
+        <column name="Client"           source="screening_client" format="" ifempty="N/A"   style="" />
+        -->
+    </columns>
+</report>

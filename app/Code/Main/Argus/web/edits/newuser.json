@@ -1,0 +1,81 @@
+({
+	form:
+	{
+		id: 		"argus-new-user-form-&&win_id&&",
+		drawme:		false,
+		action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"email-&&win_id&&",
+			longname:		"E-mail Address",
+			title:			"User E-mail Address",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"width: 300px; padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"gender-&&win_id&&",
+			longname:		"Gender",
+			title:			"User Gender (leave blank if not sure)",
+                         type:                  "select",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},                   
+		{
+			active:			true,
+			id: 			"first_name-&&win_id&&",
+			longname:		"First Name",
+			title:			"User First Name",
+                         type:                  "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"last_name-&&win_id&&",
+			longname:		"Last Name",
+			title:			"User Last Name",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"new-user-submit-&&win_id&&",
+			longname:		"Add User",
+			title:			"Click To Create This User",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+                        onclick:        function (evt) {
+                            if (Edits['argus-new-user-&&win_id&&'].validate()) {
+                                (new EasyAjax('/argus/admin/adduser')).packageForm('argus-new-user-form-&&win_id&&').then(function (response) {
+                                    alert(response);
+                                    Desktop.window.list['&&win_id&&']._close();
+                                }).post();
+                            }
+                        },
+			classname:		"",
+			style:			""
+		}
+
+	]
+})

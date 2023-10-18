@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!--
+
+Reporting related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/Pages/Controllers.html
+-->
+<controller name="reports" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="configuration">
+            <description>Initial configuration screen</description>
+            <entity namespace="argus" class="report_projects" id='projects'>
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="project">
+            <description>Will create a new project to associate reports to</description>
+            <entity namespace="argus" class="report_projects" method="save">
+                <parameter name="project" value="project_name" source="post" required="true" />
+                <parameter name="description" value="project_description" source="post" required="true" />
+                <parameter name="created_by" value='uid' source="session" required="true" />
+            </entity>
+            <model namespace="argus" class="reports" id="reports" method="newProject">
+                <parameter name="project_name" source="post" required="true" />
+                <parameter name="project_description" source="post" required="true" />
+            </model>
+            <chain>
+                <action name="configuration" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="new">
+            <description>Creates a new report</description>
+            <enity namespace="argus" class="reports" method="save">
+                <parameter name="report" value="report_name" source="post" required="true" />
+                <parameter name="project_id" source="post" required="true" />                
+                <parameter name="description" value="report_description"  source="post" required="true" />
+                <parameter name="created_by" value='uid' source="session" required="true" />
+            </enity>
+            <model namespace="argus" class="reports" id='report' method="newReport">
+                <parameter name="report_name" source="post" required="true" />
+                <parameter name="project_id" source="post" required="true" />                
+                <parameter name="report_description"  source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="projects">
+            <description>Lists projects and the roles that get to access them</description>
+            <entity namespace="argus" class="roles" id="roles">
+
+            </entity>
+            <entity namespace="argus" class="report_projects" id="projects">
+
+            </entity>
+            <entity namespace="argus" class='report_projects_access' id='project_access'  />            
+        </action>
+        
+        <!-- ############################################################### -->                
+        
+        <action name="access">
+            <description>Lists the users in a role who are allowed to run reports</description>
+            <entity namespace="argus" class="roles" id="roles">
+                <parameter name="role_id" source="post" required="true" />
+            </entity>
+            <entity namespace="argus" class="user_roles" id="user_roles">
+                <parameter name="role_id" source="post" required="true" />
+            </entity>                        
+        </action>
+        
+        <!-- ############################################################### -->                
+        
+        <action name="set">
+            <description>Grants to a role the ability to run reports in a project</description>
+            <entity namespace="argus" class='report_projects_access' method='save' >
+                <parameter name='project_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->                
+        
+        <action name="remove">
+            <description>Removes from a role the ability to run reports in a project</description>
+            <entity namespace="argus" class='report_projects_access' method='nonkeysdelete' >
+                <parameter name='project_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </entity>
+            
+        </action>
+        
+        <!-- ############################################################### -->                
+        
+        <action name="users" passalong='role_id,project_id'>
+            <description>Lists the users in a role who are allowed to run reports</description>
+            <entity namespace='argus' class='user_roles' id='user_roles'>
+                <parameter name='role_id' source='post' required='true' />
+            </entity>
+            <entity namespace="argus" class='report_projects_access' id='access' method="nonkeysload">
+                <parameter name='project_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </entity>              
+            <entity namespace="argus" class='report_projects_access_denied' id='denied'>
+                <parameter name='project_id' source='post' required='true' />
+                <parameter name='role_id' source='post' required='true' />
+            </entity>            
+            <entity namespace="argus" class='report_projects' id='project' method="load">
+                <parameter name="id" value='project_id' source='post' required='true' />
+            </entity>            
+            
+        </action>
+        
+        <!-- ############################################################### -->               
+        
+        <action name="projectaccess">
+            <description>Will add or remove the ability of a person</description>
+            <helper namespace='argus' class='data' id='helper'>
+                <parameter name="action" source="post" required="true" />
+            </helper>
+            <switch id="helper" method="getAction">
+                <case value="set">
+                    <entity namespace="argus" class="report_projects_access_denied" method="save">
+                        <parameter name='project_id' source='post' required='true' />
+                        <parameter name='role_id' source='post' required='true' />
+                        <parameter name="user_id" source="post" required="true" />
+                        <parameter name="denied_by" source="session" required="true" value="uid" />
+                    </entity>
+                </case>
+                <case value="remove">
+                    <entity namespace="argus" class="report_projects_access_denied" method="nonkeysdelete">
+                        <parameter name='project_id' source='post' required='true' />
+                        <parameter name='role_id' source='post' required='true' />
+                        <parameter name="user_id" source="post" required="true" />
+                    </entity>                    
+                </case>
+                <default />
+            </switch>
+        </action>
+        
+        <!-- ############################################################### -->     
+        
+        <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>The reports main screen</description>
+            <!--entity namespace="argus" class="report_projects" id="projects">
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </entity-->
+            <entity namespace="humble" class="modules" orderby="namespace=ASC" id="modules" />
+        </action>
+        
+        <!-- ############################################################### -->     
+        
+        <action name="available" blocking="off">
+            <description>Parses the XML in a particular modules Reporting directory to list the available reports to that module</description>
+            <model namespace="argus" class="reports" method="available" id="reports">
+                <parameter name="namespace" source="request" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->     
+        
+        <action name="display" blocking="off">
+            <description>Runs the selected report</description>
+            <model namespace="argus" class="reports" id="report">
+                <parameter name="*" source="request"  />
+            </model>
+        </action>
+
+       <!-- ############################################################### -->     
+        
+        <action name="export" output="CSV" blocking="off">
+            <description>Runs the selected report</description>
+            <model namespace="argus" class="reports" method="export" response="true">
+                <parameter name="date" optional="true" format="date" />
+                <parameter name="start_date" optional="true" format="date" />
+                <parameter name="end_date" optional="true" format="date" />
+                <parameter name="*" source="request"  />
+                
+            </model>
+        </action>
+                                
+        <!-- ############################################################### -->     
+        
+        <action name="setup" blocking="off" passalong="window_id,namespace,report">
+            <description>Creates the selection section of the report</description>
+            <model namespace="argus" class="reports" id="reports">
+                <parameter name="namespace" source="request" required="true" />
+                <parameter name="report" source="request" required="true" />
+            </model>
+        </action>
+        
+    </actions>
+</controller>

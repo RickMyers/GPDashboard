@@ -1,0 +1,43 @@
+({
+    form:
+    {
+        id: 		"new-retina-consultation-form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"dv_od",
+            longname:		"OD",
+            title:		"",
+            type:               "combo",
+            required:		false,
+            force:		false,
+            classname:		"",
+            disabled:           true,
+            style:		""
+        },  
+        {
+            active:		true,
+            id: 		"dv_os",
+            longname:		"OS",
+            title:		"",
+            type:               "combo",
+            required:		false,
+            force:		false,
+            classname:		"",
+            disabled:           true,
+            style:		""
+        }
+       
+
+    ]
+})
+

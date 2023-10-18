@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+
+Geocoding Related Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="geocode" use="Smarty3" author="Rick Myers" email="rick@humbleprogramming.com">
+    <actions>
+        
+        <action name="location" output="JSON" >
+            <description>Gets the longitude and latitude of an address</description>
+            <model namespace="google" class="api" id="google">
+                <parameter name="address" source="request" required="true" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

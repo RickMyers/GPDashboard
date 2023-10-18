@@ -1,0 +1,168 @@
+{
+    "form":
+    {
+        "id":       "new-event-details-form",
+        "drawme":   false,
+        "action":   "",
+        "onload":   function () {
+            //when form is loaded, do something
+        },
+        "method":		"post",
+        "style":		"",
+        "onenterkey":	"send"
+    },
+    "fields":
+    [
+        {
+            "active":	true,
+            "id": 	"client_id",
+            "longname":	"Client",
+            "title":	"Name of the Health Plan we are doing the event for",
+            "type":     "select",
+            "onchange":  function (evt){
+                (new EasyAjax('/vision/client/ipas')).add('client_id',$(evt.target).val()).then(function (response) {
+                    EasyEdits.populateSelectBox('ipa_id',JSON.parse(response));
+                }).get();
+            },
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },          
+        {
+            active:		true,
+            id: 		"ipa_id",
+            longname:		"IPA",
+            title:		"",
+            type:               "combo",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                if (+$(evt.target).val() == $(evt.target).val()) {
+                    (new EasyAjax('/vision/ipa/offices')).add('ipa_id',$(evt.target).val()).then(function (response) {
+                        EasyEdits.populateSelectBox('location_id',JSON.parse(response));
+                    }).get();
+                }
+            },            
+            classname:		"",
+            style:		""
+        },         
+        {
+            "active":	true,
+            "id": 	"contact_name",
+            "longname":	"Name of Office contact",
+            "title":	"The name of a person to contact at the facility",
+            "type":     "text",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },   
+        {
+            "active":	true,
+            "id": 	"location_id",
+            "longname":	"Business Name",
+            "title":	"The name of the facility where the event will take place",
+            "type":     "combo",
+            "required":	true,
+            "force":	true,
+            "onchange": function (evt) {
+                (new EasyAjax('/vision/client/addresses')).add('location_id',$('#location_id').val()).then(function (response) {
+                    EasyEdits.populateSelectBox('address_id',JSON.parse(response));
+                }).get();
+            },
+            "classname":"",
+            "style":	""
+        },          
+        {
+            "active":	true,
+            "id": 	"address_id",
+            "longname":	"Office Location",
+            "title":	"The address where the event will take place",
+            "type":     "combo",
+            "onchange":   function (evt) {
+                if ($(evt.target).val() && ($(evt.target).val() == +$(evt.target).val()) ) {
+                    (new EasyAjax('/vision/client/npis')).add('address_id',$(evt.target).val()).then(function (response) {
+                        EasyEdits.populateSelectBox('npi_id',JSON.parse(response));
+                    }).get();
+                }                
+            },
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },          
+        {
+            "active":	true,
+            "id": 	"contact_phone",
+            "longname":	"Contact Phone Number",
+            "title":	"The phone number of the primary contact at the location",
+            "type":     "text",
+            "mask":     "(###)-###-####",
+            "required":	false,
+            "force":	false,
+            "classname":"",
+            "style":	""
+        },   
+        {
+            "active":	true,
+            "id": 	"npi_id",
+            "longname":	"Location NPI",
+            "title":	"The NPI number at the location",
+            "type":     "combo",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },          
+        {
+            "active":	true,
+            "id": 	"npi_id_combo",
+            "longname":	"Location NPI",
+            "title":	"The NPI number at the location",
+            "type":     "text",
+            "minlength": 10,
+            "maxlength": 10,
+            "mask": "##########",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },          
+        
+        {
+            "active":	true,
+            "id": 	"scheduler_event_id",
+            "longname":	"Event ID",
+            "title":	"",
+            "type":     "hidden",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },
+        {
+            "active":	true,
+            "id": 	"event_type",
+            "longname":	"Type of Event",
+            "title":	"Based on how much travelling is involved",
+            "type":     "select",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },        
+        {
+            "active":	true,
+            "id": 	"event_member_list",
+            "longname":	"Upload File List",
+            "title":	"",
+            "type":     "file",
+            "required":	false,
+            "force":	false,
+            "classname":"",
+            "style":	""
+        }   
+        
+    ]
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+    Default Dashboard Layout for PCP Staff
+-->
+<profile>
+    <default>
+        <graphs>
+            <graph id="23" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-1" />
+            <graph id="24" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-2" />
+            <graph id="25" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-3" />
+            <graph id="26" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-4"/>
+        </graphs>
+        <apps>
+            <app id="2" />
+        </apps>
+    </default>
+</profile>
+

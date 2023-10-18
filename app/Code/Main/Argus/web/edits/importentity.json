@@ -1,0 +1,81 @@
+({
+	form:
+	{
+		id: 		"import_entity_form",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:   
+	[
+		{
+			active:			true,
+			id: 			"import_namespace",
+			longname:		"Entity Namespace",
+			title:			"Entity Namespace",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+                        onchange:               function (evt) {
+                            if ($(evt.target).val()) {
+                                (new EasyAjax('/argus/table/entities')).add('namespace',$(evt.target).val()).then(function (response) {
+                                    EasyEdits.populateSelectBox('export_entity',JSON.parse(response));
+                                }).get();
+                            }
+                        },
+			style:			"color: #333; border: 1px solid #aaf; width: 200px"
+		},
+		{
+			active:			true,
+			id: 			"import_entity",
+			longname:		"Export Entity",
+			title:			"Entity To Export",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333; border: 1px solid #aaf; width: 200px"
+		},                
+		{
+			active:			true,
+			id: 			"import_file",
+			longname:		"Import File",
+			title:			"File To Import (JSON/Zip)",
+                        type:                   "file",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333; border: 1px solid #aaf; width: 200px"
+		},                                
+		{
+			active:			true,
+			id: 			"import_submit",
+			longname:		"Export Start Button",
+			title:			"Click to begin the import",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['import-entity'].validate()) {
+                                Heartbeat.stop();
+                                (new EasyAjax('/argus/import/service')).packageForm('import_entity_form').then(function (response) {
+                                    let file = JSON.parse(response);
+                                    alert(file);
+                                }).post();
+                            }
+                        }
+		}                
+                
+	]
+})
+
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+
+Environment Export Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="export" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+
+        <action name="service" blocking="off">
+            <description>The main service</description>
+            <model namespace="argus" class="export" method='generate' id='export'>
+                <parameter name='uid' source='session' required="true" default='' />
+                <parameter name='scheme' source='file'  />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

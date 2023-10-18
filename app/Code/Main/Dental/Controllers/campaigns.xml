@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!--
+
+Actions involving hedis campaigns
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="campaigns" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="active" output="JSON">
+            <description>Returns a json list of active campaigns</description>
+            <entity response="true" namespace="dental" class="campaigns" method="fetchActive">
+                <parameter name="category" required="true" source="request" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="status" passalong='layer, campaign_id'>
+            <description>The status of a reachout campaign</description>
+            
+            <!--
+            <entity namespace="dental" class="campaign_results" id='campcontdec' method="campaignContactsDeclined">
+                    <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            -->
+            
+            <entity namespace="dental" class="campaign_results" id='results'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>>
+            
+            <entity namespace="dental" class="contact_call_schedule" id='schedule'>
+                <parameter name="campaign_id" source="request" optional="true" />
+                
+            </entity> 
+            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="progress" passalong='layer'>
+            <description>The current active campaign progress</description>
+            <entity namespace="dental" class="contact_call_schedule" id='contacts'>
+                <parameter name="campaign_id" required="true" source="request" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="snapshot">
+            <description>The current metrics of the active campaign</description>
+            <entity namespace="dental" class="campaign_results" id='campaign'  >
+                <parameter name="campaign_id" required="true" source="request" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->  
+              
+        <action name="workloads" passalong='layer'>
+            <description>Current hygenist call queue</description>
+            <entity namespace="dental" class="contact_call_schedule" id='schedule'>
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="claim" blocking="off">
+            <description>This will batch and submit any ready claims</description>
+            <model namespace="dental" class="claims" method="run" />
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="report" blocking="off" output="CSV">
+            <description>Runs a detail report for the dental campaigns</description>
+            <helper namespace="dental" id="data" class="data">
+                <parameter name="report" required="true" source="get" />
+            </helper>
+            <switch id="data" method="getReport">
+                <case value="Total Members Processed">
+                    <entity response="true" namespace="dental" class="reports" method="totalMembersProcessed">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>
+                
+                <case value="Total Contacts Processed">
+                    <entity response="true" namespace="dental" class="reports" method="totalContactsProcessed">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>
+                
+                <case value="Claims Generated">
+                    <entity response="true" namespace="dental" class="reports" method="claimsGenerated">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>
+                
+                
+                <case value="Members W/O Phone Numbers">
+                    <entity response="true" namespace="dental" class="reports" method="noPhoneNum">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case> 
+                
+
+                <case value="Completed Contacts">
+                    <entity response="true" namespace="dental" class="reports" method="completedContacts">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>                   
+                                
+                                                          
+                <case value="Left Messages">
+                    <entity response="true" namespace="dental" class="reports" method="leftMessages">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>
+                
+                <case value="Contact Attempts">
+                    <entity response="true" namespace="dental" class="reports" method="contactAttempts">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>
+                
+                <case value="Nutritional Counselings">
+                    <entity response="true" namespace="dental" class="reports" method="nutritionalCounselings">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>
+                <case value="Refused Counselings">
+                    <entity response="true" namespace="dental" class="reports" method="refusedNutritionalCounselings">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>                
+                <case value="Refused NC/Appt">
+                    <entity response="true" namespace="dental" class="reports" method="reportName">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>                
+                <case value="Requested Appointment">
+                    <entity response="true" namespace="dental" class="reports" method="requestedAppointment">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>                
+                <case value="Annual Dental Visit">
+                    <entity response="true" namespace="dental" class="reports" method="annualDentalVisit">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>                
+                <case value="Non-Working Numbers">
+                    <entity response="true" namespace="dental" class="reports" method="nonWorkingNumbers">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>  
+                <case value="Wrong Numbers">
+                    <entity response="true" namespace="dental" class="reports" method="wrongNumbers">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>  
+                <case value="Do Not Call">
+                    <entity response="true" namespace="dental" class="reports" method="doNotCall">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                        <parameter name="start_date" optional="true" source="get" format="date" />
+                        <parameter name="end_date" optional="true" source="get" format="date" />
+                    </entity>
+                </case>  
+                
+                
+                <case value="Ineligibility">
+                    <entity response="true" namespace="dental" class="reports" method="ineligibility">
+                        <parameter name="report" required="true" source="get" />
+                        <parameter name="campaign_id" required="true" source="get" />
+                    </entity>
+                </case>
+                
+                
+                <default>
+                    <output text="Currently the report you requested is not supported.  Contact your support person" />
+                </default>
+            </switch>
+        </action>
+    </actions>
+</controller>

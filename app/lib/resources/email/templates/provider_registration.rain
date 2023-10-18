@@ -1,0 +1,18 @@
+<img src="{$host}/images/argus/logo.png" /><br />
+
+<h1>Thank you for your interest in Argus Dental &amp; Vision </h1>
+
+Please click on the link below to access the New Provider Registration Form, and follow the instructions to the right of the form.
+You will need to enter the following PIN to sign the form and submit: <b>{$pin}</b>.
+<br /><br />
+
+Registration Form For 
+{$name}
+:
+ <a href="{$host}/argus/provider/register?form_id={$form_id}">
+{$host}/argus/provider/register?form_id={$form_id}
+</a><br /><br />
+Again, you will need to enter the following PIN to sign the form and submit: <b>{$pin}</b><br /><br />
+Again thanks from the Argus Team!<br /><br />
+
+(Please do not reply to this message)

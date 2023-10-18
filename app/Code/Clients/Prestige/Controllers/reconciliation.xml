@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+
+Actions supporting provider reconciliation
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="reconciliation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="form" passalong="window_id">
+            <description>The form that allows you to upload provider files</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="report" output="csv">
+            <description>Generates the report</description>
+            <model namespace="prestige" class="reconciliation" method="report">
+                <parameter name="argus_providers" source="file" required="true" />
+                <parameter name="prestige_providers" source="file" required="true" />
+            </model>
+        </action>
+    </actions>
+</controller>

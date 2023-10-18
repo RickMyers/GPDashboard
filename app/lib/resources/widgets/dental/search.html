@@ -1,0 +1,39 @@
+<style type="text/css">
+    .dental-hygienist-search-box {
+        border-radius: 8px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat        
+    }
+    .dental-hygienist-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px;
+    }
+    .dental-hygienist-search-field:focus {
+        outline: none;
+    }
+</style>
+<div class="dental-hygienist-search-box" style="display: inline-block">
+    <input class="dental-hygienist-search-field" type="text" style="" name="dental-hygienist-search-field" id="dental-hygienist-search-field" placeholder="Search..."/>
+</div>
+<div style="display: inline-block; margin-left: 30px; margin-right: 10px">
+    Campaign:&nbsp;<select name="dental_campaign" id="dental_campaign_id" style="background-color: lightcyan; padding: 2px 5px; border-radius: 5px; width: 180px; border: 1px solid #aaf; color: #333">
+
+    </select>
+</div> 
+<script type="text/javascript">
+    (new EasyAjax('/dental/campaigns/active')).add('category','dental').then(function (response) {
+        EasyEdits.populateSelectBox("dental_campaign_id",JSON.parse(response));
+        $('#dental_campaign_id').trigger('change');
+    }).get();    
+    $('#dental-hygienist-search-field').on("keydown",function (evt) {
+        if (evt.keyCode == 13) {
+            Argus.dental.search(evt.target.value);
+        }
+    });
+    $('#dental_campaign_id').on('change',function () {
+        Argus.singleton.set('campaign_id',this.value);
+        Heartbeat.skip();
+        if (this.value) {
+            (new EasyAjax('/dental/hygenist/queues')).add('campaign_id',this.value).add('hcm',Argus.singleton.get('hcm')).add('hqd',Argus.singleton.get('hqd')).add('hoh',Argus.singleton.get('hoh')).add('hcc',Argus.singleton.get('hcc')).then(function (response) {
+                Argus.dental.hedis.hygenist.app(response);
+            }).post();
+        }        
+    });    
+</script>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+
+General Query Execution Ability
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="query" use="Smarty3" author="Rick Myers" email="rick@humbleprogramming.com">
+    <actions>
+        <action name="open" passalong="window_id">
+            <description>The main page</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="save">
+            <description>Saves off a query</description>
+            <entity namespace="dashboard" class="adhoc/queries" method="save" response="true">
+                <parameter name="id" value="query_id" optional="true" source="post" />
+                <parameter name="query" source="post" required="true" />
+                <parameter name="description" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="exec" blocking="off">
+            <description>Executes a general SELECT query</description>
+            <entity namespace="dashboard" class="query" method="exec" response="true">
+                <parameter name="query" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="list" blocking="off">
+            <description>Gets a list of adhoc queries</description>
+            <entity namespace="dashboard" class="adhoc/queries" rows="rows" page="page" defaultRows="20" defaultPage="1" orderby="modified=DESC" id="queries" />
+        </action>
+        
+        <!-- ############################################################### -->     
+        
+        <action name="load" blocking="off" output="JSON">
+            <description>Returns a specific query</description>
+            <entity namespace="dashboard" class="adhoc/queries" response="true" method="load" >
+                <parameter name="id" value="query_id" source="request" required="true" />
+            </entity>
+        </action>
+              
+    </actions>
+</controller>

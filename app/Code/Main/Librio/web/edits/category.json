@@ -1,0 +1,71 @@
+({
+	form:
+	{
+            id: 	"librio-new-category-form",
+            drawme:	false,
+            action:	"",
+            onload:     function () {
+            },
+            method:	"post",
+            style:	"",
+            onenterkey:	"send"
+	},
+	fields:
+	[
+            {
+                active:		true,
+                id: 		"project_id",
+                longname:	"Project ID",
+                title:		"Project ID",
+                type:           "hidden",
+                required:	true,
+                force:		true,
+                classname:	"",
+                style:		""
+            },
+            {
+                active:		true,
+                id: 		"new-librio-category",
+                longname:	"Category Name",
+                title:		"The name of the category",
+                type:           "text",
+                required:	true,
+                force:		true,
+                classname:	"",
+                style:		"width: 250px; padding: 2px; border: 1px solid #aaf"
+            },
+            {
+                active:		true,
+                id: 		"new-librio-category-description",
+                longname:	"Category Description",
+                title:		"The category description",
+                type:           "text",
+                required:	true,
+                force:		true,
+                classname:	"",
+                style:		"width: 350px; padding: 2px; border: 1px solid #aaf"
+            },
+            {
+                active:		true,
+                id: 		"new-librio-category-submit",
+                longname:	"Create Category Button",
+                title:		"Click to create the category",
+                type:           "button",
+                required:	false,
+                force:		false,
+                classname:	"",
+                onclick:        function () {
+                    if (Edits['new-librio-category'].validate()) {
+                        (new EasyAjax('/librio/category/add')).packageForm('librio-new-category-form').then(function (response) {
+                            Argus.librio.category.win._close();
+                            //A different place to hook...
+                            $('#sub-container').html(response);
+                        }).post();
+                    }
+                },
+                style:		"width: 100px"
+            }
+            
+	]
+})
+

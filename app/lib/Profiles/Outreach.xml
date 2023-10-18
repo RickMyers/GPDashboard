@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+    Default Desktop Layout for Outreach participants
+-->
+<profile>
+    <default>
+        <desktop>
+            <app id="20" />
+        </desktop>
+    </default>
+</profile>
+
+

@@ -1,0 +1,86 @@
+({
+    form:
+    {
+        id: 		"dashboard_bug_form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"dashboard_bug_module",
+            longname:	"Dashboard Module",
+            type:       "combo",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },
+        {
+            active:	true,
+            id: 	"dashboard_bug_feature",
+            longname:	"Dashboard Feature",
+            type:       "combo",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },
+        {
+            active:	true,
+            id: 	"dashboard_bug_priority",
+            longname:	"Bug Priority",
+            type:       "select",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        }, 
+        {
+            active:	true,
+            id: 	"dashboard_bug_subject",
+            longname:	"Bug Subject",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },            
+        {
+            active:	true,
+            id: 	"dashboard_bug_description",
+            longname:	"Bug Description",
+            type:       "textarea",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },                
+        {
+            active:	true,
+            id: 	"dashboard_bug_submit",
+            longname:	"New Dashboard Bug Submit Button",
+            onclick:    function () {
+                if (Edits['dashboard-bug-report'].validate()) {
+                    (new EasyAjax('/dashboard/feature/bugreport')).packageForm('dashboard_bug_form').add('screenshot',$E('dashboard_bug_screenshot').src).then(function (response) {
+                        Argus.dashboard.feature.win._close();
+                    }).post();
+                }
+            },
+            title:	"Click to report this bug",
+            type:       "button",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"background-color: cadetblue; color: ghostwhite; padding: 2px 5px; border: 1px solid darkblue; border-radius: 2px"
+        }          
+    ]
+})
+

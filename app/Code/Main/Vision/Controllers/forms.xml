@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+
+Configuration pages for vision workflows
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="forms" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="unassigned" passalong="windowId">
+            <description>Configuration for calculating the number of new (unassigned) retina scans</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="load" passalong="windowId">
+            <description>Workflow configuration for </description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+                
+        <action name="statuscount" blocking="off" passalong="windowId">
+            <description>Configuration page for setting the values for a workflow process that sums up the number of forms with a given status</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="export" output="CSV" blocking="off" filename="completed_forms.csv">
+            <description>Exports completed screening/scanning forms as a CSV</description>
+            <model namespace="vision" class="forms">
+                <comment>Just a hack to make sure you are logged in</comment>
+                <parameter name="user_id" value="uid" source="session" required="true" />
+            </model>
+            <entity namespace="vision" class="consultation_forms" method="export" response="true">
+                <parameter name="status" source="request" default="C" />                
+            </entity>
+        </action>        
+    </actions>
+</controller>

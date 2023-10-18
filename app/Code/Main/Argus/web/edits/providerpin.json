@@ -1,0 +1,55 @@
+({
+    form:
+    {
+        id: 		"pin-entry-form",
+        drawme:		false,
+        action:		"",
+
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:         true,
+            id:             "pin",
+            longname:       "PIN",
+            title:          "Personal Identification Number (PIN)",
+            type:           "text",
+            required:       true,
+            force:          true,
+            minlength:      6,
+            maxlength:      6,
+            mask:           "######",
+            classname:      "",
+            style:          ""
+        },
+	{
+            active:         true,
+            id:             "provider-pin-submit-button",
+            longname:       "Long name of field",
+            title:          "title for mouse rollover",
+            type:           "button",
+            classname:      "",
+            onclick:        function () {
+                if (Edits['provider-pin-form'].validate()) {
+                    (new EasyAjax('/argus/provider/pin')).add('form_id',$('#provider_form_id').val()).add('pin',$('#pin').val()).then(function (response) {
+                        var result = JSON.parse(response);
+                        if (result && result.valid) {
+                            Argus.provider.readonly();
+                            (new EasyAjax('/argus/provider/sign')).add('form_id',$('#provider_form_id').val()).then(function (response) {
+                                console.log(response);
+                            }).post();
+                            alert('Thank You!\n\nYour form has been signed and submitted.');
+                            window.location.reload();
+                        } else {
+                            alert('Invalid PIN number\n\nPlease refer to your registration e-mail to find your PIN.');
+                        }
+                    }).post();
+                }
+            },
+            style:          ""
+        }          
+    ]
+})

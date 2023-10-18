@@ -1,0 +1,4 @@
+LX*{$service_line}~
+SV1*{$procedure_code}*{$amount}*UN*1***{$code_order}~
+DTP*472*D8*{$service_date}~
+REF*6R*{$line_item_control_number}~

@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<report>
+    <name>Retinal Results</name>
+    <description>Summary of a Screening or Scanning Event</description>
+    <selection>
+        <year />
+        <event />
+        <start_date />
+        <end_date />
+    </selection>
+    <resource method="formsExtendedInformation" />
+    <columns>
+        <column source="form_type"          name="Encounter Type"           format="" onempty="N/A"  style="text-align: center;" />
+        <column source="screening_client"   name="Healthplan"               format="" onempty="N/A"  style="text-align: center;" />
+        <column source="reviewer_name"      name="OD Reviewer"              format="" onempty=""  style="text-align: center;" />
+        <column source="technician_name"    name="Screener"                 format="" onempty=""  style="text-align: center;" />
+        <column source="event_date"         name="Date"                     format="date" onempty="" style="text-align: center;" />
+        <column source="member_name"        name="Member Name"              format="" onempty=""  style="text-align: center;" />        
+        <column source="member_id"          name="Member ID"                format="" onempty=""  style="text-align: center;" />        
+        <column source="retinopathy"        name="Retinopathy"              format="" onempty=""  style="text-align: center;" />        
+        <column source="private_note"       name="Note"                     format="" onempty="" style="text-align: center;" />
+        <column source="member_unscannable" name="Unable To Scan"           format="" onempty=" " style="text-align: center;" />
+        <column source="images_unreadable"  name="Unreadable"               format="" onempty=" " style="text-align: center;" />
+        <column source="diag_code_e11_9"    name="Dx=E11.9"                 format="" onempty=" " style="text-align: center;" />
+        <column source="diag_code_e11_65"   name="Dx=E11.65"                format="" onempty=" " style="text-align: center;" />
+        <column source="diag_code_e11_39"   name="Dx=E11.39"                format="" onempty=" " style="text-align: center;" />
+        <column source="diag_code_e11_329"  name="Dx=E11.329"               format="" onempty=" " style="text-align: center;" />
+        <column source="diag_code_e11_339"  name="Dx=E11.339"               format="" onempty=" " style="text-align: center;" />
+        <column source="diag_code_e10_9"    name="Dx=E10.9"                 format="" onempty=" " style="text-align: center;" />
+        <column source="claim_submitted"    name="Claim Submitted"          format="date" onempty=" " style="text-align: center;" />
+        <column source="claim_paid"         name="Claim Paid"               format="" onempty=" " style="text-align: center;" />
+        <column source="claim_amount"       name="Claim Amount"               format="" onempty=" " style="text-align: center;" />
+    </columns>
+</report>

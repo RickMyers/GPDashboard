@@ -1,0 +1,27 @@
+    .calendar {
+        border: 1px solid silver; padding: 10px; border-radius: 10px; width: 400px; height: 300px; margin-right: 10px; display: inline-block;
+    }
+    .weekday {
+        width: 40px; border: 1px solid transparent; height: 35px; text-align: center; color: white; font-size: .7em; background-color: rgba(202,202,202,.1)             
+    }
+    .weekend {
+        background-color: rgba(202,202,202,.3); text-align: middle; font-size: .9em; color: white; width: 50px; text-align: center;
+    }
+    .monthname {
+        background-color: rgba(202,202,202,.35); color: white
+    }
+    .daynames {
+        background-color: rgba(202,202,202,.35); color: white; text-align: center; font-size: .9em
+    }            
+    .layout {
+        background-color: rgba(202,202,202,.1); font-family: sans-serif; border: 1px solid silver
+    }
+    .month-scheduler-weekend {
+        background-color: rgba(202,202,202,.3)
+    }
+    .month-scheduler-weekday {
+        
+    }
+    .month-scheduler-daynames {
+        background-color: rgba(202,202,202,.35); color: white; text-align: center;
+    }

@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<report>
+    <name>Completed Event</name>
+    <description>Gaps closed by an event</description>
+    <selection>
+        <year />
+        <event />
+        <event_location />
+        <all_ipas />
+        <locations />
+        <location_addresses />
+    </selection>
+    <resource method="completedEvents" />
+    <columns>
+        <column source="event_date"         name="Date"            format="date" onempty="N/A" style="text-align: center;" />
+        <column source="form_type"          name="Type"            format="ucfirst" onempty="N/A"  style="text-align: center;" />
+        <column source="screening_client"   name="Healthplan"      format="" onempty="N/A"  style="text-align: center;" />
+        <column source="ipa_id_combo"       name="IPA"             format="" onempty="N/A"  style="text-align: center;" />
+        <column source="location_id_combo"  name="Location"       format="" onempty="N/A"  style="text-align: center;" />
+        <column source="member_id"          name="Member ID"       format="" onempty="N/A"  style="text-align: center;" />        
+        <column source="member_name"        name="Member Name"     format="" onempty="N/A"  style="text-align: center;" />        
+        <column source="gender"             name="Gender"          format="" onempty="N/A" style="text-align: center;" />
+        <column source="date_of_birth"      name="Date Of Birth"   format="date" onempty="N/A" style="text-align: center;" />
+        <column source="technician_name"    name="Technician Name" format="" onempty="N/A"  style="text-align: center;" />
+        <column source="reviewer_name"      name="Reviewed By"     format="" onempty=" "  style="text-align: center;"/>   
+        <column source="member_unscannable" name="Unable To Scan"  format="" onempty=" " style="text-align: center;" />   
+        <column source="status"             name="Form Status"     format="" onempty=" " style="text-align: center;" />   
+        <column source="result"             name="Outcome"         format="" onempty="N/A" style="text-align: center;" />   
+    </columns>
+</report>

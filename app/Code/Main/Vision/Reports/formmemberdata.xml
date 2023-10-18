@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<report name="Form Member Data" description="A list of member information by date by client">
+    <headings>
+        <heading>Members from %%date%%.</heading>
+    </headings>  
+    <groups>
+    </groups>
+    <columns>
+        <column name="Form ID"          source="id"                 format="" ifempty=""   style="" />
+        <column name="Member ID"        source="member_id"          format="" ifempty=""   style="" />                
+        <column name="Member Name"      source="member_name"        format="" ifempty=""   style="" />                
+        <column name="Member Address"   source="member_address"     format="" ifempty="N/A"   style="" /> 
+        <column name="Event ID"         source="event_id"           format="" ifempty="N/A"   style="" />         
+        <column name="Event Address"    source="event_address"      format="" ifempty=""   style="" />         
+    </columns>
+</report>
+

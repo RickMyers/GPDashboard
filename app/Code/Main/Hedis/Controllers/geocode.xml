@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+google lookup
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="geocode" use="Smarty3" author="Emi Clar" email="eclar@aflac.com">
+    <actions>
+        <action name="lookup">
+            <description>lookup</description>
+            <model namespace="google" class="rina" id="location">
+                <parameter name="address" source="request" required="true"></parameter>
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

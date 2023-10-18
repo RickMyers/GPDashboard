@@ -1,0 +1,87 @@
+({
+    form:
+    {
+        id: 		"npi_location_form-&&window_id&&",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+
+
+        {
+            active:		true,
+            id: 		"client_id-&&window_id&&",
+            longname:		"Client Name",
+            title:		"",
+            type:               "select",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                (new EasyAjax('/vision/client/ipas')).add('client_id',$(evt.target).val()).then(function (response) {
+                    EasyEdits.populateSelectBox('ipa_id-&&window_id&&',JSON.parse(response));
+                }).get();
+            },
+            classname:		"",
+            style:		""
+        }, 
+        {
+            active:		true,
+            id: 		"ipa_id-&&window_id&&",
+            longname:		"IPA",
+            title:		"",
+            type:               "select",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                if (+$(evt.target).val() == $(evt.target).val()) {
+                    (new EasyAjax('/vision/ipa/offices')).add('ipa_id',$(evt.target).val()).then(function (response) {
+                        EasyEdits.populateSelectBox('location_id-&&window_id&&',JSON.parse(response));
+                    }).get();
+                }
+            },            
+            classname:		"",
+            style:		""
+        }, 
+        {
+            active:		true,
+            id: 		"location_id-&&window_id&&",
+            longname:		"Business Name",
+            title:		"The name of the location the screening/scanning took place at",
+            type:               "select",
+            required:		true,
+            force:		true,
+            classname:		"",
+            onchange:           function (evt) {
+                (new EasyAjax('/vision/client/addresses')).add('location_id',$(evt.target).val()).then(function (response) {
+                    EasyEdits.populateSelectBox('address_id-&&window_id&&',JSON.parse(response));
+                }).get();
+            },
+            style:		""
+        },         
+        {
+            active:		true,
+            id: 		"address_id-&&window_id&&",
+            longname:		"Event Address",
+            title:		"",
+            type:               "select",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                if ($(evt.target).val() && ($(evt.target).val() == +$(evt.target).val()) ) {
+                    (new EasyAjax('/vision/npis/list')).add('address_id',$(evt.target).val()).add('window_id','&&window_id&&').then(function (response) {
+                        $("#location_npi_list-&&window_id&&").html(response);
+                    }).get();
+                }
+            },
+            classname:		"",
+            style:		""          
+        }        
+    ]
+})
+

@@ -1,0 +1,3 @@
+LX*{$service_line}~
+SV3*{$procedure_code}*{$amount}****1~
+REF*6R*{$line_item_control_number}~

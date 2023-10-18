@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+
+Desktop related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="desktop" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="initialize">
+            <description>Returns a list of apps to load the desktop with</description>
+            <entity namespace="dashboard" class="desktop/installed/apps" id="apps">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+            </entity>
+
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="access" blocking="off" passalong="window_id">
+            <description>The form for granting access to desktop apps (not dashboard apps)</description>
+            <entity namespace="dashboard" class="desktop/available/apps" id="apps" orderby="app=ASC">
+                
+            </entity>
+            <entity namespace="argus" class="roles" orderby="name=ASC" id="roles">
+                
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="grant" blocking="off">
+            <description>Grants access to the designated app</description>
+            <model namespace="dashboard" class="desktop" method="grant" response="true">
+                <parameter name="role_id" source="post" required="true" />
+                <parameter name="app_id" source="post" required="true" />
+            </model>
+        </action>
+        
+    </actions>
+</controller>

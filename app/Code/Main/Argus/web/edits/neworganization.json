@@ -1,0 +1,69 @@
+({
+	form:
+	{
+		id: 		"new-organization-form",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"new_organization_name",
+			longname:		"Organization Name",
+			title:			"Name of the new organization",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333"
+		},
+		{
+			active:			true,
+			id: 			"new_organization_description",
+			longname:		"Organization Description",
+			title:			"Description of the new organization",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333"
+		},
+		{
+			active:			true,
+			id: 			"new_organization_type",
+			longname:		"Organization Type",
+			title:			"Type of the new organization",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333; height: 25px"
+		},                
+		{
+			active:			true,
+			id: 			"new_organization_submit",
+			longname:		"New Organization Submit Button",
+			title:			"Click to create a new organization project",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['new-organization-form'].validate()) {
+                                (new EasyAjax('/argus/organizations/new')).packageForm('new-organization-form').then(function (response) {
+                                    $('#sub-container').html(response);
+                                }).post();
+                            }
+                        }
+		}                
+                
+	]
+})

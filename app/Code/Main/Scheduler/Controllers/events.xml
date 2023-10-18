@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<!--
+
+General event actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="events" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="open" passalong="mm,dd,yyyy,user_id">
+            <description>Opens a day to either schedule or review events</description>
+            <entity namespace='scheduler' class='events' id="events">
+                <parameter name="mm"    source="post" required="true" />
+                <parameter name="dd"    source="post" required="true" />
+                <parameter name="yyyy"  source="post" required="true" />
+            </entity>
+            <entity namespace='scheduler' class='event_types' id="event_types" />
+            <entity namespace='scheduler' class='event_location_types' id="location_types" />
+            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="locations" output="JSON">
+            <description>Returns a list of locations by location type</description>
+            <entity response="true" namespace="scheduler" class="event_locations" method="fetch" orderby="address=ASC">
+                <parameter name="location_type_id" value="type"  source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="month">
+            <description>Draws the month calendar</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="year" blocking="off">
+            <description>Draws the year calendar</description>
+            <entity namespace="argus" class="user/roles" id="users" />
+        </action>
+
+        <!-- ############################################################### -->       
+        
+        <action name="init">
+            <description>The Desktop App Layout</description>
+        </action>
+
+        <!-- ############################################################### -->           
+
+        <action name="yesterday" output="JSON">
+            <description></description>
+        </action>
+
+        <!-- ############################################################### -->                 
+        
+        <action name="today">
+            <description>Shows your current event list</description>
+            <entity namespace="scheduler" class="events" id="events">
+                <parameter name="user_id" source="request" optional="true" />
+                <parameter name="date" source="request" format="date" optional="true" />
+            </entity>            
+        </action>
+
+        <!-- ############################################################### -->     
+        
+        <action name="show" blocking="off">
+            <description>Lists events based on some criteria</description>
+            <!--entity namespace="scheduler" class="events" id="events" page="page" rows="rows" defaultPage="1" defaultRows="50">
+                <parameter name="year" required="true" source="request" />
+                <parameter name="*" source="post" />
+            </entity-->
+            <model namespace="scheduler" class="events" id="events">
+                <parameter name="year" required="true" source="request" />
+                <parameter name="*" source="post" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->     
+
+        <action name="tomorrow" output="JSON">
+            <description>Does something with tomorrow?  Why was I doing this again?</description>
+        </action>
+                
+        <!-- ############################################################### -->                                 
+        
+        <action name="list" output="JSON" blocking="off">
+            <description>Shows your current event list</description>
+            <entity response="TRUE" namespace="scheduler" class="events" method="listAllEvents">
+                <parameter name="user_id" source="request" optional='true' />
+                <parameter name="date"    source="request" format="date" optional="true" />
+                <parameter name="yyyy"    source="request" optional="true" />
+                <parameter name="mm"      source="request" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="review" blocking="off">
+            <description>The page to start listing events</description>
+            <entity namespace="argus" class="user/roles" id="technicians">
+                
+            </entity>
+            <entity namespace="argus" class="user/roles" id="ods">
+                
+            </entity>            
+        </action>
+                        
+        <!-- ############################################################### -->
+        
+        <action name="details" output="JSON" blocking="off">
+            <description>Generates a detailed list of events for display</description>
+            <entity namespace="scheduler" class="events" id="events" orderby="start_date=DESC">
+                <parameter name="user_id"       source="session" value="uid" required="true" />
+                <parameter name="yyyy"          source="request" optional="true" />
+                <parameter name="mm"            source="request" optional="true" />
+                <parameter name="technician"    source="request" optional="true" />
+                <parameter name="reviewer"      source="request" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->                                           
+        
+        <action name="didthebatch" output="JSON">
+            <description>reads the form id and returns all values for screening or scanning</description>
+            <entity response='true' namespace="scheduler" class="events" method="diddobatch">
+                
+            </entity>
+        </action>
+        
+        
+        <action name="setthebatch">
+            <description>reads the form id and returns all values for screening or scanning</description>
+            <entity namespace="scheduler" class="events" method="seteventbatch">
+                
+            </entity>
+        </action>
+        
+        
+        <!-- ############################################################### -->                 
+        
+        
+        <action name="getnpiinfo" output="JSON">
+            <description>Retrieves data about a member in the vision participants table</description>
+            <entity namespace="scheduler" class="events" method="fetch" response="true">
+                <parameter name="id" source="request" required="true" />
+            </entity>
+        </action>
+        
+        
+        <!-- ############################################################### -->                 
+        
+        
+        <action name="getnpiinfotwo" output="JSON">
+            <description>Retrieves data about a member in the vision participants table</description>
+            <entity namespace="scheduler" class="events" method="gettechequipod" response="true">
+                <parameter name="id" source="get" required="true" />
+            </entity>
+        </action>
+    </actions>
+</controller>

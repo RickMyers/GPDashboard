@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+
+Calendar related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="calendar" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="popout" blocking='off' passalong='window_id'>
+            <description>Generates the yearly popout calendar for a user</description>
+            <entity namespace="scheduler" class="user/events" id='events'>
+                <parameter name='user_id' source='post' default='' required='true' />
+                <parameter name='year'    source='post' default='' />
+            </entity>
+            <entity namespace='humble' class='user/identification' id='user' method='load'>
+                <parameter name='id' value='user_id' source='post' default='' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+
+Main controller for view tier
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="open" blocking="off" passalong="window_id">
+            <description>The introduction page</description>
+            <entity namespace="outreach" class="campaigns" id='campaigns' orderby="campaign=DESC">
+            </entity>
+            <entity namespace="outreach" class="campaign/members" id='contacts'>
+
+            </entity>
+            <entity namespace="argus" class="user/roles" id="coordinators">
+                
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

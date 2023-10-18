@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+
+Secondary queue actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="secondaryqueues" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="init">
+            <description>Sets up the secondary queue layout</description>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="queue" output='JSON' >
+            <description>Refreshes a single queue</description>
+            <if var="queue_id" eq="non_contracted">
+                <then>
+                    <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="admin"  defaultRows='15' defaultPage='1' method="nonContractedMembers">
+                        <parameter name='user_id' source='session' value='uid' />
+                    </entity>
+                </then>
+                <else>
+                    <if var="queue_id" eq="failed_claims">
+                        <then>
+                            <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="failures"  defaultRows='15' defaultPage='1' method="fetch">
+                                <parameter name="claim_status" source="request" default="E" />
+                                <parameter name="status" source="request" default="C" />
+                            </entity>                                
+                        </then>
+                        <else>
+                            <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="referrals"  defaultRows='15' defaultPage='1' method="formsRequiringReferral">
+                                <parameter name='user_id' source='session' value='uid' />
+                            </entity>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="refresh">
+            <description>Refreshes the administration queues</description>
+            <entity namespace="vision" class="consultation/forms" rows="rows" page="non_contracted"  id="noncon"  defaultRows='15' defaultPage='1' />
+            <entity namespace="vision" class="consultation/forms" rows="rows" page="referral_required"  id="referrals"  defaultRows='15' defaultPage='1' />
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="failed_claims"  id="failures"  defaultRows='15' defaultPage='1'>
+                <parameter name='claim_status' source='request' default='E' />
+                <parameter name='status' source='request' default='C' />
+            </entity>            
+            
+         </action>
+        
+    </actions>
+</controller>

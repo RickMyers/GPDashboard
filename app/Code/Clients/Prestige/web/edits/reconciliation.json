@@ -1,0 +1,52 @@
+
+({
+	form:
+	{
+		id: 		"provider_reconciliation_form-&&WID&&",
+		drawme:		false,
+		action:		"",
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"argus_provider_list-&&WID&&",
+			longname:		"Argus Provider List",
+            type:           "file",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			""
+		},
+		{
+			active:			true,
+			id: 			"prestige_provider_list-&&WID&&",
+			longname:		"Prestige Provider List",
+            type:           "file",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			""
+		},
+		{
+			active:			true,
+			id: 			"reconciliation_submit-&&WID&&",
+			longname:		"Long name of field",
+			title:			"title for mouse rollover",
+            type:           "button",
+			classname:		"",
+			style:			"",
+            "onclick":      function () {
+                if (Edits['reconciliation-form-&&WID&&'].validate()) {
+                    (new EasyAjax('/prestige/reconciliation/report')).addFiles('argus_providers',$E('argus_provider_list-&&WID&&')).addFiles('prestige_provider',$E('prestige_provider_list-&&WID&&')).then(function (response) {
+                        alert(response);
+                    }).post();
+
+                }
+            }
+		}
+	]
+})

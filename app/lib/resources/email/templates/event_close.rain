@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Diabetic screening results</title>
+</head>
+<body>
+	
+Hello {$event['contact_name']},<br /><br />
+
+Diabetic screening results ({$total}) from {$event['start_date']} are available via <a href="https://hedis.argusdentalvision.com" style="color: blue">HEDIS portal</a>.<br /><br />
+
+{if="$referrals>0"}
+There were "{$referrals}" patients recommended for referral to ophthalmology which will need your office to arrange.<br />
+These patients have been told to expect a call from your office or the specialist's office within the recommended triage time frame.  Please forward a copy of the screening results to the ophthalmology provider to assist with continuity of care.<br /><br />
+{/if}
+{if="$incomplete>0"}
+Please be aware, there were "{$incomplete}" records with incomplete data and are still pending completion.<br /><br />
+{/if}
+Thank you from the Argus HEDIS Team.<br />
+For any questions, please call 1-877-710-5174<br />
+	
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+reportico/templates_c/*
+reportico/projects/*
+cache/*
+Cache/*
+Code/Main/Vision/lib/forms/*
+**/Schema/DSL/*
+node_modules/*
+composer.lock

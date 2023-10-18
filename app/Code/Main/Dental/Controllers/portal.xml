@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+
+A portal for our patients
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="portal" use="Twig" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="create" event="newUserPortal" comment="A user portal page was created">
+            <description>Creates a new user portal location</description>
+            <entity namespace="dental" class="portal" id="portal" method="save">
+                <parameter name="email" source="post" required="true" />
+                <parameter name="page" value="email" source="post" format="password" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="default">
+            <description>Yep, lets route everyone through here</description>
+            <model namespace="dental" class="portal" id="portal">
+                <parameter name="pin" source="request" optional="true" />
+            </model>
+            <if id="portal" method="routing" eq="true">
+                <then>
+                    <if id="portal" method="pinCheck" eq="true">
+                        <then>
+                            <entity namespace="dental" class="consultation_forms" id="form" />
+                            <entity namespace="dental" class="consultation_xrays" id="xrays" />
+                            <entity namespace="dental" class="consultation_snapshots" id="snapshots" />
+                            <view name="user" />
+                        </then>
+                        <else>
+                            <helper namespace="argus" class="data" id='helper' />
+                            <view name="pin" />
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <view name="reject" />
+                </else>
+            </if>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

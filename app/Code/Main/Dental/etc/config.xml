@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<config>
+    <dental>
+        <version>0.0.1</version>
+        <title>Dental Apps</title>
+        <description>Apps involving dental stuff</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Dental</name>
+            <weight>50</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Dental/Models</source>
+            </models>
+            <config>
+                <source>Dental/etc</source>
+            </config>
+            <helpers>
+                <source>Dental/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Dental/Controllers</source>
+                <cache>Dental/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Dental/Schema/Install</install>
+                <update>Dental/Schema/Update</update>
+                <layout>Dental/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Dental/etc</source>
+            </configuration>
+            <views>
+                <source>Dental/Views</source>
+                <cache>Dental/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Dental/Images</source>
+                <cache>Dental/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Dental/Entities</source>
+            </entities>
+            <RPC>
+                <source>Dental/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Dental/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>dental_</prefix>
+            <mongodb>Dental</mongodb>
+            <entities>
+                <address_types />
+                <addresses />
+                <call_log />
+                <campaigns />
+                <campaign_categories />
+                <campaign_results />
+                <claim_batches />
+                <claims />
+                <consultation_forms polyglot="Y" />
+                <consultation_snapshots />
+                <consultation_xrays />
+                <contact_call_log />
+                <contact_call_schedule />
+                <contact_members />
+                <members />
+                <member_addresses />
+                <member_phone_numbers />
+                <mouthwatch_scans />
+                <phone_numbers />
+                <phone_number_types />
+                <portal polyglot="Y" />
+                <waiting_room />
+                <waiting_rooms />
+            </entities>
+        </orm>
+
+        <web>
+            <edits>
+                <televisit>Dental/web/edits/televisit.json</televisit>
+            </edits>
+            <dashboard>
+                <js>
+                    <source weight='40'>Dental/web/js/Dental.js</source>
+                    <source weight='45'>Dental/web/js/DentalRTC.js</source>
+                    <source weight='55'>Dental/web/js/EasyRTC.js</source>
+                    <source weight='60'>Dental/web/js/Teledentistry.js</source>
+                </js>
+                <css>
+                    <source weight='10'>Dental/web/css/Dental.css</source>
+                    <source weight='15'>Dental/web/css/DentalRTC.css</source>
+                </css>
+            </dashboard>
+        </web>
+    </dental>
+</config>

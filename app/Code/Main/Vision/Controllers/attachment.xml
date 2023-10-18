@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Attachment related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="attachment" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="open">
+            <description>Opens an attachment</description>
+            <entity response="true" namespace="vision" class="event_attachments" method="open">
+                <parameter name="id" value='attachment_id' source='request' required="true"/>
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

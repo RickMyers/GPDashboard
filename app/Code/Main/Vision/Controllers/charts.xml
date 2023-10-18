@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!--
+
+Dashboard Chart Actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="charts" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="workloads" passalong='layer' >
+            <description>Shows the current status of vision package workloads</description>
+            <entity namespace="vision" class="consultation_forms" id='screenings' >
+
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->  
+              
+        <action name="screeningsbyhealthplan" passalong='layer'>
+            <description>Pie chart data for which healthplans have sent screening forms</description>
+            <entity assign='data' namespace="vision" class="consultation_forms" id='forms' method='screeningsByHealthPlan'>
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->  
+              
+        <action name="screeningsbymonth" passalong='layer'>
+            <description>A month by month list of screenings that have been done for the current year</description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="screeningsByMonth">
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->  
+              
+        <action name="gapsclosed" passalong='layer'>
+            <description>Calculates how many gaps, respective to the NPC, are open or closed, as in commitments fulfilled</description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="calculateGapsClosed">
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->  
+              
+        <action name="readableforms" passalong='layer'>
+            <description>Breaks screening forms down into those that are readable and not readable based on the uploaded images</description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="calculateReadableForms">
+            </entity>
+        </action>                                 
+
+        <!-- ############################################################### -->  
+              
+        <action name="ipatechnicians" passalong='layer'>
+            <description>Lists the forms in an IPA queue by technician and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByTechnician">
+            </entity>
+        </action>   
+
+        <!-- ############################################################### -->  
+              
+        <action name="ipahealthplans" passalong='layer'>
+            <description>Lists the forms in an IPA queue by health plan and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByHealthPlan">
+            </entity>
+        </action>   
+        
+        <!-- ############################################################### -->  
+              
+        <action name="ipaphysicians" passalong='layer'>
+            <description>Lists the forms in an IPA queue by physician and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByPhysician">
+            </entity>
+        </action>                                           
+        
+        <!-- ############################################################### -->  
+              
+        <action name="ipalocations" passalong='layer'>
+            <description>Lists the forms in an IPA queue by physician and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByLocation">
+            </entity>
+        </action> 
+                
+        <!-- ############################################################### -->  
+        
+        <action name="technicianphysicians" passalong="layer">
+            <description>Generates the data for number of forms submitted to a PCP by technician </description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="technicianFormsByPhysician">
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="technicianhealthplans" passalong="layer">
+            <description>Generates the data for number of forms from a healthplan sent to a PCP </description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="technicianFormsByHealthPlan">
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="technicianreadable" passalong="layer">
+            <description>Generates the data for percent of forms that are readable by technician </description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="technicianReadableForms">
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="technicianmonthly" passalong="layer">
+            <description>Generates the data for number of forms submitted by technician per month </description>
+            <entity assign="data" namespace="vision" class="consultation_forms" id='forms' method="technicianFormsByMonth">
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="totalscanningsbymonth" passalong="layer" blocking="off">
+            <description>Creates the Current Claim Status chart for dashboard</description>
+            <entity namespace="vision" class="consultation/forms" id="forms">
+                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="totalscreeningsbymonth" passalong="layer" blocking="off">
+            <description>Creates the Current Claim Status chart for dashboard</description>
+            <entity namespace="vision" class="consultation/forms" id="forms">
+                
+            </entity>
+        </action>
+
+    </actions>
+</controller>

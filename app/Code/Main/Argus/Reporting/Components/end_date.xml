@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>End Date</name>
+    <description>Calendar End Date Picker</description>
+    <type>Date</type>
+    <resource id="end_date"  /> 
+</component>

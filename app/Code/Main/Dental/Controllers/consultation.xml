@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!--
+
+Teledentistry Consultation Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="consultation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="open" passalong='window_id,browse' CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Opens an existing consultation</description>
+            <entity namespace='dental' class='consultation_forms' id='form'>
+                <parameter name='id' value='form_id' source='request' required='true' />
+            </entity>
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+            <comment>NOTE THAT WE ARE USING THE NEW VIEW FOR THIS</comment>
+            <view name='new' />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="new" passalong='window_id,browse' CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>A new consultation form, and lets you attach scans</description>
+            <entity namespace='dental' class='consultation_forms' id='form'>
+                <parameter name='created_by' source='session' value='uid' required='true' />
+            </entity>
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="print" passalong='window_id,browse'>
+            <description>Creates a printable version of the teledentistry consultation form</description>
+            <entity namespace='dental' class='consultation_forms' id='form'>
+                <parameter name='id' value='form_id' source='request' required='true' />
+            </entity>
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="status" blocking="off">
+            <description>Sets the status for a particular consultation form</description>
+            <entity namespace='dental' class='consultation_forms' id='form' method="save">
+                <parameter name='id' value='form_id' source='post' required='true' />
+                <parameter name='status' source='post' required='true' />
+            </entity>
+        </action>
+        <!-- ############################################################### -->
+
+        <action name="start" passalong="window_id">
+            <description>Creates a new consultation form and starts the consultation</description>
+            <entity namespace="dental" class="consultation_forms" id="form" method="newConsultation">
+                <parameter name="member_name" required="true" source="post" />
+                <parameter name="member_id"   required="true" source="post" />
+                <parameter name="visit_date"  source="post" format="date" default="now" />
+                <parameter name="hygienist"   required="true" source="session" value='uid' />
+            </entity>
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+            <view name="new" />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="save">
+            <description>Saves form data as the user is entering it </description>
+            <entity namespace='dental' class='consultation_forms' id='form' method='save'>
+                <parameter name='id' source='post' required='true' />
+                <parameter name='consultation_date' source='post' optional='true' format="date" />
+                <parameter name='patient_dob' source='post' optional='true' format="date" />
+                <parameter name='*' source='post'  />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="load" output="JSON">
+            <description>Saves form data as the user is entering it </description>
+            <entity namespace='dental' class='consultation_forms' id='form' method='consultationInformation' response="true">
+                <parameter name='id' value="room_id" source='request' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="status">
+            <description>Changes the status of a dental packet</description>
+            <entity namespace='dental' class='consultation_forms' method='save'>
+                <parameter name='id'     source='post' required='true' />
+                <parameter name='status' source='post' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="searchpage" passalong="window_id,text">
+            <description>Performs a search on several fields</description>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="tdsearchpage" passalong="window_id,text">
+            <description>Performs a search on several fields for the teledentistry app</description>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="search">
+            <description>Performs a search on several fields</description>
+            <entity namespace="dental" response="true" class="contact_call_schedule" method="search" rows="rows" defaultRows="20" page="page" defaultPage="1">
+                <parameter name='text' source='request' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="tdsearch">
+            <description>Performs a search on teledentistry consultations using several fields</description>
+            <entity namespace="dental" response="true" class="consultation_forms" method="search" rows="rows" defaultRows="20" page="page" defaultPage="1">
+                <parameter name='text' source='request' required='true' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="form">
+            <description>A teledentistry consultation</description>
+            <entity namespace='dental' class='consultation_forms' id='form'>
+                <parameter name='id' source='post' required='true' />
+            </entity>
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="snapshot" blocking="no">
+            <description>Saves a snapshot during a dental consultation</description>
+            <entity namespace='dental' class='consultation_snapshots' method='thumbnailAndSave'>
+                <parameter name="snapshot" source="post" required="true" />
+                <parameter name="form_id" source="post" required="true" />
+                <parameter name="taken_by" source="session" value="uid" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="snapshots">
+            <description>Shows the snapshots taken during a consultation</description>
+            <entity namespace='dental' class='consultation_snapshots' id='snapshots'>
+                <parameter name="form_id" source="post" required="true" />
+            </entity>
+        </action>
+
+        <!-- ##############################################################  -->
+
+        <action name="refreshsnap" output="JSON">
+            <discription>re-gets values of snapshot</discription>
+            <entity response='true' namespace='dental' class='campaign_results' method="snapshotrefresh" />
+        </action>
+
+        <!-- ##############################################################  -->
+
+        <action name="sign">
+            <description>A person, maybe the doctor, has signed the consultation</description>
+            <entity namespace="argus" class="pin_repository" id="pin">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+                <parameter name="pin" source="post" format="password" required="true" />
+            </entity>
+            <switch id="pin" method="valid">
+                <case value="TRUE">
+                    <entity namespace="humble" class="user_identification" method="load" id="user">
+                        <parameter name="id" value="uid" source="session" required="true" />
+                    </entity>
+                </case>
+                <default>
+                    <view name="badpin" />
+                </default>
+            </switch>
+        </action>
+    </actions>
+</controller>

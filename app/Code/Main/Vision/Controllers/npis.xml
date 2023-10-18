@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+
+NPI related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="npis" use="Twig" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="list" passalong="window_id">
+            <description>Lists the NPIs associated to an address</description>
+            <entity namespace="vision" class="address/npis" id="npis" rows="rows" page="page">
+                <parameter name='address_id' source='request' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="add"  passalong="window_id">
+            <description>Adds a new NPI</description>
+            <entity namespace="vision" class="address/npis" method="save">
+                <parameter name='address_id' source='post' required='true' />
+                <parameter name='npi' source='post' required='true' />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="delete" passalong="address_id,window_id">
+            <description>Deletes an NPI</description>
+            <entity namespace="vision" class="address/npis" method="delete">
+                <parameter name='id' value='npi_id' source='post' required='true' />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="information">
+            <description>Fetches information on an NPI</description>
+            <entity namespace="vision" class="address/npis" method="nonkeysload" assign='results'>
+                <parameter name='npi' source='post' required='true' />
+            </entity>
+            <helper namespace="vision" class="npi" id="npi_helper" />
+        </action>
+
+    </actions>
+</controller>

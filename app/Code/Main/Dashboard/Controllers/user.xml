@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+
+Specific User Dashboard actions 
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="user" use="Smarty3" author=" " email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="login" passalong="user_name:required=true,user_password:format=password:required=true:value=password" event='userLogin' comment='Triggers the login workflow'>
+            <description>Launches the process that a person goes through to login</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="logout">
+            <description>Destroy session and go to the login page</description>
+            <model namespace="argus" class="user" method="logout">
+                <parameter name="id" value="uid" source="session" required="true" />
+            </model>
+            <redirect href="/index.html" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="logoff">
+            <description>Propogates the logout message to a particular persons dashboard... logging off all tabs as well</description>
+            <model namespace="dashboard" class="user" method="logoff">
+                <parameter name="uid" source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Gets the users default dashboard</description>
+            <entity namespace="humble" class="users" id='user' method='load'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="humble" class="user_identification" id='member' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="humble" class="user_identification" id='member' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace='dashboard' class='installed/apps' id='apps'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace='dashboard' class='navigation' id='navigation'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+            <model namespace='dashboard' class='charts' id='chart_library'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="configure" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Allows you to configure the widgets and graphs shown on the dashboard</description>
+            <entity namespace="argus" class="users" id='user' method='load'>
+                <parameter name='id' value='uid' source='session' required='true' />
+            </entity>
+            <entity namespace="dashboard" class="chart_packages" id="available_charts" >
+                <parameter name='user_id' value='uid' source='session' required='true' />
+            </entity>
+            <entity namespace="dashboard" class="available_apps" id="apps" >
+                <parameter name='user_id' value='uid' source='session' required='true' />
+            </entity>
+            <model namespace='dashboard' class='charts' id='chart_library'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </model>            
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="appsave">
+            <description>Allows you to configure the widgets and graphs shown on the dashboard</description>
+            <entity namespace="dashboard" class="available_apps" id="apps" method='installApps'>
+                <parameter name='user_id' value='uid' source='session' required='true' />
+                <parameter name='data' source='post' required='true' />
+            </entity>
+            <chain>
+                <action name="home" />
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="save">
+            <description>Allows you to configure the widgets and graphs shown on the dashboard</description>
+            <model namespace="dashboard" class="charts" method='saveCharts'>
+                <parameter name='user_id' value='uid' source='session' required='true' />
+                <parameter name='data' source='post' required='true' />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="info" output="JSON">
+            <description>A hook for the node.js side to get user information (just name and gender)</description>
+            <entity namespace="dashboard" class="user" method="info" response="true">
+                <parameter name="uid" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="whois" blocking="off" output="JSON">
+            <entity namespace="humble" class="user_identification" method="load" wrapper="json_encode" response="true">
+                <parameter name="id" value="from" source="request" required="true" />
+            </entity>
+        </action>
+        
+    </actions>
+</controller>

@@ -1,0 +1,70 @@
+({
+	form:
+	{
+		id: 		"new-project-report-form-&&pid&&",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"report_name-&&pid&&",
+			longname:		"Report Name",
+			title:			"Name of new report",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"width: 500px; color: #333"
+		},
+		{
+			active:			true,
+			id: 			"project_id-&&pid&&",
+			longname:		"Project Id",
+			title:			"The Project Id",
+                        type:                   "hidden",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			""
+		},                
+		{
+			active:			true,
+			id: 			"report_description-&&pid&&",
+			longname:		"Report Description",
+			title:			"Description of this report",
+                        type:                   "textarea",
+			required:		true,
+			force:			true,
+                        maxchars:               255,
+			classname:		"",
+			style:			"width: 500px; height: 80px; color: #333"
+		},
+		{
+			active:			true,
+			id: 			"new_report_submit-&&pid&&",
+			longname:		"Report Submit Button",
+			title:			"Click to create a new report",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333; color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['new-report-form-&&pid&&'].validate()) {
+                                (new EasyAjax('/argus/reports/new')).packageForm('new-project-report-form-&&pid&&').then(function (response) {
+                                    $('#sub-container').html(response);
+                                }).post();
+                            }
+                        }
+		}                
+                
+	]
+})

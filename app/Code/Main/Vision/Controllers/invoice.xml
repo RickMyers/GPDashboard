@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!--
+
+Invoice actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="invoice" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="review" blocking="off" passalong="window_id">  
+            <description>Review the available offices to send an invoice to</description>
+            <entity namespace="vision" class="consultation/forms" id="noncon">
+                <parameter name='year' source='request' format='year' default='currentYear' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="create" output="JSON" blocking="off">
+            <description>Actually creates the </description>
+            <model namespace="vision" class="invoice" response="true" method="create">
+                <parameter name="forms" format="json" source="request" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="view" blocking="off" passalong="window_id,action">
+            <description>View a previously created invoice</description>
+            <entity namespace="vision" class="invoices" id="header">
+                <parameter name="id" value="invoice_id" source="request"/>
+            </entity>
+            <entity namespace="vision" class="invoice/forms" id="forms">
+                <parameter name="invoice_id" source="request" />
+            </entity>            
+            <view name="edit" />
+        </action>
+        
+                        
+        <!-- ############################################################### -->        
+
+        <action name="edit" blocking="off" passalong="forms_text,window_id,action">
+            <description>Edit the invoice recipients fields</description>
+            <entity namespace="vision" class="invoices" id="header">
+                <parameter name="id" value="invoice_id" source="request"/>
+            </entity>
+            <entity namespace="vision" class="invoice/forms" id="forms">
+                <parameter name="invoice_id" source="request" />
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->        
+                
+        <action name="save" blocking="off">
+            <description>Active saving is in effect here</description>
+            <entity namespace="vision" class="invoices" method="save">
+                <parameter name="id" value="invoice_id" source="post" required="true" />  
+                <parameter name="invoice_date" source="post" format="date" optional="true" />
+                <parameter name="*" source="post" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+                
+        <action name="update" blocking="off">
+            <description>Updates a row of invoice member data</description>
+            <entity namespace="vision" class="invoice/forms" method="save">
+                <parameter name="id" value="invoice_row_id" source="request" required="true" />
+                <parameter name="*"  source="request" />
+            </entity>
+        </action>
+                
+        <!-- ############################################################### -->        
+                
+        <action name="delete">
+            <description>Actually, we didn't need that invoice after all</description>
+            <entity namespace="vision" class="invoices" method="delete">
+                <parameter name="id" source="post" required="true" />
+            </entity>            
+        </action>                
+        
+        <!-- ############################################################### -->        
+        
+        <action name="achpage" blocking="off">
+            <description>This adds the ACH information to the printed invoice</description>
+            <entity namespace="argus" class="miscellaneous">
+                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name='removeform' blocking='off'>
+            <description>Will lift the PCP portal hold flag so that the form wont appear on the invoice list</description>
+            <entity namespace='vision' class='consultation/forms' method='save'>
+                <parameter name='id' value='form_id' source='post' required='true' />
+                <parameter name='pcp_portal_withhold' source='post' default='N' />
+            </entity>
+            <chain>
+                <action name='review' />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->        
+        <action name="print" blocking="off" passalong="action">
+            <description>We are going to print some page headers, and then move to the edit action, but passing the value of 'print' in the 'action' parameter</description>
+            <chain>
+                <action name="edit" />
+                <action name="achpage" />
+            </chain>           
+        </action>
+        
+        <!-- ############################################################### -->        
+                
+        <action name="list" blocking="off" passalong="window_id">
+            <description>List all invoices with pagination</description>
+            <entity namespace="vision" class="invoices" id="invoices" rows="rows" page="page" defaultRows="30" defaultPage="1">
+                
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->        
+                
+        <action name="paid">
+            <description>When the invoice is paid, it will be marked completed and all members forms will be released to the PCP portal</description>
+            <entity namespace="vision" class="invoices" method="save">
+                <parameter name="id" value="invoice_id" required="true" source="post" />
+                <parameter name="paid" source="post" default="Y" />
+            </entity>
+            <model namespace="vision" class="invoice" method="paid">
+                <parameter name="invoice_id" source="post" required="true" />
+            </model>
+        </action>
+    </actions>
+</controller>

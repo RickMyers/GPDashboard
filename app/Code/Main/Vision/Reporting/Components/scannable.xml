@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<component>
+    <name>Scannable/Unscannable</name>
+    <description>Whether a members eyes were scannable</description>
+    <type>Select</type>
+    <resource id="member_unscannable" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "Scannable",
+                "value": "N"
+            },
+            {
+                "text": "Unscannable",
+                "value": "Y"
+            }
+        ]
+    </content>    
+</component>
+
+

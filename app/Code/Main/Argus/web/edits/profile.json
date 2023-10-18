@@ -1,0 +1,172 @@
+({
+    /* for examples on how to use form edits, please see the help video */
+	form:
+	{
+		id: 		"argus-settings-form",
+		drawme:		false,
+		action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"id",
+			longname:		"User Id",
+			title:			"",
+            type:           "hidden",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			""
+		},
+		{
+			active:			true,
+			id: 			"email",
+			longname:		"E-mail Address",
+			title:			"User E-mail Address",
+            type:           "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"width: 300px; padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"appellation_id",
+			longname:		"Appellation",
+			title:			"User title (also known as an Appellation)",
+                         type:                  "select",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"gender",
+			longname:		"Gender",
+			title:			"User Gender (leave blank if not sure)",
+                         type:                  "select",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},                   
+		{
+			active:			true,
+			id: 			"first_name",
+			longname:		"First Name",
+			title:			"User First Name",
+                         type:           "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"last_name",
+			longname:		"Last Name",
+			title:			"User Last Name",
+            type:           "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"preferred_name",
+			longname:		"Preferred Name",
+			title:			"User Preferred Name",
+            type:           "text",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"maiden_name",
+			longname:		"Maiden Name",
+			title:			"Maiden Name, if applicable",
+            type:           "text",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"use_preferred_name",
+			longname:		"Use Preferred Name",
+			title:			"Use Preferred Name Flag",
+            type:           "checkbox",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"date_of_birth",
+			longname:		"Date of Birth",
+			title:			"Date of Birth",
+            type:           "text",
+            mask:           "####-#^-#^",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"user_pin",
+			longname:		"User Pin",
+			title:			"Numeric Pin",
+                        type:                   "text",
+                        mask:                   "######",
+                        minlength:              "4",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; color: #333; border-radius: 2px; width: 100px; text-align: center"
+		},                
+                {
+			active:			true,
+			id: 			"waiting_room_name",
+			longname:		"Waiting Room Name",
+			title:			"A custom waiting room name",
+                        type:                   "text",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; color: #333; border-radius: 2px"
+		},                
+		{
+			active:			true,
+			id: 			"settings-submit",
+			longname:		"Settings Save",
+			title:			"Click To Save These Settings",
+            type:           "text",
+			required:		false,
+			force:			false,
+            onclick:        function (evt) {
+                if (Edits['argus-user-settings'].validate()) {
+                    (new EasyAjax('/argus/user/save')).packageForm('argus-settings-form').then(function (response) {
+                        window.location.reload();
+                    }).post();
+                }
+            },
+			classname:		"",
+			style:			" padding: 2px; border: 1px solid #aaf; border-radius: 2px"
+		}
+
+	]
+})

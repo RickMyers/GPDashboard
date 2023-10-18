@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<component>
+    <name>Events</name>
+    <description>A list of events by year</description>
+    <type>Select</type>
+    <resource action="/scheduler/event/list" id="event_id" text="summary" value="id" on="year" /> 
+</component>
+
+

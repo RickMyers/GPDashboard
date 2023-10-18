@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!--
+
+Scheduling vision events
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="schedule" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="screening" passalong="event_id">
+            <description>Schedules a screening event</description>
+            <entity namespace="scheduler" class="events" id="event">
+                <parameter name="id" value="event_id" source="post" required="true" />
+            </entity>
+            <entity namespace="vision" class="event_members" id="members">
+                <parameter name="event_id" source="post" required="true" />
+            </entity>            
+            <entity namespace="vision" class="clients" id="clients" orderby="client=ASC" />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="listmembers" passalong="event_id">
+            <description>Lists the members attending an event</description>
+            <entity namespace="vision" class="event_members" id="members" >
+                <parameter name="event_id" source="post" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="memberupload">
+            <description>Schedules a screening event</description>
+            <helper namespace="vision" class="data" id="event" >
+                <parameter name="event_id" source="post" required="true" />
+                <parameter name="members"  source="file" required="true" />
+            </helper>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="location" output="JSON">
+            <description>Records a location value with a corresponding health plan</description>
+            <helper response="true" namespace="vision" class="event" method="recordLocation" id="location">
+                <parameter name="health_plan"   source="post" required="true" />
+                <parameter name="address"       source="post" required="true" />
+                <parameter name="city"          source="post" required="true" />
+                <parameter name="state"         source="post" required="true" />
+                <parameter name="zip_code"      source="post" required="true" />
+            </helper>
+            <entity namespace="vision" class="locations" id="locations"></entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="locations" output="JSON">
+            <description>Gets a list of current locations associated to a Health Plan</description>
+            <entity namespace="vision" class="locations" id="locations" orderby="zip_code=ASC,address1=ASC">
+                <parameter name="health_plan_id" source="request" default="" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="edit" blocking='off'>
+            <description>The Vision Screening/Scanning event edit screen</description>
+            <entity namespace="vision" class="clients" id="client" />
+            <entity namespace="scheduler" class="events" id="event">
+                <parameter name="id" source="post" required="true" />
+            </entity>  
+            <entity namespace="argus" class="user/roles" id="users">
+            </entity>       
+            <entity namespace="vision" class="event/members" id="members">
+                <parameter name="event_id" value="id" source="post" required="true" />
+            </entity>                           
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="remove">
+            <description>A member is being removed from the event participants list</description>
+            <entity namespace="vision" class="event_members" method="nonkeysdelete">
+                <parameter name="event_id" source="post" required="true" />
+                <parameter name="id" source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="listmembers" />
+            </chain>
+        </action>   
+        
+        <!-- ############################################################### -->        
+
+        <action name="add">
+            <description>Adds a member to an event</description>
+            <entity namespace="vision" class="event/members" method="save">
+                <parameter name="event_id"          source="post" required="true" />
+                <parameter name="member_id"         source="post" required="true" value="member_number" />                
+                <parameter name="member_name"       source="post" optional="true" />     
+                <parameter name="addon"             source="post" optional="true" />
+                <parameter name="result"            source="post" optional="true" />
+                <parameter name="outcome"           source="post" optional="true" />
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->  
+        
+        <action name="addmember" namespace="vision" class="EventMembers" passalong="member_number,health_plan" comment="Note that we will be calling the execute() method on the vision/EventMembers model to handle this">
+            <description>A member is being added from the event participants list, we are using the rarely used 'execute' feature to handle this</description>
+            <entity namespace="vision" class="event/members" id="member">
+                <parameter name="event_id"          source="post" required="true" />
+                <parameter name="member_id"         source="post" required="true" value="member_number" />                
+                <parameter name="hba1c"             value="member_hba1c"      source="post" optional="true" />
+                <parameter name="hba1c_date"        value="member_hba1c_date" source="post" optional="true" format="date" />
+                <parameter name="fbs"               value="member_fbs"        source="post" optional="true" />
+                <parameter name="fbs_date"          value="member_fbs_date"   source="post" optional="true" format="date" />
+                <parameter name="diabetes_type"     source="post" optional="true" />
+                <parameter name="addon"             source="post" optional="true" />
+                <parameter name="result"            source="post" optional="true" />
+                <parameter name="outcome"           source="post" optional="true" />
+            </entity>
+            <chain>
+                <action name="listmembers" />
+            </chain>
+        </action>        
+        
+        <!-- ############################################################### -->   
+        
+        <action name="test" blocking="off">
+            <description>Runs some tests against an event schedule to make sure that it can be parsed</description>
+            <helper namespace="vision" class="event" method="test" response="true">
+                <parameter name="schedule" source="file" required="true" />
+            </helper>
+        </action>
+        
+        <!-- ############################################################### -->   
+        
+        <action name="cancel" >
+            <description>Sets the event to non active</description>
+            <model namespace="vision" class="events" method="cancelEvent">
+                <parameter name="event_id" source="post" required="true" />
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </model>
+        </action>
+        
+    </actions>
+</controller>

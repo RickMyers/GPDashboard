@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+
+Main documents actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="documents" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home">
+            <description>The home page...</description>
+            <entity namespace="librio" class="projects" id='projects'>
+                
+            </entity>            
+            <helper namespace="librio" class="data">
+                <parameter name='uid' source='session' value='uid' required="true" />
+            </helper>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

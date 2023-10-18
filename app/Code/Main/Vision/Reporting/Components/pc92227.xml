@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<component>
+    <name>Procedure Code 92227</name>
+    <description>Options for the PC 92227</description>
+    <type>Select</type>
+    <resource id="pc_92227" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "Present",
+                "value": "Y"
+            },
+            {
+                "text": "Not-Present",
+                "value": ""
+            }
+        ]
+    </content>    
+</component>

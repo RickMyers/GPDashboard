@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<config>
+    <librio>
+        <version>0.0.1</version>
+        <title>Librio</title>
+        <description>Document and Artifact Management</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Librio</name>
+            <weight>50</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>        
+        <structure>
+            <models>
+                <source>Librio/Models</source>
+            </models>
+            <config>
+                <source>Librio/etc</source>
+            </config>
+            <helpers>
+                <source>Librio/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Librio/Controllers</source>
+                <cache>Librio/Controllers_Cache</cache>
+            </controllers>
+            <schema>
+                <install>Librio/Schema/Install</install>
+                <update>Librio/Schema/Update</update>
+                <layout>Librio/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Librio/etc</source>
+            </configuration>
+            <views>
+                <source>Librio/Views</source>
+                <cache>Librio/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Librio/Images</source>
+                <cache>Librio/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Librio/Entities</source>
+            </entities>
+            <RPC>
+                <source>Librio/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Librio/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>librio_</prefix>
+            <mongodb>librio</mongodb>
+            <entities>
+                <projects />
+                <project_categories />
+                <project_documents />
+                <project_document_types />
+                <project_document_history />
+                <permissions />
+                <user_permissions />
+                <project_permissions />
+                <project_role_permissions />
+            </entities>
+        </orm>
+
+        <web>
+            <edits>
+                <project>Librio/web/edits/project.json</project>
+            </edits>
+            <dashboard>
+                <js>
+                    <source>Librio/web/js/Librio.js</source>
+                </js>
+                <css>
+                    <source>Librio/web/css/Librio.css</source>
+                </css>
+            </dashboard>
+        </web>
+    </librio>
+</config>

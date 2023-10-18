@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<component>
+    <name>Event Type</name>
+    <description>Types of events that we handle</description>
+    <type>Select</type>
+    <resource action="/scheduler/event/types" id="event_type_id" text="type" value="id" /> 
+</component>
+

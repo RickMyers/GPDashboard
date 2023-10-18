@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+
+SFTP related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="sftp" use="Smarty3" author="Rick Myers" email="rick@humbleprogramming.com">
+    <actions>
+        <action name="home">
+            <description>The initial home page</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="upload" blocking="OFF" event="fileToBeSentSFTPUploaded" comment="A file intended to send to a remote site by SFTP has been uploaded">
+            <description>Triggers the event to handle an uploaded file</description>
+            <helper namespace="argus" class="data" id="uploader">
+                <parameter name="sftp_file" source="file" required="true" /> 
+            </helper>
+        </action>
+        
+    </actions>
+</controller>

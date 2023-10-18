@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+
+App Install or Un-install
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="app" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="install">
+            <description>Subscribes to an app</description>
+            <entity namespace='dashboard' class='installed/apps' method='save'>
+                <parameter name='user_id' source='session' value='uid' required="true" />
+                <parameter name='app_id' source='post' required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="uninstall">
+            <description>Unsubscribe to an app</description>
+            <entity namespace='dashboard' class='installed/apps' method='nonkeysdelete'>
+                <parameter name='user_id' source='session' value='uid' required="true" />
+                <parameter name='app_id' source='post' required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="new" passalong="window_id" blocking="off" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>The page that allows you to create a new app</description>
+            <entity namespace="argus" class="roles" id="roles" orderby="name=ASC" />
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="create" blocking="off">
+            <description>The action that actually creates the new app</description>
+            <entity assign="app_id" namespace="dashboard" class="desktop/available/apps" method="save">
+                <parameter name="app" value="new_app_name" required="true" source="post" />
+                <parameter name="description" value="new_app_description" source="post" required="true" />
+                <parameter name="url" value="new_app_uri" required="true" source="post" />
+                <parameter name="component" value="new_app_component" default="" source="post" />
+                <parameter name="author" value="uid" source="session" required="true" />
+            </entity>
+            <helper namespace="dashboard" class="apps" method="processIconImages">
+                <parameter name="app_id" source="assign" default="" />
+                <parameter name="icon"   value="new_app_icon"  source="file"  />
+                <parameter name="minimized" value="new_app_minimized"  source="file"  />
+            </helper>            
+            <model namespace="dashboard" class="apps" method="assignAppRoles">
+                <parameter name="app_id" source="assign" default="" />
+                <parameter name="roles"  source="post"   required="true" />
+            </model>
+        </action>
+        
+    </actions>
+</controller>

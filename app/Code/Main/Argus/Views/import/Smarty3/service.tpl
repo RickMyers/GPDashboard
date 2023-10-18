@@ -1,0 +1,3 @@
+{
+    "filename": "{$import->getFilename()}"
+}

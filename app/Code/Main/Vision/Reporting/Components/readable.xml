@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<component>
+    <name>Readable/Unreadable</name>
+    <description>Whether the images were readable by the OD</description>
+    <type>Select</type>
+    <resource id="images_unreadable" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "Unreadable",
+                "value": "Y"
+            }
+        ]
+    </content>    
+</component>

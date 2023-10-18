@@ -1,0 +1,3 @@
+SE*{{number_of_segments}}*{$transaction_control_number}~
+GE*1*{$control_group_number}~
+IEA*1*{$group_number}~

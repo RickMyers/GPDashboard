@@ -1,0 +1,106 @@
+({
+    form:
+    {
+        id: 		"dashboard_feature_form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"dashboard_feature_module",
+            longname:	"Dashboard Module",
+            type:       "combo",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },
+        {
+            active:	true,
+            id: 	"dashboard_feature",
+            longname:	"Dashboard Feature",
+            type:       "combo",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },
+        {
+            active:	true,
+            id: 	"dashboard_subject",
+            longname:	"Short Description",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },        
+        {
+            active:	true,
+            id: 	"feature_request_type",
+            longname:	"Request Type",
+            type:       "hidden",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	""
+        },        
+        {
+            active:	true,
+            id: 	"dashboard_feature_priority",
+            longname:	"Priority",
+            type:       "select",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },        
+        {
+            active:	true,
+            id: 	"dashboard_feature_description",
+            longname:	"Feature Description",
+            type:       "textarea",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        }, 
+        {
+            active:	true,
+            id: 	"feature_brd",
+            longname:	"Requirements Document",
+            type:       "file",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },         
+        {
+            active:	true,
+            id: 	"dashboard_feature_submit",
+            longname:	"New Dashboard Feature Submit Button",
+            onclick:    function () {
+                if (Edits['dashboard-feature-request'].validate()) {
+                    (new EasyAjax('/dashboard/feature/request')).packageForm('dashboard_feature_form').then(function (response) {
+                        Argus.dashboard.feature.win._close();
+                    }).post();
+                }
+            },
+            title:	"Click to request this feature",
+            type:       "button",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"background-color: cadetblue; color: ghostwhite; padding: 2px 5px; border: 1px solid darkblue; border-radius: 2px"
+        }          
+    ]
+})
+

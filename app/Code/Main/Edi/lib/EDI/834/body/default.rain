@@ -1,0 +1,16 @@
+INS*{$is_subscriber}*{$dependent_who}*030*XN*A***FT*{$student_flag}~
+REF*0F*{$id_card_number}~
+REF*1L*{$policy_number}~
+{if="$dependent_code!='01'"}REF*17*{$dependent_code}~{/if}
+NM1*IL*1*{$last_name}*{$first_name}*{$middle_name}***{if="$ssn"}34*{$ssn}{else}***{/if}~
+{if="$phone_number"}PER*IP**HP*{$phone_number}~{/if}
+N3*{$address}~N4*{$city}*{$state}*{$zip_code}~
+DMG*D8*{$DOB}*{$gender}***~
+{if="$dental_flag=='Y'"}HD*030**DEN*{$plan_strategy}*{$coverage_level}~
+DTP*348*D8*{$effective_date}~
+DTP*349*D8*{$term_date}~REF*CE*{$description}~{/if}
+{if="$vision_flag=='Y'"}HD*030**{$LOB}*{$custom_LOB}*{$coverage_level}~
+DTP*348*D8*{$effective_date}~
+DTP*349*D8*{$term_date}~
+REF*CE*{$plan_strategy}~
+{/if}

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+
+Retinal scan consultation actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="retina" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="image">
+            <description>Views an image of a retina scan</description>
+            <entity namespace="humble" class="user" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="consultation">
+            <description>Builds the consultation form</description>
+        </action>
+        
+        <!-- ############################################################### -->     
+           
+        <action name="scans" blocking="off">
+            <description>Lists that scans attached to the passed form</description>
+            <entity namespace='vision' class='retina_scans' id='scans'>
+                <parameter name='form_id'   source='post' required='true' />
+            </entity>                      
+        </action>
+
+        <!-- ############################################################### -->     
+        
+        <action name="scan" passalong="window_id"> 
+            <description>Attaches a retina scan to a medical form</description>
+            <model namespace='vision' class='scans' method='attachRetinaScan'>
+                <parameter name='scan'      source='file'    default='' />
+                <parameter name='uid'       source='session' default='' />
+                <parameter name='form_id'   source='post'    required='true' />
+            </model>   
+            <chain>
+                <action name="scans" />
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->        
+        
+        <action name="encryptedscans" passalong="window_id"> 
+            <description>Attaches a retina scan to a medical form</description>
+            <model namespace='vision' class='scans' method='attachEncryptedRetinaScans'>
+                <parameter name='scans'     source='post' format='JSON'    default='' />
+                <parameter name='uid'       source='session' default='' />
+                <parameter name='form_id'   source='post'    required='true' />
+            </model>   
+            <chain>
+                <action name="scans" />
+            </chain>
+        </action>
+                
+        <!-- ############################################################### -->        
+        
+        <action name="analyze" passalong="form_id,scan_id,window_id">
+            <description>Presents the Doctor with an analyzation tool for reviwing retina scans</description>
+            <entity namespace="vision" class="consultation_forms" id="form">
+                <parameter name="id" value="form_id" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->        
+                        
+        <action name="remove" passalong="window_id">
+            <description>Removes a scanned image from the consultation form</description>
+            <entity namespace='vision' class='retina_scans' method='delete'>
+                <parameter name='id'    value="scan_id"  source='post'    required='true' />
+            </entity>   
+            <chain>
+                <action name="scans" />
+            </chain>
+        </action>
+        
+    </actions>
+</controller>

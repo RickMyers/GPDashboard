@@ -1,0 +1,9 @@
+CREATE TABLE vision_ipas
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	ipa CHAR(128) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	user_id INT DEFAULT NULL,
+	PRIMARY KEY (id),
+        unique key (ipa)   
+);

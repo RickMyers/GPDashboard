@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<config>
+    <scheduler>
+        <version>0.0.1</version>
+        <title>Team Scheduler</title>
+        <description>Scheduler App</description>
+        <author>
+            <name>Richard Myers</name>
+            <email>rick@enicity.com</email>
+        </author>
+        <module>
+            <name>Scheduler</name>
+            <weight>50</weight>
+            <required>N</required>
+            <workflow>N</workflow>
+            <package>Main</package>
+            <use>Smarty3</use>
+        </module>
+        <structure>
+            <models>
+                <source>Scheduler/Models</source>
+            </models>
+            <config>
+                <source>Scheduler/etc</source>
+            </config>
+            <helpers>
+                <source>Scheduler/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Scheduler/Controllers</source>
+                <cache>Scheduler/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Scheduler/Schema/Install</install>
+                <update>Scheduler/Schema/Update</update>
+                <layout>Scheduler/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Scheduler/etc</source>
+            </configuration>
+            <views>
+                <source>Scheduler/Views</source>
+                <cache>Scheduler/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Scheduler/Images</source>
+                <cache>Scheduler/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Scheduler/Entities</source>
+            </entities>
+            <RPC>
+                <source>Scheduler/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Scheduler/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>scheduler_</prefix>
+            <mongodb>scheduler</mongodb>
+            <entities>
+                <availability />
+                <events polyglot="Y" />
+                <event_dates />
+                <event_participants />
+                <event_locations />
+                <event_location_types />
+                <event_types />
+                <event_roles />
+                <user_events />
+            </entities>
+        </orm>
+        <events>
+            
+        </events>
+        <web>
+            <edits>
+                <eventtypes>Scheduler/web/edits/eventtypes.json</eventtypes>
+                <eventlist>Scheduler/web/edits/eventlist.json</eventlist>
+            </edits>
+            <dashboard>
+                <js>
+                    <source weight="8">Scheduler/web/js/Scheduler.js</source>
+                    <source weight="9">Scheduler/web/js/Calendar.js</source>
+                </js>
+                <css>
+                    <source>Scheduler/web/css/Scheduler.css</source>
+                </css>
+            </dashboard>
+        </web>
+    </scheduler>
+</config>

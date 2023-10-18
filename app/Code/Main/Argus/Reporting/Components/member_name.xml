@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>Member Name</name>
+    <description>Member Name Field</description>
+    <type>Text</type>
+    <resource id="member_name" /> 
+</component>

@@ -1,0 +1,94 @@
+({
+    form:
+    {
+        id: 		"ipa_grouping_form-&&window_id&&",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"ipa_group_id-&&window_id&&",
+            longname:		"IPA Grouping",
+            title:		"",
+            type:               "combo",
+            required:		true,
+            force:		true,
+            onchange:           function (evt) {
+                if (evt.isTrusted && $(evt.target).val()) {
+                    var id = '#'+evt.target.id+" option:selected";
+                    $('#current_group_id-&&window_id&&').val($(id).val());
+                    $('#current_ipa_group-&&window_id&&').html($(id).text());
+                    (new EasyAjax('/vision/ipagroup/list')).add('window_id','&&window_id&&').add('group_id',$('#current_group_id-&&window_id&&').val()).then(function (response) {
+                        $('#ipa_group_members-&&window_id&&').html(response);
+                    }).post();
+                }
+            },
+            classname:		"",
+            style:		"padding: 2px"
+        },
+        {
+            active:		true,
+            id: 		"ipa_id-&&window_id&&",
+            longname:		"IPA Grouping",
+            title:		"",
+            type:               "select",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		"padding: 2px"
+        },
+        {
+            active:		true,
+            id: 		"ipa_group_create_button-&&window_id&&",
+            longname:		"New IPA Submit",
+            title:		"Click to create a new IPA Group",
+            type:               "button",
+            required:		false,
+            force:		false,
+            classname:		"",
+            onclick:            function (evt) {
+                if (Edits['ipa_grouping_form-&&window_id&&'].validate()) {
+                    var ao = new EasyAjax('stuff');
+                    var group = ao.getValue('ipa_group_id-&&window_id&&');
+                    (new EasyAjax('/vision/ipagroup/add')).add('window_id','&&window_id&&').add('group',group).then(function (response) {
+                        response = JSON.parse(response);
+                        EasyEdits.populateSelectBox('ipa_group_id-&&window_id&&',response);
+                        $('#current_ipa_group-&&window_id&&').html(group);
+                        for (var i=0; i>response.length; i++) {
+                            if (response[i].text == group) {
+                                $('#current_group_id-&&window_id&&').val(response[i].value);
+                            }
+                        }
+                    }).post();
+                } 
+            },
+            style:		"width: 90px; padding: 2px"
+        },
+        {
+            active:		true,
+            id: 		"add_ipa_button-&&window_id&&",
+            longname:		"Add IPA Button",
+            title:		"Click to add this IPA to the group",
+            type:               "button",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		"width: 90px; padding: 2px",
+            onclick:            function (evt) {
+                (new EasyAjax('/vision/ipagroup/associate')).add('window_id','&&window_id&&').add('ipa_id',$('#ipa_id-&&window_id&&').val()).add('group_id',$('#current_group_id-&&window_id&&').val()).then(function (response) {
+                    $('#ipa_group_members-&&window_id&&').html(response);
+                }).post();
+        
+            }
+        }       
+    ]
+})
+
+

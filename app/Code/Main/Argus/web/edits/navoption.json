@@ -1,0 +1,104 @@
+({
+    form:
+    {
+        id: 		"new-navigation-option-form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"new_navigation_option_image",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"width: 100%; border: 1px solid #aaf; padding: 2px; border-radius: 2px; color: #333"
+        },
+        {
+            active:		true,
+            id: 		"new_navigation_option_title",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"width: 100%; border: 1px solid #aaf; padding: 2px; border-radius: 2px; color: #333"
+        },
+        {
+            active:		true,
+            id: 		"new_navigation_option_class",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		"width: 100%; border: 1px solid #aaf; padding: 2px; border-radius: 2px; color: #333"
+        } ,
+        {
+            active:		true,
+            id: 		"new_navigation_option_method",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"width: 100%; border: 1px solid #aaf; padding: 2px; border-radius: 2px; color: #333"
+        }  
+        ,
+        {
+            active:		true,
+            id: 		"new_navigation_option_style",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		"width: 100%; border: 1px solid #aaf; padding: 2px; border-radius: 2px; color: #333"
+        },
+        {
+            active:		true,
+            id: 		"new_navigation_option_image_style",
+            longname:		"",
+            title:		"",
+            type:               "text",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		"width: 100%; border: 1px solid #aaf; padding: 2px; border-radius: 2px; color: #333"
+        },
+        {
+            active:		true,
+            id: 		"new_navigation_option_submit",
+            longname:		"",
+            title:		"",
+            type:               "button",
+            value:              " Add Option ",
+            required:		false,
+            force:		false,
+            onclick:            function (evt) {
+                if (Edits['new-nav-option-form'].validate()) {
+                    (new EasyAjax('/argus/navigation/navoption')).packageForm('new-navigation-option-form').then(function (response) {
+                        $('#sub-container').html(response);
+                    }).post();
+                }
+            },
+            classname:		"",
+            style:		"color: #333"
+        }  
+        
+    ]
+})

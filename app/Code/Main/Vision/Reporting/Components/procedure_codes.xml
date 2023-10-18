@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<component>
+    <name>Procedure Codes</name>
+    <description>Available Procedure Codes</description>
+    <type>Select</type>
+    <resource id="procedure_code" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "S3000",
+                "value": "pc_s3000"
+            },
+            {
+                "text": "G2102",
+                "value": "pc_g2102"
+            },
+            {
+                "text": "2023F",
+                "value": "pc_2023f"
+            },
+            {
+                "text": "3072F",
+                "value": "pc_3072f"
+            },
+            {
+                "text": "5010F",
+                "value": "pc_5010f"
+            },
+            {
+                "text": "G8397",
+                "value": "pc_g8397"
+            },
+            {
+                "text": "92227",
+                "value": "pc_92227"
+            },
+            {
+                "text": "2033F",
+                "value": "pc_2033f"
+            },
+            {
+                "text": "92228",
+                "value": "pc_92228"
+            },
+            {
+                "text": "G2104",
+                "value": "pc_g2104"
+            }
+        ]
+    </content>    
+</component>
+

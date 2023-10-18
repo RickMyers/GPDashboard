@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<component>
+    <name>Date Of Service</name>
+    <description>Calendar Date Picker</description>
+    <type>Date</type>
+    <resource id="date"  /> 
+</component>
+

@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config>
+    <ehealth>
+        <version>0.0.1</version>
+        <title>eHealth Integration</title>
+        <description>Integration points for ehealth</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>EHealth</name>
+            <weight>70</weight>
+            <use>Smarty3</use>
+            <package>Integration</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>EHealth/Models</source>
+            </models>
+            <config>
+                <source>EHealth/etc</source>
+            </config>
+            <helpers>
+                <source>EHealth/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>EHealth/Controllers</source>
+                <cache>EHealth/Controllers_Cache</cache>
+            </controllers>
+            <schema>
+                <install>EHealth/Schema/Install</install>
+                <update>EHealth/Schema/Update</update>
+                <layout>EHealth/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>EHealth/etc</source>
+            </configuration>
+            <views>
+                <source>EHealth/Views</source>
+                <cache>EHealth/Views_Cache</cache>
+            </views>
+            <images>
+                <source>EHealth/Images</source>
+                <cache>EHealth/Images_Cache</cache>
+            </images>
+            <entities>
+                <source>EHealth/Entities</source>
+            </entities>
+            <RPC>
+                <source>EHealth/RPC</source>
+            </RPC>
+            <frontend>
+                <source>EHealth/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>ehealth_</prefix>
+            <mongodb>ehealth</mongodb>
+            <entities>
+            </entities>
+        </orm>
+        <web>
+            <dashboard>
+                <js>
+                    <source weight="60">EHealth/web/js/EHealth.js</source>
+                </js>
+            </dashboard>
+        </web>
+    </ehealth>
+</config>

@@ -1,0 +1,105 @@
+---
+prestigeEligibilityStatus:
+  url             : /esb/prestige/eligibility
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [memberId]
+prestigeMultipleEligibilityStatus:
+  url             : /esb/prestige/multieligibility
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [memberIds]  
+hedisDentalManagerQueues:
+  url             : /dental/manager/queues
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [oh,ua,qd,cm,ra,rt,rows,campaign_id]
+hedisDentalHygenistQueues:
+  url             : /dental/hygenist/queues
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [hcc,hcm,hqd,hoh,rows,campaign_id]
+teledentistryQueues:
+  url             : /dental/queue/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [dental_new,dental_inprogress,dental_completed,rows]   
+teledentistryArchiveQueues:
+  url             : /dental/queue/archive
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [archiveq,rows]   
+campaign3Progress:
+  url             : /dental/campaigns/progress
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+            campaign_id : 5
+  method          : GET     
+hygenistCampaignProgress:
+  url             : /dental/hygenist/progress
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :            
+            campaign_id : 6
+  method          : GET    
+hygenistContactCompletions:
+  url             : /dental/hygenist/completions
+  api-key         : 
+  api-var         : 
+  arguments       :  
+            layer :            
+            campaign_id : 6
+  method          : GET      
+averageHygenistCallDuration:
+  url             : /dental/hygenist/calldurations
+  api-key         : 
+  api-var         : 
+  arguments       : [layer]
+  method          : GET 
+completedCounselings:
+  url             : /dental/hygenist/counselings
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+            campaign_id : 6
+  method          : GET     
+completedContacts:
+  url             : /dental/hygenist/contacts
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+            campaign_id : 6
+  method          : GET       
+campaignCallQueueStatus  :
+  url             : /dental/campaigns/status
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+            campaign_id : 6
+  method          : GET
+campaignHygenistWorkloads  :
+  url             : /dental/campaigns/workloads
+  api-key         : 
+  api-var         : 
+  arguments       : [layer]
+  method          : GET    
+hygenistAvailable  :
+  url             : /dental/hygenist/hygenistavailable
+  api-key         : 
+  api-var         : 
+  arguments       :  
+            layer :            
+            campaign_id : 6
+  method          : GET   

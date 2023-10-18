@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<config>
+    <authorize>
+        <version>0.0.1</version>
+        <title>Authorize.net Interactions</title>
+        <description>Manages the RPC calls and additional functionality</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Authorize</name>
+            <weight>70</weight>
+            <use>Smarty3</use>
+            <package>Integration</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Authorize/Models</source>
+            </models>
+            <config>
+                <source>Authorize/etc</source>
+            </config>
+            <helpers>
+                <source>Authorize/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Authorize/Controllers</source>
+                <cache>Authorize/Controllers_Cache</cache>
+            </controllers>
+            <schema>
+                <install>Authorize/Schema/Install</install>
+                <update>Authorize/Schema/Update</update>
+                <layout>Authorize/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Authorize/etc</source>
+            </configuration>
+            <views>
+                <source>Authorize/Views</source>
+                <cache>Authorize/Views_Cache</cache>
+            </views>
+            <images>
+                <source>Authorize/Images</source>
+                <cache>Authorize/Images_Cache</cache>
+            </images>
+            <entities>
+                <source>Authorize/Entities</source>
+            </entities>
+            <RPC>
+                <source>Authorize/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Authorize/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>authorize_</prefix>
+            <mongodb>authorize</mongodb>
+            <entities>
+            </entities>
+        </orm>
+
+        <web>
+        </web>
+    </authorize>
+</config>

@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+
+Manager related actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="manager" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="init">
+            <description>Manager Queue View</description>
+            <entity namespace="argus" class="user_roles" id='hygenists'>
+                <parameter name="role_name" source="post" default="HEDIS Hygenist" />
+            </entity> 
+            <helper namespace="humble" class='file' id='file'></helper>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="queues" blocking="off">
+            <description>This is the recurring poll action for the dashboard HEDIS call center manager app</description>   
+            <entity namespace="dental" class="hygenists" id="hygenists">
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="ua" id="unassigned"  defaultRows='14' defaultPage='1'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="qd" id="queued"      defaultRows='14' defaultPage='1'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="oh" id="onhold"      defaultRows='14' defaultPage='1'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" rows="rows" page="rt" id="returned"    defaultRows='14' defaultPage='1'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="campaign_results" rows="rows" page="cm" id="completed"        defaultRows='14' defaultPage='1'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+            <entity namespace="dental" class="campaign_results" rows="rows" page="ra" id="requested"        defaultRows='14' defaultPage='1'>
+                <parameter name="campaign_id" source="request" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="return" blocking="false">
+            <description>This will return all of the contacts currently on hold back to their respective hygienist</description>
+            <entity namespace="dental" class="contact_call_schedule" method="returnOnHoldContacts">
+                <parameter name="assignee" source="request" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="recall" blocking="false">
+            <description>This will return all of the contacts currently on hold back to the unassigned queue</description>
+            <entity namespace="dental" class="contact_call_schedule" method="recallOnHoldContacts">
+                <parameter name="assignee" source="request" optional="true" />
+            </entity>
+        </action>
+        
+    </actions>
+</controller>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<component>
+    <name>Event Location List</name>
+    <description>The list of locations where we do scannings and screenings</description>
+    <type>Select</type>
+    <resource action="/vision/event/locations" id="location_id" text="location" value="id" /> 
+</component>
+
+

@@ -1,0 +1,2 @@
+ST*837*{$transaction_control_number}*005010X222A1~
+BHT*0019*00*{$group_control_number}*{$create_date}*{$create_time}*CH~

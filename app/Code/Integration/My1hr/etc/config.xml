@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<config>
+    <my1hr>
+        <version>0.0.1</version>
+        <title>My1HR Module</title>
+        <description>Integration Functionality for My1HR Broker</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>My1hr</name>
+            <weight>70</weight>
+            <use>Smarty3</use>
+            <package>Integration</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>My1hr/Models</source>
+            </models>
+            <config>
+                <source>My1hr/etc</source>
+            </config>
+            <helpers>
+                <source>My1hr/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>My1hr/Controllers</source>
+                <cache>My1hr/Controllers_Cache</cache>
+            </controllers>
+            <schema>
+                <install>My1hr/Schema/Install</install>
+                <update>My1hr/Schema/Update</update>
+                <layout>My1hr/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>My1hr/etc</source>
+            </configuration>
+            <views>
+                <source>My1hr/Views</source>
+                <cache>My1hr/Views_Cache</cache>
+            </views>
+            <images>
+                <source>My1hr/Images</source>
+                <cache>My1hr/Images_Cache</cache>
+            </images>
+            <entities>
+                <source>My1hr/Entities</source>
+            </entities>
+            <RPC>
+                <source>My1hr/RPC</source>
+            </RPC>
+            <frontend>
+                <source>My1hr/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>my1hr_</prefix>
+            <mongodb>my1hr</mongodb>
+            <entities>
+                <applications />
+                <application_agents />
+            </entities>
+        </orm>
+        <web>
+        </web>
+    </my1hr>
+</config>

@@ -1,0 +1,50 @@
+{
+    "humble": {
+        "users": {
+            "key": "uid",
+            "overwrite": false,
+            "condition": false,
+                "scrub": {
+                }
+        },
+            "user_identification": {
+            "overwrite": false,
+            "condition": false,
+            "scrub": {
+                "first_name": "firstNameScrubber",
+                "last_name": "lastNameScrubber",
+                "date_of_birth": "dobScrubber"
+            }
+        }
+    },
+    "argus": {
+        "claims": {
+            "key": "id",
+            "overwrite": true,
+            "condition": "modified >= '2021-01-01'",
+            "scrub": {
+
+            }
+        }
+    },
+    "dashboard": {
+
+    },
+    "scheduler": {
+        "event_members": {
+            "key": "id",
+            "overwrite": true,
+            "condition": "modified >= '2021-01-01'",
+            "scrub": {
+
+            }
+        }
+    },
+    "dental": {
+
+    },
+
+    "vision": {
+
+    }
+}

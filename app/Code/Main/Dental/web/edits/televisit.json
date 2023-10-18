@@ -1,0 +1,89 @@
+({
+    form:
+    {
+        id: 		"newTeledentistrySessionForm",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active: 	true,
+            id: 	"teledentistry_member_name",
+            longname:	"Member Name",
+            title:	"Name of Member",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border-radius: 2px; border: 1px solid #aaf"
+        },
+        {
+            active: 	true,
+            id: 	"teledentistry_form_id",
+            longname:	"Form ID",
+            title:	"",
+            type:       "hidden",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	""
+        },
+        {
+            active: 	true,
+            id: 	"teledentistry_window_id",
+            longname:	"Window ID",
+            title:	"",
+            type:       "hidden",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	""
+        },        
+        {
+            active: 	true,
+            id: 	"teledentistry_member_id",
+            longname:	"Member ID",
+            title:	"Health Plan Member ID",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border-radius: 2px; border: 1px solid #aaf"
+        },
+        {
+            active: 	true,
+            id: 	"teledentistry_start_button",
+            longname:	"Start Visit Button",
+            title:	"Button",
+            type:       "button",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"",
+            onclick:    function (evt) {
+                if (Edits['televisit'].validate()) {
+                    (new EasyAjax('/dental/consultation/start')).packageForm('newTeledentistrySessionForm').then(function (response) {
+                       Argus.dashboard.socket.emit('patientEnteredWaitingRoom',{'patient': 'someguy'});
+                       Argus.teledentistry.waitingRoom.refresh(response);
+                       Argus.dashboard.socket.on('dentistStartedFacetime',function (data) {
+                           
+                       });
+                       //(new EasyAjax('/dental/teledentistry/wait')).add('form_id',data.form_id).then(function (response) {
+                            
+                        //}).get();
+                    }).post();
+                }
+            }
+        }
+
+
+
+    ]
+})

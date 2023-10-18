@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+
+Tech Availability Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="availability" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="review">
+            <description>The initial page</description>
+            <entity namespace='argus' class='user/roles' id='users' />
+        </action>
+        
+        <!-- ############################################################### -->                                 
+        
+        <action name="list" output="JSON" blocking="off">
+            <description>Shows your current event list</description>
+            <entity response="TRUE" namespace="scheduler" class="availability" method="fetchStatus">
+                <parameter name="user_id" source="request" optional='true' />
+                <parameter name="date"    source="request" format="date" optional="true" />
+                <parameter name="yyyy"    source="request" optional="true" />
+                <parameter name="mm"      source="request" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="record" blocking="off">
+            <description>Records the availability per day</description>
+            <model name='scheduler' class='helper' id='availability'>
+                <parameter name='state' source='post' required='true' />
+            </model>
+            <switch id='availability' method='getState'>
+                <case value='2'>
+                    <comment>Marking as available</comment>
+                    <entity namespace='scheduler' class='availability' method='save'>
+                        <parameter name='user_id' source='session' value='uid' required='true' />
+                        <parameter name='date'    source='post' format='date' required='true' />
+                        <parameter name='available' source='post' default='Y' />
+                    </entity>
+                </case>
+                <case value='3'>
+                    <comment>Marking as NOT available</comment>
+                    <entity namespace='scheduler' class='availability' method='save'>
+                        <parameter name='user_id' source='session' value='uid' required='true' />
+                        <parameter name='date'    source='post' format='date' required='true' />
+                        <parameter name='available' source='post' default='N' />
+                    </entity>                    
+                </case>
+                <default>
+                    <entity namespace='scheduler' class='availability' method='nonkeysdelete'>
+                        <parameter name='user_id' source='session' value='uid' required='true' />
+                        <parameter name='date'    source='post' format='date' required='true' />
+                    </entity>
+                </default>
+            </switch>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+    </actions>
+</controller>

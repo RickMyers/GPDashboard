@@ -1,0 +1,1 @@
+{assign var=user value=$user->load(true)}{if ($user)}TRUE{else}FALSE{/if}

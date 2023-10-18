@@ -1,0 +1,17 @@
+---
+currentWeather  :
+  url             : http://weather.yahooapis.com/forecastrss #this is a sample
+  api-key         : 1234
+  api-var         : api_key
+  arguments       : [p]
+  method          : GET
+memberImportCSV :
+  url             : /wapi/my1hr/import
+  api-key         : 
+  api-var         : 
+  method          : POST
+  arguments       : 
+      sessionId : true
+      csv :
+        
+  

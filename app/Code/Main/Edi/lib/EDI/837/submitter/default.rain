@@ -1,0 +1,2 @@
+NM1*41*{$entity_type}*{$last_name}*{$first_name}*{$middle_name}***46*{$id_code}~
+PER*IC*{$organization}*TE*{$phone_number}*{if="$extension"}EX*{$extension}*{/if}EM*{$email}~

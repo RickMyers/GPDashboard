@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+
+Initial Action Controller
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="admin" use="Smarty3" author="rmyers@argusdentalvision.com">
+    <actions>
+
+        <action name="adduserform" passalong='window_id'>
+            <description>Presents the add user form</description>
+        </action> 
+
+        <!-- ################################################################################################# -->
+
+        <action name="adduser" passalong='window_id' event='newUser' comment='When a new user is added to the system'>
+            <description>Adds a new user to the system</description>
+            <model namespace='argus' class='user' id='user' method='newUser' response="true">
+                <parameter name='email'      source='post' required='true' />
+                <parameter name='first_name' source='post' required='true' />
+                <parameter name='last_name'  source='post' required='true' />
+                <parameter name='gender'     source='post' optional='true' />
+                <parameter name='password'   source='post' format='password' default='argus1234' />
+            </model> 
+        </action>
+
+        <!-- ################################################################################################# -->
+
+        <action name="addlistform" passalong='window_id'>
+            <description>Presents the add list form, for use in workflows</description>
+        </action>
+         
+        <!-- ################################################################################################# -->
+
+        <action name="addusertolist" passalong='window_id'>
+            <description>Adds a user to a precreated list</description>
+        </action>
+
+    </actions>
+</controller>

@@ -1,0 +1,430 @@
+<?xml version="1.0"?>
+<!--
+
+User actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="user" use="Smarty3" author=" " email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="hasrole" blocking="off" output="JSON">
+            <description> Checks to see if user has a certain role </description>
+            <entity namespace="argus" class="user/roles" method="hasRole" response="true">
+                <parameter name='user_id' source='session' value='uid' required="true" />
+                <parameter name='role' source='request' required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="role" passalong="windowId">
+            <description>Configuration page for the workflow decision that determines if a user has a role</description>
+            <entity namespace="argus" class="roles" orderby="name=ASC" id='roles' />
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+          
+        <!-- ############################################################### -->
+        
+        <action name="information" passalong="windowId">
+            <description>Configuration page for extracting user information</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="increment" passalong="windowId">
+            <description>Configuration page for incrementing the number of tries to login a user (identified by user_name or email) has performed </description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="login" passalong="windowId">
+            <description>Configuration page for validating user_name/email and password</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+                                                      
+        <!-- ############################################################### -->
+        
+        <action name="ipaddress" passalong="windowId">
+            <description>Configuration page for saving the IP address of someone</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>                            
+        
+        <!-- ############################################################### -->
+        
+        <action name="profile" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Update your profile</description>
+            <entity namespace="humble" class="users" id='login' method='load'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="humble" class="user/identification" id='user' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="argus" class="user/appellations" id='appellation'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="argus" class="appellations" id='appellations' />
+            <entity namespace="argus" class="user/settings" id='settings' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>              
+            <entity namespace="argus" class="user/roles" id='roles'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
+            <entity namespace="argus" class="pin_repository" id='pins'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>          
+            <entity namespace="dashboard" class="backgrounds" id="backgrounds"></entity>                        
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="home">
+            <description>The admin user home area</description>
+        </action>
+ 
+        <!-- ############################################################### -->
+        
+        <action name="view" passalong="window_id"> 
+            <description>Displays individual user data</description> 
+            <entity namespace="argus" class="user" id="user">
+                <parameter name="user_id" source="post" required="true" />
+            </entity>
+            <entity namespace="humble" class="user/permissions" id="permissions" method="load">
+                <parameter name="id" source="session" value="uid" required="true" />
+            </entity>            
+            <entity namespace="argus" class="user/appellations" id="appellation" >
+                <parameter name="user_id" source="post" required='true' />
+            </entity>
+            <entity namespace="argus" class="appellations" id="appellations" />
+            <entity namespace="argus" class="user/information" id="additional">
+                <parameter name="user_id" source="post" default='' />
+            </entity>              
+            <entity namespace="argus" class="primary/care/physicians" assign="pcp" method="nonkeysload">
+                <parameter name="user_id" source="post" default='' />
+            </entity>            
+            <entity namespace="argus" class="entity/types" id="entity_types" />
+            <entity namespace="argus" class="entity/users" id="associations">
+                <parameter name="user_id" value="user_id" source="post" required="true" />
+            </entity>
+            <entity namespace="argus" class="user/roles" id="role">
+                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="additional">
+            <description>Saves additional data into a specific polyglot table</description>
+            <entity namespace="argus" class="user/information" method="save">
+                <parameter name="user_id" source="post" default='' />
+                <parameter name="*" source="post" default='' />
+            </entity>              
+
+            <chain>
+                <action name="view"/>
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="save" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">  
+            <description>Saves user data</description>
+            <entity namespace="humble" class="user/identification" id='user' method='save'>
+                <parameter name='id' source='post' required="true"  />
+                <parameter name="*"  source="post" />
+            </entity>
+            <entity namespace="argus" class="user/appellations" method="save">
+                <parameter name='appellation_id'        source='post' default='' />
+                <parameter name="user_id" source="session" value="uid" required="true" />
+            </entity>
+            <entity namespace="humble" class='users' id='login' method='save'>
+                <parameter name='uid'   source='post' default='' value='id' />
+                <parameter name='email' source='post' default='' />
+            </entity>
+            <helper namespace='argus' class='data' id='photo' method='storeProfilePhoto'>
+                <parameter name='uid'   value='id'      source='post' default='' />
+                <parameter name='photo' value='photo'   source='file' default='' />
+            </helper>
+            <entity namespace="argus" class="user/settings" id='settings' method='save'>
+                <parameter name='id' source='session' value='uid' default='' />
+                <parameter name='transparent_windows' source='post' default='' />
+                <parameter name='waiting_room_name' source='post' optional='true' />
+                <parameter name="background_image"  source="post" optional="true" />
+                <parameter name="background_id"     source="post" optional="true" />
+            </entity>
+            <helper namespace="argus" class="data" id="pins">
+                <parameter name='pin' value="user_pin" source='post' default=''  />
+            </helper> 
+            <switch id="pins" method="getPin">
+                <case value="">
+                    <comment> DO NOTHING, NO VALUE FOR PIN WAS PASSED </comment>
+                </case>
+                <default>
+                    <entity namespace="argus" class="pin_repository" method="save">
+                        <parameter name='user_id' source='session' value='uid' required="true" />
+                        <parameter name='pin' value="user_pin" source='post' format="password"  />
+                    </entity> 
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="display">
+            <description>Displays user and roles</description>
+            <entity namespace="argus" class="roles" id="roles"/>
+            <entity namespace="argus" class="user" id='users' page="page" rows="rows" defaultRows="10" defaultPage="1" orderby="last_name=ASC,first_name=ASC">
+                <parameter name="starts_with" source="post" optional="true" />
+                <parameter name="role_id" source="post" optional="true" />
+            </entity>            
+            <entity namespace="argus" class='user_roles' id='user_roles'  />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="recoveremail">
+            <description>Will send the email instructing a person how to recover their password</description>
+            <model namespace="argus" class="user" id="user">
+                <parameter name="email" required="true" source="post" />
+            </model>
+            <switch id="user" method="recoverPasswordEmail">
+                <case value="TRUE">
+                    <redirect href="/index.html?message=Recovery Instruction E-mail Sent" />
+                </case>
+                <default>
+                    <redirect href="/index.html?message=An Error Occurred: Please Contact Support" />
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="resetform" passalong='token'>
+            <description>Generates the form that allows the user to enter a new password</description>
+            <model namespace="argus" class="user" id="user">
+                <parameter name="email" required="true" source="request" />
+                <parameter name="security_token" required="true" value="token" source="request" />
+            </model>
+            <switch id="user" method="isLegitimate">
+                <case value="TRUE">
+                    <view name="newPasswordForm" />
+                </case>
+                <default>
+                    <redirect href="/index.html?message=An Error Occurred: Please Contact Support" />
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='resetpassword'>
+            <description>Will set the login attempts back to 0 if you have the security token</description>
+            <entity namespace="humble" class='users' id='user'>
+                <parameter name="reset_password_token" value="token" source="request" required="true" />
+            </entity>
+            <switch id='user' method="resetTokenIsValid">
+                <case value='TRUE'>
+                    <entity namespace="humble" class='users' method='resetLoginAttempts'>
+                        <parameter name="reset_password_token" value="token" source="request" required="true" />
+                    </entity>
+                    <redirect href="/index.html?m=Your Account Has Been Unlocked" />
+                </case>
+                <default>
+                    <redirect href="/index.html?m=Invalid Password Reset Attempt" />
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="passwordreset">
+            <description>Sets the password of the user back to something selected by the admin</description>
+            <model namespace="argus" class="user" method="passwordReset">
+                <parameter name="user_id" source="post" value="uid" required="true" />
+                <parameter name="password" source="post" format="password" required="true" />
+                <parameter name="uid" source="session" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="enroll" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Allows the user to self enroll</description>
+            <model namespace="argus" class="user" id="user" method="enroll">
+                <parameter name="authentication_token" source="post" default="" required="true" />
+                <parameter name="email"     source="post" default="" required="true" />
+                <parameter name="first_name" source="post" default="" required="true" />
+                <parameter name="last_name"  source="post" default="" required="true" />
+                <parameter name="name"  source="post" default="" />
+                <parameter name="user_name"    source="post" default="" required="true" />
+                <parameter name="password"  source="post" default="" required="true" />
+                <parameter name="date_of_birth"   source="post" default=""  />
+                <parameter name="address1"     source="post" default="" />
+                <parameter name="address2"     source="post" default="" />
+                <parameter name="city"      source="post" default="" />
+                <parameter name="state"     source="post" default="" />
+                <parameter name="zip_code"   source="post" default="" />
+           </model>
+           <redirect href="/index.html?m=Welcome!" />
+        </action>
+        <!-- ############################################################### -->
+
+        <action name="newpassword">
+            <description>Will actually save the new password</description>
+            <model namespace="argus" class="user" id="user">
+                <parameter name="email" required="true" source="post" />
+                <parameter name="password" required="true" format="password" source="post" />
+                <parameter name="confirm" required="true" format="password" source="post" />
+                <if var="clearReset" eq="true">
+                    <then>
+                        <parameter name="reset_password_token" required="true" value="token" source="post" />
+                    </then>
+                    <else>
+                        <parameter name="security_token" required="true" value="token" source="post" />
+                    </else>
+                </if>
+            </model>
+            <switch id="user" method="newPassword">
+                <case value="TRUE">
+                    <redirect href="/index.html?message=Success! Please Log In" />
+                </case>
+                <default>
+                    <redirect href="/index.html?message=Password change attempt failed, try again" />
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="newPasswordForm"  passalong='token,clearReset'>
+            <description>Presents the new password form</description>
+            <entity namespace="humble" class='users' id='user'>
+                <parameter name="reset_password_token" value='token' source="request" required="true" />
+            </entity>
+            <switch id='user' method='newPasswordRequestValid'>
+                <case value="true">
+                    <comment>No operation, use usual form</comment>
+                </case>
+                <default>
+                    <redirect href="/index.html?m=Invalid New Password Token" />
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="enrollForm">
+            <description>Allows the user to self enroll</description>
+            <entity namespace="humble" class="users" id="users">
+                <parameter name="authentication_token" value='invite' source="get" default="" />
+            </entity>
+            <switch id="users" method="getAuthenticationToken">
+                <case value="">
+                    <output text="Please refer to your invitation E-mail and click on the link therein" />
+                    <abort value="true" />
+                </case>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="recoverForm">
+            <description>Allows the user to start the process of credential recovery</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="registerForm">
+            <description>Allows the user to start the process of credential recovery</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="register">
+            <description>Registers a user</description>
+            <model namespace="argus" class="user" method="register" id="user">
+                <parameter name="password" source="post" format="password"  required="true" />
+                <parameter name="confirm"  source="post" format="password"  required="true" />
+                <parameter name="email" source="post" required="true" />
+                <parameter name="first_name" source="post" required="true" />
+                <parameter name="last_name" source="post" required="true" />
+                <parameter name="nick_name" source="post" value="name" optional="true" />
+            </model>
+        </action>                        
+        
+        <!-- ############################################################### -->
+
+        <action name='changepassword' event='passwordChange' comment='A user has changed their password' CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <entity response="true" namespace="argus" class='user' method='updatePassword'>
+                <parameter name="current_password" source="post" format="password" required="true" />
+                <parameter name="password" source="post" format="password" value="new_password" required="true" />
+                <parameter name="uid" source="session" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="emailcheck">
+            <description>Checks to see if an email is in the system</description>
+            <entity namespace="humble" class="users" id="user">
+                <parameter name="email" source="get" required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+                
+        <action name="logout" event="userLogout" comment="Triggers the logout workflow (if any)">
+            <description>Destroys the session and logs you out...</description>
+            <model namespace="humble" class="user" id="user" method="logout">
+                <parameter name="uid" source="session" default="" />
+            </model>
+            <redirect href="/index.html?You have logged out" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="update" event="userDataUpdated" comment="An admin has updated users data">
+            <description>An administrator has updated some user data</description>
+            <model namespace="argus" class="user" method="update">
+                <parameter name="data" format="json" source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="firstpassword">
+            <description>If you have a value in the new_password_token field you are routed here</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="setfirstpassword">
+            <description>Lets see if we can now change your password</description>
+            <model namespace="argus" class="user" id="user">
+                <parameter name="password" format="password" source="post" value="user_password" required="true" />
+                <parameter name="confirm" format="password" source="post" value="confirm_password" required="true" />
+                <parameter name="token" source="post" required="true" />
+            </model>
+            <switch id="user" method="createPassword">
+                <case value="TRUE">
+                    <redirect href="/index.html?m=Your password was created,  please log in" />
+                </case>
+                <default>
+                    <redirect href="/index.html?m=Error creating password, please open a support ticket" />
+                </default>
+            </switch>
+        </action>        
+    </actions>
+</controller>

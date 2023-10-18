@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<report name="BatchSaveFile" description="A list for batch saving to PDF">
+    <headings>
+        <heading>Batch File for PDF Save</heading>
+    </headings>  
+    <groups>
+        <!--<group column="screening_client" sum="false" />-->
+    </groups>
+    <columns>
+        <column name="event_id"        source="event_id"        format="" ifempty=""   style="" />  
+        <column name="screening_client"        source="screening_client"        format="" ifempty=""   style="" />  
+        <column name="primary_doctor"        source="primary_doctor"        format="" ifempty=""   style="" />  
+        <column name="event_date"        source="event_date"        format="" ifempty=""   style="" />  
+        <column name="ipa_box"        source="ipa_box"        format="" ifempty=""   style="" />  
+        <column name="ipa_other_box"        source="ipa_other_box"        format="" ifempty=""   style="" />  
+        <column name="member_name"        source="member_name"        format="" ifempty=""   style="" />  
+        <column name="member_id"        source="member_id"        format="" ifempty=""   style="" />  
+        <column name="date_of_birth"        source="date_of_birth"        format="" ifempty=""   style="" />  
+        <column name="gender"        source="gender"        format="" ifempty=""   style="" />  
+        <column name="member_address"        source="member_address"        format="" ifempty=""   style="" />  
+        <column name="address_id"        source="address_id"        format="" ifempty=""   style="" />          
+        <column name="npi_id"        source="npi_id"        format="" ifempty=""   style="" />  
+        <column name="pcp_staff_signature"        source="pcp_staff_signature"        format="" ifempty=""   style="" />  
+        <column name="patient_agreement"        source="patient_agreement"        format="" ifempty=""   style="" />  
+        <column name="bmi"        source="bmi"        format="" ifempty=""   style="" />  
+        <column name="fbs"        source="fbs"        format="" ifempty=""   style="" />  
+        <column name="fbs_date"        source="fbs_date"        format="" ifempty=""   style="" />  
+        <!--
+        <column name="type_1dm"        source="type_1dm"        format="" ifempty=""   style="" />  
+        <column name="dm_type"        source="dm_type"        format="" ifempty=""   style="" />  
+        <column name="type_1_years"        source="type_1yrs"        format="" ifempty=""   style="" />  
+        -->
+        <column name="hba1c"        source="hba1c"        format="" ifempty=""   style="" />          
+        <column name="hba1c_date"        source="hba1c_date"        format="" ifempty=""   style="" />  
+        <!--
+        <column name="type_2dm"        source="type_2dm"        format="" ifempty=""   style="" />  
+        <column name="dm_type_2"        source="dm_type_2"        format="" ifempty=""   style="" />  
+        <column name="type_2_years"        source="type_2yrs"        format="" ifempty=""   style="" />  
+        -->
+        
+        <column name="type_dm"             source="type_dm"        format="" ifempty=""   style="" />  
+        <column name="dm_alltype"        source="dm_alltype"        format="" ifempty=""   style="" />  
+        <column name="type_years"        source="type_yrs"        format="" ifempty=""   style="" />  
+        <column name="type_oral"        source="type_oral"        format="" ifempty=""   style="" />  
+        <column name="type_insulin"        source="type_insulin"        format="" ifempty=""   style="" />  
+        <column name="type_diet"        source="type_diet"        format="" ifempty=""   style="" />  
+        
+        <column name="sorc"        source="sorc"        format="" ifempty=""   style="" />  
+        <column name="dv_od"        source="dv_od"        format="" ifempty=""   style="" />  
+        <column name="dv_os"        source="dv_os"        format="" ifempty=""   style="" />  
+        <column name="last_exam_date"        source="last_exam_date"        format="" ifempty=""   style="" />  
+        <column name="iop_od"        source="iop_od"        format="" ifempty=""   style="" />  
+        <column name="iop_os"        source="iop_os"        format="" ifempty=""   style="" />  
+        <column name="exam_time"        source="exam_time"        format="" ifempty=""   style="" />  
+        <column name="exam_time_ampm"        source="exam_time_ampm"        format="" ifempty=""   style="" />  
+        <column name="ta_tp"        source="ta_tp"        format="" ifempty=""   style="" />  
+        <column name="angle_od"        source="angle_od"        format="" ifempty=""   style="" />  
+        <column name="od_pupil"        source="od_pupil"        format="" ifempty=""   style="" />  
+        <column name="angle_os"        source="angle_os"        format="" ifempty=""   style="" />           
+        <column name="os_pupil"        source="os_pupil"        format="" ifempty=""   style="" />   
+        <column name="dilation"        source="dilation"        format="" ifempty=""   style="" />   
+       <!-- <column name="dilation_time"        source="dilation_time"        format="" ifempty=""   style="" />   
+        <column name="dilation_ampm"        source="dilation_ampm"        format="" ifempty=""   style="" />   
+        -->
+        <column name="retinopathy"        source="retinopathy"        format="" ifempty="No diabetic retinopathy"   style="" />   
+        <column name="exam_finding"        source="exam_finding"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_9"        source="diag_code_e11_9"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_9"        source="diag_code_e10_9"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_65"        source="diag_code_e11_65"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_65"        source="diag_code_e10_65"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_39"        source="diag_code_e11_39"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_39"        source="diag_code_e10_39"        format="" ifempty=""   style="" />   
+        <column name="other_diabetes"        source="other_diabetes"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_319"        source="diag_code_e11_319"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_319"        source="diag_code_e10_319"        format="" ifempty=""   style="" />           
+        <column name="diag_code_e11_311"        source="diag_code_e11_311"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_311"        source="diag_code_e10_311"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_321"        source="diag_code_e11_321"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_321"        source="lbl_code_e11_321"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_321"        source="diag_code_e10_321"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_321"        source="lbl_code_e10_321"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_329"        source="diag_code_e11_329"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_329"        source="lbl_code_e11_329"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_329"        source="diag_code_e10_329"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_329"        source="lbl_code_e10_329"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_331"        source="diag_code_e11_331"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_331"        source="lbl_code_e11_331"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_331"        source="diag_code_e10_331"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_331"        source="lbl_code_e10_331"        format="" ifempty=""   style="" />           
+        <column name="diag_code_e11_339"        source="diag_code_e11_339"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_339"        source="lbl_code_e11_339"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_339"        source="diag_code_e10_339"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_339"        source="lbl_code_e10_339"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_341"        source="diag_code_e11_341"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_341"        source="lbl_code_e11_341"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_341"        source="diag_code_e10_341"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_341"        source="lbl_code_e10_341"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_349"        source="diag_code_e11_349"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_349"        source="lbl_code_e11_349"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_349"        source="diag_code_e10_349"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_349"        source="lbl_code_e10_349"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_351"        source="diag_code_e11_351"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_351"        source="lbl_code_e11_351"        format="" ifempty=""   style="" />           
+        <column name="diag_code_e10_351"        source="diag_code_e10_351"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_351"        source="lbl_code_e10_351"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e11_359"        source="diag_code_e11_359"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e11_359"        source="lbl_code_e11_359"        format="" ifempty=""   style="" />   
+        <column name="diag_code_e10_359"        source="diag_code_e10_359"        format="" ifempty=""   style="" />   
+        <column name="lbl_code_e10_359"        source="lbl_code_e10_359"        format="" ifempty=""   style="" />   
+        <column name="pc_s3000"        source="pc_s3000"        format="" ifempty=""   style="" />   
+        <column name="pc_2022f_8p"        source="pc_2022f_8p"        format="" ifempty=""   style="" />   
+        <column name="pc_3072f"        source="pc_3072f"        format="" ifempty=""   style="" />   
+        <column name="pc_5010f"        source="pc_5010f"        format="" ifempty=""   style="" />   
+        <column name="pc_g8397"        source="pc_g8397"        format="" ifempty=""   style="" />   
+        <column name="pc_92227"        source="pc_92227"        format="" ifempty=""   style="" />   
+        <column name="pc_92228"        source="pc_92228"        format="" ifempty=""   style="" />   
+        <column name="pc_2026f"        source="pc_2026f"        format="" ifempty=""   style="" />   
+        <column name="images_unreadable"        source="images_unreadable"        format="" ifempty=""   style="" />           
+        <column name="eye_exam"        source="eye_exam"        format="" ifempty=""   style="" />  
+        <column name="eye_exam_period_quantity"        source="eye_exam_period_quantity"        format="" ifempty=""   style="" />  
+        <column name="eye_exam_period"        source="eye_exam_period"        format="" ifempty=""   style="" />  
+        <column name="opth_referral"        source="opth_referral"        format="" ifempty=""   style="" />  
+        <column name="opth_referral_period_quantity"        source="opth_referral_period_quantity"        format="" ifempty=""   style="" />  
+        <column name="opth_referral_period"        source="opth_referral_period"        format="" ifempty=""   style="" />  
+        <column name="retinal_referral"        source="retinal_referral"        format="" ifempty=""   style="" />  
+        <column name="retinal_referral_period_quantity"        source="retinal_referral_period_quantity"        format="" ifempty=""   style="" />  
+        <column name="retinal_referral_period"        source="retinal_referral_period"        format="" ifempty=""   style="" />  
+        <column name="comment"        source="comment"        format="" ifempty=""   style="" />  
+        <column name="od_signature"        source="od_signature"        format="" ifempty=""   style="" />  
+        
+        <column name="email"        source="email"        format="" ifempty=""   style="" />
+                     
+        <!--
+	
+
+
+        -->
+        
+        <!--
+                       
+        <column name="PCP"        source="PCP"        format="" ifempty="N/A"   style="" /> 
+        
+        -->
+    </columns>
+</report>

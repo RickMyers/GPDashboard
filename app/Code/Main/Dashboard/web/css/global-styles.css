@@ -1,0 +1,174 @@
+
+.navbar-default {
+  /*background-image: linear-gradient(to bottom,#759bcb 0,#668cbd 100%);*/
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzI1NjFhNyIgc3RvcC1vcGFjaXR5PSIwLjgiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzFlNTc5OSIgc3RvcC1vcGFjaXR5PSIwLjgiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+  background: -moz-linear-gradient(top,  rgba(37,97,167,0.8) 0%, rgba(30,87,153,0.8) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(37,97,167,0.8)), color-stop(100%,rgba(30,87,153,0.8))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(37,97,167,0.8) 0%,rgba(30,87,153,0.8) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(37,97,167,0.8) 0%,rgba(30,87,153,0.8) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(37,97,167,0.8) 0%,rgba(30,87,153,0.8) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(37,97,167,0.8) 0%,rgba(30,87,153,0.8) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc2561a7', endColorstr='#cc1e5799',GradientType=0 ); /* IE6-8 */
+
+  border-color: #1E5799;
+}
+
+.logo img {
+  height: 30px;
+  margin: 10px;
+}
+
+/* IE hack filter is a default bootstrap style on .navbar that IE doesn't understand */
+.navbar { filter: none; }
+
+.navbar-default .navbar-nav>li>a {
+  color: #fff;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+  /*background: #6c9bd2;*/
+  color: #184583;
+}
+
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+  color: #184583;
+  background-color: #e7e7e7;
+  /*background-color: #bfcee0;*/
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+  background-image: -webkit-linear-gradient(top,#d2deec 0,#bfcee0 100%);
+  background-image: linear-gradient(to bottom,#d2deec 0,#bfcee0 100%);
+  background-color: #bfcee0;
+  /*background-color: #e7e7e7;*/
+}
+
+.glyphicon {
+  padding-right: 8px;
+}
+
+/* Mobile Menu Styles */
+.navbar-default .navbar-toggle {
+
+}
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  border-color: #1E5799;
+}
+.navbar-toggle {
+  background-color: #fff;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: rgba(30,87,153,0.8);
+}
+
+/* Form Styles */
+.form-horizontal {
+  background-color: rgba(255,255,255,0.7);
+  padding: 20px;
+}
+.save-confirmation {
+    background-color: #5cb85c;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Table Styles */
+.table-hover>tbody>tr:hover,  .table-hover>tbody>tr:hover a {
+    background-color: #e1effe;
+    color: #154780;
+}
+thead {
+    background: #f9f9f9; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y5ZjlmOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZGRkZGQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #f9f9f9 0%, #dddddd 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f9f9f9), color-stop(100%,#dddddd)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f9f9f9 0%,#dddddd 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f9f9f9 0%,#dddddd 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f9f9f9 0%,#dddddd 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f9f9f9 0%,#dddddd 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f9f9f9', endColorstr='#dddddd',GradientType=0 ); /* IE6-8 */
+}
+.table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border-bottom: 1px solid rgb(181, 181, 181);
+}
+
+/* Tab Styles */
+.tab-pane {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top: transparent;
+    padding:15px;
+    border-radius: 0 0 4px 4px;
+}
+
+/* Helper Styles */
+.no-top-margin {
+    margin-top: 0;
+}
+
+
+/* One-Page Form Styles */
+#form-content {
+    padding: 0;
+}
+#form-content form {
+    border: 1px #ddd solid;
+    border-radius: 10px;
+    -webkit-box-shadow: -6px 0px 10px -4px rgba(0,0,0,0.45);
+    -moz-box-shadow: -6px 0px 10px -4px rgba(0,0,0,0.45);
+    box-shadow: -6px 0px 10px -4px rgba(0,0,0,0.45);
+}
+#form-content .row {
+    margin: 10px;
+}
+.form-horizontal {
+  background-color: rgba(255,255,255,0.7);
+  padding: 20px;
+}
+.form-group.required .control-label:before {
+   content:"*";
+   color:red;
+   margin-right: 4px;
+}
+
+/* form steps */
+#form-nav ul{
+    background-color: #3a464f;
+    padding-right: 0;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+#form-nav .nav-sidebar {
+    position: fixed;
+    top: 140px;
+}
+#form-nav .nav>li>a:focus {
+    background-color: #668cbd;
+}
+#form-nav .nav-sidebar a.active {
+    background-color: #668cbd;
+    height: auto;
+    margin: 0;
+    color: #fff;
+}
+#form-nav ul li:first-child a{
+    border-top-left-radius: 10px;
+}
+#form-nav ul li:last-child a{
+    border-bottom-left-radius: 10px;
+}
+.form-step {
+    background-color: #9da3a7;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 8px;
+}
+.active .form-step {
+    background-color: #fff;
+}

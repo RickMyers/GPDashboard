@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+
+Report related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="reports" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="extendedinformation" output="JSON">
+            <description>Returns the forms for specific clients between dates</description>
+            <entity namespace="vision" class="consultation/forms" id='forms' response="true" method="extendedInformation">
+                <parameter name='start_date'    format="date" source='request' optional="true" />
+                <parameter name='end_date'      format="date" source='request' optional="true" />
+                <parameter name='date'          format="date" source='request' optional="true" />                
+                <parameter name='*'             source='request'  />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

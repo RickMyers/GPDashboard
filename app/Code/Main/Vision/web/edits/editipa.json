@@ -1,0 +1,61 @@
+{
+    "form":
+    {
+        "id":       "edit_ipa_form",
+        "drawme":   false,
+        "action":   "",
+        "method":   "post",
+        "style":    "",
+        "onenterkey":	"send"
+    },
+    "fields":
+    [
+
+        {
+            "active":	true,
+            "id": 	"edit_ipa_name",
+            "placeholder": "New IPA Name",
+            "longname":	"IPA Name",
+            "title":	"New IPA Name",
+            "type":     "text",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	"border: 1px solid #aaf; padding: 2px; border-radius: 2px"
+        },
+        {
+            "active":	true,
+            "id": 	"edit_ipa_id",
+            "longname":	"",
+            "title":	"",
+            "type":     "hidden",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	""
+        },         
+        {
+            "active":	true,
+            "id": 	"edit_ipa_name_submit",
+            "placeholder": "",
+            "longname":	"IPA Submit",
+            "title":	"",
+            "type":     "button",
+            "onclick":  function () {
+                if (Edits['vision-edit-ipa'].validate()) {
+                    (new EasyAjax('/vision/ipa/updateipa')).packageForm('edit_ipa_form').then(function (response) {
+                        var raw = {
+                            data: JSON.parse(response)
+                        }
+                        $('#ipa_list').html(Argus.hedis.vision.ipatemplate(raw).trim());
+                    }).post();
+                }
+            },
+            "classname":"",
+            "style":	"background-color: silver"
+        }            
+    ]
+}
+
+
+

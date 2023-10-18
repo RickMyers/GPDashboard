@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!--
+
+Campaign queries and actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="campaign" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="participants">
+            <description>Lists the IPAs in a particular campaign</description>
+            <entity namespace="vision" class="campaign_participants" id="participants">
+                <parameter name="campaign_id" source="request" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        <action name="snapshot">
+            <description>The current metrics of the active campaign</description>
+            <entity namespace="vision" class="campaign_results" id='campaign'  >
+                <!--<parameter name="campaign_id" required="true" source="request" />-->
+            </entity>
+        </action>
+        
+        
+        <!-- ############################################################### -->
+        <action name="batchprint" passalong="window_id">
+            <description>The current metrics of the active campaign</description>
+            
+            <entity namespace="vision" class="campaign_results" id='campaign'  >
+                
+            </entity>
+            
+            <!--<parameter name="campaign_id" required="true" source="request" />-->
+            
+            <model namespace="vision" class="forms" method="addresssearcher" id="finder">
+                <!--
+                <parameter name="event_date" optional="true" source="get" format="date" />
+                <parameter name="address_id" optional="true" source="get" format="date" />
+                -->
+            </model>
+            
+            <model namespace="vision" class="forms" method="batchpdffinder" id="batchfinder">
+                <!--
+                <parameter name="event_date" optional="true" source="get" format="date" />
+                <parameter name="address_id" optional="true" source="get" format="date" />
+                -->
+            </model>
+            <entity namespace='vision' class='ipa_sub' id='ipa_sub' /> 
+            
+            <entity namespace='vision' class='ipa_sub' id='batchfinderer' /> 
+        </action>
+        
+
+                
+        <!-- ############################################################### -->
+        
+        <action name="report" blocking="off" output="CSV">
+            <description>Runs a detail report for Vision</description>
+            
+            <model response="true" namespace="vision" class="forms" method="snapshot">
+                <parameter name="report" optional="true" source="get" />
+                <parameter name="health_plan" required="true" source="get" />
+                <parameter name="start_date" optional="true" source="get" format="date" />
+                <parameter name="end_date" optional="true" source="get" format="date" />
+            </model>
+
+
+        </action>
+        
+        
+        <!-- ############################################################### -->
+        <!-- <action name="battest" blocking="off" output="CSV"> -->
+        <action name="battest" blocking="off">
+            <description>Test for creating CSV file for PDF batch saver</description>
+            <!-- <entity response="true" namespace="vision" class="ipa_sub" method="idcsvwirter">-->
+            <entity namespace="vision" class="ipa_sub" method="idcsvwirter">
+                <parameter name="memid" required="true" source="get" />
+                <parameter name="evdate" required="true" source="get" format="date" />
+                <parameter name="evloc" required="true" source="get" />
+                <parameter name="evid" required="true" source="get" />
+            </entity>
+
+        </action>
+        
+        
+        
+        
+        
+        
+        
+        <action name="batevid" blocking="off" output="CSV">
+            <description>Test for creating CSV file for PDF batch saver</description>
+            
+            <entity response="true" namespace="vision" class="ipa_sub" method="eventidcsvwirter">
+                <parameter name="eventid" required="true" source="get" />
+                
+            </entity>
+
+        </action>
+        
+        
+        
+        <!-- ############################################################### -->
+        
+        
+        <action name="addressfinder">
+            <description>Runs a detail report for Vision</description>
+            
+            <model response="true" namespace="vision" class="forms" method="addresssearcher" id="finder">
+                <!--
+                <parameter name="event_date" optional="true" source="get" format="date" />
+                <parameter name="address_id" optional="true" source="get" format="date" />
+                -->
+            </model>
+
+
+        </action>
+        
+        
+        
+        
+    </actions>
+</controller>

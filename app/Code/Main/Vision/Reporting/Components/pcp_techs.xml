@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>PCP Techs</name>
+    <description></description>
+    <type>Select</type>
+    <resource action="/vision/pcp/techs" id="technician" text="name" value="user_id" /> 
+</component>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+MS Office Stuff
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="docx" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="extract" blocking="OFF" output="JSON">
+            <description>Pulls the text out of a docx file into JSON format</description>
+            <helper namespace="argus" class="MSOffice" id='office' method="docxToJson" response="true">
+                <parameter name='doc' source='file' />
+            </helper>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

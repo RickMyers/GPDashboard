@@ -1,0 +1,3 @@
+NM1*PR*{$entity_code}*{$name}*****PI*{$id_code}~
+N3*{$street_address}~
+N4*{$city}*{$state}*{$zip_code}~

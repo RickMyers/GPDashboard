@@ -1,0 +1,77 @@
+({
+    form:
+    {
+        id: 		"vision-member-upload-form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"event_date",
+            longname:		"Event Date",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"font-size: .9em; padding: 4px; width: 250px; border: 1px solid #aaf; border-radius: 4px"
+        },
+        {
+            active:		true,
+            id: 		"office_name",
+            longname:		"Office Name",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"font-size: .9em; padding: 4px; width: 250px; border: 1px solid #aaf; border-radius: 4px"
+        },        
+        {
+            active:		true,
+            id: 		"office_address",
+            longname:		"Office Address",
+            title:		"",
+            type:               "text",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"font-size: .9em; padding: 4px; width: 380px; border: 1px solid #aaf; border-radius: 4px"
+        },
+        {
+            active:		true,
+            id: 		"vision_member_data",
+            longname:		"Member Data",
+            title:		"",
+            type:               "file",
+            classname:		"",
+            style:		"font-size: .9em; padding: 4px; width: 380px; border: 1px solid #aaf; border-radius: 4px"
+        },        
+        {
+            active:		true,
+            id: 		"vision_upload_submit",
+            longname:		"Upload",
+            title:		"",
+            type:               "button",
+            required:		false,
+            force:		false,
+            onclick:            function (evt) {
+                if (Edits['vision-member-upload'].validate()) {
+                   (new EasyAjax('/vision/members/upload')).add('event_date',$('#event_date').val()).add('office_name',$('#office_name').val()).add('office_address',$('#office_address').val()).addFiles('member_data',$E('vision_member_data')).then(function (response) {
+                       console.log(response);
+                       //Argus.vision.consultation.uploadWindow._close();
+                   }).post();   
+                }
+            },
+            classname:		"",
+            style:		""
+        }   
+    ]
+})

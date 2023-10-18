@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<config>
+    <argus>
+        <version>0.0.1</version>
+        <title>Argus App</title>
+        <description>The Primary Argus App Module</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Argus</name>
+            <weight>20</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Argus/Models</source>
+            </models>
+            <config>
+                <source>Argus/etc</source>
+            </config>
+            <helpers>
+                <source>Argus/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Argus/Controllers</source>
+                <cache>Argus/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Argus/Schema/Install</install>
+                <update>Argus/Schema/Update</update>
+                <layout>Argus/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Argus/etc</source>
+            </configuration>
+            <views>
+                <source>Argus/Views</source>
+                <cache>Argus/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Argus/Images</source>
+                <cache>Argus/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Argus/Entities</source>
+            </entities>
+            <RPC>
+                <source>Argus/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Argus/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>argus_</prefix>
+            <mongodb>Argus</mongodb>
+            <entities>
+                <activity_templates />
+                <addresses polyglot='Y' />
+                <address_types />
+                <appellations />
+                <apps_role_required />
+                <aldera_locations />
+                <claims polyglot="Y" />
+                <claim_services polyglot="Y"/>
+                <claims_log />
+                <emails polyglot='Y' />
+                <email_templates />
+                <email_categories />
+                <entities polyglot="Y" />
+                <entity_addresses />
+                <entity_administrators />
+                <entity_contacts polyglot="Y" />
+                <entity_contact_types />
+                <entity_phone_numbers />
+                <entity_relationships />
+                <entity_types />
+                <entity_users />
+                <online_applications polyglot='Y' />
+                <pcp_cache polyglot='Y' />
+                <pin_repository />
+                <primary_care_physicians />
+                <programs />
+                <provider_credentialing_forms polyglot="Y" />
+                <provider_credentialing_form_attachments />
+                <provider_registration_forms polyglot="Y" />
+                <provider_registration_form_attachments />
+                <relationship_dates />
+                <relationship_types />
+                <reports />
+                <reports_access />
+                <report_parameters />
+                <report_parameter_types />
+                <report_projects />
+                <report_projects_access />
+                <report_projects_access_denied />
+                <roles polyglot='Y' />
+                <secure_data polyglot='Y' />
+                <servers />
+                <user_appellations />
+                <user_entities />
+                <user_information polyglot='Y' />
+                <user_ip_addresses />
+                <user_roles />
+                <user_settings polyglot='Y' />
+                <utility_run_log />
+            </entities>
+        </orm>
+        <web>
+            <edits>
+                <profile>Argus/web/edits/profile.json</profile>
+                <password>Argus/web/edits/password.json</password>
+                <calllog>Argus/web/edits/calllog.json</calllog>
+                <newuser>Argus/web/edits/newuser.json</newuser>
+                <campaign>Argus/web/edits/campaign.json</campaign>
+                <newproject>Argus/web/edits/newproject.json</newproject>
+                <newreport>Argus/web/edits/newreport.json</newreport>
+                <newentity>Argus/web/edits/newentity.json</newentity>
+                <newentitytype>Argus/web/edits/newentitytype.json</newentitytype>
+                <neworganization>Argus/web/edits/neworganization.json</neworganization>
+                <newrole>Argus/web/edits/newrole.json</newrole>
+                <newproviderrequest>Argus/web/edits/newproviderrequestform.json</newproviderrequest>
+                <register>Argus/web/edits/register.json</register>
+                <providerpin>Argus/web/edits/providerpin.json</providerpin>
+                <navoption>Argus/web/edits/navoption.json</navoption>
+                <newpassword>Argus/web/edits/newpassword.json</newpassword>
+                <recover>Argus/web/edits/recover.json</recover>
+                <import>Argus/web/edits/import.json</import>
+                <apply>Argus/web/edits/apply.json</apply>
+                <exportentity>Argus/web/edits/exportentity.json</exportentity>
+                <importentity>Argus/web/edits/importentity.json</importentity>
+            </edits>
+            <engine>
+                <js>
+                    <source weight='100'>Argus/web/js/Paradigm.config.js</source>   
+                </js>
+            </engine>
+            <desktop>
+                <js>
+                    <source weight='100'>Argus/web/js/Paradigm.config.js</source>                    
+                </js>
+            </desktop>            
+            <argus>
+                <js>
+                    <source>Argus/web/js/Argus.js</source>
+                </js>
+            </argus>
+            <theme>
+                <css>
+                    <source>Argus/web/css/Argus.css</source>
+                </css>
+            </theme>
+        </web>
+    </argus>
+</config>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<report name="IPAExport" description="Data pertinent to an IPA">
+    <headings>
+        <heading>IPA Data for %%ipa_name%%.</heading>
+    </headings>  
+    <!--groups>
+        <group column="screening_client" sum="false" />
+    </groups-->
+    <columns>
+        <column name="Event Type"      source="form_type"     format="" ifempty=""   style="" />        
+        <column name="Form ID"         source="id"     format="" ifempty=""   style="" />        
+        <column name="IPA"             source="ipa_id_combo"  format="" ifempty=""   style="" />
+        <column name="Location"        source="location_id_combo"  format="" ifempty=""   style="" />
+        <column name="Address"         source="address_id_combo"  format="" ifempty=""   style="" />
+        <column name="Location NPI"    source="npi_id_combo"  format="" ifempty=""   style="" />
+        <column name="Client/Health Plan"  source="screening_client"      format="" ifempty="N/A"   style="" />     
+        <column name="Event ID"        source="event_id"        format="" ifempty="N/A"   style="" />                
+        <column name="Event Date"      source="event_date"      format="" ifempty="N/A"   style="" />     
+        <column name="Event Address"   source="event_address"      format="" ifempty="N/A"   style="" />
+        <column name="Member Name"     source="member_name"      format="" ifempty=""   style="" />
+        <column name="Member ID"       source="member_id"      format="" ifempty=""   style="" />
+        <column name="PCP"             source="primary_doctor"      format="" ifempty=""   style="" />
+        <column name="PCP NPI"         source="physician_npi"      format="" ifempty=""   style="" />
+        <column name="Technician"      source="pcp_staff_member"      format="" ifempty=""   style="" />
+        <column name="Reviewer"        source="doctor"      format="" ifempty=""   style="" />
+        <column name="License Number"  source="license_number"      format="" ifempty=""   style="" />
+        <column name="Date Signed"        source="od_signed_date"      format="" ifempty=""   style="" />
+        <column name="Images Unreadable"   source="images_unreadable"     format="" ifempty="N"   style="" />
+        <column name="Exam Findings"       source="exam_finding"      format="" ifempty="N/A"   style="" />
+        <column name="Biometrics"       source="biometrics"      format="" ifempty="N/A"   style="" />
+        <column name="Procedure Codes"     source="procedure_codes"      format="" ifempty=""   style="" />
+        <column name="Diagnosis Codes"     source="diagnosis_codes"      format="" ifempty=""   style="" />
+        <column name="Referral"         source="referral"      format="" ifempty=""   style="" />
+        <column name="Comments"            source="comment"      format="" ifempty=""   style="" />
+        <!--
+        <column name="Member ID"        source="member_id"        format="" ifempty="N/A"   style="" />        
+        <column name="Member Name"      source="member_name"      format="" ifempty=""      style="" />
+        <column name="Birth Date"       source="date_of_birth"    format="" ifempty="N/A"   style="" />
+        <column name="Screening Date"   source="event_date"       format="" ifempty="N/A"   style="" />
+        <column name="Client"           source="screening_client" format="" ifempty="N/A"   style="" />
+        -->
+    </columns>
+</report>
+

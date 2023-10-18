@@ -1,0 +1,6 @@
+{
+    "format": "numeric",
+    "min-length": "10",
+    "max-length": "10"
+}
+

@@ -1,0 +1,47 @@
+{
+    "form":
+    {
+        "id":       "new_client_form",
+        "drawme":   false,
+        "action":   "",
+        "method":   "post",
+        "style":    "",
+        "onenterkey":	"send"
+    },
+    "fields":
+    [
+
+        {
+            "active":	true,
+            "id": 	"new_client_name",
+            "placeholder": "New IPA Name",
+            "longname":	"IPA Name",
+            "title":	"New IPA Name",
+            "type":     "text",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	"border: 1px solid #aaf; padding: 2px; border-radius: 2px"
+        },
+        {
+            "active":	true,
+            "id": 	"new_client_name_submit",
+            "placeholder": "",
+            "longname":	"IPA Submit",
+            "title":	"",
+            "type":     "button",
+            "onclick":  function () {
+                if (Edits['vision-new-client'].validate()) {
+                    (new EasyAjax('/vision/client/new')).packageForm('new_client_form').then(function (response) {
+                        Argus.hedis.configuration();
+                    }).post();
+                }
+            },
+            "classname":"",
+            "style":	"background-color: silver"
+        }            
+    ]
+}
+
+
+

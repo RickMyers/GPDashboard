@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>Location Addresses</name>
+    <description>The list of addresses associated with an location</description>
+    <type>Select</type>
+    <resource action="/vision/location/offices" id="address_id" text="address" value="id" on="location_id" /> 
+</component>

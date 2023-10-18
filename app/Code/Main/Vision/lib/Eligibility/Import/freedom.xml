@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<layout delimiter=",">
+    <entity namespace="vision" class="members" store="member_id"  use="health_plan_id" >
+        <if var="LOB" eq="OPT">
+            <then>
+                <assign var="health_plan_id" value="1" />
+            </then>
+            <else>
+                <assign var="health_plan_id" value="2" />
+            </else>
+        </if>
+        <column name="first_name">
+            <source     name="MEMBER NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>
+        </column>
+        <column name="last_name">
+            <source      name="MEMBER NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>
+        </column>    
+        <column name="member_number" record="Y">
+            <source     name="MEMBER ID" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="*" />
+                <argument name="index" value="1" />
+            </transform>
+        </column>      
+        <column name="date_of_birth">
+            <source     name="MEMBER DOB" format="date" />
+        </column>
+           <column name="phonetic_token_1">
+            <source     name="MEMBER NAME" format="metaphone" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>            
+        </column>
+        <column name="phonetic_token_2">
+            <source     name="MEMBER NAME"  format="metaphone" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>            
+        </column>                
+    </entity>
+    <entity namespace="vision" class="phone_numbers" use="member_id" store="phone_number_id">
+        <column name="phone_number">
+            <source     name="MEMBER PHONE NO" />
+        </column>
+    </entity>
+    <entity namespace="vision" class="member_phone_numbers" use="member_id,phone_number_id" />
+    <!--entity namespace="vision" class="addresses" store="address_id">
+        <column name="address">
+            <source     name="MEMBER ADDRESS" />
+        </column>        
+        <column name="city">
+            <source     name="MEMBER CITY" />
+        </column>        
+        <column name="state">
+            <source     name="MEMBER STATE" />
+        </column>        
+        <column name="zip_code">
+            <source     name="MEMBER ZIP" />
+        </column>        
+    </entity-->
+    <!--entity namespace="argus" class="primary_care_physicians" store="relation_id">
+        <column name="first name">
+            <source     name="PCP_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" /> 
+            </transform>    
+        </column>    
+        <column name="last_name">
+            <source     name="PCP NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>    
+        </column>
+        <column name="npi">
+            <source     name="PCP ID" />
+        </column>           
+        <column name="address">
+            <source     name="PCP ADDRESS" />
+        </column>    
+        <column name="fax">
+            <source     name="PCP FAX" />
+        </column>               
+    </entity-->
+    <!--entity namespace="argus" class="relationship_dates" use="member_id,relation_id" validate="activeRelationship" relationshipType="1">
+        <column name="effective_start_date">
+            <source name="EFFECTIVE_DATE" default="now" format="date"/>
+        </column>           
+    </entity-->
+    <!--entity namespace="vision" class="member_addresses" use="member_id,address_id" /-->    
+</layout>
+

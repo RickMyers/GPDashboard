@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<report>
+    <name>Diabetic Retinopathy</name>
+    <description> Report on members with or without retinopathy </description>
+    <selection>
+        <client />
+        <start_date />
+        <end_date />
+        <pc2023f />
+        <pc92227 />
+    </selection>
+    <resource method="formsExtendedInformation" />
+    <columns>
+        <column source="event_date"       name="Date"            format="date" onempty="N/A" />
+        <column source="screening_client" name="Healthplan"      format="" onempty="N/A" />
+        <column source="member_id"        name="Member ID"       format="" onempty="N/A" />        
+        <column source="member_name"      name="Member Name"     format="" onempty="N/A" />        
+        <column source="member_address"   name="Member Address"  format="" onempty="N/A" />                
+        <column source="gender"           name="Gender"          format="" onempty="N/A" />
+        <column source="date_of_birth"    name="Date Of Birth"   format="" onempty="N/A" />
+        <column source="pc_2023f"         name="2023F"           format="" onempty="" />
+        <column source="pc_92227"         name="92227"           format="" onempty="" />
+    </columns>
+</report>
+

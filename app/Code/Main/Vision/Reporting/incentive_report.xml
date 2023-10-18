@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<report>
+    <name>Incentive Report</name>
+    <description> List of members seen between a certain date who should get gift cards </description>
+    <selection>
+        <client />
+        <start_date />
+        <end_date />
+    </selection>
+    <resource method="formsExtendedInformation" />
+    <columns>
+        <column source="event_date"       name="Date"        format="date" onempty="N/A" />
+        <column source="screening_client" name="Healthplan"  format="" onempty="N/A" />
+        <column source="address_id_combo" name="Event Address"  format="" onempty="N/A" />        
+        <column source="member_id"        name="Member ID"   format="" onempty="N/A" />        
+        <column source="member_name"      name="Member Name" format="" onempty="N/A" />        
+        <column source="member_address"   name="Member Address" format="" onempty="N/A" /> 
+    </columns>
+</report>
+

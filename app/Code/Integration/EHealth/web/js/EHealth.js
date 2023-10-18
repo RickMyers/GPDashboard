@@ -1,0 +1,4 @@
+Argus.ehealth = (function () {
+    return {
+    }
+})();

@@ -1,0 +1,13 @@
+INS*Y*18*030*XN*A~
+REF*0F*{$member_id_number}~
+REF*1L*{$group_name}~
+NM1*IL*1*{$member_last_name}*{$member_first_name}{if="$member_middle_initial"}*{$member_middle_initial}{/if}~{if="(($home_phone_number) || ($work_phone_number))"}
+PER*IP*{if="$home_phone_number"}*HP*{$home_phone_number}{/if}{if="$work_phone_number"}*WP*{$work_phone_number}{/if}~{/if}
+N3*{$address_line_1}{if="$address_line_2"}*{$address_line_2}{/if}~
+N4*{$city}*{$state}*{$zip_code}{if="$member_county"}**CY*{$member_county}{/if}~
+DMG*D8*{$member_date_of_birth}*{$member_sex}~{if="$member_language"}
+LUI*LD*{$member_language}~{/if}
+HD*030**DEN**EMP~
+DTP*348*D8*{$plan_eff_dt}~{if="$member_termination_date"}
+DTP*349*D8*{$member_termination_date}~{/if}
+REF*CE*{$plan_strategy}~

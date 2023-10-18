@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+
+Interacts with and retrieves data from Aldera
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="claim" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="lookup" passalong="window_id">
+            <description>The lookup claim VUE component</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="data" output="JSON" blocking="OFF">
+            <description>Will attempt to return data from Aldera API on a particular claim</description>
+            <model name="argus" class="doowahdiddydumdiddydo" method="claimData" response="true">
+                <parameter name="PatientControlNumber" source="request" required="true" />
+            </model>
+        </action>        
+
+        <!-- ############################################################### -->
+        
+        <action name="verification">
+            <description>Performs the claim lookup for claim status from ArgusApp (Microsoft SQL Server)</description>
+            <entity namespace="argus" class="claims" method="verify">
+                
+            </entity>
+        </action>
+    </actions>
+</controller>

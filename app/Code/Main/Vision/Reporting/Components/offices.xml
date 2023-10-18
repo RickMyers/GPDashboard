@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>IPA Office Locations</name>
+    <description>The list of office locations associated with an IPA</description>
+    <type>Select</type>
+    <resource action="/vision/ipa/locations" id="office_id" text="location" value="id" on="ipa_id" /> 
+</component>

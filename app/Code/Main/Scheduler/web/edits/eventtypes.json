@@ -1,0 +1,111 @@
+{
+    "form":
+    {
+        "id": 		"scheduler-event-form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:         true,
+            id:             "scheduler_event_start_date",
+            longname:       "Event Start Date",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          "",
+            onchange:       Scheduler.create.event
+        },
+        {
+            active:         true,
+            id:             "scheduler_event_start_time",
+            longname:       "Event Start Time",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          "",
+            onchange:       Scheduler.create.event
+        },
+        {
+            active:         true,
+            id:             "scheduler_event_end_date",
+            longname:       "Event End Date",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          "",
+            onchange:       Scheduler.create.event
+        },
+        {
+            active:         true,
+            id:             "scheduler_event_end_time",
+            longname:       "Event End Time",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          "",
+            onchange:       Scheduler.create.event
+        },
+        {
+            active:         true,
+            id:             "scheduler_event_id",
+            longname:       "Event ID",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          "",
+            onchange:       Scheduler.create.event
+        },  
+        {
+            active:         true,
+            id:             "scheduler_event_resource",
+            longname:       "Event ID",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          ""
+        },   
+        {
+            active:         true,
+            id:             "scheduler_event_type_id",
+            longname:       "Event Type ID",
+            title:          "",
+            type:           "hidden",
+            required:       true,
+            force:          true,
+            classname:      "",
+            style:          ""
+        },          
+        {
+            active:         true,
+            id:             "scheduler_event_type",
+            longname:       "Event Type",
+            title:          "Event Type",
+            type:           "select",
+            required:       true,
+            force:          true,
+            onchange:       Scheduler.create.event,
+            classname:      "",
+            style:          ""
+        }          
+    ]
+}

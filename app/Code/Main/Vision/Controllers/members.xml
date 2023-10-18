@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+
+Member actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="members" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="uploadform" passalong="window_id">
+            <description>The form for uploading the members at an event</description>
+            <entity namespace="argus" class="hedis_campaigns" id="campaigns">
+                <parameter name="category_id" default='2' source='post' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="demographics" blocking="off" output="JSON">
+            <description>Hardcoded EMPTY result for testing when no connection to SQL Server is available</description>
+            <entity namespace='vision' class='clients' id='client' method='load'>
+                <comment>If they don't pass a client id, I'll just set it to careplus</comment>                
+                <parameter name='id' value='client_id' source='request' default='111' />
+            </entity>
+            <switch id='client' method='getActive'>
+                <case value='Y'>
+                    <comment>
+                        In the development environment we do not have a connection to the DWH server so I cant do a member lookup
+                        So instead we just give back some default data for the member
+                    </comment>
+                    <application var='state' assign='app_state' />
+                    <if model='app_state' eq='DEVELOPMENT'>
+                        <then>
+                            <comment>No SQL Server connection, can't do the lookup, just return a sample member data</comment>
+                            <view name='default_demographics' />
+                        </then>
+                        <else>
+                            <entity namespace="vision" class="demographics" id="member" method="information" response="true">
+                                <parameter name="member_id" source="request" required="true" />
+                                <parameter name="date_of_service" source="request" optional="true" />
+                            </entity>
+                        </else>
+                    </if>
+                </case>
+                <default>
+                    <comment>This is non-contracted, so we don't have member data</comment>
+                    <view name='emptyset' />
+                </default>
+            </switch>
+        </action>                
+        <!-- ############################################################### -->
+                        
+        <action name="upload" blocking="off">
+            <description>Processes the upload member list</description>
+            <helper namespace="vision" class="members" method="upload">
+                <parameter name="office_name" source="post" required="true" />
+                <parameter name="event_date" source="post" format="date" required="true" />
+                <parameter name="office_address" source="post" required="true" />
+                <parameter name="member_data" source="file"  />
+            </helper>
+        </action>
+        
+        <!-- ############################################################### -->                
+        
+        <action name="importform" >
+            <description>The form for uploading a complete member list</description>
+            <entity namespace="vision" class="clients" id="clients" orderby="client=ASC" />
+        </action>
+
+        <!-- ############################################################### -->                
+        
+        <action name="data" output="JSON" >
+            <description>Retrieves information about a particular member</description>
+            <entity namespace="vision" class="members" method="data" >
+                <parameter name="id" source="post" required="true" />
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->                
+        
+        <action name="import" blocking="off" >
+            <description>The actual import process</description>
+            <model namespace="vision" class="members" method="import">
+                <parameter name="member_list" source="file"  />
+                <parameter name="health_plan_id" source="post" required="true"  />
+            </model>
+        </action>
+        
+    </actions>
+</controller>

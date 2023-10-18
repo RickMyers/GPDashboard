@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<layout delimiter=",">
+    <entity namespace="vision" class="members" store="member_id"  use="health_plan_id">
+        <column name="member_number">
+            <source     name="MEM_ID" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="*" />
+                <argument name="index" value="1" />
+            </transform>            
+        </column>           
+        <column name="first_name">
+            <source     name="MEM_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>
+        </column>
+        <column name="last_name">
+            <source     name="MEM_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>
+        </column>    
+        <column name="date_of_birth">
+            <source     name="BIRTH DATE" format="date" />
+        </column>
+        <column name="gender">
+            <source     name="SEX" />
+        </column>        
+        <column name="phonetic_token_1">
+            <source     name="MEM_NAME" format="metaphone" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>            
+        </column>
+        <column name="phonetic_token_2">
+            <source     name="MEM_NAME"  format="metaphone" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>            
+        </column>                
+    </entity>
+    <entity namespace="vision" class="phone_numbers" use="member_id" store="phone_number_id">
+        <column name="phone_number">
+            <source     name="MEMBER_PHONE_NO." />
+        </column>
+    </entity>
+    <entity namespace="vision" class="member_phone_numbers" use="member_id,phone_number_id" />
+    <entity namespace="vision" class="addresses" store="address_id">
+        <column name="address">
+            <source     name="MEM_ADDR1" />
+
+        </column>        
+        <column name="city">
+            <source     name="MEM_CITY" />
+        </column>        
+        <column name="state">
+            <source     name="MEM_STATE" />
+        </column>        
+        <column name="zip_code">
+            <source     name="MEM_ZIP" />
+        </column>        
+    </entity>
+    <entity namespace="argus" class="primary_care_physicians">
+        <column name="first_name">
+            <source     name="PCP_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>    
+        </column>    
+        <column name="last_name">
+            <source     name="PCP_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>    
+        </column>
+        <column name="npi">
+            <source     name="NPI" />
+        </column>           
+        <!--column name="address">
+            <source     name="PCP_ADDRESS" />
+        </column-->    
+        <!--column name="fax">
+            <source     name="PCP_FAX" />
+        </column-->               
+    </entity>
+    <entity namespace="vision" class="member_addresses" use="member_id,address_id">
+   
+    </entity>
+    
+</layout>
+

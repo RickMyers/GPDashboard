@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+
+Import and Export related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="table" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="home" blocking="off">
+            <description>The initial screen</description>
+            <entity namespace="humble" class="modules" id='namespaces' orderby='namespace=ASC'>
+
+            </entity>
+            <entity namespace="humble" class="entities" id='entities' orderby='entity=ASC'>
+
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="export" blocking="off">
+            <description>Actually does the export of table data</description>
+            <model namespace="argus" class="export" id="export">
+                <parameter name='namespace' source='post' required='true' />
+                <parameter name='entity'    source='post' required='true' />
+                <parameter name='condition' source='post' optional='true' />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="import" blocking="off">
+            <description>Actually does the import of table data</description>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="entities" blocking="off" output="JSON">
+            <description>List the entities associated to a particular namespace</description>
+            <entity namespace='humble' class='entities' id='entities'>
+                <parameter name='namespace' source='request' required='true' />
+            </entity>
+        </action>
+        
+    </actions>
+</controller>

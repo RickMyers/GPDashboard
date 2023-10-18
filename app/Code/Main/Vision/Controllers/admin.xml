@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+
+Admin related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="admin" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="init">
+            <description>Sets up the administration queue layout</description>
+            <entity namespace="vision" class="consultation/forms" id="forms" />
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="queue" output='JSON' >
+            <description>Refreshes a single queue</description>
+            <if var="queue_id" eq="admin_required">
+                <then>
+                    <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation/forms" rows="rows" page="page"  id="admin"  defaultRows='15' defaultPage='1' method="formsRequiringAdmin">
+                        <parameter name='user_id' source='session' value='uid' />
+                        <parameter name="*" source="request" />
+                    </entity>
+                </then>
+                <else>
+                    <comment>No other queues at the moment</comment>
+                </else>
+            </if>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="refresh">
+            <description>Refreshes the administration queues</description>
+            <entity orderby="event_date=desc" namespace="vision" class="consultation_forms" rows="rows" page="admin_required"  id="admin"  defaultRows='15' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+                <parameter name="*" source="request" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="search" passalong="window_id">
+            <description>Searches for a missing member</description>
+            <entity namespace="vision" class="failed_claims" method="search" response="true">
+                <parameter name="search" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="searchqueue" passalong="window_id">
+            <description>Searches only the admin queue</description>
+            <entity namespace="vision" class="consultation/forms" page="page" rows="rows"  method="searchAdminQueue" response="true">
+                <parameter name="search" source="request" required="true" />
+            </entity>
+        </action>
+                                
+        <!-- ############################################################### -->
+
+        <action name="searchpage" passalong="window_id,search">
+            <description>Opens the search page</description>
+        </action>       
+        
+        <!-- ############################################################### -->
+        
+        <action name="claimexport" output="CSV" blocking="off" filename="failed_claims_queue.csv">
+            <description>Exports the failed claim queue data</description>
+            <model namespace="vision" class="forms">
+                <comment>Just a hack to make sure you are logged in</comment>
+                <parameter name="user_id" value="uid" source="session" required="true" />
+            </model>
+            <entity namespace="vision" class="consultation_forms" method="export" response="true">
+                <parameter name="claim_status" source="request" default="E" />
+                <parameter name="status" source="request" default="C" />                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="export" output="CSV" blocking="off" filename="admin_queue.csv">
+            <description>Exports the failed claim queue data</description>
+            <model namespace="vision" class="forms">
+                <comment>Just a hack to make sure you are logged in</comment>
+                <parameter name="user_id" value="uid" source="session" required="true" />
+            </model>
+            <entity namespace="vision" class="consultation_forms" method="export" response="true">
+                <parameter name="status" source="request" default="A" />                
+            </entity>
+        </action>        
+    </actions>
+</controller>

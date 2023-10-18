@@ -1,0 +1,34 @@
+({
+    form:
+    {
+        "id": 		"outreach_campaign_selection_form",
+        "drawme":	false,
+        "action":	"",
+        "onload":       function () {
+            //when form is loaded, do something
+        },
+        "method":	"post",
+        "style":	"",
+        "onenterkey":	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"outreach_campaign",
+            longname:	"Outreach Campaign",
+            title:	"Campaign to Manage",
+            type:       "select",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"width: 200px",
+            onchange: function (evt) {
+                if ($(evt.target).val()) {
+                    Argus.outreach.listeners.manage($(evt.target).val());
+                    Argus.outreach.queues.load($(evt.target).val());
+                }
+            }
+        }          
+    ]
+})

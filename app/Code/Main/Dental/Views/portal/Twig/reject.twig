@@ -1,0 +1,52 @@
+{% set ts = helper._getTimeStamp() %}
+<html>
+    <head>
+        <title>Portal Error</title>
+        <link rel="shortcut icon" href="/images/argus/favicon.png" />
+        <link rel='stylesheet' href='/css/bootstrap?cachebust='/>
+        <link rel='stylesheet' href='/css/theme?cachebust='/>
+        <style type="text/css">
+            #dental-portal-header {
+                padding: 10px 5px; font-family: sans-serif; font-size: 1.8em; color: ghostwhite; background-color: #333
+            }
+            #dental-portal-body {
+                position: relative;
+            }
+            #dental-portal-footer {
+                padding: 2px 5px; font-family: sans-serif; font-size: .8em; color: ghostwhite; background-color: #333
+            }
+        </style>
+        <script type="text/javascript" src='/js/jquery?cachebust={{ ts }}'></script>
+        <script type='text/javascript' src='/js/bootstrap?cachebust={{ ts }}'></script>
+        <script type='text/javascript' src='/js/vue?cachebust={{ ts }}'></script>
+        <script type='text/javascript' src='/js/common?cachebust={{ ts }}'></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $(window).resize();
+            });
+            $(window).resize(function () {
+                $('#dental-portal-body').height($(document).height() - $E('dental-portal-header').offsetHeight - $E('dental-portal-footer').offsetHeight);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="dental-portal-header">
+            Argus Dental &amp; Vision Tele-Dentistry Portal
+        </div>
+        <table style='width: 100%' id="dental-portal-body">
+            <tr>
+                <td valign='middle'>
+                    <form name='dental-pin-form' method="post" onsubmit="return false">
+                        <div style='margin-left: auto; margin-right: auto; width: 600px; padding:40px; border: 1px solid silver; background-color: ghostwhite; color: #333'>
+                            <h2>Teledentistry Portal Error</h2>
+                                The portal you are trying does not exists.  Please refer to the E-mail you received and click on the portal link.<br />
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </table>
+        <div id="dental-portal-footer">
+            &copy; Argus Dental &amp; Vision, 2017 - Present, all rights reserved
+        </div>
+    </body>
+</html>

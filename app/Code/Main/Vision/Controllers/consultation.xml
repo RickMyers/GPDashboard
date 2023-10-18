@@ -1,0 +1,833 @@
+<?xml version="1.0"?>
+<!--
+
+Retina Consultation Actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="consultation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="new" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Create the form and initialize some basic fields</description>
+            <entity namespace="argus" class="user/roles"  id="user">
+                
+            </entity>
+            <entity namespace='vision' class='consultation/forms' id='form' assign="tag" method="create">
+                <parameter name='created_by'    source='session'    value='uid' required='true' />
+                <parameter name='created'       source='post'       default="now" format="timestamp" />
+                <parameter name="last_action"   source="request"    default='Created Form' />
+                <parameter name="last_activity" format="timestamp"  default="now" source="request" />
+                <parameter name="version" default="1" source="request" />
+                <if id="user" method="userHasRole" arguments="PCP Staff" eq="true">
+                    <then>
+                        <parameter name="technician" value="uid" source="session" />
+                    </then>
+                </if>
+            </entity>
+            <chain>
+                <action name="open" add="tag" />  
+            </chain>
+        </action>        
+
+        <!-- ############################################################### -->
+                
+        <action name="open" passalong='window_id,browse' blocking="off">
+            <description>Opens an existing consultation</description>
+            <entity namespace='vision' class='consultation_forms' id='form' method="nonkeysload">
+                <parameter name='tag' source='post' required='true' />
+            </entity>
+            <entity namespace='vision' class='form_feedback' id='form_feedback'>
+                <parameter name='tag' source='post' />
+            </entity>
+            <entity namespace='vision' class='clients' id='clients'  orderby="client=ASC" />
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>   
+            <comment>Now look for the right view to use</comment>
+            <if id="form" method="getCreated" gte="2022-04-10 00:00:00">
+                <then>
+                    <entity namespace="vision" class="consultation/form/comments" id="comments">
+
+                    </entity>
+                    <model namespace="vision" class="forms" id="formModel">
+                        <parameter name='tag' source='post' />
+                    </model>
+                    <view name='2022_form' />
+                </then>
+                <else>
+                    <if id="form" method="getCreated" gte="2021-01-01 00:00:00">
+                        <then>
+                            <view name='2021_form' />
+                        </then>                        
+                        <else>
+                            <if id="form" method="getCreated" gte="2018-01-01 00:00:00">
+                                <then>
+                                    <view name='2018_form' />
+                                </then>                        
+                                <else>
+                                    <view name='original' />  
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>
+            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="editComment" blocking="off">
+            <description>Returns a comment to be edited</description>
+            <entity namespace="vision" class="consultation/form/comments" wrapper="json_encode" response="true" method="load">
+                <parameter name="id" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="markclaimed" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Marks a screening/scanning form as being claimed, usually through a manual process not associated with the dashboard</description>
+            <entity namespace="vision" class="consultation_forms" method="save">
+                <parameter name='id' source='post' value='form_id' required='true' />
+                <parameter name='claim_status' source='post' default='Y' />
+                <parameter name='status' source='post' default='C' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="comments" passalong="form_id" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <entity namespace="vision" class="consultation/form/comments" id="comments" response="true">
+                <parameter name="form_id" source="post" required="true" />
+            </entity>            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="removeComment" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <entity namespace="vision" class="consultation/form/comments" method="delete">
+                <parameter name="id" source="post" required="true" />
+            </entity>            
+            <chain>
+                <action name="comments" />
+            </chain>
+        </action>
+                        
+        <!-- ############################################################### -->        
+        
+        <action name="comment" blocking="off" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Adds a comment to a form</description>
+            <entity namespace="vision" class="consultation/form/comments" id="form" method="save">
+                <parameter name="id" source="post" optional="true" /><comment>If they pass an ID, then we are editing a comment</comment>
+                <parameter name="form_id" source="post" required="true" />
+                <parameter name="comment" source="post" required="true" />
+                <parameter name="user_id" source="session" required="true" value="uid" />
+                <parameter name="posted" source="request" format="timestamp" default="now" />
+            </entity>
+            <chain>
+                <action name="comments" />
+            </chain>
+
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="oldcomment">
+            <description>Adds a comment to a form</description>
+            <entity namespace="vision" class="consultation_forms" id="form" response="true" method="addComment">
+                <parameter name="id" value="form_id" source="post" required="true" />
+                <parameter name="comment" source="post" required="true" />
+                <parameter name="user_id" source="session" required="true" value="uid" />
+            </entity>
+        </action>                
+        
+        <!-- ############################################################### -->
+        
+        <action name="claims" blocking="off">
+            <description>Will return the number of forms ready to be claimed</description>
+            <entity namespace="vision" class="consultation_forms" id="form" method="claims" response="true">
+            </entity>
+        </action>
+    
+        <!-- ############################################################### -->
+        
+        <action name="refer">
+            <description>Refers this form for administrative action, removing it from the queue</description>
+            <entity namespace="vision" class="consultation_forms" id="form" method='save'>
+                <parameter name="id" value="form_id" source="post" required="true" />
+                <parameter name="previous_status" value='current_status' source="post" required="true" />
+                <parameter name="referral_reason" value='reason' source="post" required="true" />
+                <parameter name="referred_by" source="session" required="true" value="uid" />
+                <parameter name="status" source="post" default="A" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="resolve">
+            <description>Returns a form that was referred for administration back to the point where it was referred</description>
+            <entity namespace="vision" class="consultation_forms" id="form" method='resolve'>
+                <parameter name="id" value="form_id" source="post" required="true" />
+                <parameter name="resolved_by" source="session" required="true" value="uid" />
+            </entity>
+        </action>
+                
+        
+        <!-- ############################################################### -->        
+
+        <action name="load" output="JSON" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>Returns the consultation data in JSON format </description>
+            <!--entity response="true" namespace="vision" class="consultation/forms" method="data" wrapper="json_encode">
+                <parameter name="tag" source="request" required="true" />
+            </entity-->
+            <entity response="true" namespace="vision" class="consultation/forms" method="nonkeysload" wrapper="json_encode">
+                <parameter name="tag" source="request" required="true" />
+            </entity>
+            
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="inreview">
+            <description>Marks a consultation as being in review using the current user id</description>
+            <entity namespace="vision" class="consultation_forms" method="save" >
+                <parameter name="id" value="form_id" source="post" required="true" />
+                <parameter name="reviewer" value="uid" source="session" required="true" />
+                <parameter name="status" source="request" default="I" />
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="assign">
+            <description>Assign a role to a person</description>
+            <if var="role" eq="technician">
+                <then>
+                    <entity namespace="vision" class="consultation_forms" id="biden2020" method="save">
+                        <parameter name="id" value="form_id" source="post" required="true" />
+                        <parameter name="technician" value="uid" source="session" required="true" />
+                    </entity>
+                </then>
+                <else>
+                    <if var="role" eq="reviewer">
+                        <then>
+                            <entity namespace="vision" class="consultation_forms" id="biden2020" method="save">
+                                <parameter name="id" value="form_id" source="post" required="true" />
+                                <parameter name="reviewer" value="uid" source="session" required="true" />
+                                <parameter name="status"  source="post" optional="true" />
+                            </entity>
+                        </then>
+                    </if>
+                </else>
+            </if>
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="printheader">
+            <description>Outputs the top of the print page</description>
+            <model namespace='argus' class='manager' id='manager' />
+            <entity namespace="humble" class="users" id='user' method='load'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>                    
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="printaction">
+            <description>Prints an existing consultation</description>
+            <entity namespace='vision' class='consultation_forms' id='form' method="load">
+                <parameter name='id' source='request' required='true' />
+                <parameter name='print' source='request' default="true" />
+            </entity>
+            <entity namespace='vision' class='form_feedback' id='form_feedback'>
+                <parameter name='form_id' source='post' value="id" />
+            </entity>
+            <entity namespace='vision' class='clients' id='clients'  orderby="client=ASC" />
+            <entity namespace='argus' class='user_roles' id='role'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>   
+            <comment>Now look for the right view to use</comment>
+            <if id="form" method="getCreated" gte="2022-04-10 00:00:00">
+                <then>
+                    <entity namespace="vision" class="consultation/form/comments" id="comments">
+                        <parameter name='form_id' source='post' value="id" />
+                    </entity>
+                    <view name='2022_form' />
+                </then>
+                <else>
+                    <if id="form" method="getCreated" gte="2021-01-01 00:00:00">
+                        <then>
+                            <view name='2021_form' />
+                        </then>                        
+                        <else>
+                            <if id="form" method="getCreated" gte="2018-01-01 00:00:00">
+                                <then>
+                                    <view name='2018_form' />
+                                </then>                        
+                                <else>
+                                    <view name='original' />  
+                                </else>
+                            </if>
+                        </else>
+                    </if>
+                </else>
+            </if>  
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="print">
+            <chain>
+                <action name="printheader" />
+                <action name="printaction" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="ipaget" output="JSON">
+            <description>Opens an existing consultation</description>
+            <entity response='true' namespace='vision' class='ipa_sub' id='ipaget' method='ipagetter'>
+            </entity>
+        </action>
+          
+        <!-- ############################################################### -->
+        
+        <action name="npifinder"   passalong='window_id' output="JSON">
+            <description>Retrieves data about the NPI Number for the location in the vision participants table</description>
+            <entity namespace='scheduler' class='events' id='schnpifinder' method='npifind'>
+            </entity>
+        </action>
+            
+        <!-- ############################################################### -->        
+        
+        <action name="members" passalong="search">
+            <description>This is the member search page, it does not do the search itself</description>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="membersearch" output="JSON">
+            <description>Member search/lookup</description>
+            <entity namespace='vision' response="true"  class='members' id='members' method='search' page="page" rows="rows"> 
+                <parameter name="health_plan" source="request" required="true" />
+                <parameter name="search" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="personfinder"  output="JSON">
+            <description>Retrieves data about the NPI Number for the location in the vision participants table</description>
+            <entity response='true' namespace='vision' class='members'  method='personfind'>
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="spnpifind"  output="JSON">
+            <description>Retrieves data about the NPI Number for the location in the vision participants table</description>
+            <entity response='true' namespace='scheduler' class='events'  method='spnpifind'> 
+                <!--<parameter name="npi_id" source="request" required="true" />-->
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="personsearch"  output="JSON">
+            <description>Retrieves data about the NPI Number for the location in the vision participants table</description>
+            <entity response='true' namespace='vision' class='members'  method='personsearch'> 
+                <!--<parameter name="npi_id" source="request" required="true" />-->
+            </entity>
+        </action>
+            
+        <!-- ############################################################### -->
+        
+        <action name="visionevents">
+            <description>Setup for creating the vision events and upload of members</description>
+            <entity namespace="vision" class="events" id='eventinfo'>
+                <!--<parameter name='uid' source='session' value='uid' default='' />-->
+            </entity>
+            
+            <entity namespace="vision" class="event_members" id='memberlist'>
+                <!--<parameter name='uid' source='session' value='uid' default='' />-->
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="oddefine"   passalong='window_id' output="JSON">
+            <description>Page for creating default values for OD</description>
+            <entity namespace="humble" class="user_identification" id='user' method='load'>
+                <parameter name='id' source='session' value='uid' default='' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="odsave">
+            <description>Saves data for od defaults </description>
+            <entity namespace='vision' class='od_predetermined' method='save'>
+                <parameter name='id' source='post' optional="true" />
+                <parameter name='od_id' source='post' required='true' />
+                
+                <parameter name='ta_tp' source='post' optional='true' />
+                <parameter name='iop_od' source='post' optional='true'  />
+                <parameter name='iop_os' source='post' optional='true' />
+                <parameter name='dilation' source='post' optional='true' />
+                <parameter name="modified" format="timestamp" default="now" source="request" />
+
+            </entity>
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="odget" output="JSON">
+            
+            <description>Load id if  for od defaults </description>
+            <entity response='true'  namespace='vision' class='ipa_sub' method='getidfromod' >
+            </entity>
+        </action> 
+
+        <!-- ############################################################### -->
+        
+        <action name="newipa" passalong="window_id">
+            <description>Creates/Updates IPA's and sub groups</description>
+            <entity namespace='vision' class='ipa' id='form'>
+                <parameter name="ipa_id" source="session"   />
+            </entity>
+            <entity namespace='vision' class='ipa_sub' id='subform'>
+                <parameter name="ipa_parent_id" source="session"  />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="newsubipa" passalong="window_id">
+            <description>Creates/Updates IPA's and sub groups</description>
+            <entity namespace='vision' class='ipa' id='form'>
+                <parameter name="ipa_id" source="session"   />
+            </entity>
+            <entity namespace='vision' class='ipa_sub' id='subform'>
+                <parameter name="ipa_parent_id" source="session"  />
+            </entity>
+            <entity namespace='vision' class='ipa_sub' method="createmainipatable" id="finder" >
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="searchpage" passalong="search,window_id,ipa">
+            <description>The page that the search results are put in</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="formsearch" passalong="search,window_id">
+            <description>The page that the search results are put in</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="search" output="json">
+            <description>Actual search results</description>
+            <entity namespace="vision" class="consultation/forms" method="search" response="TRUE" rows="rows" page="page" defaultRows="10" defaultPage="1">
+                <parameter name="search" source="post" required="true" />
+                <parameter name="search_mine_only" source="post" default="N" />
+                <parameter name="ipa" source="post" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="referred" blocking='off'>
+            <description>A form, marked for referral, has been referred</description>
+            <entity namespace='vision' class='consultation/forms' method='save'>
+                <parameter name='id' value='form_id' source='post' required='true' />
+                <parameter name='referred' source='post' default='Y' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="release" blocking='off'>
+            <description>Will release the form to the PCP portal</description>
+            <model namespace='vision' class='forms' method='releaseToPCPPortal' response='true'>
+                <parameter name='id' source='post' required='true' />
+            </model>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="save">
+            <description>Saves form data as the user is entering it </description>
+            <entity namespace='vision' class='consultation/forms' method='save'>
+                <parameter name='id'         source='post' required='true' />
+                <parameter name='event_date' source='post' optional='true' format='date'/><!-- Just in case we need to format this before storing it -->
+                <parameter name='fbs_date'   source='post' optional='true' format='date'/><!-- Just in case we need to format this before storing it -->
+                <parameter name='hba1c_date' source='post' optional='true' format='date'/><!-- Just in case we need to format this before storing it -->
+                <parameter name='date_of_birth' source='post' optional='true' format='date'/><!-- Just in case we need to format this before storing it -->
+                <parameter name='*'          source='post' trim="true" upper="true"  />
+            </entity>     
+            <if var="status" eq="C">   
+                <then>
+                    <model namespace='vision' class='forms' method='checkWithholding'>
+                        <comment>Check to make sure that the client (health plan) is active with us, otherwise we will have to put a hold on it until payment is received</comment>
+                        <parameter name='id'  source='post' required="true" />
+                    </model>
+                    <model namespace='vision' class='forms' method='checkFormLock'>
+                        <comment>If a form is in an unlocked state, we need to check (manually) to make sure the addresses will claim</comment>
+                        <parameter name='id'  source='post' required="true" />
+                    </model>
+                    <model namespace='vision' class='forms' method='checkForIpaAndLocationValues'>
+                        <comment>Make sure the IPA_ID and LOCATION_ID values got set</comment>
+                        <parameter name='id'  source='post' required="true" />
+                    </model>                    
+                </then>
+            </if>
+            <if var="client_id" ne=''>  
+                <then>
+                    <model namespace='vision' class='forms' method='screeningClient'>
+                        <parameter name='form_id' value="id" source='post' />
+                        <parameter name='client_id' source='post' required="true" />
+                    </model>
+                </then>
+            </if>
+            <if var="opth_referral" eq='Y'>
+                <then>
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <parameter name='id' source='post' required='true' />
+                        <parameter name='referral' source='request' default='Y' />
+                    </entity>
+                </then>
+            </if>
+            <if var="retinal_referral" eq='Y'>
+                <then>
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <parameter name='id' source='post' required='true' />
+                        <parameter name='referral' source='request' default='Y' />
+                    </entity>                    
+                </then>
+            </if>   
+            <if var="opth_referral" eq=''>
+                <then>
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <parameter name='id' source='post' required='true' />
+                        <parameter name='referral' source='request' default='N' />
+                    </entity>
+                </then>
+            </if>
+            <if var="retinal_referral" eq=''>
+                <then>
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <parameter name='id' source='post' required='true' />
+                        <parameter name='referral' source='request' default='N' />
+                    </entity>                    
+                </then>
+            </if>                     
+        </action>   
+        
+        <!-- ############################################################### -->
+        
+        <action name="submit">
+            <description>Registers the time when the consultation scanning was submitted</description>
+            <entity namespace='vision' class='consultation_forms' method='save'>
+                <parameter name='id' source='post' required='true' />
+                <parameter name='status' source='post' default='S' />
+                <parameter name='submitted' format="timestamp" default="now" source='request' />
+            </entity>
+            <model namespace="vision" class="pcp" method="add">
+                <parameter name='id'     source='post' required='true' />
+            </model>              
+        </action>  
+        
+        <!-- ############################################################### -->    
+        
+        <action name="claimready" blocking="off">
+            <description>Publishes an event that lets everyone know a new claim is ready</description>
+            <model namespace="vision" class="claims" method="available">
+                <parameter name="form_id" source="request" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->    
+        
+        <action name="noncontractedclaimready" blocking="off">
+            <description>Publishes an event that lets everyone know a new noncontracted claim is ready</description>
+            <model namespace="vision" class="claims" method="noncontractedClaimAvailable">
+                <parameter name="form_id" source="request" required="true" />
+            </model>
+        </action>        
+        
+        <!-- ############################################################### -->        
+        
+        <action name="noncontracted" blocking="off">
+            <description>Will return just the number of non-contracted claims are ready to be invoiced for the current year</description>
+            <comment>NOTE THAT THIS WILL BE FOR THE CURRENT YEAR IF YOU DONT PASS A YYYY WITH THIS!</comment>
+            <entity namespace="vision" class="consultation/forms" method="noncontractedClaimsAvailable" response='true'>
+                <parameter name='year' source='request' format='date' default='currentYear' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="claim" blocking="off">
+            <description>Batches and claims the consultations that are completed and in an unprocessed claim state</description>
+            <model namespace="vision" class="claims" method="run" response="true" id="claims">
+                <parameter name="uid" source="session" required="true" />
+                <parameter name="number" source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="status" event='visionRecordStatusChange' comment='A vision scanning record has been created, submitted, reviewed or archived'>
+            <description>Changes the status of a vision packet</description>
+            <entity namespace='vision' class='consultation_forms' method='save' id='form'>
+                <parameter name='id'     source='post' required='true' />
+                <parameter name='status' source='post' required='true' />
+            </entity>
+            <switch id="form" method="getStatus">
+                <case value="S">
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <comment>If they have submitted it, record that date/time</comment>
+                        <parameter name='id'     source='post' required='true' />
+                        <parameter name='submitted'     format="timestamp" default="now" source='request' />
+                        <parameter name="last_action"   default="Submitted to O.D."      source="request" />
+                        <parameter name="last_activity" format="timestamp" default="now" source="request" />
+                    </entity> 
+                </case>
+                <case value='N'>
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <comment>If they have submitted it, record that date/time</comment>
+                        <parameter name='id'     source='post' required='true' />
+                        <parameter name="status" source="post" default='N' />
+                        <parameter name="last_action" default="Returned to Submitter" source="request" />
+                        <parameter name="last_activity" format="timestamp" default="now" source="request" />
+                    </entity>                    
+                </case>
+                <case value='C'>
+                    <entity namespace='vision' class='consultation_forms' method='save'>
+                        <comment>If they have submitted it, record that date/time</comment>
+                        <parameter name='id'     source='post' required='true' />
+                        <parameter name="status" source="post" default='N' />
+                        <parameter name="last_action" default="Form Completed/Signed" source="request" />
+                        <parameter name="last_activity" format="timestamp" default="now" source="request" />
+                    </entity>
+                    <model namespace="vision" class="pcp" method="registerPCP">
+                        <parameter name='form_id' value="id"  source='post' required='true' />
+                    </model>
+                </case>
+                <default>
+                </default>
+            </switch>
+        </action>
+        
+        <!-- ############################################################### -->   
+        
+        <action name="discard" audit="true">
+            <description>Removes a screening form</description>
+            <entity namespace="vision" class="consultation/forms" method="nonkeysdelete">
+                <parameter name="tag" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->   
+        
+        <action name="recall">
+            <description>Recall is when a pcp staff pulls back a consultation form for more updates before a reviewer has had a chance to review it</description>
+            <entity namespace="vision" class="consultation_forms" method="save">
+                <parameter name="id" source="post" required="true" />
+                <parameter name="status" source="post" default='N' />
+                <parameter name="last_action" default="Recalled" source="request" />
+                <parameter name="last_activity" format="timestamp" default="now" source="request" />                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->           
+        
+        <action name="lookup" output="JSON">
+            <description>Retrieves data about a member in the vision participants table</description>
+            <entity namespace="vision" class="event_members" method="fetch" response="true">
+                <parameter name="member_id" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->           
+        
+        <action name="namelookup" output="JSON">
+            <description>Retrieves data about a member in the vision participants table</description>
+            <entity namespace="vision" class="event_members" method="fetch" response="true">
+                <parameter name="member_name" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->    
+        
+        <action name="npilookup" output="JSON">
+            <description>Retrieves data about the NPI Number for the location in the vision participants table</description>
+            <entity namespace="vision" class="event_npi" method="fetch" response="true">
+                <parameter name="npi_id" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="eventlookup" output="JSON">
+            <description>Retrieves data about the event location for the event NPI number for the vision participants table</description>
+            <entity namespace="vision" class="event_npi" method="fetch" response="true">
+                <parameter name="location" source="request" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="pcpsearch" output="json">
+            <description>Actual search results</description>
+            <entity namespace="vision" class="consultation_forms" method="pcpSearch" orderby="event_data=DESC" response="TRUE" rows="rows" page="page" defaultRows="10" defaultPage="1">
+                <parameter name="search" source="post" required="true" />
+            </entity>
+        </action>
+                
+        <!-- ############################################################### -->
+
+        <action name="getorderipa" output="JSON">
+            <description>saves changes to vision_ipa</description>
+            <entity response='true' namespace='vision' class='ipa_sub' method="getidfromod" >
+            </entity>  
+        </action> 
+
+        <!-- #############################################   -->
+        
+        <action name="getorderipasub" output="JSON">
+            <description>saves changes to vision_ipa</description>
+            <entity response='true' namespace='vision' class='ipa_sub' method="ordertoipasubid" >
+            </entity>  
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="savetonpi">
+            <description>Saves form data as the user is entering it </description>
+            <entity namespace='vision' class='event_npi' method='save'>
+                <parameter name='npi_id' source='post' required='true' />
+                <parameter name='location' source='post' required='true' />
+                <parameter name="created_on" format="timestamp" default="now" source="request" />
+                <parameter name="modified" format="timestamp" default="now" source="request" />
+            </entity>
+        </action>  
+        
+        <!-- ############################################################### --> 
+        
+        <action name="getipacount" output='JSON'>
+            <description>gets the amount of ipa's </description>
+            <entity response='true' namespace='vision' class='ipa_sub' method='getipamount'>
+            </entity>
+        </action>         
+        
+        <!-- ############################################################### --> 
+        
+        <action name="getipasubcount" output='JSON'>
+            <description>gets the amount of ipa subdivisions's </description>
+            <entity response='true' namespace='vision' class='ipa_sub' method='getipasubamount'>
+            </entity>
+        </action>        
+        
+        <!-- ###############################################################  -->
+        
+        <action name="createsubtable" output="JSON">
+            <description>saves changes to vision_ipa</description>
+            <entity response='true' namespace='vision' class='ipa_sub' method="createsubtable" >
+            </entity>  
+        </action>                
+                                                               
+        <!-- #####################################################-->                                                                                                                 
+                                                                                    
+        <action name="feedback">
+            <description>Saves feedback from the doctor on quality of form</description>
+            <entity namespace="vision" class="form_feedback" method="save" >
+                <parameter name="form_id" source="post" required="true" />
+                <parameter name="respondent"    source="session" value="uid" required="true" />
+                <parameter name="image_quantity" source="post"  optional="true" />
+                <parameter name="image_quality" source="post"   optional="true" />
+                <parameter name="feedback"      source="post"   optional="true" />
+            </entity>
+        </action>    
+        
+        <!-- ############################################################### -->                                           
+        
+        <action name="return">
+            <description>Returns the encounter to the OD to modify and re-sign</description>
+            <entity namespace="vision" class="consultation_forms" method="save">
+                <parameter name="id" value="form_id" source="post" required="true" />
+                <parameter name="doctor_has_signed" source="post" default="N" />
+                <parameter name="status" source="post" default="S" />
+                <parameter name="last_activity" format="timestamp" source="post" default="now" />
+                <parameter name="last_action" source="post" default="Returned" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->   
+        
+        <action name="sign">
+            <description>A person, maybe the doctor, has signed the consultation</description>
+            <entity namespace="argus" class="pin_repository" id="pin">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+                <parameter name="pin" source="post" format="password" required="true" />
+            </entity>
+            <switch id="pin" method="valid">
+                <case value="TRUE">
+                    <entity namespace="humble" class="user_identification" method="load" id="user">
+                        <parameter name="id" value="uid" source="session" required="true" />
+                    </entity>
+                    <entity namespace="vision" class="consultation/forms" method="sign">
+                        <parameter name="id" source="post" required="true" />
+                        <parameter name="user_id" value="uid" source="session" required="true" />
+                        <parameter name="last_activity" format="timestamp" default="now" source="request" /> 
+                    </entity>
+                </case>
+                <default>
+                    <view name="badpin" />
+                </default>
+            </switch>
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="markclaimed" blocking="off">
+            <description>Marks a claim as being cleared/processed</description>
+            <entity namespace='vision' class='consultation/forms' method='save'>
+                <parameter name='id' value='form_id' source='post' required='true' />
+                <parameter name='claim_satus' source='post' default='Y' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->  
+        
+        <action name="claimreset" blocking="off">
+            <description>Resets the claim so it can be run again</description>
+            <entity namespace='vision' class='consultation/forms' method='save'>
+                <parameter name='id' value='form_id' source='post' required='true' />
+                <parameter name='claim_status' source='post' default='N' />
+                <parameter name='status' source='post' default='C' />
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->  
+        
+        <action name='clearsignature'>
+            <description>Removes the OD signature and returns the form to their input (submission) queue</description>
+            <entity namespace="vision" class="consultation/forms" method="save">
+                <parameter name="id" value="form_id" source="post" required="true" />
+                <parameter name="status"            source="request" default="S" />
+                <parameter name="doctor_has_signed" source="request" default='' />
+                <parameter name="license_number"    source="request" default='' />
+                <parameter name="doctor"            source="request" default='' />
+                <parameter name="od_signed_date"    source="request" default='' />
+            </entity>
+        </action>
+    </actions>
+</controller>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Some general claims actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="claims" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="analyze">
+            <description>Summarizes an uploaded claim file</description>
+            <helper namespace="dashboard" class="widgets" id="claims">
+                <parameter name="claims_file" source="file" required="true" />
+            </helper>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

@@ -1,0 +1,57 @@
+({
+	form:
+	{
+		id: 		"new-entity-type-form",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"entity_type",
+			longname:		"Entity Type",
+			title:			"New Entity Type",
+                        type:                   "text",
+                        required:		true,
+                        force:			true,
+			classname:		"",
+			style:			"padding: 2px; width: 150px; color: #333; border: 1px solid #aaf; border-radius: 2px"
+		},
+		{
+			active:			true,
+			id: 			"entity_type_description",
+			longname:		"Entity Type Description",
+			title:			"New Entity Type Description",
+                        type:                   "text",
+                        required:		true,
+                        force:			true,
+			classname:		"",
+			style:			"padding: 2px; width: 250px; color: #333; border: 1px solid #aaf; border-radius: 2px"
+		},                
+                {
+			active:			true,
+			id: 			"entity_type_submit",
+			longname:		"Submit",
+			title:			"Click when to create a new entity type",
+                        type:                   "button",
+                        required:		false,
+                        force:			false,
+			classname:		"",
+			style:			"color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['new-entity-type-form'].validate()) {
+                                (new EasyAjax('/argus/entity/newtype')).add('type',$('#entity_type').val()).add('description',$('#entity_type_description').val()).then(function (response) {
+                                    $('#argus-entity-types-tab').html(response);
+                                }).post();
+                            }
+                        }
+		}                   
+	]
+})

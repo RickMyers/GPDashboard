@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>IPA List</name>
+    <description>The list of clients we currently have</description>
+    <type>Select</type>
+    <resource action="/vision/client/ipas" id="ipa_id" text="text" value="value" on="client_id" /> 
+</component>

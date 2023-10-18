@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<component>
+    <name>Procedure Code 2023F</name>
+    <description>Options for the PC 2023f</description>
+    <type>Select</type>
+    <resource id="pc_2023f" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "Present",
+                "value": "Y"
+            },
+            {
+                "text": "Not-Present",
+                "value": ""
+            }
+        ]
+    </content>    
+</component>
+
+

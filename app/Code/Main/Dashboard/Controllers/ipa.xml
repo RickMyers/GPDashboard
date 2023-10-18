@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+
+IPA Login Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="ipa" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="login">
+            <description>The login page</description>
+            <entity namespace="vision" class="ipas" id='ipas' orderby="ipa=ASC">
+                <parameter name="legacy" source="post" default='N' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="authenticate" passalong="ipa_id,user_password" event="ipaAuthentication" comment="Validate the IPA ID and the password">
+            <description>A trigger for the IPA login process </description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="userid" passalong="windowId">
+            <description>Not really sure what this is all about</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+    </actions>
+</controller>

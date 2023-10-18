@@ -1,0 +1,62 @@
+({
+	form:
+	{
+		id: 		"environment_copy_form-&&win_id&&",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:   
+	[
+		{
+			active:			true,
+			id: 			"environment-&&win_id&&",
+			longname:		"Environment To Import",
+			title:			"Import Environment",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"color: #333; border: 1px solid #aaf"
+		},
+		{
+			active:			true,
+			id: 			"scheme-&&win_id&&",
+			longname:		"Import Scheme",
+			title:			"Import Scheme",
+                        type:                   "file",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"color: #333; border: 1px solid #aaf"
+		},                
+		{
+			active:			true,
+			id: 			"export_submit-&&win_id&&",
+			longname:		"Import Start Button",
+			title:			"Click to begin the export",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['import-environment-&&win_id&&'].validate()) {
+                                Heartbeat.stop();
+                                (new EasyAjax('/argus/import/service')).packageForm('environment_copy_form-&&win_id&&').then(function (response) {
+                                    var file = JSON.parse(response);
+                                    $('#latest_file-&&win_id&&').val(file.filename).trigger('change');
+                                }).post();
+                            }
+                        }
+		}                
+                
+	]
+})
+
+

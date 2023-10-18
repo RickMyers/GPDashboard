@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<!--
+
+Provider related actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="provider" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="register">
+            <description>
+                A form to register a new provider, does not require logon to complete the form
+                but after submitting you must have a UID to review and have the proper role
+            </description>
+            <entity namespace="argus" class="provider_registration_forms" id="provider_form">
+                <parameter name="form_id" source="GET" default="" />
+            </entity>
+            <switch id="provider_form" method="getFormId">
+                <case value="">
+                    <view name="new_request" />
+                </case>
+                <default>
+                    <entity namespace="argus" class="provider_registration_forms" id="provider_form" method="nonkeysload">
+                        <parameter name="form_id" source="GET" default="" />
+                    </entity>
+                    <switch id="provider_form" method="onlyCommercial">
+                        <case value="TRUE">
+                            <view name="commercial_form" />
+                            <entity namespace="argus" class='user_roles' id='role'>
+                                <parameter name="user_id" value="uid" source="session" optional="true" />
+                            </entity>
+                            <switch id='provider_form' method='getStatus'>
+                                <case value='S'>
+                                    <switch id='role' method='canViewSubmittedRegistrationForms'>
+                                        <case value="TRUE">
+                                            <!-- default processing -->
+                                        </case>
+                                        <default>
+                                            <redirect href="/index.html?m=You don't have the authority to view submitted registration forms" />
+                                        </default>
+                                    </switch>
+                                </case>
+                                <case value='A'>
+                                    <switch id='role' method='canViewArchivedRegistrationForms'>
+                                        <case value="TRUE">
+                                            <!-- default processing -->
+                                        </case>
+                                        <default>
+                                            <redirect href="/index.html?m=You don't have the authority to view archived registration forms" />
+                                        </default>
+                                    </switch>
+                                </case>
+                                <default>
+                                    <!-- Go with normal processing -->
+                                </default>
+                            </switch>
+                        </case>
+                        <default>
+                            <switch id="provider_form" method="getId">
+                                <case value="">
+                                    <view name="invalid_request" />
+                                </case>
+                                <default>
+                                    <entity namespace="argus" class='user_roles' id='role'>
+                                        <parameter name="user_id" value="uid" source="session" optional="true" />
+                                    </entity>
+                                    <switch id='provider_form' method='getStatus'>
+                                        <case value='S'>
+                                            <switch id='role' method='canViewSubmittedRegistrationForms'>
+                                                <case value="TRUE">
+                                                    <!-- default processing -->
+                                                </case>
+                                                <default>
+                                                    <redirect href="/index.html?m=You don't have the authority to view submitted registration forms" />
+                                                </default>
+                                            </switch>
+                                        </case>
+                                        <case value='A'>
+                                            <switch id='role' method='canViewArchivedRegistrationForms'>
+                                                <case value="TRUE">
+                                                    <!-- default processing -->
+                                                </case>
+                                                <default>
+                                                    <redirect href="/index.html?m=You don't have the authority to view archived registration forms" />
+                                                </default>
+                                            </switch>
+                                        </case>
+                                        <default>
+                                            <!-- Go with normal processing -->
+                                        </default>
+                                    </switch>
+                                </default>
+                            </switch>
+                        </default>
+                    </switch>
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="data" output="JSON" blocking="OFF">
+            <description>Returns NPI associated information</description>
+            <model namespace="argus" class="provider" response="true" method="npiLookup">
+                <parameter name="number" value="npi" required="true" source="request" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+    
+        <action name="credentialing">
+            <description>This is actually the recredentialing form</description>
+            <entity namespace="argus" class="provider_credentialing_forms" id="provider_form">
+                <parameter name="form_id" source="GET" default="" />
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="lookup" passalong="window_id">
+            <description>Does a call out to the NPI registery for information on a particular NPI</description>
+        </action>
+        
+        <!-- ############################################################### -->   
+        
+        <action name="search" blocking="off" output="JSON">
+            <description>Does a lookup in the Dataware House for a set of providers</description>
+            <entity namespace="argus" class="providers" method="fetch" page="page" rows="rows" defaultRows="50" defaultPage="1" response="true">
+                <parameter name="*" source="request" />  
+            </entity>		
+        </action>                  
+        
+        <!-- ############################################################### -->   
+        
+        <action name="search2" blocking="off" output="JSON">
+            <entity namespace="argus" class="providers" method="search" response="true">
+                <parameter name="zip_code" source="request" optional="true" />
+                <parameter name="distance" source="request" optional="true" />
+                <parameter name="affiliation" source="request" optional="true" />
+                <parameter name="specialty" source="request" optional="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+
+        <action name="email">
+            <description>Sends the email with the registration link and displays a confirmation message</description>
+            <entity namespace="argus" class="provider_registration_forms" id="provider_form" method="emailAndConfirm">
+                <parameter name="email"      source="post" default="" required="true" />
+                <parameter name="name"       source="post" default="" required="true" />
+                <parameter name="medicare"   source="post" default="" optional="true" />
+                <parameter name="medicaid"   source="post" default="" optional="true" />
+                <parameter name="commercial" source="post" default="" optional="true" />
+                <parameter name="fhk"        source="post" default="" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="save">
+            <description>Saves form data as the user is entering it </description>
+            <entity namespace='argus' class='provider_registration_forms' id='form' method='save'>
+                <parameter name='id' source='post' required='true' />
+                <parameter name='*' source='post'  />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="attachment">
+            <description>Saves an attachment that has been uploaded </description>
+            <helper namespace='argus' class='data'  method='handleAttachment'>
+                <parameter name='id'         source='post' required='true' />
+                <parameter name='attachment' source='post' required='true' />
+                <parameter name='attachment_file'   source='file'  />
+            </helper>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="attachments" output="JSON">
+            <description>Generates a list of the attachments contained within a form</description>
+            <entity namespace='argus' response="true" class='provider_registration_form_attachments' id='form' method='fetch'>
+                <parameter name='form_id' value="id" source='post' required='true' />
+            </entity>     
+        </action>
+                                       
+        <!-- ############################################################### -->
+        
+        <action name="view">
+            <description>Sets the appropriate mime type and dumps a file to the browser</description>
+            <helper namespace='argus' class='data'  method='outputProviderAttachment'>
+                <parameter name='id'     source='post' required='true' />
+                <parameter name='field'  source='post' required='true' />
+            </helper>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="pin" output="JSON">
+            <description>Performs the check of a pin number against a form</description>
+            <entity namespace='argus' class='provider_registration_forms' id='form'>
+                <parameter name='form_id'   source='post' required='true' />
+                <parameter name='pin'       source='post' required='true' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="sign">
+            <description>Signs the provider registration form</description>
+            <model namespace='argus' class='provider' method='sign'>
+                <parameter name='form_id'   source='post' required='true' />
+            </model>
+        </action>        
+                        
+        <!-- ############################################################### -->
+        
+        <action name="submit" event="newProviderRegistrationSubmit" comment="A potential provider has submitted their online registration form for review ">
+            <description>A potential provider has submitted their online registration form for review </description>
+            <entity namespace='argus' class='provider_registration_forms' method="save">
+                <parameter name='id' source='post' required='true' />
+                <parameter name='form_id' source='post' required="true" />
+                <parameter name="status" source="post" default="S" />
+                <parameter name="date_submitted" source="post" format="timestamp" default="now" /> 
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="info" output="JSON">
+            <description>Does a remote call to get the provider information from the CMMS lookup service</description>
+            <model namespace="argus" class="PCP" method="info" response="true">
+                <parameter name='version' source='request' default="2.1" />
+                <parameter name='number' source='request' required='true' />
+            </model>
+        </action>
+    </actions>
+</controller>

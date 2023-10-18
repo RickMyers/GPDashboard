@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+
+Category related actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="category" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="new">
+            <description>The New Category Form</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="add">
+            <description>Add a new category</description>
+            <entity namespace="librio" class="project_categories" method="save">
+                <parameter name='project_id'    source='post' required="true" />
+                <parameter name='category'      source='post' required="true" />
+                <parameter name='description'   source='post' required="true" />
+                <parameter name='creator'       source='session' value='uid' required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="contents">
+            <description>Lists the contents of a project category</description>
+            <entity namespace="librio" class="project_documents" id='category'>
+                <parameter name='project_id'    source='post' value='project_id' required="true" />
+                <parameter name='category_id'   source='post' value='category_id' required="true" />
+            </entity>
+        </action>
+    </actions>
+</controller>

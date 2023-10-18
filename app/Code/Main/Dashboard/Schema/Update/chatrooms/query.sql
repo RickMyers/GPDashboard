@@ -1,0 +1,30 @@
+ CREATE TABLE dashboard_chatrooms
+ (
+	id INT NOT NULL AUTO_INCREMENT,
+	created_by INT DEFAULT NULL,
+	created DATETIME DEFAULT NULL,
+	alias CHAR(36) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+ );
+ CREATE TABLE dashboard_chatroom_log
+ (
+	id INT NOT NULL AUTO_INCREMENT,
+	chatroom_id INT DEFAULT NULL,
+	participant_id INT DEFAULT NULL,
+	`text` TEXT,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	INDEX (chatroom_id)
+ );
+ CREATE TABLE dashboard_chatroom_participants
+ (
+	id INT NOT NULL AUTO_INCREMENT,
+	chatroom_id INT DEFAULT NULL,
+	user_id INT DEFAULT NULL,
+	joined DATETIME DEFAULT NULL,
+	exited DATETIME DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	INDEX (chatroom_id) 
+ );

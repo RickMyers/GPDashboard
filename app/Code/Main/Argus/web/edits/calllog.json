@@ -1,0 +1,222 @@
+({
+
+    form:
+    {
+        id: 		"hedis-call-&&win_id&&",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            $('#call_attempted-&&win_id&&').click();
+            $('#call_attempted-&&win_id&&').click();
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"call_attempted-&&win_id&&",
+            longname:		"Call Attempted",
+            title:		"Check if/when you attempt a call",
+            type:               "checkbox",
+            required:		false,
+            force:		false,
+            dependencies:       "counseling_completed_yes-&&win_id&&,counseling_completed_no-&&win_id&&,counseling_completed_na-&&win_id&&,working_number_yes-&&win_id&&,working_number_no-&&win_id&&,wrong_number_yes-&&win_id&&,wrong_number_no-&&win_id&&,left_message_yes-&&win_id&&,left_message_no-&&win_id&&,left_message_na-&&win_id&&,appt_requested_yes-&&win_id&&,appt_requested_no-&&win_id&&,appt_requested_na-&&win_id&&",
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"call_id-&&win_id&&",
+            longname:		"Call ID",
+            title:		"",
+            type:               "hidden",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"time_of_call-&&win_id&&",
+            longname:		"Time Of call",
+            title:		"",
+            type:               "hidden",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"wrong_number_yes-&&win_id&&",
+            group:              "wrong_number",
+            longname:		"Wrong Number Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"wrong_number_no-&&win_id&&",
+            group:              "wrong_number",
+            longname:		"Wrong Number Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"working_number_yes-&&win_id&&",
+            group:              "working_number",
+            longname:		"Working Number Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"working_number_no-&&win_id&&",
+            group:              "working_number",
+            longname:		"Working Number Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"left_message_yes-&&win_id&&",
+            group:              "left_message",
+            longname:		"Left Message Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"left_message_no-&&win_id&&",
+            group:              "left_message",
+            longname:		"Left Message Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"appt_requested_yes-&&win_id&&",
+            group:              "appt_requested",
+            longname:		"Appointment Requested Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"appt_requested_no-&&win_id&&",
+            group:              "appt_requested",
+            longname:		"Appointment Requested Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        }, 
+        {
+            active:		true,
+            id: 		"counseling_completed_yes-&&win_id&&",
+            group:              "counseling_completed",
+            longname:		"Couseling Completed Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },
+        {
+            active:		true,
+            id: 		"counseling_completed_no-&&win_id&&",
+            group:              "counseling_completed",
+            longname:		"Counseling Completed Indicator",
+            title:		"",
+            type:               "radio",
+            required:		false,
+            force:		false,
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"additional_comments-&&win_id&&",
+            longname:		"Additional Comments",
+            title:		"",
+            type:               "textarea",
+            maxchars:           255,
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"log-activity-button-&&win_id&&",
+            longname:		"Log Activity",
+            title:		"",
+            type:               "button",
+            required:		false,
+            force:		false,
+            onclick:            function (evt) {
+                if (Edits['hedis-call-log-&&win_id&&'].validate()) {
+                   (new EasyAjax('/dental/hedis/logcall')).packageForm('hedis-call-&&win_id&&').then(function (response) {
+                       Desktop.window.list['&&win_id&&']._close();
+                   }).post();   
+                }
+            },
+            classname:		"",
+            style:		""
+        },        
+        {
+            active:		true,
+            id: 		"reasignment-button-&&win_id&&",
+            longname:		"Reassignment Button",
+            title:		"",
+            type:               "button",
+            required:		false,
+            force:		false,
+            onclick:            function (evt) {
+                if (Edits['hedis-call-log-&&win_id&&'].validate()) {
+                    (new EasyAjax('/dental/hedis/reset')).packageForm('hedis-call-&&win_id&&').add('assignee','').then(function (response) {
+                       Desktop.window.list['&&win_id&&']._close();
+                    }).post();                
+                }
+            },
+            classname:		"",
+            style:		""
+        }     
+        
+    ]
+})

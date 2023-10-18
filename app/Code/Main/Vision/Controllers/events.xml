@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+
+Scanning Event actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="events" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="add">
+            <description>Add a member to an event</description>
+            <entity namespace="humble" class="users" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="remove" event="memberRemovedFromEvent" comment="A member has been removed from an event">
+            <description>A member has been removed from attending an event</description>
+            <entity namespace="vision" class="event_members" method="delete">
+                <parameter name="id" source="post" required="true" />
+                <parameter name="event_id" source="post" optional="true" />
+                <parameter name="member_id" source="post" optional="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="upload">
+            <description>We are uploading a list of members into an event</description>
+            <helper namespace="vision" class="event" method="newUpload">
+                <parameter name="event_id"    source="post" required="true" />
+                <parameter name="client_id" source="post" required="true" />
+                <parameter name="member_list" source="file"  />
+            </helper>
+            <entity namespace="vision" class="event/attachments" method="save">
+                <parameter name="event_id" source="post" required="true" />
+                <parameter name="attachment" source="file" value="member_list" />
+                <parameter name="author_id" source="session" value="uid" required="true" />
+                <parameter name="description" source="post" default="Uploaded Member List"/>
+            </entity>            
+            <chain>
+                <action name="members" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="members" passalong="event_id">
+            <description>Lists the members associated to a particular event</description>
+            <entity namespace="vision" class="event_members" id="members">
+                <parameter name="event_id" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="search" passalong="window_id">
+            <description>The basic layout for a search</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="list">
+            <description>The basic layout for a search</description>
+            <entity namespace="scheduler" class="events" page="page" response="true" rows="row" id="events" method="useKeysFetch" orderby="id=DESC">
+                <parameter name="id" optional="true" source="request" />
+            </entity>
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="recap" blocking="off" output="JSON">
+            <description>After the fact report of what went on in at an event</description>
+            <entity namespace="vision" class="event/members" method="recap" normalize="Y" response="true"> 
+                <parameter name="start_date" source="request" format="date" optional='true' />
+                <parameter name="end_date" source="request" format="date"  optional='true' />
+                <parameter name="*" source="request" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="completed" blocking="off" output="JSON">
+            <description>After the fact report of what went on in at an event</description>
+            <entity namespace="vision" class="consultation/forms" method="gapsClosed" normalize="Y" response="true"> 
+                <parameter name="*" source="request" />
+            </entity>
+        </action>
+        
+    </actions>
+</controller>

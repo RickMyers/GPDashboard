@@ -1,0 +1,42 @@
+{
+    "separator": ",",
+    "segments": {
+        "number": {
+            "4": {
+                "1": {
+                    "format": "string"
+                },
+                "2": {
+                    "format": "string"                    
+                },
+                "3": {
+                    "validator": "state"
+                },
+                "4": {
+                    "validator": "zipcode"                    
+                }
+            },
+            "5": {
+                "1": {
+                    "format": "string"
+                },
+                "2": {
+                    "format": "string"
+                },
+                "3": {
+                    "format": "string"
+                },
+                "4": {
+                    "validator": "state"
+                },
+                "5": {
+                    "validator": "zipcode"
+                }
+            }
+        }
+    },
+    "verifier": {
+        "namespace": "vision",
+        "action": ""
+    }
+}

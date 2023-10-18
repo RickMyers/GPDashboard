@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<layout delimiter=",">
+    <entity namespace="vision" class="members" store="member_id" use="health_plan_id">
+        <column name="first_name">
+            <source     name="MEMBER_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="2" />
+            </transform>
+        </column>
+        <column name="last_name">
+            <source     name="MEMBER_NAME" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value="," />
+                <argument name="index" value="1" />
+            </transform>
+        </column>    
+        <column name="member_number">
+            <source     name="SUBSCRIBER_ID" />
+        </column>      
+        <column name="date_of_birth">
+            <source     name="MEMBER_DOB_PHONE" format="date" />
+             <transform   name="splitValue">
+                <argument name="delimiter" value=" - " />
+                <argument name="index" value="1" />
+            </transform>
+        </column>
+    </entity>
+    <entity namespace="vision" class="phone_numbers" use="member_id" store="phone_number_id">
+        <column name="phone_number">
+            <source     name="MEMBER_DOB_PHONE" />
+            <transform   name="splitValue">
+                <argument name="delimiter" value=" - " />
+                <argument name="index" value="2" />
+            </transform>
+        </column>
+    </entity>
+    <entity namespace="vision" class="addresses" store="address_id">
+        <column name="address">
+            <source     name="MEMBER_ADDRESS" />
+        </column>    
+        <column name="city">
+            <source     name="MEMBER_CITY" />
+        </column>    
+        <column name="state">
+            <source     name="MEMBER STATE" />
+        </column>    
+        <column name="zip_code">
+            <source     name="MEMBER ZIP" />
+        </column>    
+    </entity>
+    <entity namespace="vision" class="member_addresses" use="member_id,address_id" />
+    <entity namespace="vision" class="member_phone_numbers" use="member_id,phone_number_id" />
+</layout>

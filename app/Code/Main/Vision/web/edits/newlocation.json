@@ -1,0 +1,71 @@
+
+{
+    "form":
+    {
+        "id":       "new_ipa_location_form",
+        "drawme":   false,
+        "action":   "",
+        "method":   "post",
+        "style":    "",
+        "onenterkey":	"send"
+    },
+    "fields":
+    [
+        {
+            "active":	true,
+            "id": 	"new_ipa_location_name",
+            "placeholder": "New IPA Location Name",
+            "longname":	"Location Name",
+            "title":	"New IPA Location Name",
+            "type":     "text",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":	"border: 1px solid #aaf; padding: 2px; border-radius: 2px"
+        },
+        {
+            "active":	true,
+            "id": 	"new_ipa_client_id",
+            "longname":	"",
+            "title":	"",
+            "type":     "hidden",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":  "" 
+        },
+        {
+            "active":	true,
+            "id": 	"new_ipa_id",
+            "longname":	"",
+            "title":	"",
+            "type":     "hidden",
+            "required":	true,
+            "force":	true,
+            "classname":"",
+            "style":  "" 
+        },        
+        {
+            "active":	true,
+            "id": 	"new_location_name_submit",
+            "placeholder": "",
+            "longname":	"Location Submit",
+            "title":	"",
+            "type":     "button",
+            "onclick":  function () {
+                if (Edits['vision-new-location'].validate()) {
+                    (new EasyAjax('/vision/location/new')).packageForm('new_ipa_location_form').then(function (response) {
+                        var raw = {
+                            data: JSON.parse(response)
+                        }
+                        $('#location_list').html(Argus.hedis.vision.locationtemplate(raw).trim());
+                    }).post();
+                }
+            },
+            "classname":"",
+            "style":	"background-color: silver"
+        }            
+    ]
+}
+
+

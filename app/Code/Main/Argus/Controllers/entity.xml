@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!--
+
+Entity actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="entity" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="home">
+            <description>The main entity management page</description>
+            <entity namespace="argus" class="entities" id='entities' />
+            <entity namespace="argus" class="entity_types" id='types' />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="display">
+            <description>Shows information about a contact</description>
+            <entity namespace="argus" class="entities" id="entity">
+                <parameter name="id" source="post" default="" />
+            </entity>
+            <entity namespace="argus" class="entities" id="entities">
+            </entity>
+            <entity namespace="argus" class="entity_relationships" id="relationships">
+                <parameter name="entity_id" value="id" source="post" default="" />
+            </entity>            
+            <entity namespace="argus" class="entity_types" id="entity_types" />
+            <entity namespace="argus" class="entity_contact_types" id="contact_types" />
+            <entity namespace="argus" class="entity_addresses" id="addresses" >
+                <parameter name="entity_id" value="id" source="post" default="" />
+            </entity>
+            <entity namespace="argus" class="entity_emails" id="emails" >
+                <parameter name="entity_id" value="id" source="post" default="" />
+            </entity>
+            <entity namespace="argus" class="entity_contacts" id="contacts" orderby="contact=ASC" >
+                <parameter name="entity_id" value="id" source="post" default="" />
+            </entity>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="types">
+            <description>Generates a list of the entity types</description>
+            <entity namespace="argus" class="entity_types" id="types"></entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="form">
+            <description>The new entity form</description>
+            <entity namespace="argus" class="entity_types" id="types"></entity>
+            <entity namespace="argus" class="user_roles" id="roles"></entity>
+
+        </action>
+                
+        <!-- ############################################################### -->        
+
+        <action name="new">
+            <description>Creates a new entity</description>
+            <model namespace="argus" class="entities" method="registerNewEntity">
+                <parameter name="entity" source="post" required="true" />
+                <parameter name="entity_type_id" source="post" />
+                <parameter name="user_id" source="post" required="true" />
+            </model>
+        </action>
+                
+        <!-- ############################################################### -->        
+        
+        <action name="newtype">
+            <description>Creates a new entity type</description>
+            <entity namespace="argus" class="entity_types" method="save">
+                <parameter name="type" source="post" default="" />
+                <parameter name="description" source="post" default="" />
+            </entity>
+            <chain>
+                <action name="types" />
+            </chain>
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action name="list">
+            <description>Lists a all entities of a certain type</description>
+            <entity namespace="argus" class="entities" id="entities" response="true" method="fetch" orderby="entity=ASC">
+                <parameter name="entity_type_id" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="associate">
+            <description>Associates you to some entity</description>
+            <entity namespace="argus" class="entity_users" method="save">
+                <parameter name="user_id" source="post" required="true" />
+                <parameter name="entity_id" source="post" />
+                <parameter name="effective_start_date" source="post" optional="true" format="date" />
+                <parameter name="effective_end_date" source="post" optional="true" format="date" />
+            </entity>
+            <entity namespace="argus" class="entity_users" id="associations">
+                <parameter name="user_id" source="post" required="true" />
+            </entity>
+            
+        </action>
+
+        <!-- ############################################################### -->        
+                
+        <action name="remove">
+            <description>Removes an entity along with their relationships</description>
+            <entity namespace="argus" class="entities" method="delete">
+                <parameter name="id" source="post"  required="true" />                
+            </entity> 
+            <entity namespace="argus" class="entity_relationshiops" method="nonkeysdelete">
+                <parameter name="entity_id" value="id" source="post"  required="true" />                
+            </entity>             
+        </action>
+                        
+        <!-- ############################################################### -->        
+        
+        <action name="removetype">
+            <description>Removes an entity type and also any entities of that type along with their relationships</description>
+            <model namespace="argus" class="entities" method="remove">
+                <parameter name="type_id" value="id" source="post"  required="true" />                
+            </model> 
+        </action>
+    </actions>
+</controller>

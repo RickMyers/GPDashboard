@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<report>
+    <name>Event Recap</name>
+    <description>Summary of screening and scanning events</description>
+    <selection>
+        <year />
+        <event />
+        <client />
+        <start_date />
+        <end_date />
+    </selection>
+    <resource method="eventRecapInformation" />
+    <headers>
+        <heading source="event_date"        title="Event Date"  format="date" />
+        <heading source="screening_client"  title="Health Plan" />
+        <heading source="ipa_id_combo"      title="IPA" />
+        <heading source="location_id_combo" title="Business Name" />
+        <heading source="public_notes"      title="Event Notes" />
+        <heading source="private_notes"     title="Internal Notes" />
+    </headers>
+    <columns>
+        <column source="event_date"         name="Date"                     format="date" onempty="N/A" style="text-align: center;" display="No" />
+        <column source="form_type"          name="Type"                     format="ucfirst" onempty="N/A"  style="text-align: center;" />
+        <column source="screening_client"   name="Healthplan"               format="" onempty="N/A"  style="text-align: center;" display="No" />
+        <column source="ipa_id_combo"       name="IPA"                      format="" onempty="N/A"  style="text-align: center;" display="No" />
+        <column source="location_id_combo"  name="Business Name"            format="" onempty="N/A"  style="text-align: center;"  display="No" />
+        <column source="member_id"          name="Member ID"                format="" onempty="N/A"  style="text-align: center;" />        
+        <column source="member_name"        name="Member Name"              format="" onempty="N/A"  style="text-align: center;" />        
+        <column source="gender"             name="Gender"                   format="" onempty="N/A" style="text-align: center;" />
+        <column source="date_of_birth"      name="Date Of Birth"            format="date" onempty="N/A" style="text-align: center;" />
+        <column source="pcp_npi"            name="Provider NPI"             format="" onempty="" style="text-align: center;" display="No" />
+        <column source="technician_name"    name="Technician Name"          format="" onempty="N/A"  style="text-align: center;" />
+        <column source="reviewer_name"      name="Reviewed By"              format="" onempty=" "  style="text-align: center;"/>   
+        <column source="member_unscannable" name="Unable To Scan"           format="" onempty=" " style="text-align: center;" />   
+        <column source="status"             name="Form Status"              format="" onempty=" " style="text-align: center;" />   
+        <column source="images_unreadable"  name="Image Unreadable"         format="" onempty=" " style="text-align: center;" />
+    </columns>
+</report>

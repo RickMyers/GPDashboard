@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<!--
+
+Vision Scanning/Screening Event Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="event" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="generate">
+            <description>Generates the consultation screening forms for attendees to an event</description>
+            <model namespace="vision" class="forms" method="generate">
+                <parameter name="event_id" source="post" required="true" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="log" event="techLoggedAnEvent" comment="PCP tech has completed the recap and logged their event">
+            <description>Logs the event and sends a report to the HEDIS Staff</description>
+            <entity namespace="scheduler" class="events" method="save">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="logged" default="Y" source="post" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="close" event="closedAnEvent" comment="OD, Technician, or Manager has closed an event">
+            <description>Logs the event and sends a report to the HEDIS Staff</description>
+            <entity namespace="scheduler" class="events" method="save">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="closed" default="Y" source="post" />
+            </entity>
+            <model namespace='vision' class='events' method='updateOutreach'>
+                <parameter name="event_id" source="post" required="true" />
+            </model>
+        </action>                
+        
+        <!-- ############################################################### -->
+       
+        <action name="update" blocking="off">
+            <description>First clears the assigned actor by role (if applicable) and then updates the event with polyglot data </description>
+            <model namespace="vision" class="events" method="clearAndUpdateActorsByRole">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="*" source="post" />
+            </model>            
+            <entity namespace="scheduler" class="events" id="event"  method="save">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="*" source="post" default='' />
+            </entity>
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="check" blocking="off" output="JSON">
+            <description>Checks to see if a member is already present in an event... if so, returns their current information</description>
+            <entity namespace="vision" class="event/members" method="nonkeysload" response="true" wrapper="json_encode">
+                <parameter name="member_id" source="post" required="true" />
+                <parameter name="event_id" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="notifications" blocking="off">
+            <description>Clears/sends notifications if the updated field is an actor </description>
+            <model namespace="vision" class="events" method="notifications">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="*" source="post" />
+            </model>
+        </action> 
+
+        <!-- ############################################################### -->
+
+        <action name="attachment" blocking="off">
+            <description>Adds an attachment to an event</description>
+            <entity namespace="vision" class="event/attachments" method="save">
+                <parameter name="event_id" source="post" required="true" />
+                <parameter name="attachment" source="file" />
+                <parameter name="author_id" source="session" value="uid" required="true" />
+                <parameter name="description" source="post" default=""/>
+            </entity>
+            <chain>
+                <action name="attachments" />
+            </chain>
+        </action>
+                        
+        <!-- ############################################################### -->
+
+        <action name="attachments" blocking="off">
+            <description>List the attachments to an event</description>
+            <entity namespace="vision" class="event_attachments" id="attachments">
+                <parameter name="event_id" source="post" required="true" />
+            </entity>
+        </action>
+                                        
+        <!-- ############################################################### -->
+        
+        <action name="reports" blocking="off" output="JSON" >
+            <description>create a report</description>
+            <entity response="true" namespace="vision" class="ipa_sub" method="reportcreator"/>
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="singlereport" blocking="off">
+            <description>create a report</description>
+            <entity namespace="vision" class="ipa_sub" method="singlereportcreator"/>
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="close" blocking="off" event="visionEventCompleted" comment="A vision event has completed">
+            <description>Marks the event closed (inactive) and sends out the notifications</description>
+            <entity namespace="scheduler" class="events" method="save">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="active" default='C' source='post' />
+            </entity>
+            <model namespace="vision" class="events"  method="close">
+                <parameter name="event_id" source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="recap" blocking="off" passalong="event_id">
+            <description>The event recap screen</description>
+            <entity namespace="vision" class="event/members" id="members">
+                <parameter name="event_id" source="post" required="true" />
+            </entity>
+            <entity assign="event_details" namespace="scheduler" class="events" id="event" method="load">
+                <parameter name="id" value="event_id" source="post" required="true" />
+            </entity>
+            <entity namespace="argus" class="user/roles" id="user">
+                <parameter name="user_id" value="uid" source="session" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="save" blocking="off">
+            <description>Saves the result of one of the screenings or scannings</description>
+            <entity namespace="vision" class="event/members" method="save">
+                <parameter name="id" value="event_member_id" source="post" required="true" />
+                <parameter name="*" source="post"/>
+            </entity>
+        </action>        
+
+        <!-- ############################################################### -->
+        
+        <action name="note" blocking="off">
+            <description>Records the event note</description>
+            <entity namespace="scheduler" class="events" method="save">
+                <parameter name="id" value="event_id" source="post" required="true" />
+                <parameter name="*" source="post" />
+            </entity>
+        </action>        
+                        
+        <!-- ############################################################### -->
+        
+        <action name="locations" blocking="off" output="JSON">
+            <description>Generates a list of all locations we currently do events at</description>
+            <entity response="true" namespace='vision' class='ipa/locations' orderby='location=ASC' method="fetch">
+                <parameter name="legacy" source="post" default='N' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="attachdetails" blocking="off" passalong="windowId">
+            <description>Configuration page for attaching event details</description>
+            <comment>In this case, the first use of event refers to an internal system event, while the second usage is a scheduled screening/scanning event</comment>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="recipients" blocking="off" passalong="windowId">
+            <description>Configuration screen for attaching recipients to a triggered event.  The recipient is the person identified as the contact in the scheduled event </description>
+            <comment>In this case, the first use of event refers to an internal system event, while the second usage is a scheduled screening/scanning event</comment>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+    </actions>
+</controller>

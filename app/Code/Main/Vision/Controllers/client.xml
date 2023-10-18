@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+
+High-levl Actions for Clients 
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="client" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="list" response="true" output="JSON">
+            <description>Lists our current clients</description>
+            <entity namespace="vision" class="clients" method="fetch" response="true" orderby="client=ASC">
+
+            </entity>
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="new">
+            <description>Adds a new client</description>
+            <entity namespace="vision" class="clients" method="save">
+                <parameter name='client' value="client_name" source='post' required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="ipas" output="JSON">
+            <description>List of ipas associated to the client</description>
+            <entity namespace="vision" class="client_ipas" id='ipas' response="true" method="listIpas">
+                <parameter name='client_id' source='request' required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="addresses" output="JSON">
+            <description>List of addresses associated to the client office location</description>
+            <entity namespace="vision" class="ipa_location_addresses" id='addresses' response="true" method="listAddresses">
+                <parameter name='location_id' source='request' required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="npis" output="JSON">
+            <description>List of NPIs associated to an office location</description>
+            <entity namespace="vision" class="address_npis" id='npis' response="true" method="listNpis">
+                <parameter name='address_id' source='request' required="true" />
+            </entity>
+        </action>   
+        
+        <!-- ############################################################### -->                  
+        
+        <action name="contracted" output="JSON" blocking="OFF">
+            <description>Checks to see if a client is contracted or not</description>
+            <entity namespace="vision" class="clients" response="true" method="nonkeysload" wrapper="json_encode">
+                <parameter name="id" value="client_id" required="true" source="request" />
+                <parameter name="active" source="request" default="Y" />
+            </entity>
+        </action>
+    </actions>
+</controller>

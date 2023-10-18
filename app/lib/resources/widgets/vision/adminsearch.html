@@ -1,0 +1,24 @@
+<style type="text/css">
+    .vision-admin-search-box {
+        border-radius: 8px; height: 25px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat
+    }
+    .vision-admin-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px; height: 20px; position: relative; top: 2px
+    }
+    .vision-admin-search-field:focus {
+        outline: none;
+    }
+</style>
+<div class="vision-admin-search-box" style="display: inline-block">
+    <input class="vision-admin-search-field" type="text" style="" name="vision-admin-search-field" id="vision-admin-search-field" placeholder="Search..."/>
+</div>
+<script type="text/javascript">
+    $('#vision-admin-search-field').on("keydown",function (evt) {
+        if (evt.keyCode == 13) {
+            Argus.vision.admin.search.page(evt.target.value);
+        }        
+    });
+</script>
+
+
+

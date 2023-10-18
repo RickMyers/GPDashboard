@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+
+Document actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="document" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="new" passalong="window_id">
+            <description>Opens up the document create or document upload window</description>
+        </action>
+
+        <!-- ############################################################### -->                
+        
+        <action name="view">
+            <description>Views a document</description>
+            <entity namespace="humble" class="user" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="edit">
+            <description>Edit an in-line document</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="add">
+            <description>Uploads a new document into the system</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="signout">
+            <description>Signs out a document for edit/update</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="signin">
+            <description>Signs in a document after editing</description>
+        </action>
+        
+        
+    </actions>
+</controller>

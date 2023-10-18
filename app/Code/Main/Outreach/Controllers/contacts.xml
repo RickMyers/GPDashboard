@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!--
+
+Individual Contact actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="contacts" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="open" blocking="off" passalong="window_id,contact_id">
+            <description>Opens a contact</description>
+            <entity namespace="outreach" class="campaign/members" method='load' assign='contact'>
+                <parameter name='id' source='post' value='contact_id' default='' required="true" />
+            </entity>
+            <entity namespace="outreach" class="campaign/member/logs" id="logs">
+                <parameter name='contact_id' source='post' default='' />
+            </entity>
+            <entity namespace="argus" class="user/roles" id='roles' />
+            
+            <!--model namespace="outreach" class="manager" method="notifyContactCenter"><comment>Notification is now taking place at the client</comment>
+            
+                <parameter name='contact_id' source='post' default='' />                
+            </model-->
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="assign" blocking="off">
+            <description>Assigns a block of contacts to a person</description>
+            <model namespace="outreach" class="manager" method='assign'>
+                <parameter name='contacts'    source='post' required="true" />
+                <parameter name='campaign_id' source='post' required="true" />
+                <parameter name='assignee'    source='post' value='user_id' required="true" />
+            </model>
+            <chain>
+                <action name="assignments" />
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="call" blocking="off">
+            <description>Increments the number of times a contact call has been attempted</description>
+            <model namespace="outreach" class="manager" method='recordAttempt' response="true">
+                <parameter name='contact_id'    source='post' required="true" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="assignments" blocking="off" passalong='campaign_id'>
+            <description>Lists the current contacts assigned to participants</description>
+            <entity namespace="outreach" class="campaigns" id="campaign" method="load">
+                <parameter name="id" value='campaign_id' source='post' required="true" />
+            </entity>
+            <entity namespace="outreach" class="campaign/members" id='contacts'>
+                <parameter name='campaign_id' source='post' required="true" />
+            </entity>
+            <model namespace="outreach" class='roles' id='roles'>
+                <parameter name='campaign_id' source='post' required="true" />
+            </model>
+            <entity namespace="argus" class="user/roles" id="participants" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="log" blocking="off">
+            <description>Records a log entry from a campaign contact</description>
+            <entity namespace="outreach" class='campaign/member/logs' method="save">
+                <parameter name='contact_id' source='post' required='true' />
+                <parameter name='user_id' source='session' value='uid' required='true' />
+                <parameter name='log' source='post' default='' />
+                <parameter name='log_date' default='now' format='timestamp' source='request' />
+            </entity> 
+            <chain>
+                <action name="open" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="complete" blocking="off">
+            <description>Marks the contact as closed</description>
+            <entity namespace="outreach" class='campaign/members' method="save">
+                <parameter name='id' value='contact_id' source='post' required='true' />
+                <parameter name='completed_date' default='now' format='timestamp' source='request' />
+                <parameter name='status' source='post' default='C' />
+            </entity> 
+        </action>
+                
+        <!-- ############################################################### -->
+
+        <action name="close" blocking="off">
+            <description>Marks the contact as closed</description>
+            <entity namespace="outreach" class='campaign/members' method="save">
+                <parameter name='id' value='contact_id' source='post' required='true' />
+                <parameter name='gap_closed_date' default='now' format='timestamp' source='request' />
+            </entity> 
+        </action>
+     
+        <!-- ############################################################### -->
+
+        <action name="return" blocking="off">
+            <description>Marks the contact as returned</description>
+            <entity namespace="outreach" class='campaign/members' method="save">
+                <parameter name="id" value='contact_id' source='post' required='true' />
+                <parameter name='status' source='post' default='R' />
+            </entity> 
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="followup" blocking="off">
+            <description>Marks or Un-Marks the contact as needing a follow up for assistance</description>
+            <entity namespace="outreach" class='campaign/members' method="save">
+                <parameter name="id" value='contact_id' source='post' required='true' />
+                <parameter name='follow_up' source='post' default='' />
+            </entity> 
+        </action>        
+        
+    </actions>
+</controller>

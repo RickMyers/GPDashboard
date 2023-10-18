@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--
+
+Workflow configuration pages
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="transaction" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="authorization" passalong="windowId">
+            <description>Workflow configuration for doing a simple payment authorization request</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="refund">
+            <description>Refund workflow element configuration</description>
+            <entity namespace="humble" class="user" id='user'>
+                <parameter name='uid' source='session' value='uid' default='' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="updatesubscription" passalong="windowId">
+            <description>Workflow configuration for getting data from the event and sending that data to Authorize.net for a particular account</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="updated" passalong="windowId">
+            <description>Workflow configuration for checking to see if the attempt to update the subscription completed</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action name="subscribed" passalong="windowId">
+            <description>Workflow configuration for determining if an attempt to set up a subscription was successful</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>        
+        
+        <!-- ############################################################### -->
+        
+        <action name="recurring" passalong="windowId">
+            <description>Workflow configuration options for scheduling recurring billing</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action> 
+        
+        <!-- ############################################################### -->
+        
+        <action name="payment" passalong="windowId">
+            <description>The payment authorization configuration</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>    
+        
+        <!-- ############################################################### -->
+        
+        <action name="paymenttype" passalong="windowId">
+            <description>The workflow element configuration for determining whether this is a credit card payment type or ACH</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>            
+        </action>                                                       
+    </actions>
+</controller>

@@ -1,0 +1,57 @@
+({
+    form:
+    {
+        id: 	"librio-new-project-form",
+        drawme:	false,
+        action:	"",
+        onload:     function () {
+        },
+        method:	"post",
+        style:	"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"new-librio-project",
+            longname:	"Project Name",
+            title:		"The name of the project",
+            type:           "text",
+            required:	true,
+            force:		true,
+            classname:	"",
+            style:		"width: 250px; padding: 2px; border: 1px solid #aaf"
+        },
+        {
+            active:		true,
+            id: 		"new-librio-project-description",
+            longname:	"Project Description",
+            title:		"The project description",
+            type:           "text",
+            required:	true,
+            force:		true,
+            classname:	"",
+            style:		"width: 350px; padding: 2px; border: 1px solid #aaf"
+        },
+        {
+            active:		true,
+            id: 		"new-librio-project-submit",
+            longname:	"Create Project Button",
+            title:		"Click to create the project",
+            type:           "button",
+            required:	false,
+            force:		false,
+            classname:	"",
+            onclick:        function () {
+                if (Edits['new-librio-project'].validate()) {
+                    (new EasyAjax('/librio/project/add')).packageForm('librio-new-project-form').then(function (response) {
+                        Argus.librio.project.win._close();
+                        $('#sub-container').html(response);
+                    }).post();
+                }
+            },
+            style:		"width: 100px"
+        }
+    ]
+})

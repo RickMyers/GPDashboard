@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+
+Whitelabeling actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="whitelabels" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home">
+            <description>The main page</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="users">
+            <description>Users cross referenced with white labeled options</description>
+            <entity namespace="argus" class="user" id='users' page="page" rows="rows" defaultRows="10" defaultPage="1" />
+            <entity namespace="dashboard" class="white_labels" id="labels" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="update">
+            <description>Sets the labeling option for a particular user</description>
+            <entity namespace="humble" polyglot="Y" class="user_identification" method="save">
+                <parameter name="*" source="post" />
+            </entity>
+        </action>
+    </actions>
+</controller>

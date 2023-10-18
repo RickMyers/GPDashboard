@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<component>
+    <name>IPA Location List</name>
+    <description>The list of locations and IPA has</description>
+    <type>Select</type>
+    <resource action="/vision/location/list" id="location_id" text="location" value="id" on="ipa_id" /> 
+</component>
+

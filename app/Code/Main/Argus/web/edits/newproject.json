@@ -1,0 +1,59 @@
+({
+	form:
+	{
+		id: 		"new-project-form",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"project_name",
+			longname:		"Project Name",
+			title:			"Name of new report project",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"width: 500px; color: #333"
+		},
+		{
+			active:			true,
+			id: 			"project_description",
+			longname:		"Project Description",
+			title:			"Description of this report project",
+                        type:                   "textarea",
+			required:		true,
+			force:			true,
+                        maxchars:               255,
+			classname:		"",
+			style:			"width: 500px; height: 80px; color: #333"
+		},
+		{
+			active:			true,
+			id: 			"new_project_submit",
+			longname:		"Project Submit Button",
+			title:			"Click to create a new report project",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['new-project-form'].validate()) {
+                                (new EasyAjax('/argus/reports/project')).packageForm('new-project-form').then(function (response) {
+                                    $('#sub-container').html(response);
+                                }).post();
+                            }
+                        }
+		}                
+                
+	]
+})

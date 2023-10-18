@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<!--
+
+Call Center Dashboard Actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="hedis" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+
+        <action name="consultants">
+            <description>Shows the consultants who are available to assign calls to</description>
+            <entity namespace="argus" class="user_roles" id='hygenists' polyglot='true'>
+                <parameter name="role_name" source="post" default="HEDIS Hygenist" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" id="contacts">
+                <parameter name="campaign_id" source="post" required="true" />
+            </entity>
+            <entity namespace="dental" class="campaigns" id="campaigns" method="load">
+                <parameter name="id" value="campaign_id" source="post" required="true" />
+            </entity>
+            <helper namespace="humble" class='file' id='file'></helper>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="assignments" blocking="off">
+            <description>Will make the actual assignment of consultant to available call</description>
+            <model namespace='dental' class='manager' method='assignments'>
+                <parameter name='data' source='post' required='true' />
+            </model>
+            <redirect href="/dashboard/user/home" post="true" />
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="language">
+            <description>Attaches a language value to the core identification using the polyglot feature</description>
+            <entity namespace="humble" class='user_identification' method='save'>
+                <parameter name='*' source='post' required='' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="member" passalong="window_id">
+            <description>Shows member and contact information</description>
+            <entity namespace="dental" class="campaign_results" id="member">
+                <parameter name='member_id' source='post' default='' />
+            </entity>
+            <helper namespace="argus" class="date" id="helper" />
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action name="commitment">
+            <description>Records the number of hours a hygenist has committed to work using the polyglot feature</description>
+            <entity namespace="humble" class='user_identification' method='save'>
+                <parameter name='*' source='post' required='' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="callinprogress">
+            <description>This will either mark a call in progress or no longer in progress</description>
+            <entity namespace="dental" class="contact_call_schedule" method='save' >
+                <parameter name="id" source="request" value="contact_id" reguired="true" />
+                <parameter name="in_progress" source="request" reguired="true" />
+            </entity>
+            <model namespace="argus" class="data" id="helper">
+                <parameter name="call_attempted" source="request" />
+                <parameter name="call_id"        source="request" />
+            </model>
+            <switch id="helper" method="getCallId">
+                <case value="TRUE">
+                    <switch id="helper" method="getCallAttempted">
+                        <case value="Y">
+                            <entity namespace="dental" class="call_log" method="save">
+                                <parameter name="id" value="call_id" source="request" required="true" />
+                                <parameter name="end_time" source="post" format="timestamp" default="now" />
+                            </entity>
+                        </case>
+                        <default>
+                            <entity namespace="dental" class="call_log" method="delete">
+                                <parameter name="id" value="call_id" source="request" required="true" />
+                            </entity>
+                        </default>
+                    </switch>
+                </case>
+                <default>
+                    <comment>No call id was passed, so likely this is just the start of a call</comment>
+                </default>
+            </switch>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="clearcalllog">
+            <description>Will remove the log entry since they didn't attempt to call</description>
+            <entity namespace="dental" class="call_log" method='delete'>
+                <parameter name="id" source="request" value="call_id" reguired="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name='contact' passalong='window_id,campaign_id'>
+            <description>This will bring up screen that lets you track a call, this is the edit screen</description>
+            <model namespace="dental" class="someclass" id="elig" />
+            <entity namespace="dental" class="call_log" id="call">
+                <parameter name="contact_id" source="post"    reguired="true" />
+                <parameter name="user_id"    source="session" value="uid" reguired="true" />
+                <parameter name="start_time" source="post"    format="timestamp" default="now" />
+            </entity>
+            <entity namespace="dental" class="contact_call_schedule" id='contact'>
+                <parameter name="id" source="post" value="contact_id" reguired="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_log" id='logs'>
+                <parameter name="contact_id" source="post" reguired="true" />
+            </entity>
+            <helper namespace="humble" class='file' id='file' />
+            <helper namespace='argus' class='date' id='date' />
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name='view' passalong='window_id'>
+            <description>This will bring up screen that lets you review a call</description>
+            <entity namespace="dental" class="contact_call_schedule" id='contact'>
+                <parameter name="id" source="post" value="contact_id" reguired="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_log" id='logs'>
+                <parameter name="contact_id" source="post" reguired="true" />
+            </entity> 
+            <helper namespace="humble" class='file' id='file' />
+        </action>        
+
+        <!-- ############################################################### -->
+
+        <action name='contactlog' passalong="window_id" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>This will bring up screen that lets you review a call, this is the browse screen</description>
+            <entity namespace="dental" class="contact_call_schedule" id='contacts'>
+                <parameter name="id" source="post" value="contact_id" reguired="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_log" id='logs'>
+                <parameter name="contact_id" source="post" reguired="true" />
+            </entity>
+            <helper namespace="humble" class='file' id='file' />
+            <entity namespace="argus" class="user_roles" id='hygenists'>
+                <parameter name="role_name" source="post" default="HEDIS Hygenist" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="reassign" event="HEDISCallReassigned" comment="A call has been assigned or reassigned to or from a hygenist">
+            <description>Changes who the assignee is on a call</description>
+            <entity namespace="dental" class="contact_call_schedule" method="save">
+                <parameter name="id" value="contact_id" source="post" reguired="true" />
+                <parameter name="assignee"  source="post" reguired="true" />
+                <parameter name="status" source="post" default='A' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='return'>
+            <description>Returns the call to the unassigned queue, effectively reseting it</description>
+            <model namespace='dental' class='manager' method='returnCallToAssignment'>
+                <parameter name="contact_id" source="post" required="true" />
+                <parameter name="call_attempted" source="post" optional="true" />
+                <parameter name="user_id" source="session" value='uid' required="true" />
+                <parameter name="time_of_call" source="post" optional="true" />
+                <parameter name="working_number" source="post" optional="true" />
+                <parameter name="wrong_number" source="post" optional="true" />
+                <parameter name="left_message" source="post" optional="true" />
+                <parameter name="comments" value="additional_comments" source="post" required="true" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="logcall">
+            <description>Will do the actual save of HEDIS call log information</description>
+            <model namespace='dental' class='manager' method='logCall'>
+                <parameter name="call_id" source="post" required="true" />
+                <parameter name="user_id" source="session" value='uid' required="true" />
+                <parameter name="call_attempted" source="post" optional="true" /> <!-- Optional because it is a checkbox, if not checked, it won't be sent with the post -->
+                <parameter name="time_of_call" source="post" required="true" />
+                <parameter name="working_number" source="post" required="true" />
+                <parameter name="wrong_number" source="post" required="true" />
+                <parameter name="left_message" source="post" required="true" />
+                <parameter name="requested_appointment" value="appt_requested" source="post" required="true" />
+                <parameter name="counseling_completed" source="post" required="true" />
+                <parameter name="comments" value="additional_comments" source="post" required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name='review' passalong='window_id'>
+            <description>Will Review a campaign result row</description>
+            <entity namespace='dental' class='campaign_results' id='result'>
+                <parameter name='member_id' source='post' required='true' />
+                <parameter name='campaign_id' source='post' required="true" />
+            </entity>
+            <entity namespace="dental" class="contact_call_log" id='logs'>
+            </entity>            
+            <helper namespace="humble" class='file' id='file' />
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="campaigns" output="JSON">
+            <description>Returns a list of active campaigns withing a campaign category</description>
+            <entity namespace="dental" class="campaigns" method="fetch" response="true">
+                <parameter name="category_id" source="request" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="update" passalong="window_id">
+            <description>Will update a hedis contact information as well as update information about the participants residing at the contact location</description>
+            <model namespace="dental" class="manager" method="updateHedisContact">
+                <parameter name="data" source="post" required="true" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='refresh' output='JSON' blocking="off">
+            <description>This is the priming data load for the queues and for when you trigger pagination</description>
+            <helper namespace="humble" class='data' id='helper'>
+                <parameter name='queue_id' source='request' required='true' />
+            </helper>
+
+            <switch id="helper" method="getQueueId">
+                <case value="ua">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentUnassignedContacts" >
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="qd">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentQueuedContacts" >
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="oh">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentOnHoldContacts" >
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="ra">
+                    <entity namespace="dental" response='true' class="campaign_results" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentRequestingAppointment" >
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="rt">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentReturnedContacts" >
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>                
+                <case value="cm">
+                    <entity namespace="dental" response='true' class="campaign_results" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentCompletedCounseling" >
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="hcm">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="completedContacts" >
+                        <parameter name="assignee" value="uid" source="session" optional="true" />
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="hoh">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentOnHoldContacts" >
+                        <parameter name="assignee" value="uid" source="session" optional="true" />
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>  
+                <case value="hqd">
+                    <entity namespace="dental" response='true' class="contact_call_schedule" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentQueuedContacts" >
+                        <parameter name="assignee" value="uid" source="session" optional="true" />
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+                <case value="hcc">
+                    <entity namespace="dental" response='true' class="campaign_results" rows="rows" page="page" defaultRows='14' defaultPage='1' method="currentCompletedCounseling" >
+                        <parameter name="assignee" value="uid" source="session" optional="true" />
+                        <parameter name="campaign_id" source="request" optional="true" />
+                    </entity>
+                </case>
+
+            </switch>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="increment">
+            <description>Increases the call attempt counter</description>
+            <entity namespace="dental" class="contact_call_schedule" method="increment">
+                <parameter name="id" source="post" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->        
+
+        <action name="claims" passalong="windowId">
+            <description>This is the claims workflow process configuration screen</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>        
+        
+        <!-- ############################################################### -->        
+        
+        <action name="returncontacts">
+            <description>Returns the contacts assigned to a hygienist back to the unassigned queue</description>
+            <entity namespace="dental" class="contact_call_schedule" method="returnContacts">
+                <parameter name="user_id"   source="post" required="true" />
+                <parameter name="uid"       source="session" required="true" />
+            </entity>
+            <chain>
+                <action name="consultants" />
+            </chain>
+        </action>        
+    </actions>
+</controller>

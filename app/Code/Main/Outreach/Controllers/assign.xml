@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+
+Managing contact assignment actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="assign" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="manager">
+            <description>Marks or unmarks a person as a manager</description>
+            <entity namespace="outreach" class="participant/roles" id='participant' method='save'>
+                <parameter name='campaign_id' source='post' required="true" />
+                <parameter name='participant_id' value='user_id' source='post' required="true" />
+                <parameter name='manager' source='post' default='' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="coordinator">
+            <description>Marks or unmarks a person as a coordinator</description>
+            <entity namespace="outreach" class="participant/roles" id='participant' method='save'>
+                <parameter name='campaign_id' source='post' required="true" />
+                <parameter name='participant_id' value='user_id' source='post' required="true" />
+                <parameter name='coordinator' source='post' default='' />
+            </entity>
+        </action>
+
+    </actions>
+</controller>

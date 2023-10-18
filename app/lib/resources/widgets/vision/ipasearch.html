@@ -1,0 +1,29 @@
+<style type="text/css">
+    .vision-ipa-search-box {
+        border-radius: 8px; height: 25px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat
+    }
+    .vision-ipa-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px; height: 20px; position: relative; top: 2px
+    }
+    .vision-ipa-search-field:focus {
+        outline: none;
+    }
+</style>
+<div style='float: left; margin-right: 20px'>
+    <a href="#" onclick="Argus.vision.ipa.exportData(); return false" style="color: ghostwhite" title="Will generate a CSV file with all pertinent data">Export Data</a>
+</div>
+<div class="vision-ipa-search-box" style="display: inline-block">
+    <input class="vision-ipa-search-field" type="text" style="" name="vision-ipa-search-field" id="vision-ipa-search-field" placeholder="Search..."/>
+</div>
+<script type="text/javascript">
+    $('#vision-ipa-search-field').on("keydown",function (evt) {
+        if (evt.keyCode == 13) {
+            Argus.vision.search.page(evt.target.value,true);
+           // Argus.vision.ipa.search.page(evt.target.value);
+        }        
+    });
+</script>
+
+
+
+

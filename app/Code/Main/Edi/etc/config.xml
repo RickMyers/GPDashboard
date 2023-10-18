@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<config>
+    <edi>
+        <version>0.0.1</version>
+        <title>EDI Interactions</title>
+        <description>Reading and manipulation of EDI data functionality</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@argusdentalvision.com</email>
+        </author>
+        <module>
+            <name>Edi</name>
+            <weight>50</weight>
+            <use>Smarty3</use>
+            <package>Main</package>
+            <workflow>Y</workflow>
+            <required>Y</required>
+        </module>
+        <structure>
+            <models>
+                <source>Edi/Models</source>
+            </models>
+            <config>
+                <source>Edi/etc</source>
+            </config>
+            <helpers>
+                <source>Edi/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Edi/Controllers</source>
+                <cache>Edi/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Edi/Schema/Install</install>
+                <update>Edi/Schema/Update</update>
+                <layout>Edi/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Edi/etc</source>
+            </configuration>
+            <views>
+                <source>Edi/Views</source>
+                <cache>Edi/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Edi/Images</source>
+                <cache>Edi/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Edi/Entities</source>
+            </entities>
+            <RPC>
+                <source>Edi/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Edi/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>edi_</prefix>
+            <mongodb>edi</mongodb>
+            <entities>
+                <addresses />
+                <address_types />
+                <payors />
+                <phone_numbers />
+                <phone_number_types />
+                <providers />
+                <receivers />
+                <services />
+                <submitters />
+            </entities>
+        </orm>
+    </edi>
+</config>

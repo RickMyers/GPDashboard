@@ -1,0 +1,6 @@
+HL*{$hierarchical_level}*{$parent_hierarchical_level}*22*{$has_children}~
+SBR*{$responsibility}*18*{$policy_number}******CI~
+NM1*IL*1*{$last_name}*{$first_name}****MI*9460472923~
+N3*{$street_address}*{$street_address_2}~
+N4*{$city}*{$state}*{$zip_code}~
+DMG*D8*20070530*M~

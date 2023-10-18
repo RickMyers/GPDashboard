@@ -1,0 +1,74 @@
+<style type="text/css">
+    #news-list {
+        padding: 0.5rem;
+    }
+
+    .author_name {
+        font-style: italic;
+    }
+
+    a {
+        color: #0606FA;
+        font-weight: 600;
+        background-color: transparent;
+        text-decoration: none;
+    }  
+</style>
+
+<div id="news-list">
+    {% for story in stories.fetch() %}
+        <div class="news_article" articleId="{{ story.id }}">
+            {{ story.id }}: 
+            <b>{{ story.title }}</b>
+            <span class="author_name">by {{ story.first_name }} {{ story.last_name }}</span>
+        </div>
+    {% endfor %}
+    <br/>
+    {# pages: {{ stories._pages() }}<br/>
+    page: {{ stories._page() }}<br/>
+    fromRow: {{ stories._fromRow() }}<br/>
+    toRow: {{ stories._toRow() }}<br/>
+    rowCount: {{ stories._rowCount() }}<br/> #}
+    <a id="next_page" href="#">Next</a>
+</div>
+
+<script>
+    $(".news_article").on("click", function(evt) {
+        let win = Desktop.semaphore.checkout(true);
+        (new EasyAjax('/hedis/news/article')).add('id', evt.target.getAttribute("articleId")).then(function(response) {
+            win._open(response);
+            console.log(response);
+        }).post();
+    })
+    $("#next_page").on("click", function() {
+        let next_page = +"{{ stories._page() }}";
+        if(+"{{ stories._pages() }}" === next_page) next_page = 1;
+        else next_page++;
+
+        (new EasyAjax('/hedis/news/list')).add('page', next_page).then(function(response) {
+            $("#office-news-data").html(response);
+        }).post();
+        return false;
+    })
+    {# const app = Vue.createApp({
+        template: Humble.template('hedis/news'),
+        data() {
+            return {
+                stories: []
+            }
+        },
+        created() {
+            let me = this;
+            (new EasyAjax('/hedis/news/current')).then(function (response){
+                me.stories = JSON.parse(response)
+            }).post();
+        }
+    });
+
+    app.mount("#news-list");
+    console.log("list app:", app); #}
+</script>
+
+<style>
+
+</style>

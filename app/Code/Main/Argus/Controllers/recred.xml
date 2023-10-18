@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+
+Recredentialing
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="recred" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="form" passalong="window_id">
+            <description>The recredentialing request form</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="request">
+            <description>The recredentialing request form</description>
+            <entity namespace="argus" class="provider_credentialing_forms" method="sendRequest">
+                <parameter name="email" source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="save">
+            <description>Saves form data as the user is entering it </description>
+            <entity namespace='argus' class='provider_credentialing_forms' id='form' method='save'>
+                <parameter name='id' source='post' required='true' />
+                <parameter name='*' source='post'  />
+            </entity>
+        </action>   
+        
+        <!-- ############################################################### -->
+        
+        <action name="attachment">
+            <description>Saves an attachment that has been uploaded </description>
+            <helper namespace='argus' class='data'  method='handleAttachment'>
+                <parameter name='id'         source='post' required='true' />
+                <parameter name='attachment' source='post' required='true' />
+                <parameter name='attachment_file'   source='file'  />
+            </helper>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="attachments" output="JSON">
+            <description>Generates a list of the attachments contained within a form</description>
+            <entity namespace='argus' response="true" class='provider_credentialing_form_attachments' id='form' method='fetch'>
+                <parameter name='form_id' value="id" source='post' required='true' />
+            </entity>     
+        </action>    
+                      
+    </actions>
+</controller>

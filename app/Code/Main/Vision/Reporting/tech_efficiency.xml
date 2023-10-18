@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<report export="yes" print="yes" pdf="yes">
+    <name>Tech Efficiency</name>
+    <description>A report on how technician performance</description>
+    <selection>
+        <pcp_techs />
+        <start_date />
+        <end_date />
+        <all_ipas />
+        <locations />
+        <location_addresses />
+    </selection>
+    <graphs>
+        <graph type="pie" resource="visionUnreadableGraph"  title="Unreadable Images"   style="display: inline-block; width: 48%; height: 200px; margin-right: 1%" arguments="technician,start_date,end_date" />
+        <graph type="pie" resource="visionUnscannableGraph" title="Unscannable Members" style="display: inline-block; width: 48%; height: 200px;" arguments="technician,start_date,end_date" />
+    </graphs>
+    <resource method="formsExtendedInformation" />
+    <columns>
+        <column source="event_date"       name="Date"            format="date" onempty="N/A" />
+        <column source="screening_client" name="Healthplan"      format="" onempty="N/A" />
+        <column source="ipa_id_combo"     name="IPA"             format="" onempty="N/A" />
+        <column source="member_id"        name="Member ID"       format="" onempty="N/A" />        
+        <column source="member_name"      name="Member Name"     format="" onempty="N/A" />        
+        <column source="technician_name"  name="Technician Name" format="" onempty="N/A" />
+        <column source="reviewer_name"    name="Reviewed By"     format="" onempty="N/A" />        
+        <column source="member_unscannable" name="Unable To Scan"  format="" onempty="" />  
+        <column source="images_unreadable" name="Images Unreadable"  format="" onempty="" />  
+    </columns>
+</report>
+

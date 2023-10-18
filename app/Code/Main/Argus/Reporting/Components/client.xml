@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<component>
+    <name>Health Plan</name>
+    <description>The list of health plan we currently have</description>
+    <type>Select</type>
+    <resource action="/vision/client/list" id="client_id" text="client" value="id" /> 
+</component>

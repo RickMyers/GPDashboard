@@ -1,0 +1,275 @@
+---
+formComments      : 
+  url             : /vision/consultation/displayComments
+  api-key         :
+  api-var         :
+  method          : POST
+  camel-case      : true
+  arguments       : [ form_id ]    
+visionQueues:
+  url             : /vision/queue/poll
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ staging,inbound,outbound,unassigned,rows ]   
+visionOdQueues    :  
+  url             : /vision/od/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ screening,scanning,od_staging,rows ]
+visionIpaQueues    :  
+  url             : /vision/ipa/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ ipa_clients,ipa_physicians,rows ]    
+visionSecondaryQueues    :  
+  url             : /vision/secondaryqueues/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ non_contracted,referral_required,failed_claims,rows ]     
+visionTechCompletedQueue:
+  url             : /vision/queue/tech
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ tech_completed,rows ]     
+visionAdminQueues :
+  url             : /vision/admin/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ admin_required,referral_reason,rows ]  
+visionArchiveQueues:
+  url             : /vision/queue/archiverefresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [signed,archive,rows]   
+pcpQueue:
+  url             : /vision/queue/pcp
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [pcpqueue,rows]     
+consultationForm    :
+  url               : /vision/consultation/print
+  api-key           :
+  api-var           :
+  method            : POST
+  arguments         :
+      id        :
+      uid       :
+      window_id : paradigm-window-0
+      browse    : 1
+screeningFormsByHealthPlan:
+  url             : /vision/charts/screeningsbyhealthplan
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET                
+screeningFormsByMonth:
+  url             : /vision/charts/screeningsbymonth
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET     
+screeningsByMonth:
+  url             : /vision/charts/totalscreeningsbymonth
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET 
+scanningsByMonth:
+  url             : /vision/charts/totalscanningsbymonth
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET   
+screeningFormGapsClosed:
+  url             : /vision/charts/gapsclosed
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET
+ipaFormsByHealthPlan:
+  url             : /vision/charts/ipahealthplans
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET  
+ipaFormsByTechnician:
+  url             : /vision/charts/ipatechnicians
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET  
+ipaFormsByLocation:
+  url             : /vision/charts/ipalocations
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET    
+ipaFormsByPhysician:
+  url             : /vision/charts/ipaphysicians
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET    
+readableScreeningForms:
+  url             : /vision/charts/readableforms
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :                
+  method          : GET    
+technicianFormsByPhysician:
+  url             : /vision/charts/technicianphysicians
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET    
+technicianFormsByHealthPlan:
+  url             : /vision/charts/technicianhealthplans
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET    
+technicianFormsByMonth:
+  url             : /vision/charts/technicianmonthly
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET
+technicianReadableForms:
+  url             : /vision/charts/technicianreadable
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET
+ophthalmologyWorkloads:  
+  url             : /vision/charts/workloads
+  api-key         : 
+  api-var         : 
+  arguments       : [layer]
+  method          : GET
+registerPcps:  
+  url             : /vision/pcp/register
+  api-key         : 
+  api-var         : 
+  arguments       :
+  method          : GET  
+memberDemographicInformation:
+  url             : /vision/members/demographics
+  api-key         : 
+  api-var         : 
+  secure          : true
+  blocking        : false
+  camel-case      : true
+  arguments       : 
+            member_id :
+            date_of_service :
+  method          : GET 
+completedEvents :
+  url           : /vision/events/completed
+  secure        : true
+  blocking      : false
+  method        : POST
+  camel-case    : true
+  arguments     :
+      sessionId     :
+      date          :
+      ipa_id        :
+      location_id   :
+      event_id      :
+      address_id    :
+eventRecapInformation: 
+  url           : /vision/events/recap
+  secure        : true
+  blocking      : false
+  method        : GET
+  camel-case    : true
+  arguments     :
+      sessionId     :
+      date          :
+      ipa_id        :
+      location_id   :
+      event_id      :
+      client_id     :
+      start_date    :
+      end_date      :
+visionPCPInformation: 
+  url             : https://npiregistry.cms.hhs.gov/api/
+  api-key         : 
+  api-var         :
+  method          : GET
+  secure          : true
+  arguments       :
+      version     : 2.1
+      number      :  
+visionUnreadableGraph: 
+  url             : /vision/graphs/unreadable
+  api-key         : 
+  api-var         :
+  method          : GET
+  blocking        : false
+  camel-case      : true  
+  arguments       :
+      start_date  :
+      end_date    :
+      technician  :      
+      style       :          
+visionUnscannableGraph: 
+  url             : /vision/graphs/unscannable
+  api-key         : 
+  api-var         :
+  method          : GET
+  blocking        : false
+  camel-case      : true
+  arguments       :
+      start_date  :
+      end_date    :
+      technician  :
+      style       :
+formsExtendedInformation :
+  url           : /vision/reports/extendedinformation
+  secure        : true
+  blocking      : false
+  method        : POST
+  camel-case    : true
+  arguments     :
+      sessionId :
+      ipa_id    :
+      client_id :
+      location_id :
+      address_id  :
+      event_id  :
+      start_date :
+      end_date  :
+      pc_2023f  :
+      pc_92227  :
+      date      :
+      year      :
+      procedure_code :
+      reviewer  :
+      images_unreadable :
+      member_unscannable :
+      member_id :
+      member_name :
+      technician :
+      office :

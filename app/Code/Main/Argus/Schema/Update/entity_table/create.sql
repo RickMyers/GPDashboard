@@ -1,0 +1,9 @@
+CREATE TABLE argus_user_entities
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	user_id INT DEFAULT NULL,
+	entity CHAR(128) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+        UNIQUE INDEX (user_id)
+);

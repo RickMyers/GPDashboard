@@ -1,0 +1,45 @@
+({
+    form:
+    {
+        id: 		"navigation-&&id&&-form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"role_id-&&id&&",
+            longname:	"User Role",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"padding: 2px; border: 1px solid #aaf; color: #333"
+        },
+        {
+            active:	true,
+            id: 	"new-navigation-role-submit-&&id&&",
+            longname:	"New Navigation Role Submit",
+            onclick:    function () {
+                if (Edits['navigation-&&id&&-form'].validate()) {
+                    (new EasyAjax('/argus/navigation/addrole')).packageForm('navigation-&&id&&-form').then(function (response) {
+                        $('#navigation-edit-row-&&nav_id&&').html(response);
+                    }).post();
+                }
+            },
+            title:	"Click to make this navigation option available to this role",
+            type:       "text",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"color: #333"
+        }          
+    ]
+})

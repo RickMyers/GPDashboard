@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+
+Actions related to importing/exporting and scrubbing data
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="import" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home" passalong="window_id">
+            <description>The Main Page for the utility</description>
+            <entity namespace="argus" class="servers" id="servers" />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="apply" blocking="off">
+            <description>Applies the exported file (basically imports the data)</description>
+            <model namespace="argus" class="import" id='import' method='processImportFile'>
+                <parameter name='uid' source='session' required="true" />
+                <parameter name='data_file' source='post' required='true' />
+                <parameter name="apply_rules" source="file" />
+           </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="service" blocking="off" output="JSON">
+            <description>The main service</description>
+            <model namespace="argus" class="import" method='importDatabase' id='import'>
+                <parameter name='user_id' value="uid" source='session' required="true" default='' />
+                <parameter name='scheme' source='file'  />
+                <parameter name='environment' source='post' required="true"  />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="next" blocking="off" passalong="window_id,latest_file">
+            <description>After getting the file with the update, this presents the file form and upload area for the rules to apply</description>
+            <helper namespace="argus" class="IO" id="dir">
+                <comment>By making the source "session", I prevent anyone from passing in an arbitrary directory value and possibly getting a listing of a directory</comment>
+                <parameter name="directory" source="session" default="import_tmp" />
+                <parameter name="file_extension" source="session" default=".zip" />
+            </helper>
+        </action>
+    </actions>
+</controller>

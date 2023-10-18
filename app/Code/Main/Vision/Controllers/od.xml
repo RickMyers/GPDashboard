@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+
+OD Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="od" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+
+        <action name="refresh" output='JSON'>
+            <description>This is the recurring refresh queries for OD queues</description>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="scanning"  id="scanning"  defaultRows='20' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="screening"  id="screening"  defaultRows='20' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>            
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="od_staging"  id="staging"  defaultRows='20' defaultPage='1'>
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>            
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='queue' output='JSON'>        
+            <description>Refreshes a single OD queue</description>
+            <helper namespace="humble" class='data' id='helper'>
+                <parameter name='queue_id' source='request' required='true' />
+            </helper>
+            <switch id="helper" method="getQueueId">
+                <case value="scanning">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='odScanningForms'>
+                        <parameter name='user_id' source='session' value='uid' required='true' />
+                    </entity>
+                </case>
+                <case value="screening">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='odScreeningForms'>
+                        <parameter name='user_id' source='session' value='uid' required='true' />
+                    </entity>
+                </case>
+                <case value="od_staging">
+                    <entity response="true" namespace="vision" class="consultation_forms" rows="rows" page="page" defaultRows='10' defaultPage='1' method='odStagingForms'>
+                        <parameter name='user_id' source='session' value='uid' required='true' />
+                    </entity>
+                </case>                
+            </switch>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="form" blocking="off">
+            <description>The re-assignment form for an OD to assign forms to another O.D.</description>
+            <entity namespace="vision" class="consultation/forms" id="forms">
+            </entity>
+            <entity namespace="argus" class="user/roles" id="users">
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="reassignment">
+            <description></description>
+            <model namespace="vision" class="od" method="reassign">
+                <parameter name="user_id" source="session" value="uid" required="true" />
+                <parameter name="assignee" source="post"  required="true" />
+                <parameter name="reassign" source="post"  required="true" />
+            </model>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="training" blocking="OFF">
+            <description>The Webinar Training Video</description>
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="workloads" passalong="windowId">
+            <description>The configuration form for the current OD workload workflow</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="activeworkload" passalong="windowId">
+            <description>The configuration form for the current OD workload workflow</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>        
+        
+        <!-- ############################################################### -->        
+        
+        <action name="notification" passalong="windowId">
+            <description>The configuration form spawning off OD Workload Notification events</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>           
+    </actions>
+</controller>

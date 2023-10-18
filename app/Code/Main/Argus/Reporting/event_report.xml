@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<report>
+    <name>Scanning/Screening Event Reports</name>
+    <description>  </description>
+    <selection>
+        <client />
+        <ipa use="client" />
+        <location use="ipa" />
+        <start_date />
+        <end_date />
+    </selection>
+    <resource method="formsExtendedInformation" />
+    <columns>
+        <column source="event_date"       name="Date"        format="date" onempty="N/A" />
+        <column source="screening_client" name="Healthplan"  format="" onempty="N/A" />
+        <column source="ipa_id_combo"     name="IPA"         format="" onempty="N/A" />
+        <column source="member_id"        name="Member ID"   format="" onempty="N/A" />        
+        <column source="member_name"      name="Member Name" format="" onempty="N/A" />        
+        <column source="technician_name"  name="Technician Name" format="" onempty="N/A" />
+        <column source="reviewer_name"    name="Reviewed By" format="" onempty="N/A" />
+    </columns>
+</report>
+

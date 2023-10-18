@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+
+Location actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="location" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="list" output="JSON">
+            <description>Creates a list of available IPAs relative to a client id</description>
+            <entity namespace="vision" class="ipa_locations" id="locations">
+                <parameter name="ipa_id" source="request" required="true" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="new">
+            <description>Adds a new location to a client</description>
+            <entity assign="id" namespace="vision" class="ipa_locations" method="save">
+                <parameter name="ipa_id"    source="post" required="true" />
+                <parameter name="location"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="update">
+            <description>Updates the name of a particular location</description>
+            <entity namespace="vision" class="ipa_locations" method="save">
+                <parameter name="id"  source="post" required="true" />
+                <parameter name="location"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="remove">
+            <description>Deletes a location</description>
+            <entity namespace="vision" class="ipa_locations" method="delete">
+                <parameter name="id"  source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="list" />
+            </chain>            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="offices" blocking="off" output="JSON">
+            <description>A list of offices associated to a location, or all addresses if no location id is passed</description>
+            <entity namespace="vision" class="ipa/location/addresses" response="true" method="fetch">
+                <parameter name="location_id" source="request" optional="true" />
+            </entity>
+        </action>
+    </actions>
+</controller>

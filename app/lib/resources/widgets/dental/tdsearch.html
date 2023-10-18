@@ -1,0 +1,21 @@
+<style type="text/css">
+    .teledentistry-search-box {
+        border-radius: 8px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat        
+    }
+    .teledentistry-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px;
+    }
+    .teledentistry-search-field:focus {
+        outline: none;
+    }
+</style>
+<div class="teledentistry-search-box" style="display: inline-block">
+   <input class="teledentistry-search-field" type="text" style="" name="teledentistry-search-field" placeholder="Search..."/>
+</div>
+<script type="text/javascript">
+    $('.teledentistry-search-field').on("keydown",function (evt) {
+        if (evt.keyCode == 13) {
+            Argus.dental.consultation.search(evt.target.value);
+        }
+    });
+</script>

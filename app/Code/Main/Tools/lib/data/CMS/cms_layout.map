@@ -1,0 +1,163 @@
+[___] - 001) Record_Code                                       Designates the type of record; for a detail record, this value must always be 01
+[001] - 002) TPID                                              The Trading Partner ID associated with the QHP ID Lookup Key of the enrollment record
+[___] - 003) SPOE_ID                                           This field is to be sent as ten blanks spaces
+[___] - 004) Tenant_ID                                         Two-character state abbreviation plus a zero (e.g. XX0, where XX is the state code)
+[___] - 005) HIOS_ID                                           Identifier for the Issuer as assigned via the Health Insurance Oversight System; corresponds to the first 5 characters of the QHP ID
+[___] - 006) QHPID_Lookup_Key                                  First ten characters of the QHP ID associated with the enrollment record; used to map the QHP to a Trading Partner ID on the EDI Registration Form
+[___] - 007) Issuer_Extract_Date                               Date the enrollment record was extracted from the Issuer?s system
+[096] - 008) FFM_Member_First_Name                             First name of the qualified individual (member)
+[___] - 009) Issuer_Member_First_Name                          First name of the qualified individual (member)
+[___] - 010) FTI_Member_First_Name_Flag                        Results of the comparison of Issuer data to FFM data for Member First Name, including the required action to resolve any discrepancy (as needed)
+[097] - 011) FFM_Member_Middle_Name                            Middle name of the qualified individual (member)
+[___] - 012) Issuer_Member_Middle_Name                         Middle name of the qualified individual (member)
+[___] - 013) FTI_Member_Middle_Name_Flag                       Results of the comparison of Issuer data to FFM data for Member Middle Name, including the required action to resolve any discrepancy (as needed)
+[095] - 014) FFM_Member_Last_Name                              Last name of the qualified individual (member)
+[___] - 015) Issuer_Member_Last_Name                           Last name of the qualified individual (member)
+[___] - 016) FTI_Member_Last_Name_Flag                         Results of the comparison of Issuer data to FFM data for Member Last Name, including the required action to resolve any discrepancy (as needed)
+[117] - 017) FFM_DOB                                           Birthdate of the qualified individual (member)
+[___] - 018) Issuer_DOB                                        Birthdate of the qualified individual (member)
+[___] - 019) FTI_DOB_Flag                                      Results of the comparison of Issuer data to FFM data for DOB, including the required action to resolve any discrepancy (as needed)
+[118] - 020) FFM_Gender                                        Member gender; allowed values are F ? female or M ? male
+[___] - 021) Issuer_Gender                                     Member gender; allowed values are F ? female or M ? male
+[___] - 022) FTI_Gender_Flag                                   Results of the comparison of Issuer data to FFM data for Gender, including the required action to resolve any discrepancy (as needed)
+[101] - 023) FFM_SSN                                           Social Security Number of the member
+[___] - 024) Issuer_SSN                                        Social Security Number of the member
+[___] - 025) FTI_SSN_Flag                                      Results of the comparison of Issuer data to FFM data for SSN, including the required action to resolve any discrepancy (as needed)
+[___] - 026) FFM_Subscriber_Indicator                          Indicates whether the member is the subscriber of the enrollment group:,Y ? Subscriber,N ? Dependent Member
+[___] - 027) Issuer_Subscriber_Indicator                       Indicates whether the member isthe subscriber of the enrollment, group:, Y ? Subscriber, N ? Dependent Member
+[___] - 028) FTI_Subscriber_Indicator_Flag                     Results of the comparison of Issuer data to FFM data for Subscriber Indictor, including the required action to resolve any discrepancy (as needed)
+[___] - 029) FFM_Relationship_to                               Indicates the member?srelationship to the subscriber for, the enrollment group; use the ASC, X12 values in Table 1, Should the Issuer's system not have the, ASC X12 code available then the Issuer, should crosswalk to the following four, values:, 01 ? Spouse, 18 ? Self, 19 ? Child, G8 ? Other Relative
+[___] - 030) Issuer_Relationship_to                            Indicates the member?srelationship to the subscriber for, the enrollment group; use the ASC, X12 values in Table 1, Should the Issuer's system not have the, ASC X12 code available then the Issuer, should crosswalk to the following four, values:, 01 ? Spouse, 18 ? Self, 19 ? Child, G8 ? Other Relative
+[___] - 031) FTI_Relationship_to_Subscriber_Indicator_Flag     Results of the comparison of Issuer data to FFM data for Relationship to Subscriber Indicator, including the required action to resolve any discrepancy (as needed)
+[___] - 032) FFM_Exchanged_Assigned_Subscriber_ID              Exchange-Assigned identifier for the subscriber of the enrollment group; if the member in the record is the subscriber, this will be the same as the Exchange-Assigned Member ID,Must be 10 characters, including leading zeroes
+[___] - 033) Issuer_Exchanged_Assigned_Subscriber_ID           Exchange-Assigned identifier for the subscriber of the enrollment group; if the member in the record is the subscriber, this will be the same as the Exchange-Assigned Member ID,Must be 10 characters, including leading zeroes
+[___] - 034) FTI_Exchanged_Assigned_Subscriber_ID               Results of the comparison of Issuer data to FFM data for Exchange-Assigned Subscriber ID, including the required action to resolve any discrepancy (as needed)
+[___] - 035) FFM_Exchanged_Assigned_Member_ID                   Exchange-Assigned identifier for the member,Must be 10 characters, including leading zeroes
+[___] - 036) Issuer_Exchanged_Assigned_Member_ID               Exchange-Assigned identifier for the member,Must be 10 characters, including leading zeroes
+[___] - 037) FTI_Exchanged_Assigned_Member_ID_Flag              Results of the comparison of Issuer data to FFM data for Exchange-Assigned Member ID, including the required action to resolve any discrepancy (as needed)
+[___] - 038) FFM_Issuer_Assigned_Subscriber_ID                 Issuer-Assigned identifier for the subscriber of the enrollment group; if the member in the record is the subscriber, this should be the same as the Issuer-Assigned Member ID
+[___] - 039) Issuer_Issuer_Assigned_Subscriber_ID              Issuer-Assigned identifier for the subscriber of the enrollment group; if the member in the record is the subscriber, this should be the same as the Issuer-Assigned Member ID
+[___] - 040) FTI_Issuer-Assigned_Subscriber_ID_Flag            Results of the comparison of Issuer data to FFM data for Issuer- Assigned Subscriber ID, including the required action to resolve any discrepancy (as needed)
+[___] - 041) FFM_Issuer-Assigned_Member_ID                     Issuer-Assigned identifier for the member
+[___] - 042) Issuer_Issuer-Assigned_Member_ID                  Issuer-Assigned identifier for the member
+[___] - 043) FTI_Issuer-Assigned_Member_ID_Flag                Results of the comparison of Issuer data to FFM data for Issuer- Assigned Member ID, including the required action to resolve any discrepancy (as needed)
+[___] - 044) FFM_Exchange_Assigned_Policy_Number               Identifier for this enrollment policy document, generated by the FFM
+[___] - 045) Issuer_Exchange_Assigned_Policy_Number           Identifier for this enrollment policy document, generated by the FFM
+[___] - 046) FTI_Exchange_Assigned_Policy_ID_Flag              Results of the comparison of Issuer data to FFM data for Exchange-Assigned Policy ID, including the required action to resolve any discrepancy (as needed)
+[___] - 047) FFM_Issuer-Assigned_Policy_ID                     Policy number for the benefit coverage as assigned by the Issuer; this value must be populated for proper determination of the enrollment group from the Issuer?s perspective,This value must be unique to an enrollment group (within a HIOS ID) and consistent across all members of the enrollment group
+[___] - 048) Issuer_Issuer-Assigned_Policy_ID                  Policy number for the benefit coverage as assigned by the Issuer; this value must be populated for proper determination of the enrollment group from the Issuer?s perspective,This value must be unique to an enrollment group (within a HIOS ID) and consistent across all members of the enrollment group
+[___] - 049) FTI_Issuer-Assigned_Policy_ID_Flag                Results of the comparison of Issuer data to FFM data for Issuer- Assigned Policy ID, including the required action to resolve any discrepancy (as needed)
+[___] - 050) FFM_Residential_Street_Address                    Residential street address of the member (Line 1)
+[___] - 051) Issuer_Residential_Street_Address                 Residential street address of the member (Line 1)
+[___] - 052) FTI_Residential_Street_Address_Flag               Results of the comparison of Issuer data to FFM data for Residential Street Address (Line 1), including the required action to resolve any discrepancy (as needed)
+[___] - 053) FFM_Residential_Street_Address_Line_2             Residential street address of the member (Line 2)
+[___] - 054) Issuer_Residential_Street_Address_Line_2          Residential street address of the member (Line 2)
+[___] - 055) FTI_Residential_Street_Address_Line_2_Flag        Results of the comparison of Issuer data to FFM data for Residential Street Address (Line 2), including the required action to resolve any discrepancy (as needed)
+[___] - 056) FFM_Residential_City                              Residential city of the member
+[___] - 057) Issuer_Residential_City                           Residential city of the member
+[___] - 058) FTI_Residential_City_Flag                         Results of the comparison of Issuer data to FFM data for Residential City, including the required action to resolve any discrepancy (as needed)
+[___] - 059) FFM_Residential_State                             State abbreviation for the residential state of the member
+[___] - 060) Issuer_Residential_State                          State abbreviation for the residential state of the member
+[___] - 061) FTI_Residential_State_Flag                        Results of the comparison of Issuer data to FFM data for Residential State, including the required action to resolve any discrepancy (as needed)
+[___] - 062) FFM_Residential_ZIP_Code                          Residential ZIP Code of the member
+[___] - 063) Issuer_Residential_ZIP_Code                       Residential ZIP Code of the member
+[___] - 064) FTI_Residential_ZIP_Code_Flag                     Results of the comparison of Issuer data to FFM data for Residential ZIP Code, including the required action to resolve any discrepancy (as needed)
+[150] - 065) FFM_Mailing_Address_Street                        Mailing street address of the member (Line 1)
+[___] - 066) Issuer_Mailing_Address_Street                     Mailing street address of the member (Line 1)
+[___] - 067) FTI_Mailing_Address_Street_Flag                   Results of the comparison of Issuer data to FFM data for Mailing Address Street (Line 1), including the required action to resolve any discrepancy (as needed)
+[151] - 068) FFM_Mailing_Address_Street_Line_2                 Mailing street address of the member (Line 2)
+[___] - 069) Issuer_Mailing_Address_Street_Line_2              Mailing street address of the member (Line 2)
+[___] - 070) FTI_Mailing_Address_Street_Line_2_Flag            Results of the comparison of Issuer data to FFM data for Mailing Address Street (Line 2), including the required action to resolve any discrepancy (as needed)
+[152] - 071) FFM_Mailing_Address_City                          Mailing city of the member
+[___] - 072) Issuer_Mailing_Address_City                       Mailing city of the member
+[___] - 073) FTI_Mailing_Address_City_Flag                     Results of the comparison of Issuer data to FFM data for Mailing Address City, including the required action to resolve any discrepancy (as needed)
+[153] - 074) FFM_Mailing_Address_State                         State abbreviation for the mailing state of the member
+[___] - 075) Issuer_Mailing_Address_State                      State abbreviation for the mailing state of the member
+[___] - 076) FTI_Mailing_Address_State_Flag                    Results of the comparison of Issuer data to FFM data for Mailing Address State, including the required action to resolve any discrepancy (as needed)
+[154] - 077) FFM_Mailing_Address_ZIP_Code                      Mailing ZIP Code of the member
+[___] - 078) Issuer_Mailing_Address_ZIP_Code                   Mailing ZIP Code of the member
+[___] - 079) FTI_Mailing_Address_ZIP_Code_Flag                 Results of the comparison of Issuer data to FFM data for Mailing Address ZIP Code, including the required action to resolve any discrepancy (as needed)
+[___] - 080) FFM_Residential_County_Code                       Residential County (Federal Information Processing Standard ? FIPS) Code of the member
+[___] - 081) Issuer_Residential_County_Code                    Residential County (Federal Information Processing Standard ? FIPS) Code of the member
+[___] - 082) FTI_Residential_County_Code_Flag                  Results of the comparison of Issuer data to FFM data for Residential County Code, including the required action to resolve any discrepancy (as needed)
+[___] - 083) FFM_Rating_Area                                   Rating area of the enrollment, based on residential address; only applies to subscriber records
+[___] - 084) Issuer_Rating_Area                                Rating area of the enrollment, based on residential address; only applies to subscriber records
+[___] - 085) FTI_Rating_Area_Flag                              Results of the comparison of Issuer data to FFM data for Rating Area, including the required action to resolve any discrepancy (as needed)
+[___] - 086) FFM_Telephone_Number                              Primary contact telephone number for the member
+[___] - 087) Issuer_Telephone_Number                           Primary contact telephone number for the member
+[___] - 088) FTI_Telephone_Number_Flag                         Results of the comparison of Issuer data to FFM data for Telephone Number, including the required action to resolve any discrepancy (as needed)
+[___] - 089) FFM_Tobacco_Status                                Specifies whether the member has indicated tobacco use in the past six months:,1 ? Tobacco Use,2 ? No Tobacco Use,NOTE: for any individual under 18 years of age, this field should always be sent with a value of 2
+[___] - 090) Issuer_Tobacco_Status                             Specifies whether the member has indicated tobacco use in the past six months:,1 ? Tobacco Use,2 ? No Tobacco Use,NOTE: for any individual under 18 years of age, this field should always be sent with a value of 2
+[___] - 091) FTI_Tobacco_Status_Flag                           Results of the comparison of Issuer data to FFM data for Tobacco Status, including the required action to resolve any discrepancy (as needed)
+[___] - 092) FFM_QHP_ID                                        Full 16 character Qualified Health Plan (QHP) identifier, including CSR variant; required for all records
+[___] - 093) Issuer_QHP_ID                                     Full 16 character Qualified Health Plan (QHP) identifier, including CSR variant; required for all records
+[___] - 094) FTI_QHP_ID_Flag                                   Results of the comparison of Issuer data to FFM data for QHP ID, including the required action to resolve any discrepancy (as needed)
+[248] - 095) FFM_Benefit_Start_Date                            Effective date of benefit coverage associated with this enrollment record; required for all records
+[___] - 096) Issuer_Benefit_Start_Date                         Effective date of benefit coverage associated with this enrollment record; required for all records
+[___] - 097) FTI_Benefit_Start_Date_Flag                       Results of the comparison of Issuer data to FFM data for Benefit Start Date, including the required action to resolve any discrepancy (as needed)
+[249] - 098) FFM_Benefit_End_Date                              Last date of benefit coverage associated with this enrollment record; a blank date may be sent for open ended coverage
+[___] - 099) Issuer_Benefit_End_Date                           Last date of benefit coverage associated with this enrollment record; a blank date may be sent for open ended coverage
+[___] - 100) FTI_Benefit_End_Date_Flag                         Results of the comparison of Issuer data to FFM data for Benefit End Date, including the required action to resolve any discrepancy (as needed)
+[___] - 101) FFM_Applied_APTC_Amount                           Amount of Advance Premium Tax Credit applied to the premium monthly, based on the subscriber?s election during enrollment; only applies to subscriber records, otherwise blank
+[___] - 102) Issuer_Applied_APTC_Amount                        Amount of Advance Premium Tax Credit applied to the premium monthly, based on the subscriber?s election during enrollment; only applies to subscriber records, otherwise blank
+[___] - 103) FTI_Applied_APTC_Amount_Flag                      Results of the comparison of Issuer data to FFM data for Applied APTC Amount, including the required action to resolve any discrepancy (as needed)
+[___] - 104) FFM_Applied_APTC_Effective_Date                   Effective date of the monthly applied APTC amount; only applies to subscriber records with a positive Applied APTC Amount, otherwise blank
+[___] - 105) Issuer_Applied_APTC_Effective_Date                Effective date of the monthly applied APTC amount; only applies to subscriber records with a positive Applied APTC Amount, otherwise blank
+[___] - 106) FTI_Applied_APTC_Effective_Date_Flag              Results of the comparison of Issuer data to FFM data for Applied APTC Effective Date, including the required action to resolve any discrepancy (as needed)
+[___] - 107) FFM_Applied_APTC_End_Date                         End date of the monthly applied APTC amount; only applies to subscriber records with a positive Applied APTC Amount, otherwise blank
+[___] - 108) Issuer_Applied_APTC_End_Date                      End date of the monthly applied APTC amount; only applies to subscriber records with a positive Applied APTC Amount, otherwise blank
+[___] - 109) FTI_Applied_APTC_End_Date_Flag                    Results of the comparison of Issuer data to FFM data for Applied APTC End Date, including the required action to resolve any discrepancy (as needed)
+[___] - 110) FFM_CSR_Amount                                    Monthly Cost Sharing Reduction amount based on plan selection and member eligibility; only applies to subscriber records, otherwise blank
+[___] - 111) Issuer_CSR_Amount                                 Monthly Cost Sharing Reduction amount based on plan selection and member eligibility; only applies to subscriber records, otherwise blank
+[___] - 112) FTI_CSR_Amount_Flag                               Results of the comparison of Issuer data to FFM data for CSR Amount, including the required action to resolve any discrepancy (as needed)
+[___] - 113) FFM_CSR_Effective_Date                            Effective date of the monthly CSR amount; only applies to subscriber records with a positive CSR Amount, otherwise blank
+[___] - 114) Issuer_CSR_Effective_Date                         Effective date of the monthly CSR amount; only applies to subscriber records with a positive CSR Amount, otherwise blank
+[___] - 115) CSR_Effective_Date_Flag                           Results of the comparison of Issuer data to FFM data for CSR Effective Date, including the required action to resolve any discrepancy (as needed)
+[___] - 116) FFM_CSR_End_Date                                  End date of the monthly CSR amount; only applies to subscriber records with a positive CSR Amount, otherwise blank
+[___] - 117) Issuer_CSR_End_Date                               End date of the monthly CSR amount; only applies to subscriber records with a positive CSR Amount, otherwise blank
+[___] - 118) FTI_CSR_End_Date_Flag                             Results of the comparison of Issuer data to FFM data for CSR End Date, including the required action to resolve any discrepancy (as needed)
+[___] - 119) FFM_Total_Premium_Amount                          Total monthly premium amount for the enrollment group; only applies to subscriber records, otherwise blank
+[___] - 120) Issuer_Total_Premium_Amount                       Total monthly premium amount for the enrollment group; only applies to subscriber records, otherwise blank
+[___] - 121) FTI_Total_Premium_Amount_Flag                     Results of the comparison of Issuer data to FFM data for Total Premium Amount, including the required action to resolve any discrepancy (as needed)
+[___] - 122) FFM_Total_Premium_Effective_Date                  Effective date of the monthly total premium amount; only applies to subscriber records, otherwise blank
+[___] - 123) Issuer_Total_Premium_Effective_Date               Effective date of the monthly total premium amount; only applies to subscriber records, otherwise blank
+[___] - 124) FTI_Total_Premium_Effective_Date_Flag             Results of the comparison of Issuer data to FFM data for Total Premium Effective Date, including the required action to resolve any discrepancy (as needed)
+[___] - 125) FFM_Total_Premium_End_Date                        End date of the monthly total premium amount; only applies to subscriber records, otherwise blank
+[___] - 126) Issuer_Total_Premium_End_Date                     End date of the monthly total premium amount; only applies to subscriber records, otherwise blank
+[___] - 127) FTI_Total_Premium_End_Date_Flag                   Results of the comparison of Issuer data to FFM data for Total Premium End Date, including the required action to resolve any discrepancy (as needed)
+[___] - 128) FFM_Member_Premium_Amount                         Monthly premium amount associated with the individual member; sent for both subscriber and dependent member records, if available in the Issuer?s system
+[___] - 129) Issuer_Member_Premium_Amount                      Monthly premium amount associated with the individual member; sent for both subscriber and dependent member records, if available in the Issuer?s system
+[___] - 130) FTI_Member_Premium_Amount_Flag                    Results of the comparison of Issuer data to FFM data for Member Premium Amount, including the required action to resolve any discrepancy (as needed)
+[___] - 131) FFM_Member_Premium_Effective_Date                 Effective date of the monthly individual premium amount; sent for both subscriber and dependent member records, if available in the Issuer?s system
+[___] - 132) Issuer_Member_Premium_Effective_Date              Effective date of the monthly individual premium amount; sent for both subscriber and dependent member records, if available in the Issuer?s system
+[___] - 133) FTI_Member_Premium_Effective_Date_Flag            Results of the comparison of Issuer data to FFM data for Member Premium Effective Date, including the required action to resolve any discrepancy (as needed)
+[___] - 134) FFM_Member_Premium_End_Date                       End date of the monthly individual premium amount; sent for both subscriber and dependent member records, if available in the Issuer?s system
+[___] - 135) Issuer_Member_Premium_End_Date                    End date of the monthly individual premium amount; sent for both subscriber and dependent member records, if available in the Issuer?s system
+[___] - 136) FTI_Member_Premium_End_Date_Flag                  Results of the comparison of Issuer data to FFM data for Member Premium End Date, including the required action to resolve any discrepancy (as needed)
+[___] - 137) FFM_Initial_Premium_Paid_Status                   Indicates if the initial binder payment has been made for the enrollment, leading to effectuated coverage:,Y ? Effectuated (active or terminated coverage),N ? Uneffectuated (awaiting binder payment),C ? Cancelled (no binder payment received, no period of coverage),This value is to be sent with the subscriber of the enrollment group and will apply to all members of the enrollment group
+[___] - 138) Issuer_Initial_Premium_Paid_Status                Indicates if the initial binder payment has been made for the enrollment, leading to effectuated coverage:,Y ? Effectuated (active or terminated coverage),N ? Uneffectuated (awaiting binder payment),C ? Cancelled (no binder payment received, no period of coverage),This value is to be sent with the subscriber of the enrollment group and will apply to all members of the enrollment group
+[___] - 139) FTI_Initial_Premium_Paid_Status_Flag              Results of the comparison of Issuer data to FFM data for Initial Premium Paid Status, including the required action to resolve any discrepancy (as needed)
+[___] - 140) FTI_Issuer_Overall_Record_Flag                    Results of the record-level comparison, and ? if matched ? an indicator of whether any Issuer or FFM updates are flagged within the record
+[___] - 141) FFM_Internal_Inventory_Record_Number              Unique identifier for the specific record in the RCNO file
+[___] - 142) FTI_Issuer_Link_Key                               The purpose of the FTI Issuer Link key is to provide the Issuer with the enrollment groups which have been linked together via the analytical processing of the Issuer's data
+[___] - 143) FTI_Internal_Batch_ID                             Indicates the processing batch (reconciliation cycle) in which the file was generated
+[___] - 144) FTI_Internal_Date_ERR_Review                      This field will contain eight spaces or blanks.
+[___] - 145) FTI_Issuer-Assigned_Record_Trace_Number           This is the value that was on the inbound Enrollment Reconciliation file "01 Detail Record" from the Issuer. If the Issuer did not assign a value to the "01 Detail Record" Issuer-Assigned Record Trace Number field then the only value returned will be a single space or blank character in the outbound Enrollment Reconciliation file. If the FFM has an individual (Subscriber or Member) that was not on the inbound Issuer's file then the value of the FTI Issuer- Assigned Record Trace Number is space or blank.
+[___] - 146) FFM_Coverage_Year                                 Relevant 4-digit Plan Year represented by the enrollment record
+[___] - 147) Issuer_Coverage_Year                              Relevant 4-digit Plan Year represented by the enrollment record
+[___] - 148) FTI_Coverage_Year_Flag                            Results of comparison of Issuer data to FFM data for Coverage Year; Please Note: any discrepancy on this field will result in an unprocessable record
+[___] - 149) FFM_Paid_Through_Date                             Date through which the member has made payment for benefit coverage (as provided by the Issuer); only applies to subscriber records, otherwise blank
+[___] - 150) Issuer_Paid_Through_Date                          Date through which the member has made payment for benefit coverage (as provided by the Issuer); only applies to subscriber records, otherwise blank
+[___] - 151) FTI_Paid_Through_Date_Flag                        Results of the comparison of Issuer data to FFM data for Paid Through Date, including the required action to resolve any discrepancy (as needed)
+[___] - 152) FFM_End_of_Year_Termination_Indicator             Indicates if the enrollment record will be terminated effective December 31st of the given plan year and should be ineligible for reenrollment through Batch Auto- Renewal; ?Y? indicates terminated 12/31, ?N? indicates not terminated 12/31
+[___] - 153) Issuer_End_of_Year_Termination_Indicator          Indicates if the enrollment record will be terminated effective December 31st of the given plan year and should be ineligible for reenrollment through Batch Auto- Renewal; ?Y? indicates terminated 12/31, ?N? indicates not terminated 12/31
+[___] - 154) FTI_End_of_Year_Termination_Indicator_Flag        Results of the comparison of Issuer data to FFM data for End of Year Voluntary Termination Indicator, including the required action to resolve any discrepancy (as needed)
+[___] - 155) FFM_Agent/Broker_Name                             Full name of the agent/broker associated with the enrollment, if applicable
+[___] - 156) Issuer_Agent/Broker_Name                          Full name of the agent/broker associated with the enrollment, if applicable
+[___] - 157) FTI_Agent/Broker_Name_Flag                        Results of the comparison of Issuer data to FFM data for Agent/Broker Name, including the required action to resolve any discrepancy (as needed)
+[___] - 158) FFM_Agent/Broker_NPN                              The National Producer Number of the agent/broker, if applicable
+[___] - 159) Issuer_Agent/Broker_NPN                           The National Producer Number of the agent/broker, if applicable
+[___] - 160) FTI_Agent/Broker_NPN_Flag                         Results of the comparison of Issuer data to FFM data for Agent/Broker NPN, including the required action to resolve any discrepancy (as needed)
+[___] - 161) FFM_Enrollment_Group_Member_Count                 Number of members in the enrollment group, as determined by the FFM
+[___] - 162) Issuer_Enrollment_Group_Member_Count              Number of members in the enrollment, as submitted by the Issuer (members with the same Issuer-Assigned Policy ID and same effective date)
+[___] - 163) FTI_Enrollment_Group_Member_Count_Flag            Results of comparison of Issuer data to FFM data for Enrollment Group Member Count; Please Note: any discrepancy on this field will result in suppression of full field-level updates to the FFM for the record

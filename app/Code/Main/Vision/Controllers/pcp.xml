@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+
+Primary Care Physician actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="pcp" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="register">
+            <description>Creates user accounts for new PCPs.</description>
+            <model namespace="vision" class="pcp" id='pcp' method="register">
+                <parameter name='uid' source='session' value='uid' default='' required="true" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="training" blocking="OFF">
+            <description>The Webinar Training Video</description>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="portal" blocking="off" passalong="window_id">
+            <description>The "create pcp portal" information gathering page</description>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="add" blocking="off">
+            <description>Actually creates the PCP portal and displays </description>
+            <model namespace="vision" class="pcp" id='pcp' method="createPortal" response="true">
+                <parameter name='uid' source='session' value='uid' default='' required="true" />
+                <parameter name="first_name" source="post" required="true" />
+                <parameter name="last_name" source="post" required="true" />
+                <parameter name="npi" source="post" required="true" />
+            </model>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="formstoreview" blocking="off" passalong="windowId">
+            <description>Workflow configuration form for setting the message to send to the PCP about which forms to review</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>             
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="notification" blocking="off" passalong="windowId">
+            <description>Configuration form for the triggering of notifications that there are forms for PCPs to review</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>            
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="techs" blocking="off" output="JSON">
+            <description>Lists all users with a role of PCP Tech</description>
+            <entity namespace="argus" class="user/roles" method="usersWithRole" response="true" orderby="name=ASC">
+                <parameter name="role_id" source="request" default="6" />
+            </entity>
+        </action>
+    </actions>
+</controller>

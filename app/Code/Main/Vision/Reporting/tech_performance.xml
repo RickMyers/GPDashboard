@@ -1,0 +1,43 @@
+<?xml version='1.0'?>
+<report>
+    <name>Tech/User Performance</name>
+    <description>Summary of screening and scanning events</description>
+    <selection>
+        <pcp_techs />
+        <start_date />
+        <end_date />
+        <all_ipas />
+        <locations />
+        <location_addresses />
+    </selection>
+    <resource method="formsExtendedInformation" /><!-- we arent going to be using this resource... a new one will have to be created -->
+    <columns>
+        <column source="event_date"       name="Date"            format="date" onempty="N/A" />
+        <column source="form_type"        name="Type"            format="ucfirst" onempty="N/A" />
+        <column source="screening_client" name="Healthplan"      format="" onempty="N/A" />
+        <column source="ipa_id_combo"     name="IPA"             format="" onempty="N/A" />
+        <column source="location_id_combo" name="Location"       format="" onempty="N/A" />
+        <column source="member_id"        name="Member ID"       format="" onempty="N/A" />        
+        <column source="member_name"      name="Member Name"     format="" onempty="N/A" />        
+        <column source="member_address"   name="Member Address"  format="" onempty="N/A" />                
+        <column source="gender"           name="Gender"          format="" onempty="N/A" />
+        <column source="date_of_birth"    name="Date Of Birth"   format="" onempty="N/A" />
+        <column source="technician_name"  name="Technician Name" format="" onempty="N/A" />
+        <column source="reviewer_name"    name="Reviewed By"     format="" onempty="N/A" />        
+        <column source="pc_2023f"         name="2023F"           format="" onempty="" />
+        <column source="pc_92227"         name="92227"           format="" onempty="" />
+        <column source="pc_s3000"         name="S3000"           format="" onempty="" />
+        <column source="pc_2022f"         name="2022F"           format="" onempty="" />
+        <column source="pc_g2102"         name="G2102"           format="" onempty="" />
+        <column source="pc_5010f"         name="5010F"           format="" onempty="" />
+        <column source="pc_3072f"         name="3072F"           format="" onempty="" />
+        <column source="pc_2026f"         name="2026F"           format="" onempty="" />
+        <column source="pc_g2104"         name="G2104"           format="" onempty="" />
+        <column source="pc_2033f"         name="2033F"           format="" onempty="" />
+        <column source="retinopathy"      name="Retinopathy (N=No,B=Bkg,P=Pro)"  format="" onempty="" />
+        <column source="exam_finding"     name="Exam Findings"   format="" onempty="N/A" />  
+        <column source="member_unscannable" name="Unable To Scan"  format="" onempty="N" />  
+        <column source="images_unreadable" name="Images Unreadable"  format="" onempty="" />  
+        <column source="comment"          name="Comment"         format="" onempty="N/A" />        
+    </columns>
+</report>

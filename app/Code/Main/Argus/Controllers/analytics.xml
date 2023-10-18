@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+
+Analytical displays and charts
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="analytics" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
+            <description>The main page</description>
+            <entity namespace="dashboard" class="chart_packages" id="available_charts" >
+                <parameter name='user_id' value='uid' source='session' required='true' />
+            </entity>
+            <entity namespace="dashboard" class="analytical/charts" id="analytical">
+                <parameter name='user_id' value='uid' source='session'  />
+            </entity>
+            <model namespace='dashboard' class='charts' id='chart_library'>
+                <parameter name='user_id' value='uid' source='session'  />
+            </model>   
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="add">
+            <description>Adds a chart to the users analytics section</description>
+            <entity namespace="dashboard" class="analytical/charts" method="save">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+                <parameter name="chart_id" value="id" source="post" required="true" />
+                <parameter name="width" source="post" default="25" optional="true"  />
+                <parameter name="alignment" source="post" default="left" optional="true"  />
+            </entity>
+            <chain>
+                <action name="home" />
+            </chain>            
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="delete">
+            <description>Removes a chart from the users analytics section</description>
+            <entity namespace="dashboard" class="analytical/charts" method="nonkeysdelete">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+                <parameter name="chart_id" source="post" required="true" />
+            </entity>
+            <chain>
+                <action name="home" />
+            </chain>
+        </action>    
+            
+    </actions>
+</controller>

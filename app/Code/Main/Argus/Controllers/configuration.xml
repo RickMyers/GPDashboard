@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+System configuration actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="configuration" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="home">
+            <description>The main home page</description>
+            <entity namespace='dashboard' class='navigation' id='navigation'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

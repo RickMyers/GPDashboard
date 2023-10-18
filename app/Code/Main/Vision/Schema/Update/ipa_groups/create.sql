@@ -1,0 +1,15 @@
+CREATE TABLE vision_ipa_groups (
+	id INT NOT NULL AUTO_INCREMENT,
+	`group` CHAR(128) DEFAULT NULL,
+	`description` VARCHAR(255) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)	
+);
+CREATE TABLE vision_ipa_group_members (
+	id INT NOT NULL AUTO_INCREMENT,
+	group_id INT DEFAULT NULL,
+	ipa_id INT DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	UNIQUE KEY (group_id, ipa_id)
+);

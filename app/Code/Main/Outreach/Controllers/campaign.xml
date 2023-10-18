@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+
+Outreach campaign related services
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="campaign" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="add" blocking="off">
+            <description>Adds a new campaign</description>
+            <entity namespace="outreach" class="campaigns" method="save" assign='campaign_id'>
+                <parameter name='campaign'      source='post' required="true" />
+                <parameter name='description'   source='post' default='Outreach Campaign' />
+                <parameter name='created_by'    source='session' value='uid' required='true' />
+                <parameter name='created_date'  source='post' format='date' default='now' />
+                <parameter name='active'        source='post' default='Y' />
+            </entity>
+            <entity namespace='outreach' class='participant/roles' method='save'>
+                <parameter name='campaign_id'   source='assign' required='true' />
+                <parameter name='participant_id' source='session' value='uid' required='true' />
+                <parameter name='manager'       source='post' default='Y' />
+            </entity>
+            <redirect href='/outreach/home/open' post="true" />
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='status' blocking='off'>
+            <description>Sets the campaign status</description>
+            <entity namespace='outreach' class='campaigns' method='save'>
+                <parameter name='id' source='post' value='campaign_id' required='true' />
+                <parameter name='active' source='post' required='true' />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name='admin' blocking='off'>
+            <description>Just the admin tab setup</description>
+            <entity namespace='outreach' class='campaigns' id='campaigns' />
+        </action>
+    </actions>
+</controller>

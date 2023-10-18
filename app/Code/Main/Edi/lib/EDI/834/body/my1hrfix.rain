@@ -1,0 +1,7 @@
+INS*{$subscriber_or_dependent}*{*relation_code}*001**A**E~
+REF*0F*{$subscriber_identifier}~
+{if dependent}
+REF*17*{$dependent_id}~
+{/if}
+NM1*70*1*{$last_name}*{$first_name}~
+DMG*D8*{$date_of_birth}****~

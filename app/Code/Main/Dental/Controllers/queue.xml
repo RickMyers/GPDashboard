@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+
+Dental Queue actions
+
+For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+-->
+<controller name="queue" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        <action name="init">
+            <description>Initial layout of a dental queues</description>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="refresh" blocking="off">
+            <description>This is the recurring poll action vision queues</description>   
+            <entity namespace="dental" class="consultation_forms" rows="rows" page="dental_new"  id="new"  defaultRows='14' defaultPage='1'>
+                <parameter name='status' source='request' default='N' />
+            </entity>
+            <entity namespace="dental" class="consultation_forms" rows="rows" page="dental_inprogress"  id="inprogress"  defaultRows='14' defaultPage='1'>
+                <parameter name='status' source='request' default='A' />
+            </entity>
+            <entity namespace="dental" class="consultation_forms" rows="rows" page="dental_completed"  id="completed"  defaultRows='14' defaultPage='1'>
+                <parameter name='status' source='request' default='C' />
+            </entity>            
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="page" blocking="off" passalong="queue_id">
+            <description>This is the recurring poll action vision queues</description>   
+            <entity namespace="dental" class="consultation_forms" rows="rows" page="page"  id="forms"  defaultRows='14' defaultPage='1'>
+                <if var="queue_id" eq="dental_new">
+                    <then>
+                        <parameter name='status' source='request' default='N' />
+                    </then>
+                    <else>
+                        <if var="queue_id" eq="dental_inprogress">
+                            <then>
+                                <parameter name='status' source='request' default='A' />
+                            </then>
+                            <else>
+                                <parameter name='status' source='request' default='C' />
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="archive" blocking="off">
+            <description>Recurring poll for the teledentistry archive queue</description>
+            <entity namespace="dental" class="consultation_forms" rows="rows" page="archiveq"  id="archive"  defaultRows='14' defaultPage='1'>
+                <parameter name='status' source='request' default='Z' />
+            </entity>            
+        </action>
+    </actions>
+</controller>

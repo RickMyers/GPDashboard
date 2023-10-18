@@ -1,0 +1,74 @@
+<style type='text/css'>
+    .npi-results-row {
+        overflow: hidden; white-space: nowrap
+    }
+    .npi-results-cell {
+        display: inline-block
+    }
+    .npi-results-label {
+        font-family: monospace; font-size: .9em;
+    }
+    .npi-results-field {
+        font-family: sans-serif; font-size: .95em; padding: 2px 2px 2px 15px;
+    }
+</style>
+    {% if results.data.results.0 %}
+        {% set data = npi_helper.node(results.data.results.0,'basic') %}
+        {% set addr = npi_helper.node(results.data.results.0,'addresses') %}
+        {% if data.organization_name %}
+        <div class='npi-results-row'>
+            <div class='npi-results-cell'>
+                <div class='npi-results-label'>
+                    Organization Name
+                </div>
+                <div class='npi-results-field'>
+                    {{ data.organization_name }}
+                </div>                
+            </div>
+        </div>
+        {% else %}
+        <div class='npi-results-row'>
+            <div class='npi-results-cell'>
+                <div class='npi-results-label'>
+                    Name
+                </div>
+                <div class='npi-results-field'>
+                    {{ data.last_name }}, {{ data.first_name }}
+                </div>                
+            </div>
+        </div>
+        {% endif %}
+        {% for address in addr %}
+        <div class='npi-results-row'>
+            <div class='npi-results-cell'>
+                <div class='npi-results-label'>
+                    Address
+                </div>
+                <div class='npi-results-field'>
+                    {{ address.address_1 }}, {{ address.city }}, {{ address.state }}, {{ address.postal_code }}
+                </div>                
+            </div>
+        </div>
+        {% if address.telephone_number %}
+            <div class='npi-results-row'>
+                <div class='npi-results-cell'>
+                    <div class='npi-results-label'>
+                        Telephone
+                    </div>
+                    <div class='npi-results-field'>
+                        {{ address.telephone_number }}
+                    </div>                
+                </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+        {% if results.data.Errors %}
+        <ul>
+            {% for key,attr in results.data.Errors %}
+            <li>{{ key }}: {{ attr }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endif %}
+

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+
+Basic Controller
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="dashboard" use="Smarty3" author=" " email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="connection" blocking="off" output="JSON">
+            <description>Simply returns whether the connection to the DWH is active</description>
+            <entity namespace="argus" class="MSConn" id="connection">
+                
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="indicator" blocking="off">
+            <description>The indicator on whether the connection to SQL Server is active</description>
+        </action>
+        
+    </actions>
+</controller>

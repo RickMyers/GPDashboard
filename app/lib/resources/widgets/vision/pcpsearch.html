@@ -1,0 +1,30 @@
+<style type="text/css">
+    .vision-pcp-search-box {
+        border-radius: 8px; height: 25px; width: 270px; border: 1px solid #333; padding-left: 30px; background-color: ghostwhite; background-image: url(/images/dental/search.png); background-repeat: no-repeat
+    }
+    .vision-pcp-search-field {
+        border: 0px; color: #333; background-color: ghostwhite; width: 230px; height: 20px; position: relative; top: 2px
+    }
+    .vision-pcp-search-field:focus {
+        outline: none;
+    }
+</style>
+<div class="vision-pcp-search-box" style="display: inline-block">
+    <input class="vision-pcp-search-field" type="text" style="" name="vision-pcp-search-field" id="vision-pcp-search-field" placeholder="Search..."/>
+</div>
+<script type="text/javascript">
+    $('#vision-pcp-search-field').on("keydown",function (evt) {
+        if (evt.keyCode == 13) {
+            var win = Desktop.semaphore.checkout(true);
+            (new EasyAjax('/vision/consultation/pcpsearch')).add('window_id',win.id).add('search',evt.target.value).then(function (response) {
+                (function (win,data) {
+                    return function () {
+                        win._title('PCP Form Search')._open(data);
+                    }
+                })(win,response)();
+            }).post();
+        }        
+    });
+</script>
+
+

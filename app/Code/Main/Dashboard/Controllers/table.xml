@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+
+Table Editing Actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="table" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+    <actions>
+        
+        <action name="home" blocking="off" passalong="window_id">
+            <description>The main page</description>
+            <entity namespace="dashboard" class="entities" id="entity">
+
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="list" blocking="off" output="JSON">
+            <description>JSON List of entities</description>
+            <entity namespace="dashboard" class="entities" id="entity" method="list" response="true">
+                <parameter name="namespace" required="true" source="request" />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="query" blocking="off" passalong="window_id">
+            <description>JSON List of entities</description>
+            <entity namespace="dashboard" class="entities" id="query" rows="rows" page="page" defaultRows="20" defaultPage="1">
+                <parameter name="namespace" required="true" source="request" />
+                <parameter name="entity" required="true" source="request" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="edit" blocking="off" passalong="window_id">
+            <description>Presents the user with the ability to edit a row of the table</description>
+              <entity assign="results" namespace="dashboard" class="entities" id="query" method="editQuery">
+                <parameter name="namespace" required="true" source="request" />
+                <parameter name="entity" required="true" source="request" />
+                <parameter name="id" required="true" source="request" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="save" blocking="off">
+            <entity assign="results" namespace="dashboard" class="entities" id="query" method="save">
+                <parameter name="namespace" required="true" source="post" />
+                <parameter name="entity"    required="true" source="post" />
+                <parameter name="id"        required="true" source="post" />
+                <parameter name="fields"    source="post" required="true" />
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="run" blocking="off" passalong="window_id">
+            <entity namespace="dashboard" class="entities" id="query" rows="rows" page="page" defaultRows="20" defaultPage="1">
+                <parameter name="query" required="true" source="post" />
+            </entity>
+        </action>
+    </actions>
+</controller>
