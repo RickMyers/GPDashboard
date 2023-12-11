@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+    Default Dashboard Layout for IPA Locations, also known as Business Office
+-->
+<profile>
+    <default>
+        <graphs>
+            <graph id="28" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-1" />
+            <graph id="29" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-2" />
+            <graph id="30" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-3" />
+            <graph id="31" namespace="dashboard" controller="user" action="home" layer="dashboard-chart-4" />
+        </graphs>
+        <apps>
+            <app id="19" />
+        </apps>
+        <options>
+        </options>
+    </default>
+</profile>

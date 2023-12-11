@@ -1,0 +1,46 @@
+({
+    form:
+    {
+        "id": 		"eis_member_form-&&win_id&&",
+        "drawme":	false,
+        "action":	"",
+        "onload":       function () {
+            //when form is loaded, do something
+        },
+        "method":	"post",
+        "style":	"",
+        "onenterkey":	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"member_id-&&win_id&&",
+            longname:	"Member ID",
+            title:	"Member ID or Unique Member ID",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"width: 250px; padding: 2px; border: 1px solid #333"
+        },         
+        {
+            active:	true,
+            id: 	"member_id_submit-&&win_id&&",
+            longname:	"Member Search Submit Button",
+            onclick:    function () {
+                if (Edits['eis_member_search-&&win_id&&'].validate()) {
+                    (new EasyAjax('/eis/member/lookup')).addForm('eis_member_form-&&win_id&&').then(function (response) {
+                        console.log(response);
+                    }).post();
+                }
+            },
+            title:	"Click to search for a member",
+            type:       "button",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"background-color: cadetblue; color: ghostwhite; padding: 2px 5px; border: 1px solid darkblue; border-radius: 2px"
+        }          
+    ]
+})

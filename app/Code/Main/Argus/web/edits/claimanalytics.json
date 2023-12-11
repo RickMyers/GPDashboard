@@ -1,0 +1,38 @@
+({
+    form:
+    {
+        id: 		"hedis_claims_analytics_form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+            //when form is loaded, do something
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:   
+    [
+        {
+            active:		true,
+            id:			"claims_analytics_yyyy",
+            longname:		"Year",
+            title:		"Year",
+            type:               "select",
+            required:		true,
+            force:		true,
+            classname:		"",
+            style:		"color: #333; border: 1px solid #aaf; padding: 2px; border-radius: 2px",
+            onchange: function (evt) {
+                (new EasyAjax('')).addForm('hedis_claims_analytics_form').then(function (response) {
+                    
+                }).post();
+            }
+        }                
+
+    ]
+})
+
+
+
+

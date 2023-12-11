@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<component>
+    <name>OD Reviewer</name>
+    <description>Name of OD</description>
+    <type>Select</type>
+    <resource id="reviewer" />
+    <content>
+        [
+            {
+                "text": "",
+                "value": ""
+            },
+            {
+                "text": "Dr. Mark Sarno",
+                "value": "23"
+            },
+            {
+                "text": "Dr. Frank Hurd",
+                "value": "68"
+            }
+        ]
+    </content>    
+</component>
+

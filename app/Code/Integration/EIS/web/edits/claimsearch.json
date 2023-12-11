@@ -1,0 +1,46 @@
+({
+    form:
+    {
+        "id": 		"eis_claim_form-&&win_id&&",
+        "drawme":	false,
+        "action":	"",
+        "onload":       function () {
+            //when form is loaded, do something
+        },
+        "method":	"post",
+        "style":	"",
+        "onenterkey":	"send"
+    },
+    fields:
+    [
+        {
+            active:	true,
+            id: 	"claim_number-&&win_id&&",
+            longname:	"Claim Number",
+            title:	"Claim Number",
+            type:       "text",
+            required:	true,
+            force:	true,
+            classname:	"",
+            style:	"width: 250px; padding: 2px; border: 1px solid #333"
+        },         
+        {
+            active:	true,
+            id: 	"claim_number_submit-&&win_id&&",
+            longname:	"Claim Number Submit Button",
+            onclick:    function () {
+                if (Edits['eis_claim_search-&&win_id&&'].validate()) {
+                    (new EasyAjax('/eis/claim/search')).addForm('eis_claim_form-&&win_id&&').then(function (response) {
+                        console.log(response);
+                    }).post();
+                }
+            },
+            title:	"Click to search for a claim",
+            type:       "button",
+            required:	false,
+            force:	false,
+            classname:	"",
+            style:	"background-color: cadetblue; color: ghostwhite; padding: 2px 5px; border: 1px solid darkblue; border-radius: 2px"
+        }          
+    ]
+})

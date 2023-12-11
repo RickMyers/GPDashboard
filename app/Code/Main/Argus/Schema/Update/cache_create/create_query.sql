@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS argus_cache;
+CREATE TABLE argus_cache
+(
+	id INT NOT NULL AUTO_INCREMENT,
+	cache_id CHAR(36) DEFAULT NULL,
+	modified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	INDEX (cache_id) 
+); 

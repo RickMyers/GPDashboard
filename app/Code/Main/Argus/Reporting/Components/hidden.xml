@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<component>
+    <name>Hidden Field</name>
+    <description>Hidden Field</description>
+    <type>Hidden</type>
+    <!-- <resource id="member_id" style="text-align: center; text-transform: uppercase" />  -->
+    
+</component>

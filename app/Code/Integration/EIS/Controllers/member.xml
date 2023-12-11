@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+
+Core EIS actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
+    <actions>
+        <action name="lookup" passalong='window_id' output='JSON'>
+            <description>Performs the member lookup</description>
+            <model namespace="eis" class="manager" id="manager" assign="member_data" method="performLookup" response='true'>
+                <parameter name="uniqueMemberId" value="member_id" required="true" source="request" />
+            </model>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

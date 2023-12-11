@@ -1,0 +1,70 @@
+
+({
+	form:
+	{
+		id: 		"db_creator_form-&&win_id&&",
+		drawme:		false,
+		action:		"",
+                onload:     function () {
+                    //when form is loaded, do something
+                },
+		method:		"post",
+		style:		"",
+		onenterkey:	"send"
+	},
+	fields:
+	[
+		{
+			active:			true,
+			id: 			"db_creator_namespace-&&win_id&&",
+			longname:		"Namespace",
+			title:			"Namespace",
+                        type:                   "select",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"width: 200px; color: #333"
+		},
+		{
+			active:			true,
+			id: 			"db_creator_table_name-&&win_id&&",
+			longname:		"Table Name",
+			title:			"Table Name",
+                        type:                   "text",
+			required:		true,
+			force:			true,
+			classname:		"",
+			style:			"width: 200px; color: #333"
+		},
+		{
+			active:			true,
+			id: 			"db_creator_csv-&&win_id&&",
+			longname:		"CSV File",
+			title:			"CSV Source",
+                        type:                   "file",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"width: 300px; color: #333"
+		},                
+		{
+			active:			true,
+			id: 			"db_creator_create_button-&&win_id&&",
+			longname:		"DB Creator Create Button",
+			title:			"Click to create a new table",
+                        type:                   "button",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			"padding: 2px 10px; color: #333; color: #333",
+                        onclick:                function (evt) {
+                            if (Edits['db-creator-&&win_id&&'].validate()) {
+                                (new EasyAjax('/argus/table/create')).addForm('db_creator_form-&&win_id&&').then(function (response) {
+                                    console.log(response);
+                                }).post();
+                            }
+                        }
+		}                
+                
+	]
+})

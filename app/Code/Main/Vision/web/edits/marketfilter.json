@@ -1,0 +1,85 @@
+({
+    form:
+    {
+        id: 		"market_filter_form",
+        drawme:		false,
+        action:		"",
+        onload:     function () {
+        },
+        method:		"post",
+        style:		"",
+        onenterkey:	"send"
+    },
+    fields:
+    [
+        {
+            active:		true,
+            id: 		"market_level_ipa",
+            longname:		"IPA",
+            title:		"",
+            type:               "select",
+            required:		false,
+            force:		false,
+            populator:          function () {
+                (new EasyAjax('/vision/market/ipas')).add('client_id',Argus.vision.market.id).then(function (response) {
+                    EasyEdits.populateSelectBox('market_level_ipa',JSON.parse(response));
+                }).get();
+            },
+            onchange:           function (evt) {
+                (new EasyAjax('/vision/market/locations')).add('ipa_id',$('#market_level_ipa').val()).then(function (response) {
+                    EasyEdits.populateSelectBox('market_level_location',JSON.parse(response));
+                }).get();
+            },
+            classname:		"",
+            style:		"padding: 2px"
+        },
+        {
+            active:		true,
+            id: 		"market_level_location",
+            longname:		"Location",
+            title:		"",
+            type:               "select",
+            required:		false,
+            force:		false,
+            onchange:           function (evt) {
+                (new EasyAjax('/vision/market/physicians')).add('location_id',$('#market_level_location').val()).then(function (response) {
+                    EasyEdits.populateSelectBox('market_level_location',JSON.parse(response));
+                }).get();
+            },            
+            classname:		"",
+            style:		"padding: 2px"
+        },
+        {
+            active:		true,
+            id: 		"market_level_physician",
+            longname:		"Physician (NPI)",
+            title:		"",
+            type:               "select",
+            required:		false,
+            force:		false,
+            classname:		"",
+            onclick:            function (evt) {
+            },
+            style:		"padding: 2px"
+        },
+        {
+            active:		true,
+            id: 		"market_level_physician",
+            longname:		"Physician (NPI)",
+            title:		"",
+            type:               "select",
+            required:		false,
+            force:		false,
+            classname:		"",
+            onclick:            function (evt) {
+                (new EasyAjax('/vision/market/filter')).add('ipa_id',$('#market_level_ipa').val()).add('location_id',$('#market_level_location').val()).add('npi_id',$('#market_level_physician').val()).then(function (response) {
+                    
+                }).post();
+            },
+            style:		"padding: 2px"
+        }
+    ]
+})
+
+
+

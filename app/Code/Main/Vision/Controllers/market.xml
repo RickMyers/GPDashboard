@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+
+Market level, or global, controller
+
+For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="market" use="Smarty3" author="Rick Myers" email="rmyers@aflac.com">
+    <actions blocking="off" response="false">
+        <action name="init">
+            <description>Initial layout</description>
+            <!-- Entity, Helper, Model, Conditional declarations begin here -->
+            <entity namespace="vision" class="consultation/forms" id="forms">
+                <parameter name='client_id'     source='request' default='111' />
+                <parameter name='ipa_id'        source='request' optional='true' />
+                <parameter name='location_id'   source='request' optional='true' />
+                <parameter name='npi_id'        source='request' optional='true' />
+            </entity>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="queue">
+            <description>Gets a set of forms based on a possible list of criteria</description>
+            <entity namespace="vision" class="consultation/forms"  id='forms' orderby='event_date=DESC'>
+                <parameter name='client_id'   source='request' default='111' />
+                <parameter name='ipa_id'      source='request' optional='true' />
+                <parameter name='location_id' source='request' optional='true' />                
+                <parameter name='npi_id'      source='request' optional='true' />                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+
+        <action name="refresh">
+            <description>The periodic queue refresh action</description>
+            <entity namespace="vision" class="consultation/forms"  id='ipas' orderby='event_date=DESC'>
+                <parameter name='client_id'   source='request' default='111' />
+                <parameter name='ipa_id'      source='request' optional='true' />
+                <parameter name='location_id' source='request' optional='true' />                
+                <parameter name='npi_id'      source='request' optional='true' />                
+            </entity>
+        </action>
+                
+        <!-- ############################################################### -->
+        
+        <action name="ipas">
+            <description>Gets an IPA list</description>
+            <entity namespace="vision" class="client/ipas"  id='ipas' orderby='ipa'>
+                <parameter name='client_id'     source='request' default='111' />                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="locations">
+            <description>Gets the list of locations and addresses for a given IPA</description>
+            <entity namespace="vision" class="ipa/locations"  id='locations' orderby='location'>
+                <parameter name='ipa_id'     source='request' required='true' />                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="physicians">
+            <description>Gets a list of physicians working at a specific location</description>
+            <entity namespace="vision" class="consultation/forms"  id='ipas' orderby='npi_id_combo'>
+                <parameter name='location_id'     source='request' required='true' />                
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="filter">
+            <description>Gets a set of forms based on a possible list of criteria</description>
+            <entity namespace="vision" class="consultation/forms"  id='ipas' orderby='event_date=DESC'>
+                <parameter name='client_id'   source='request' default='111' />
+                <parameter name='ipa_id'      source='request' optional='true' />
+                <parameter name='location_id' source='request' optional='true' />                
+                <parameter name='npi_id'      source='request' optional='true' />                
+            </entity>
+        </action>
+                                                                
+    </actions>
+</controller>
