@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+
+Data extraction actions
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="extracts" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
+    <actions>
+         
+        <action name="get834" passalong="windowId,namespace">
+            <description>The biometric sensor configuration page</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+
+    </actions>
+</controller>

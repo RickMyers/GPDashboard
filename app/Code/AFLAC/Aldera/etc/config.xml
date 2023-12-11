@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<config>
+    <aldera>
+        <version>0.0.1</version>
+        <title>Aldera Module</title>
+        <description>AFLAC methods and functionality to interface with Aldera</description>
+        <author>
+            <name>Rick Myers</name>
+            <email>rmyers@aflacbenefitssolutions.com</email>
+        </author>
+        <module>
+            <name>Aldera</name>
+            <weight>70</weight>
+            <use>Smarty3</use>
+            <package>AFLAC</package>
+            <workflow>Y</workflow>
+            <required>N</required>
+        </module>
+        <structure>
+            <use>Smarty3</use>
+            <package>AFLAC</package>
+            <module>Aldera</module>
+            <workflow>Y</workflow>
+            <models>
+                <source>Aldera/Models</source>
+            </models>
+            <config>
+                <source>Aldera/etc</source>
+            </config>
+            <helpers>
+                <source>Aldera/Helpers</source>
+            </helpers>
+            <controllers>
+                <source>Aldera/Controllers</source>
+                <cache>Aldera/Controllers/Cache</cache>
+            </controllers>
+            <schema>
+                <install>Aldera/Schema/Install</install>
+                <update>Aldera/Schema/Update</update>
+                <layout>Aldera/Schema/DSL</layout>
+            </schema>
+            <configuration>
+                <source>Aldera/etc</source>
+            </configuration>
+            <views>
+                <source>Aldera/Views</source>
+                <cache>Aldera/Views/Cache</cache>
+            </views>
+            <images>
+                <source>Aldera/Images</source>
+                <cache>Aldera/Images/Cache</cache>
+            </images>
+            <entities>
+                <source>Aldera/Entities</source>
+            </entities>
+            <RPC>
+                <source>Aldera/RPC</source>
+            </RPC>
+            <frontend>
+                <source>Aldera/web/app</source>
+            </frontend>
+        </structure>
+        <orm>
+            <prefix>aldera_</prefix>
+            <mongodb>aldera</mongodb>
+            <entities>
+            </entities>
+        </orm>
+
+        <web>
+        </web>
+    </aldera>
+</config>

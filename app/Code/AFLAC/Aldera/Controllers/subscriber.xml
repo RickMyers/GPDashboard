@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+
+Actions involving Subscribers in Aldera
+
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
+-->
+<controller name="subscriber" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
+    <actions>
+        <action name="addconfig" passalong="windowId">
+            <description>Workflow element configuration for adding subscribers and dependents into aldera</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+
+        <!-- ############################################################### -->
+        
+        <action name="added" passalong="windowId">
+            <description>Workflow element configuration for determining if a member/subscriber was added into aldera</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="coverage" passalong="windowId">
+            <description>Workflow element configuration for adding coverage to a subscriber</description>
+            <mongo namespace="paradigm" class="elements" id='element'>
+                <parameter name='id' source='post' default='' />
+            </mongo>
+        </action>
+    </actions>
+</controller>

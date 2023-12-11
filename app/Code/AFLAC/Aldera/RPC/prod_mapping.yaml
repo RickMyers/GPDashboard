@@ -1,0 +1,215 @@
+---
+alderaAuthentication   :
+  wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/AuthenticationService.svc?wsdl  #production
+  version         : 1.2
+  operation       : Login
+  ws-addressing   :
+    Namespace     : ns2
+    Action        : http://www.Healthation.com/Authentication/IAuthentication/Login
+    ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+    To            : https://argus.core.alderaplatform.com/ServicesARGUS/AuthenticationService.svc/Authentication        
+  method          : SOAP  
+  arguments       : 
+    loginName     : grpadmin
+    loginPswd     : password123
+    ipAddress     : 10.2.1.76
+unlockAlderaUser:
+  wsdl            : https://argus-uat.core.alderaplatform.com/ServicesARGUS/UserAccountService.svc?wsdl  #UAT
+  version         : 1.2
+  operation       : ProviderUserAccountUnlock
+  ws-addressing   :
+    Namespace     : ns2
+    Action        : http://www.Healthation.com/Authentication/IAuthentication/ProviderUserAccountUnLock
+    ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+    To            : https://argus-uat.core.alderaplatform.com/ServicesARGUS/UserAccountService.svc/UserAccount
+  method          : SOAP  
+  arguments       : 
+      ProviderUserAccountLockRequest :        #WHY?!?!?!  Why not unlock request
+        SessionId   :
+        UserGID     :                         #Going to have to get this from a lookup of the user id
+visionCoverage:
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/EnrollmentService.svc?singleWSDL  #UAT        
+    version         : 1.2
+    operation       : CoverageAdd
+    client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns4
+        Action        : http://www.healthation.com/Services/EnrollmentService/IEnrollment/CoverageAdd
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/EnrollmentService.svc/EnrollmentService                
+    method          : SOAP  
+    arguments:
+        coverageAddRequest:
+            SessionId :
+            Coverage  :
+                CoverageCode: IND
+                EffectiveDate:
+                IsSubscriberCovered: Y
+                Lob: VIS
+                PlanStrategyID: V Argus Master Plan Vision 20
+                TerminationDate: 12/31/2199
+            GroupGID  :
+            MemberGID :
+            MemberID  :
+            SubscriberGID:
+            UpdateDependentCoverage: Y
+groupInformation:
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/GroupService.svc?wsdl  #UAT
+    version         : 1.2
+    operation       : GetGroupPlan
+#    client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns2
+        Action        : http://www.healthation.com/Services/GroupService/IGroupService/GetGroupPlan
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/GroupService.svc/GroupService
+    method          : SOAP  
+    arguments       : 
+        groupPlanRequest :
+            SessionId :
+            RequestDate: 
+            GroupID :
+eligibilitySearchResults:
+    url             : true
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/MemberService.svc?singleWSDL  #UAT
+    version         : 1.2
+    operation       : MemberEligibilitySearch
+#    client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns3
+        Action        : http://www.healthation.com/Services/MemberService/IMember/MemberEligibilitySearch
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/MemberService.svc/Member
+    method          : SOAP  
+    arguments       : 
+        memberEligibilitySearchRequest :
+            SessionID :
+            GroupID   :    
+            #MemberID  :
+newAlderaMember   :
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/EnrollmentService.svc?singleWSDL  #PROD    
+    version         : 1.2
+    operation       : SubscriberAdd
+#    client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns4
+        Action        : http://www.healthation.com/Services/EnrollmentService/IEnrollment/SubscriberAdd
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/EnrollmentService.svc/EnrollmentService
+    method          : SOAP  
+    arguments       : 
+        subscriberAddRequest :
+            SessionId   : 
+            GroupGID    : 
+            MemberID    : N
+            Subscriber  :
+                RelationshipCode : 1
+                LastName    :
+                FirstName   :
+                BirthDate   :
+                EmailAddress:
+                Smoker      :
+                SocialSecurityNumber:
+                Gender      :
+            SubscriberPhoneNumber :
+                MemberPhoneNumberBase :
+                    PhoneNumber :
+                    PhoneNumberType : HOME
+            SubscriberAddresses :
+                MemberAddressBase :
+                    AddressType : PHYS
+                    AddressLine1:
+                    City        :
+                    State       :
+                    ZipCode     :
+                    Country     : US
+            SubscriberCoverage:            
+                Lob             : DEN
+                EffectiveDate   :
+                CoverageCode    : 
+                IsSubscriberCovered : Y
+                TerminationDate : 12/31/2199
+            Dependents:
+newAlderaDependent      :
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/EnrollmentService.svc?singleWSDL  #UAT    
+    version         : 1.2
+    operation       : DependentAdd
+#    client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns4
+        Action        : http://www.healthation.com/Services/EnrollmentService/IEnrollment/DependentAdd
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/EnrollmentService.svc/EnrollmentService        
+    method          : SOAP  
+    arguments       : 
+        dependentAddRequest :
+            SessionId   : 
+            GroupGID    :
+            MemberGID   :
+            MemberID    :
+            SubscriberGID :
+            Addresses :
+                MemberAddressBase :
+                    AddressType : PHYS
+                    AddressLine1:
+                    City        :
+                    State       :
+                    ZipCode     :
+                    Country     : US 
+            PhoneNumbers :
+                MemberPhoneNumberBase :
+                    PhoneNumber :
+                    PhoneNumberType : HOME
+            Member:
+                RelationshipCode : 
+                LastName    :
+                FirstName   :
+                BirthDate   :
+                Smoker      :
+                SocialSecurityNumber:
+                Gender      :
+            Coverage:            
+                Lob             : DEN
+                EffectiveDate   :
+                CoverageCode    : 
+                TerminationDate : 12/31/2199
+updateMemberInformation      :
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/MemberService.svc?singleWSDL  #UAT    
+    version         : 1.2
+    operation       : UpdateMemberInformation
+    #client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns2
+        Action        : http://www.healthation.com/Services/MemberService/IMember/UpdateMemberInformation
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/MemberService.svc/MemberService        
+    method          : SOAP  
+    arguments       : 
+        updateMemberInformationRequest: 
+            SessionId   :
+            MemberID    :
+            BirthDate   :
+memberDetail      :
+    wsdl            : https://argus.core.alderaplatform.com/ServicesARGUS/MemberService.svc?singleWSDL  #UAT    
+    version         : 1.2
+    operation       : MemberDetail
+    client          : aldera
+    uc-first        : true
+    ws-addressing   :
+        Namespace     : ns2
+        Action        : http://www.healthation.com/Services/MemberService/IMember/UpdateMemberInformation
+        ReplyTo       : http://www.w3.org/2005/08/addressing/anonymous
+        To            : https://argus.core.alderaplatform.com/ServicesARGUS/MemberService.svc/MemberService                
+    method          : SOAP  
+    arguments       : 
+        memberDetailRequest: 
+            SessionId   :
+            MemberGID    :           
+        
+                
