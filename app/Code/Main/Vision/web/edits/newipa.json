@@ -43,7 +43,7 @@
             "type":     "button",
             "onclick":  function () {
                 if (Edits['vision-new-ipa'].validate()) {
-                    (new EasyAjax('/vision/ipa/new')).packageForm('new_ipa_form').then(function (response) {
+                    (new EasyAjax('/vision/ipa/new')).addForm('new_ipa_form').then(function (response) {
                         var raw = {
                             data: JSON.parse(response)
                         }

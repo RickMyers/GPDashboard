@@ -379,6 +379,196 @@
                 }
             }
         },   
+        "Location": {
+            "scanning": {
+                "C": {
+                    "C": {
+                        "elements": {
+                            "#header_section_1": {
+                                "class": "form"
+                            },
+                            "#highlight_block_1": {
+                                "class": "form"
+                            },
+                            "#highlight_block_2": {
+                                "style": "background-color: ghostwhite"
+                            },
+                            ".form_input": {
+                                "style": "display: none"
+                            },
+                            ".form_text": {
+                                "style": "display: block"
+                            },
+                            "#additional_consent": {
+                                "style": "display: none"
+                            },
+                            "#header_signature_field": {
+                                "html": "Technician: "
+                            },
+                            "#form_type_label": {
+                                "html": "Scanning"
+                            },
+                            "#refer_for_administration": {
+                                "style": "display: none"
+                            },
+                            "#add_scan_button": {
+                                "style": "display: none"
+                            },
+                            '#unscannable_option': {
+                                "style": "display: block"
+                            },                            
+                            init: function () {
+                                new EasyEdits("/edits/vision/browse","consultation_form");
+                                $('.doctor_field').prop('disabled',true);
+                                $('.pcp_staff').prop('disabled',true);
+                                this.signature(); this.preparer();
+                            }
+                        }                    
+                    },
+                    "P": {
+                        "elements": {
+                            "#form_recall_button": {
+                                "style": "display: none"
+                            },
+                            "#header_section_1": {
+                                "class": "form-active"
+                            },
+                            "#highlight_block_1": {
+                                "class": "form-active"
+                            },
+                            "#vision-package": {
+                                "style": "color: #000; font-size: .8em; overflow: visible"
+                            },
+                            "#highlight_block_2": {
+                                "style": "background-color: ghostwhite"
+                            },
+                            ".form_input": {
+                                "style": "display: none"
+                            },
+                            ".form_text": {
+                                "style": "display: block"
+                            },
+                            "#additional_consent": {
+                                "style": "display: none"
+                            },
+                            "#refer_for_administration": {
+                                "style": "display: none"
+                            },                            
+                            "#header_signature_field": {
+                                "html": "Technician: "
+                            },
+                            "#form_type_label": {
+                                "html": "Scanning"
+                            },
+                            "#add_scan_button": {
+                                "style": "display: none"
+                            },
+                            '#unscannable_option': {
+                                "style": "display: block"
+                            },                            
+                            init: function () {
+                                new EasyEdits("/edits/vision/consultation","consultation_form");
+                                $('.doctor_field').prop('readonly',true);
+                                this.signature(); this.preparer();
+                            }
+                        }                
+                    }
+                   }
+            },
+            "screening": {
+                "C": {
+                    "C": {
+                        "elements": {
+                            "#header_section_1": {
+                                "class": "form"
+                            },
+                            "#highlight_block_1": {
+                                "class": "form"
+                            },
+                            "#highlight_block_2": {
+                                "style": "background-color: ghostwhite"
+                            },
+                            ".form_input": {
+                                "style": "display: none"
+                            },
+                            ".form_text": {
+                                "style": "display: block"
+                            },
+                            "#additional_consent": {
+                                "style": "display: none"
+                            },
+                            "#header_signature_field": {
+                                "html": "Technician: "
+                            },
+                            "#refer_for_administration": {
+                                "style": "display: none"
+                            },                            
+                            "#form_type_label": {
+                                "html": "Scanning"
+                            },
+                            "#add_scan_button": {
+                                "style": "display: none"
+                            },
+                            '#unscannable_option': {
+                                "style": "display: block"
+                            },                            
+                            init: function () {
+                                new EasyEdits("/edits/vision/browse","consultation_form");
+                                $('.doctor_field').prop('disabled',true);
+                                $('.pcp_staff').prop('disabled',false);
+                                this.signature(); this.preparer();
+                            }
+                        }                     
+                    },
+                    "P": {
+                        "elements": {
+                            "#form_recall_button": {
+                                "style": "display: none"
+                            },
+                            "#header_section_1": {
+                                "class": "form-active"
+                            },
+                            "#vision-package": {
+                                "style": "color: #000; font-size: .8em; overflow: visible"
+                            },
+                            "#highlight_block_1": {
+                                "class": "form-active"
+                            },
+                            "#highlight_block_2": {
+                                "style": "background-color: ghostwhite"
+                            },
+                            ".form_input": {
+                                "style": "display: none"
+                            },
+                            ".form_text": {
+                                "style": "display: block"
+                            },
+                            "#additional_consent": {
+                                "style": "display: none"
+                            },
+                            "#header_signature_field": {
+                                "html": "Technician: "
+                            },
+                            "#refer_for_administration": {
+                                "style": "display: none"
+                            },                            
+                            "#form_type_label": {
+                                "html": "Scanning"
+                            },
+                            "#add_scan_button": {
+                                "style": "display: none"
+                            },
+                            init: function () {
+                                new EasyEdits("/edits/vision/consultation","consultation_form");
+                                $('.doctor_field').prop('readonly','readonly');
+                                this.signature(); this.preparer();
+                            }
+                        }                    
+                    }  
+                }
+            }
+        },   
+        
         "pcp_staff": {
             "scanning": {
                 "A": {

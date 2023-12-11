@@ -58,7 +58,7 @@
             "type":     "button",
             "onclick":  function () {
                 if (Edits['vision-new-address'].validate()) {
-                    (new EasyAjax('/vision/addresses/new')).packageForm('new_location_address_form').then(function (response) {
+                    (new EasyAjax('/vision/addresses/new')).addForm('new_location_address_form').then(function (response) {
                         var raw = {
                             data: JSON.parse(response)
                         }

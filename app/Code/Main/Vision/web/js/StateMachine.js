@@ -15,6 +15,7 @@ var StateMachine = (function () {
             role     = role || (this.doctor ? 'doctor' : false);
             role     = role || (this.pcp ? 'pcp' : false);
             role     = role || (this.IPA ? 'IPA' : false);
+            role     = role || (this.location ? 'Location' : false);
             if (role) {
                 if (this.print) {
                     fromState   = 'C';

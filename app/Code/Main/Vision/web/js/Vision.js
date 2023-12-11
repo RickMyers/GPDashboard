@@ -440,6 +440,7 @@ Argus.vision = (function () {
                 }
             }).get();        },
         init: function () {
+            //Let's get our client side rendering set up
             Handlebars.registerHelper('ifOther', function(arg1, options){return(arg1=='Other') ?  options.inverse(this) : options.fn(this) });
             Handlebars.registerHelper('ifisone', function(arg1, options){return(arg1=='1') ?  options.fn(this)  : options.inverse(this) });
             Argus.vision.queue.bound        = Handlebars.compile((Humble.template('vision/VisionInboundOutboundQueue')));
@@ -459,9 +460,12 @@ Argus.vision = (function () {
             Argus.vision.event.searchtpl    = Handlebars.compile((Humble.template('vision/EventSearch')));
             //Argus.vision.ipa.clientqueue    = Handlebars.compile((Humble.template('vision/IPAHealthPlanQueue')));
             Argus.vision.ipa.physicianqueue = Handlebars.compile((Humble.template('vision/IPAPhysicianQueue')));
+            Argus.vision.location.physicianqueue       = Handlebars.compile((Humble.template('vision/LocationPhysicianQueue')));
             Argus.vision.secondaryqueues.failedclaims  = Handlebars.compile((Humble.template('vision/VisionFailedClaims')));            
             Argus.vision.secondaryqueues.referralqueue = Handlebars.compile((Humble.template('vision/VisionReferrals'))); 
             Argus.vision.secondaryqueues.nonconqueue   = Handlebars.compile((Humble.template('vision/NonContracted')));
+            Argus.vision.market.queue       = Handlebars.compile((Humble.template('vision/MarketLevelQueue')));
+            
             //need to fix -- What? (Rick)
             Argus.vision.queue.batchsearch  = Handlebars.compile((Humble.template('vision/BatchSearch')));
             Argus.vision.tech.queue         = Handlebars.compile((Humble.template('vision/TechCompleted')));
@@ -614,7 +618,7 @@ Argus.vision = (function () {
                     (new EasyAjax('/vision/consultation/markclaimed')).add('form_id',CurrentForm.form_id).then(function (response) {
                         $('#mark_form_as_claimed_button').css('visibility','hidden');
                         $('#form_reset_claim').css('visibility','visible');
-                        //Desktop.window.list[CurrentForm.window_id]._close();
+                        Desktop.window.list[CurrentForm.window_id]._close();
                     }).post();
                 }
             },
@@ -623,6 +627,7 @@ Argus.vision = (function () {
                     (new EasyAjax('/vision/consultation/claimreset')).add('form_id',CurrentForm.form_id).then(function (response) {
                         $('#form_reset_claim').css('visibility','hidden');
                         $('#mark_form_as_claimed_button').css('visibility','visible');                        
+                        Desktop.window.list[CurrentForm.window_id]._close();
                     }).post();
                 }
             }
@@ -842,20 +847,21 @@ Argus.vision = (function () {
                 }).get();
             },
             demographics: function (member_id) {
-                let ao = (new EasyAjax('/vision/members/demographics')).add('member_id',member_id);
+                let ao = (new EasyAjax('/vision/member/demographics')).add('member_id',member_id);
                 if ($('#client_id').val()) {
                     ao.add('client_id',$('#client_id').val());
                 }
                 ao.then(function (response) {
                     if (response) {
                         var data = JSON.parse(response);
-                        if (data && data[0]) {
-                            $("#client_id option:contains(" + data[0].group_id + ")").attr('selected', 'selected').trigger('change');
-                            $('#member_address').val(data[0].address_full+', '+data[0].city+', '+data[0].state+', '+data[0].zip_code).trigger('change');
-                            $('#member_name').val(data[0].last_name+', '+data[0].first_name).trigger('change');
-                            $('#date_of_birth').val(moment(data[0].date_of_birth.date).format('MM/DD/YYYY')).trigger('change');
-                            if (data[0].gender) {
-                                $('#gender').val(data[0].gender).trigger('change');
+                        console.log(data);
+                        if (data && data['demographics']) {
+                            $("#client_id option:contains(" + data['health_plan'] + ")").attr('selected', 'selected').trigger('change');
+                            $('#member_address').val(data['demographics'].address).trigger('change');
+                            $('#member_name').val(data['demographics'].last_name+', '+data['demographics'].first_name).trigger('change');
+                            $('#date_of_birth').val(moment(data['demographics'].date_of_birth).format('MM/DD/YYYY')).trigger('change');
+                            if (data['demographics'].gender) {
+                                $('#gender').val(data['demographics'].gender).trigger('change');
                             }
                         } else {
                             if (data.length == 0) {
@@ -999,8 +1005,8 @@ Argus.vision = (function () {
         consultation: {
             uploadWindow:   false,
             active:         false,
-            get:            function (print,tag,form_id,window_id,user_id,doctor,pcp_staff,pcp,IPA) {
-                return ConsultationForms[tag] ? ConsultationForms[tag] : (ConsultationForms[tag] = Object.create(ConsultationForm, { "print": { "value": (print) ? true : false }, "tag": { "value": tag }, "form_id": { "value": form_id },"window_id": { "value": window_id },   "user_id": { "value": user_id }, "IPA" : { "value": IPA }, "doctor": { "value": doctor }, "pcp_staff": { "value": pcp_staff  }, "pcp": { "value": pcp  }   } ));
+            get:            function (print,tag,form_id,window_id,user_id,doctor,pcp_staff,pcp,IPA,location) {
+                return ConsultationForms[tag] ? ConsultationForms[tag] : (ConsultationForms[tag] = Object.create(ConsultationForm, { "print": { "value": (print) ? true : false }, "tag": { "value": tag }, "form_id": { "value": form_id },"window_id": { "value": window_id },   "user_id": { "value": user_id }, "IPA" : { "value": IPA }, "doctor": { "value": doctor }, "pcp_staff": { "value": pcp_staff  }, "pcp": { "value": pcp  }, "location": { "value": location  }   } ));
             },
             note: {
                 leave: function () {
@@ -1609,6 +1615,63 @@ Argus.vision = (function () {
                     }).post();
                 }
             }
+        },
+        market: {
+            id: false,
+            queue: false,
+            refresh: function (queue,queue_id,page,rows) {
+                (new EasyAjax('/vision/market/queue')).add('address_id',$('address_id').val()).add('queue_id',queue_id).add('page',page).add('rows',rows).add('physician_npi',$('#physician_npi').val()).then(function (response) {
+                    Argus.singleton.set(queue_id,page);
+                    response = {
+                        "data": JSON.parse(response)
+                    };
+                    $(queue).html(Argus.vision.market.queue(response).trim());
+                    Pagination.set(queue_id,this.getPagination());
+                }).post();
+            },
+            app: function (data) {
+                data = JSON.parse(data);
+                if (data) {
+                    $('#vision_market_queue').html(Argus.vision.location.physicianqueue(data['location_physicians']).trim());
+                    Pagination.set('market_forms',data['market_forms'].pagination);
+                }
+            },
+            search: function () {
+                
+            },
+            exportData: function () {
+                window.event.stopPropagation();
+                window.open('/vision/market/export','_blank');
+            }
+            
+        },        
+        location: {
+            physicianqueue: false,
+            refresh: function (queue,queue_id,page,rows) {
+                (new EasyAjax('/vision/location/queue')).add('address_id',$('address_id').val()).add('queue_id',queue_id).add('page',page).add('rows',rows).add('health_plan',$('#health_plan').val()).add('physician_npi',$('#physician_npi').val()).then(function (response) {
+                    Argus.singleton.set(queue_id,page);
+                    response = {
+                        "data": JSON.parse(response)
+                    };
+                    $(queue).html(Argus.vision.location.physicianqueue(response).trim());
+                    Pagination.set(queue_id,this.getPagination());
+                }).post();
+            },
+            app: function (data) {
+                data = JSON.parse(data);
+                if (data) {
+                    $('#ipa_physicians_queue').html(Argus.vision.location.physicianqueue(data['location_physicians']).trim());
+                    Pagination.set('location_physicians',data['location_physicians'].pagination);
+                }
+            },
+            search: function () {
+                
+            },
+            exportData: function () {
+                window.event.stopPropagation();
+                window.open('/vision/location/export','_blank');
+            }
+            
         },
         ipa: {
             physicianqueue: false,

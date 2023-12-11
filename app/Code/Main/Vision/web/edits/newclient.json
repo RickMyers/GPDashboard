@@ -32,7 +32,7 @@
             "type":     "button",
             "onclick":  function () {
                 if (Edits['vision-new-client'].validate()) {
-                    (new EasyAjax('/vision/client/new')).packageForm('new_client_form').then(function (response) {
+                    (new EasyAjax('/vision/client/new')).addForm('new_client_form').then(function (response) {
                         Argus.hedis.configuration();
                     }).post();
                 }
