@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 <application>
-    <name>General Purpose Dashboard</name>
+    <name>HEDIS Dashboard</name>
     <serial_number comment="Do Not Change, Value Is Required In Several Parts Of The Framework">WMRJ-EWEA-DKLL-KTWI</serial_number>
     <version>
-        <framework>0.7.9.6.1</framework>
+        <framework>0.7.9.8.2</framework>
         <app>2.3.7.1</app>
     </version>    
-    <state>DEVELOPMENT</state>
+    <state>PRODUCTION</state>
+    <stages>
+        <DEVELOPMENT order='1' />
+        <TEST order='2' />
+        <PRODUCTION order='3' />
+    </stages>
     <extend>
         <helpers>1</helpers>
         <models>1</models>

@@ -23,7 +23,7 @@
             onchange:   function () {
                 if (Edits['entity-selector-&&win_id&&'].validate()) {
                     $('#table_select_query_results_&&win_id&&').html('<h5>Fetching Rows...</h5>');
-                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').packageForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
+                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').addForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
                         $('#table_select_query_results_&&win_id&&').html(response);
                     }).post();
                 }
@@ -41,7 +41,7 @@
             onchange:   function () {
                 if (Edits['entity-selector-&&win_id&&'].validate()) {
                     $('#table_select_query_results_&&win_id&&').html('<h5>Fetching Rows...</h5>');
-                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').packageForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
+                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').addForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
                         $('#table_select_query_results_&&win_id&&').html(response);
                     }).post();
                 }
@@ -74,7 +74,7 @@
             onchange:   function () {
                 if (Edits['entity-selector-&&win_id&&'].validate()) {
                     $('#table_select_query_results_&&win_id&&').html('<h5>Fetching Rows...</h5>');
-                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').packageForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
+                    (new EasyAjax('/dashboard/table/query')).add('window_id','&&win_id&&').addForm('table_select_and_edit_form_&&win_id&&').then(function (response) {
                         $('#table_select_query_results_&&win_id&&').html(response);
                     }).post();
                 }

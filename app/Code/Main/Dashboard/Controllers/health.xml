@@ -5,7 +5,7 @@ Diagnostic and Status actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="health" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="health" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="check" blocking="OFF" output="JSON">
             <description>JSON output of how things are going....</description>

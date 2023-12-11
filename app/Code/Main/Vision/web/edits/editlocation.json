@@ -65,7 +65,7 @@
             "type":     "button",
             "onclick":  function () {
                 if (Edits['vision-edit-location'].validate()) {
-                    (new EasyAjax('/vision/location/update')).packageForm('edit_ipa_location_form').then(function (response) {
+                    (new EasyAjax('/vision/location/update')).addForm('edit_ipa_location_form').then(function (response) {
                         var raw = {
                             data: JSON.parse(response)
                         }

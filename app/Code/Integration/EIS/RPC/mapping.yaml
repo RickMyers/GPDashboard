@@ -1,8 +1,26 @@
 ---
-currentWeather  :
-  url             : http://weather.yahooapis.com/forecastrss #this is a sample
-  api-key         : 1234
-  api-var         : api_key
-  arguments       : [p]
-  method          : GET
-  
+memberLookup    :
+  url[DEVELOPMENT]  : http://internal-k8s-domaingroup-193dd57932-308649361.us-east-1.elb.amazonaws.com/argus-member-apis/members/summary
+  url[TEST]         : http://internal-k8s-domaingroup-4f5f72948f-1359431069.us-east-1.elb.amazonaws.com/argus-member-apis/members/summary
+  url[PRODUCTION]   : http://internal-k8s-domaingroup-673c3a7929-1034715560.us-east-1.elb.amazonaws.com/argus-member-apis/members/summary
+  DEBUG             : false
+  CURL              : true
+  camel_case        : true
+  format            : JSON
+  method            : POST
+  transform         : JSON
+  arguments         :
+      memberId       :
+      uniqueMemberId :
+planDemographics    :
+  url[DEVELOPMENT]  : http://internal-k8s-domaingroup-673c3a7929-1034715560.us-east-1.elb.amazonaws.com/argus-member-apis/members/%%memberId%%/plan-demographics
+  url[TEST]         : http://internal-k8s-domaingroup-4f5f72948f-1359431069.us-east-1.elb.amazonaws.com/argus-member-apis/members/%%memberId%%/plan-demographics
+  url[PRODUCTION]   : 
+  DEBUG             : false
+  CURL              : true
+  camel_case        : true
+  format            : JSON
+  method            : POST
+  arguments         :
+      memberId       :
+      uniqueMemberId :          

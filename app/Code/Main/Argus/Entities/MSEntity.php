@@ -14,7 +14,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Client
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -73,7 +73,6 @@ class MSEntity extends \Code\Base\Humble\Entities\Unity
     public function query($query=false) {
         $dataset = [];
         if ($query) {
-
             if ($dataset = sqlsrv_query($this->_ms_db,$query)) {
             } else {
                 print_r(sqlsrv_errors());

@@ -14,7 +14,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Core
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Hedis Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />

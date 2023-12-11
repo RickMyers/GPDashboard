@@ -12,7 +12,7 @@ namespace Code\Main\Hedis\Helpers;
  *
  * @category   Utility
  * @package    Hedis
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://license.enicity.com
  * @version    3.0.1

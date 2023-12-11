@@ -14,7 +14,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @since      File available since Release 1.0.0
  */
 class Forms extends \Code\Main\Vision\Entities\Entity
@@ -30,6 +30,19 @@ class Forms extends \Code\Main\Vision\Entities\Entity
     }
 
 
+    /**
+     * Retrieves a list of claims in the Admin or Complete queue that are flagged as failed in the claiming process
+     * 
+     * @return type
+     */
+    public function failedClaims() {
+        $query = <<<SQL
+        select * from vision_consultation_forms
+         where claim_status = 'E' and `status` in ('A','C')
+SQL;
+        return $this->addAvatars($this->query($query));
+    }
+    
     
     public function missingPCPPortals() {
         $query = <<<SQL
@@ -90,6 +103,11 @@ SQL;
         return $tag;
     }
     
+    /**
+     * A form has been marked to delete but we are going to save off a copy 
+     * 
+     * @param type $useFields
+     */
     public function delete($useFields=false) {
         if ($tag = $this->getTag()) {
             $log = Argus::getEntity('vision/consultation/forms/log');           //we are going to preserve the data incase this was a mistaken delete
@@ -183,6 +201,7 @@ SQL;
                 on a.id = b.form_id
              where a.`status` = 'C'
                and a.member_unscannable != 'Y'
+               
                 {$claim_clause}
                 {$event_clause}
                 {$client_clause}
@@ -603,7 +622,49 @@ SQL;
             }
         }
         return $results;
-    }    
+    }  
+    
+    
+    /**
+     * 
+     * 
+     * @return iterator
+     */
+    public function sortedLocationForms() {
+        $results = [];
+        if ($user_id = Environment::whoAmI()) {
+            if (count($data = Argus::getEntity('vision/ipa/locations')->setUserId($user_id)->load(true))) {
+                $location_id = $data['id'];
+                $group_clause = "";
+                //now check to see if IPA is in a group, if so, get all the other group IDS to reference
+                $physician_clause   = $this->getPhysicianNpi() ? " and a.physician_npi_combo = '".$this->getPhysicianNpi()."' " : "";
+                $health_plan_clause = $this->getHealthPlan() ? " and a.client_id = '".$this->getHealthPlan()."' " : "";
+                $query = <<<SQL
+                SELECT a.id, a.id AS form_id, a.created_by, a.created, a.submitted, a.last_activity, a.review_by, a.member_id, a.status, a.member_name, b.id as creator, a.event_date, a.modified,
+                       b.first_name AS creator_first_name, b.last_name AS creator_last_name, b.gender as creator_gender,
+                       concat(UCASE(LEFT(a.form_type, 1)),SUBSTRING(a.form_type, 2)) as form_type,
+                       a.status, a.claim_status, a.screening_client, 
+                       concat(c.first_name,' ',c.last_name) as technician_name, a.last_action, a.address_id, a.phonetic_token1, a.phonetic_token2, a.reviewer, concat(d.first_name,' ',d.last_name) as reviewer_name, 
+                       a.pcp_portal_withhold, a.ipa_id_combo, a.address_id_combo, a.location_id_combo, a.modified, a.physician_npi, a.physician_npi_combo, a.member_unscannable, a.tag
+                 FROM vision_consultation_forms AS a
+                 LEFT OUTER JOIN humble_user_identification AS b
+                   ON a.created_by = b.id
+                 left outer join humble_user_identification as c
+                   on a.technician = c.id           
+                 left outer join humble_user_identification as d
+                   on a.reviewer = d.id
+                where (a.location_id = '{$location_id}')
+                  and a.`status` = 'C'
+                {$physician_clause}
+                {$health_plan_clause}
+                order by a.event_date DESC
+SQL;
+                $results = $this->_normalize(true)->query($query);
+            }
+        }
+        return $results;
+    }        
+    
     /**
      * List of screenings and scannings by client per IPA
      * 
@@ -737,6 +798,8 @@ SQL;
                   FROM vision_consultation_forms AS a
                   LEFT OUTER JOIN argus_primary_care_physicians AS c
                     ON a.physician_npi_combo = c.npi
+                  left outer join vision_gaps as g
+                    on a.member_id = g.mem_id
                  WHERE a.physician_npi_combo = '{$npi}'   
                    AND a.pcp_portal_withhold = 'N'
                    {$status_clause}
@@ -1064,7 +1127,7 @@ SQL;
     public function addAvatars($dataset) {
         $rows = [];
         foreach ($dataset->toArray() as $row) {
-            $row['avatar'] = (file_exists('../images/argus/avatars/tn/'.$row['created_by'].'.jpg')) ? "/images/argus/avatars/tn/".$row['created_by'].'.jpg' : "/images/argus/placeholder-".$row['creator_gender'].'.png';
+            $row['avatar'] = (file_exists('../images/argus/avatars/tn/'.$row['created_by'].'.jpg')) ? "/images/argus/avatars/tn/".$row['created_by'].'.jpg' : "/images/argus/placeholder-".($row['creator_gender']??'').'.png';
             $rows[] = $row;
         }
         return json_encode(unserialize(str_replace(['NAN;','INF;'],'0;',serialize($rows))));
@@ -1285,7 +1348,7 @@ SQL;
             $claim_status = 'N';
         }
         if ($data['previous_status']==='A') {
-            $data['previous_status'] = (isset($data['doctor_has_signed']) &&($data['doctor_has_signed']==='Y')) ? 'C' : (($data['reviewer'] ? 'I' : ($data['submitted']) ? 'S' : 'N'));
+            $data['previous_status'] = (isset($data['doctor_has_signed']) &&($data['doctor_has_signed']==='Y')) ? 'C' : (($data['reviewer'] ? 'I' : (($data['submitted']) ? 'S' : 'N')));
         }
         $this->reset()->setId($data['id'])->setClaimStatus($claim_status)->setStatus($data['previous_status'])->save();
     }
@@ -1583,17 +1646,53 @@ SQL;
             $member_id = explode('*',$claim['member_id']);
             $member_id = explode('-',$member_id[0]);
             $member_id = strtoupper($member_id[0]);
-            $dmg       = json_decode($aldera->setMemberId($member_id)->memberDemographicInformation(),true);
-            if (!($dmg && isset($dmg[0]))) {                                    //Try again but without the 01
+            //$dmg       = json_decode($aldera->setMemberId($member_id)->demographicInformation(),true);
+            $dmg       = [];
+/*            if (!($dmg && isset($dmg['demographics']))) {                                    //Try again but without the 01
                 if (substr($member_id,-2)==='01') {
-                    $dmg = json_decode($aldera->setMemberId(substr($member_id,0,-2))->memberDemographicInformation(),true);
+                    $dmg = json_decode($aldera->setMemberId(substr($member_id,0,-2))->demographicInformation(),true);
                 }
-                if (!isset($dmg[0])) {
+                if (!isset($dmg['demographics'])) {
                     $errors[] = $claim;
                     continue;
                 }
+            }*/
+            $name = explode(',',$claim['member_name']);
+            $addr = explode(',',$claim['member_address']);
+            $dmg['demographics'] = [
+                'address_1'  => '',
+                'address_2'  => '',
+                'city'       => '',
+                'state'      => '',
+                'zip_code'   => ''
+            ];
+            for ($i=0; $i<count($addr); $i++) {
+                $addr[$i] = trim($addr[$i]);
             }
-            $dmg[0]['date_of_birth'] = isset($dmg[0]['date_of_birth']) ?  date('Y-m-d',strtotime($dmg[0]['date_of_birth']['date'])) : '';
+            if (count($addr)==5) {
+                $dmg['demographics'] = [
+                    'street_address' => $addr[0],
+                    'last_name'  => $name[0],
+                    'first_name' => $name[1],
+                    'gender'     => $claim['gender'],                    
+                    'address_1'  => $addr[0],
+                    'address_2'  => $addr[1],
+                    'city'       => $addr[2],
+                    'state'      => $addr[3],
+                    'zip_code'   => $addr[4]
+                ];
+            } else if (count($addr)==4) {
+                $dmg['demographics'] = [
+                    'street_address' => $addr[0],
+                    'last_name'  => $name[0],
+                    'first_name' => $name[1],
+                    'gender'     => $claim['gender'],                    
+                    'address_1'  => $addr[0],
+                    'city'       => $addr[1],
+                    'state'      => $addr[2],
+                    'zip_code'   => $addr[3]
+                ];
+            }
             if (isset($claim['event_id']) && $claim['event_id']) {              //We are going to merge the event information with the member information
                 if (!isset($event_list[$claim['event_id']])) {
                     if ($d = $events->reset()->setId($claim['event_id'])->load()) {
@@ -1605,9 +1704,8 @@ SQL;
                 }
                 $claim_data[$idx] = array_merge($event_list[$claim['event_id']],$claim);   //does this now give preference to what was on the form over the event?
             }
-            $claim_data[$idx] = array_merge($claim_data[$idx],$dmg[0]);
-            $claim_data[$idx]['street_address'] = $dmg[0]['address_full'];
-            $claim_data[$idx]['date_of_birth']  = isset($claim_data[$idx]['date_of_birth']) ? date('Y-m-d',strtotime($claim_data[$idx]['date_of_birth'])) : '';
+            $claim_data[$idx] = array_merge($claim_data[$idx],$dmg['demographics']);
+           // $claim_data[$idx]['street_address'] = $dmg['demographics']['address'];
         }
         return $claim_data;
     }
@@ -1742,8 +1840,11 @@ SQL;
         $address_clause     = $this->getAddressId()     ? " and a.address_id = '".$this->getAddressId()."' " : "";
         $start_clause       = $this->getStartDate()     ? " and a.event_date >= '".$this->getStartDate()."' " : "";
         $end_clause         = $this->getEndDate()       ? " and a.event_date <= '".$this->getEndDate()."' " : "";
+        $reviewer_clause    = $this->getReviewer()      ? " and a.reviewer = '".$this->getReviewer()."' " : "";
+        $memberid_clause    = $this->getMemberId()      ? " and a.member_id = '".$this->getMemberId()."' " : "";
         $date_clause        = $this->getDate()          ? " and a.event_date = '".$this->getDate()."' " : "";
         $tech_clause        = $this->getTechnician()    ? " and a.technician = '".$this->getTechnician()."' " : "";
+        $include_note       = $this->getIncludeNote();
         $year_clause        = $this->getYear()          ? " and (a.event_date >= '".$this->getYear()."-01-01' and a.event_date <= '".$this->getYear()."-12-31')  " : "";
         $pc2023f_clause     = $this->getPc_2023f()      ? " and a.pc_2023f = '".$this->getPc_2023f()."' " : "";
         $pc92227_clause     = $this->getPc_92227()      ? " and a.pc_92227 = '".$this->getPc_92227()."' " : "";
@@ -1756,7 +1857,8 @@ SQL;
             select a.*,
                    concat(b.first_name,' ',b.last_name) as 'technician_name',
                    concat('Dr. ',c.first_name,' ',c.last_name) as 'reviewer_name',
-                   d.`date` as 'claim_submitted', d.verified as 'claim_paid', d.total as 'claim_amount'
+                   d.`date` as 'claim_submitted', d.verified as 'claim_paid', d.total as 'claim_amount',
+                   g.*
               from vision_consultation_forms as a
               left outer join humble_user_identification as b
                 on a.technician = b.id
@@ -1764,12 +1866,16 @@ SQL;
                 on a.reviewer   = c.id
               left outer join argus_claims as d
                 on a.id = d.form_id
+              left outer join vision_gaps as g
+                on a.member_id = g.mem_id
              where a.id is not null
                 {$year_clause}
                 {$event_clause}
                 {$date_clause}
                 {$client_clause}
                 {$ipa_clause}
+                {$reviewer_clause}
+                {$memberid_clause}
                 {$location_clause}
                 {$address_clause}
                 {$start_clause}
@@ -1781,7 +1887,13 @@ SQL;
                 {$pc_clause}
              order by a.event_date
 SQL;
+        /**
+         * To-Do: Loop through the event_member table to get the value of "note" column and attach to the $results
+         */
         $results = $this->normalize($this->query($query));
+        if($include_note == "Y") {
+            
+        }
         return $results;
     }
     

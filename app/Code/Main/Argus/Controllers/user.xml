@@ -3,9 +3,9 @@
 
 User actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="user" use="Smarty3" author=" " email="rmyers@argusdentalvision.com">
+<controller name="user" use="Smarty3" author=" " email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="hasrole" blocking="off" output="JSON">
@@ -163,6 +163,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                 <parameter name='waiting_room_name' source='post' optional='true' />
                 <parameter name="background_image"  source="post" optional="true" />
                 <parameter name="background_id"     source="post" optional="true" />
+                <parameter name="market_level"      source="post" optional="true" />
             </entity>
             <helper namespace="argus" class="data" id="pins">
                 <parameter name='pin' value="user_pin" source='post' default=''  />
@@ -287,6 +288,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                 <parameter name="email" required="true" source="post" />
                 <parameter name="password" required="true" format="password" source="post" />
                 <parameter name="confirm" required="true" format="password" source="post" />
+                <parameter name="next_page" source="request" default="index.html" />
                 <if var="clearReset" eq="true">
                     <then>
                         <parameter name="reset_password_token" required="true" value="token" source="post" />
@@ -298,7 +300,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
             </model>
             <switch id="user" method="newPassword">
                 <case value="TRUE">
-                    <redirect href="/index.html?message=Success! Please Log In" />
+                    <!--redirect href="/index.html?message=Success! Please Log In" /-->
                 </case>
                 <default>
                     <redirect href="/index.html?message=Password change attempt failed, try again" />
@@ -308,7 +310,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
 
         <!-- ############################################################### -->
 
-        <action name="newPasswordForm"  passalong='token,clearReset'>
+        <action name="newPasswordForm"  passalong='token,clearReset,then'>
             <description>Presents the new password form</description>
             <entity namespace="humble" class='users' id='user'>
                 <parameter name="reset_password_token" value='token' source="request" required="true" />
@@ -318,7 +320,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                     <comment>No operation, use usual form</comment>
                 </case>
                 <default>
-                    <redirect href="/index.html?m=Invalid New Password Token" />
+                    <redirect href="/index.html?message=Invalid New Password Token" />
                 </default>
             </switch>
         </action>

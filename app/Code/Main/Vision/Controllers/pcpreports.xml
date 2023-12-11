@@ -5,7 +5,7 @@ PCP Report Generation Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="pcpreports" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="pcpreports" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
 
         <action name="list" output="JSON" blocking="Off">

@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Dashboard
- * @author     Rick Myers rmyers@argusdentalvision.com
+ * @author     Rick Myers rmyers@aflacbenefitssolutions.com
  */
 class Availability extends Entity
 {

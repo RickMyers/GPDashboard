@@ -5,7 +5,7 @@ Archive related functionality
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="archive" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="archive" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="init">
             <description>The initial queue layout.</description>

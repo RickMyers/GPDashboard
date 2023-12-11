@@ -205,7 +205,7 @@ let Scheduler = (function () {
                         $('#scheduler_event_type_id').val(resource[0]);
                         $( "#event_end_calendar" ).datetimepicker( "destroy");
                         $( "#event_start_calendar" ).datetimepicker( "destroy");
-                        (new EasyAjax('/scheduler/event/create')).packageForm('scheduler-event-form').then(function (response) {
+                        (new EasyAjax('/scheduler/event/create')).addForm('scheduler-event-form').then(function (response) {
                             $('#new-event-tab').html(response);
                         }).post();
                     }

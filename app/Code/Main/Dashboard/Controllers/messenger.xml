@@ -5,7 +5,7 @@ Messenger Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="messenger" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="messenger" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="home" blocking="off">
             <description>The main home page</description>

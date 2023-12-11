@@ -12,7 +12,7 @@ namespace Code\Main\Edi\Models;
  *
  * @category   Model
  * @package    Edi
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    3.0.1
@@ -20,7 +20,20 @@ namespace Code\Main\Edi\Models;
 class EDIModel extends Model
 {
     protected $parameters = [];
+
     
+    /**
+     * Basic magic method for setting, with an option to encrypt the value before setting it.  If encrypted, the flag is disabled after setting
+     * 
+     * @param string $name
+     * @param mixed $value
+     * @return $this
+     */
+    public function __set($name,$value)   {
+        $this->parameters[$name] = $value;
+        return $this;
+    }
+        
     /**
      * We don't support the extended RPC functionality in an entity, so we are suppressing that here
      *
@@ -46,11 +59,10 @@ class EDIModel extends Model
      */
     public function __call($name, $arguments){
         $result     = null;
-        $token      = substr($name,3);
-        $token{0}   = strtolower($token{0});
         if (substr($name,0,3)=='get') {
-            $name       = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $token));
-            $result     = $this->__get($name);
+            $result     = $this->__get($this->camelCaseToUnderscore(substr($name,3), true));
+        } else if (substr($name,0,3)=='set') {
+            $result     = $this->__set($this->camelCaseToUnderscore(substr($name,3), true),$arguments);
         }
         return $result;
     }    

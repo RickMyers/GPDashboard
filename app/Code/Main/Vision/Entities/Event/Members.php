@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -40,7 +40,7 @@ class Members extends \Code\Main\Vision\Entities\Entity
         $aldera  = Argus::getModel('vision/aldera');
         foreach ($results as $idx => $row) {
             if (!(isset($row['first_name']) && isset($row['last_name']))) {
-                $data = $aldera->setMember_id($row['member_number'])->memberDemographicInformation();
+                $data = $aldera->setMember_id($row['member_number'])->demographicInformation();
                 print_r($data);
             }
         }

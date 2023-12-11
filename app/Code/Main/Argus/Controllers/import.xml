@@ -5,7 +5,7 @@ Actions related to importing/exporting and scrubbing data
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="import" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="import" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="home" passalong="window_id">
             <description>The Main Page for the utility</description>

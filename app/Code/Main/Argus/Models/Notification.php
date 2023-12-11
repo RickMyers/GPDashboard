@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Client
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dental and Vision
  * @since      File available since Release 1.0.0
  */
@@ -47,8 +47,8 @@ class Notification extends Model
      */
     public function sendEmail($to=false,$subject=false,$body=false,$from=false,$reply=false,$attachment=false) {
         $settings = new \Settings();
-        $from = ($from ? $from : 'webmaster@argusdentalvision.com');
-        $reply = ($reply ? $reply : 'noreply@argusdentalvision.com');
+        $from = ($from ? $from : 'webmaster@aflacbenefitssolutions.com');
+        $reply = ($reply ? $reply : 'noreply@aflacbenefitssolutions.com');
         $mailer = new \PHPMailer;
         $mailer->isSMTP();
         $mailer->Host = $settings->getSmtpHost();
@@ -111,7 +111,7 @@ class Notification extends Model
                 unlink($template_file);   
                 $recipient = ($cfg['recipients_source']=='field') ? $data[trim($cfg['recipients'])] : $data['recipients'];
                 $subject   = ($cfg['subject_source']=='field')    ? $data[trim($cfg['subject'])] : $data['subject'];
-                $emailed   = Argus::getModel('argus/email')->sendEmail($recipient,$subject,$template,'noreply@argusdentalvision.com');
+                $emailed   = Argus::getModel('argus/email')->sendEmail($recipient,$subject,$template,'noreply@aflacbenefitssolutions.com');
             }
         }
         return ($emailed !== false);
@@ -131,7 +131,7 @@ class Notification extends Model
             $data   = $EVENT->load();   //get the original event data, it should have information by now
             $cfg    = $EVENT->fetch();
             if (isset($cfg['email_template']) && isset($cfg['recipients']) && ($cfg['recipients'])) {
-                $emailed = Argus::getModel('argus/email')->sendEmail($cfg['recipients'],$cfg['subject'],Argus::getHelper('paradigm/str')->translate($cfg['email_template'],$data),'noreply@argusdentalvision.com');
+                $emailed = Argus::getModel('argus/email')->sendEmail($cfg['recipients'],$cfg['subject'],Argus::getHelper('paradigm/str')->translate($cfg['email_template'],$data),'noreply@aflacbenefitssolutions.com');
             }
         }
         return ($emailed !== false);

@@ -12,7 +12,7 @@ namespace Code\Main\Outreach\Models;
  *
  * @category   Model
  * @package    Outreach
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  */
 class Model extends \Code\Main\Argus\Models\Model
 {

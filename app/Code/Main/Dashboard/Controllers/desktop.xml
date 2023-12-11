@@ -5,7 +5,7 @@ Desktop related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="desktop" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="desktop" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="initialize">
             <description>Returns a list of apps to load the desktop with</description>

@@ -137,7 +137,18 @@
 			force:			false,
 			classname:		"",
 			style:			" padding: 2px; border: 1px solid #aaf; color: #333; border-radius: 2px; width: 100px; text-align: center"
-		},                
+		}, 
+		{
+			active:			true,
+			id: 			"market_level",
+			longname:		"Market",
+			title:			"Primary Market",
+                        type:                   "text",
+			required:		false,
+			force:			false,
+			classname:		"",
+			style:			""
+		},                    
                 {
 			active:			true,
 			id: 			"waiting_room_name",
@@ -159,7 +170,7 @@
 			force:			false,
             onclick:        function (evt) {
                 if (Edits['argus-user-settings'].validate()) {
-                    (new EasyAjax('/argus/user/save')).packageForm('argus-settings-form').then(function (response) {
+                    (new EasyAjax('/argus/user/save')).addForm('argus-settings-form').then(function (response) {
                         window.location.reload();
                     }).post();
                 }

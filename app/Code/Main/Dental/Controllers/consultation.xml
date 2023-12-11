@@ -5,7 +5,7 @@ Teledentistry Consultation Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://jarvis.enicity.com/docs/controller.html
 -->
-<controller name="consultation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="consultation" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="open" passalong='window_id,browse' CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
             <description>Opens an existing consultation</description>

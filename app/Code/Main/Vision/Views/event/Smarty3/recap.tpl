@@ -52,7 +52,7 @@
             <div style="display: inline-block; width: 15%; text-align: center; text-align: center">
                 <select event_member_id='{$member.id}' id="event_recap_{$member.id}" class="recap-field" style='width: 100%; padding: 2px' {if ($closed)}disabled="disabled"{/if}>
                     <option value=""></option>
-                    <option value="S" {if (isset($member.result) && ($member.result=='S') && (isset($member.screening_technician) && ($member.screening_technician)))}selected="selected"{/if}>Submitted</option>
+                    <option value="S" {if ((isset($member.result) && ($member.result=='S')) || (($member.status == 'S') || ($member.status == 'C')))}selected="selected"{/if}>Scanned/Screened</option>
                     <option value="N" {if (isset($member.result) && ($member.result=='N'))}selected="selected"{/if}>No-Show</option>
                     <option value="C" {if (isset($member.result) && ($member.result=='C'))}selected="selected"{/if}>Canceled</option>
                     <option value="R" {if (isset($member.result) && ($member.result=='R'))}selected="selected"{/if}>Re-Scheduled</option>
@@ -111,13 +111,12 @@
                 <div id="public_notes_tab_{$event_id}"><textarea {if ($closed)}disabled="disabled"{/if} event_id='{$event_id}' placeholder="Public Notes Shared With Office Location" class="public-note-recap-field" style='margin: 0px 0px -5px 0px; width: 100%; height: 120px'>{$event->getPublicNotes()}</textarea></div>
                 <div id="private_notes_tab_{$event_id}"><textarea {if ($closed)}disabled="disabled"{/if} event_id='{$event_id}' placeholder="Private Notes Shared Only With HEDIS Team" class="private-note-recap-field" style='margin: 0px 0px -5px 0px; width: 100%; height: 120px; background-color: #ffcccc'>{$event->getPrivateNotes()}</textarea></div>
         </form><div style="background-color: #333; color: ghostwhite; padding: 5px 2px; font-size: .95em; text-align: center; margin: 0px">
-            {* if ($closed)}
+            {if ($closed)}
                 <img src="/images/vision/download_icon" onclick="Argus.vision.download()" style="float: right; margin-right: 5px; cursor: pointer" />
                 <div style="display: inline-block; margin-left: auto; margin-right: auto; color: ghostwhite">This Event Has Been Closed</div>
             {else}
                 <button event_id='{$event_id}' class="close-recap"> Close Event </button>
-            {/if *}            
-            <button event_id='{$event_id}' class="close-recap"> Close Event </button>
+            {/if}            
     </div>  
 </div>        
 <script type="text/javascript">
@@ -145,12 +144,12 @@
     });
     $('.public-note-recap-field').on('change',function (evt) {
         (new EasyAjax('/vision/event/note')).add('event_id',this.getAttribute('event_id')).add('public_notes',this.value).then(function (response) {
-            console.log(response);
+            //console.log(response);
         }).post();        
     });    
     $('.private-note-recap-field').on('change',function (evt) {
         (new EasyAjax('/vision/event/note')).add('event_id',this.getAttribute('event_id')).add('private_notes',this.value).then(function (response) {
-            console.log(response);
+            //console.log(response);
         }).post();        
     });        
     $('.event-member-note').on('change',function (evt) {

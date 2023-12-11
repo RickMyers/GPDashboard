@@ -137,6 +137,8 @@
     @TODO
 {elseif ($component.type == "Radio")}    
     @TODO
+{elseif ($component.type == "Hidden")}
+    {*  Output HTML for input type = Hidden *}
 {/if}
 {/foreach}
 <style type='text/css'>

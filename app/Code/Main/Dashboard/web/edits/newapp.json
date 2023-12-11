@@ -66,7 +66,7 @@
                             roles[roles.length] = form.elements[i].value;
                         }
                     }
-                    (new EasyAjax('/dashboard/app/create')).packageForm('new-app-form-&&win_id&&').add('roles',JSON.stringify(roles)).then(function (response) {
+                    (new EasyAjax('/dashboard/app/create')).addForm('new-app-form-&&win_id&&').add('roles',JSON.stringify(roles)).then(function (response) {
                         alert(response);
                         //Desktop.window.list['&&win_id&&']._close();
                     }).post();

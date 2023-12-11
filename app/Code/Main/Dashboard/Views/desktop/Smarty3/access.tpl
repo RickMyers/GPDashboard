@@ -44,7 +44,7 @@
 <script type="text/javascript">
     (function () {
         $('#grant_access_submit-{$window_id}').on('click',function (evt) {
-            (new EasyAjax('/dashboard/desktop/grant')).packageForm('desktop_grant_access_form-{$window_id}').then(function (response) {
+            (new EasyAjax('/dashboard/desktop/grant')).addForm('desktop_grant_access_form-{$window_id}').then(function (response) {
                 alert(response);
             }).post();
         });

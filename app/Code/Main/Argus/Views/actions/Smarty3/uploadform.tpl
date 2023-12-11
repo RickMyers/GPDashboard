@@ -9,7 +9,7 @@
 
         <meta property="og:title" content="add title">
         <meta property="og:type" content="website">
-        <meta property="og:url" content="https://hedis.argusdentalvision.com/">
+        <meta property="og:url" content="https://hedis.aflacbenefitssolutions.com/">
         <meta property="og:description" content="add description">
         <!--meta property="og:image" content="image.png"-->
 

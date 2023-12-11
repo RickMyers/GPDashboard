@@ -89,7 +89,7 @@
             longname:	"New Dashboard Feature Submit Button",
             onclick:    function () {
                 if (Edits['dashboard-feature-request'].validate()) {
-                    (new EasyAjax('/dashboard/feature/request')).packageForm('dashboard_feature_form').then(function (response) {
+                    (new EasyAjax('/dashboard/feature/request')).addForm('dashboard_feature_form').then(function (response) {
                         Argus.dashboard.feature.win._close();
                     }).post();
                 }

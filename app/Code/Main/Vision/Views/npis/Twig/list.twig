@@ -36,7 +36,7 @@
         }
     });
     $('#add-icon-button-{{ window_id }}').on('click',function () {
-        (new EasyAjax('/vision/npis/add')).packageForm('new_npi_form-{{ window_id }}').then(function (response) {
+        (new EasyAjax('/vision/npis/add')).addForm('new_npi_form-{{ window_id }}').then(function (response) {
             $("#location_npi_list-{{ window_id }}").html(response);
         }).post();
     });

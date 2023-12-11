@@ -1,4 +1,9 @@
 <?php
+/**
+ * This is the app branded central factory, which extends the frameworks Abstract Factory class.
+ * 
+ * It's a good place to put application functionality that is needed everywhere.
+ */
     require_once "autoload.php";
     class Argus extends \Humble {
 
@@ -237,6 +242,21 @@
                 }
             }
             return $results;
+        }
+        
+        /**
+         * 
+         * @param type $namespace
+         * @param type $event
+         */
+        public static function eventServices($namespace=false,$event=false) {
+            $events = [];
+            if ($namespace && $event) {
+                if ($module = Argus::getModule($namespace)) {
+                    
+                }
+            }
+            return $events;
         }
         
         /**

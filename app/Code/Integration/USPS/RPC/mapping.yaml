@@ -1,8 +1,28 @@
 ---
-currentWeather  :
-  url             : http://weather.yahooapis.com/forecastrss #this is a sample
-  api-key         : 1234
-  api-var         : api_key
-  arguments       : [p]
+verifyAddress  :
+  url             : https://secure.shippingapis.com/ShippingAPI.dll
+  api-key         : 
+  api-var         : 
+  transform       : XML2JSON      
+  arguments       :
+      API         : Verify
+      XML         :
   method          : GET
-  
+zipCodeLookup  :
+  url             : https://secure.shippingapis.com/ShippingAPI.dll
+  api-key         : 
+  api-var         : 
+  transform       : XML2JSON
+  arguments       :
+      API         : ZipCodeLookup
+      XML         :
+  method          : GET
+cityStateLookup  :
+  url             : https://secure.shippingapis.com/ShippingAPI.dll
+  api-key         : 
+  api-var         : 
+  transform       : XML2JSON      
+  arguments       :
+      API         : CityStateLookup
+      XML         :
+  method          : GET  

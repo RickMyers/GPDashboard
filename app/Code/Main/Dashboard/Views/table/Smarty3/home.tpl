@@ -82,7 +82,7 @@
     <script type="text/javascript">
         $('#general_query_run_button_{$window_id}').on("click",function (evt) {
             $('#general_query_form_results_{$window_id}').html('<h5>Running Query...</h5>');
-            (new EasyAjax('/dashboard/table/run')).packageForm('general_query_form_{$window_id}').then(function (response) {
+            (new EasyAjax('/dashboard/table/run')).addForm('general_query_form_{$window_id}').then(function (response) {
                 $('#general_query_form_results_{$window_id}').html(response);
             }).post();
         });

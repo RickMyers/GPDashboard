@@ -4,7 +4,7 @@
 <h3>Package: Main.<br />
 Module: Argus.<br />
 Namespace: argus<br />
-Author: &lt;rmyers@argusdentalvision.com&gt;</h3>
+Author: &lt;rmyers@aflacbenefitssolutions.com&gt;</h3>
 
 Welcome to the home page of your application. Some useful information is below:<br />
 <ul>

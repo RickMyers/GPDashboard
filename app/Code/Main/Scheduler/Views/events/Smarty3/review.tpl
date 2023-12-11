@@ -15,10 +15,10 @@
 <div style='color: #333; margin-top: 2px; margin-bottom: 2px'>
     <form name='event_list_form' id='event_list_form' onsubmit='return false'>
         <select name="year" id="event_year">
-            <option value="2021"> 2025 </option>
-            <option value="2021"> 2024 </option>
-            <option value="2021"> 2023 </option>
-            <option value="2022" selected="true"> 2022 </option>
+            <option value="2025"> 2025 </option>
+            <option value="2024"> 2024 </option>
+            <option value="2023" selected="true"> 2023 </option>
+            <option value="2022"> 2022 </option>
             <option value="2021"> 2021 </option>
             <option value="2020"> 2020 </option>
             <option value="2019"> 2019 </option>

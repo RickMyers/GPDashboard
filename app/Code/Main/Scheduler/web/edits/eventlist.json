@@ -69,7 +69,7 @@
             style:          "",
             onclick:        function (evt) {
                 if (Edits['eventlist'].validate()) {
-                    (new EasyAjax('/scheduler/events/show')).packageForm('event_list_form').then(function (response) {
+                    (new EasyAjax('/scheduler/events/show')).addForm('event_list_form').then(function (response) {
                         $('#scheduler_events_list').html(response);
                     }).post();
                 }

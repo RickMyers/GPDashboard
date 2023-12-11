@@ -1047,7 +1047,7 @@
                     </div>
                     <br />
                     <div style="text-align: center">
-                        <b>Argus Dental &amp; Vision, Inc.</b>, 4919 W. Laurel Street, Tampa, FL, 33607 (Toll Free 877.864.0625)
+                        <b>Aflac Benefits Solutions, Inc.</b>, 4211 West Boy Scout Blvd, Suite 295, Tampa, FL, 33607 (Toll Free 877.864.0625)
                     </div>
                 </div>
             </form>

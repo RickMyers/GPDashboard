@@ -3,9 +3,9 @@
 
 Member actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="members" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="members" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="uploadform" passalong="window_id">
@@ -23,6 +23,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                 <comment>If they don't pass a client id, I'll just set it to careplus</comment>                
                 <parameter name='id' value='client_id' source='request' default='111' />
             </entity>
+            <comment>In this case, "Active" means that we have a contract with the healthplan and so member information can be found in the DWH</comment>
             <switch id='client' method='getActive'>
                 <case value='Y'>
                     <comment>
@@ -36,6 +37,7 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                             <view name='default_demographics' />
                         </then>
                         <else>
+                            <comment>We must be in QA/Prod, so we have an active connection to the DWH</comment>
                             <entity namespace="vision" class="demographics" id="member" method="information" response="true">
                                 <parameter name="member_id" source="request" required="true" />
                                 <parameter name="date_of_service" source="request" optional="true" />
@@ -44,11 +46,12 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                     </if>
                 </case>
                 <default>
-                    <comment>This is non-contracted, so we don't have member data</comment>
+                    <comment>This is non-contracted, so we don't have member data, the tech/OD will have to enter the information manually</comment>
                     <view name='emptyset' />
                 </default>
             </switch>
-        </action>                
+        </action>            
+            
         <!-- ############################################################### -->
                         
         <action name="upload" blocking="off">

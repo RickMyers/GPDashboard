@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -29,15 +29,15 @@ class Ipas extends \Code\Main\Vision\Entities\Entity
     public function __construct() {
         parent::__construct();
     }
-
+    
     /**
      * Returns the list of IPAs associated to a client
      * 
      * @return iterator
      */
-    public function clientIpas() {
+    public function clientIpas($client_id=false) {
         $result = [];
-        if ($client_id = $this->getClientId()) {
+        if ($client_id = ($client_id ? $client_id : ($this->getClientId() ? $this->getClientId() : false))) {
             $query = <<<SQL
                 select a.*,
                        b.ipa
@@ -45,6 +45,7 @@ class Ipas extends \Code\Main\Vision\Entities\Entity
                   left outer join vision_ipas as b
                     on a.ipa_id = b.id
                  where a.client_id = '{$client_id}'
+                   and b.ipa is not null
 SQL;
             $result = $this->query($query);
         }

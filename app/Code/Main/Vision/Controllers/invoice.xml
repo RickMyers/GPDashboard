@@ -5,7 +5,7 @@ Invoice actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="invoice" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="invoice" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="review" blocking="off" passalong="window_id">  
             <description>Review the available offices to send an invoice to</description>

@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Framework
- * @author     Rick Myers rmyers@argusdentalvision.com
+ * @author     Rick Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2007-Present, Rick Myers <rick@humbleprogramming.com>
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />

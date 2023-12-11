@@ -260,12 +260,12 @@
                         <i class="glyphicons glyphicons-calculator"></i>
                     </div>
                     <!--div class='dashboard-mini-icon' title='Log Bug or New Feature Request' onclick="Desktop.icon.position(); return false; Argus.dashboard.feature.request()">
-                        <a  href="mailto:ITSupport@argusdentalvision.com?subject=HEDIS Feature Request Or Defect Detected">
+                        <a  href="mailto:ITSupport@aflacbenefitssolutions.com?subject=HEDIS Feature Request Or Defect Detected">
                             <i class="glyphicons glyphicons-bug" style='font-size: 24px;'></i>
                         </a>                        
                     </div-->                    
                     <div class='dashboard-mini-icon' title='Support Ticket'>
-                    <a  href="mailto:support@argusdentalvision.com">
+                    <a  href="mailto:support@aflacbenefitssolutions.com">
                         <i class="glyphicons glyphicons-message-plus" style='font-size: 24px; color: #CC0000'></i>
                     </a>
                     </div>
@@ -279,6 +279,7 @@
                         {if ($admin)}Administrator{else}&nbsp;{/if}{if ($permissions->getSuperUser() == "Y")}, Super User{/if}
                         {if ($role->userHasRole('Primary Care Physician'))}Primary Care Physician{/if}
                         {if ($role->userHasRole('IPA'))}IPA{/if}
+                        {if ($role->userHasRole('Location'))}Business Office{/if}
                     </div>
                     <div style='position: relative;'>
                     <div class='user-portrait' id='user-portrait'>
@@ -290,15 +291,19 @@
                               {if ($appl && isset($appl.appellation_id))}
                                 {assign var=appl value=$appellation->setId($appl.appellation_id)->load()}
                             {/if}
-                            {if (isset($data.entity_name) && $data.entity_name )}{$data.entity_name}{else}
+                            {if (isset($data.entity_name) && $data.entity_name )}<div style='font-size: .8em'>{$data.entity_name}</div>{/if}
+                            {if ($role->userHasRole('Location'))}
+                                {assign var=loc value=$location->info()}
+                                <div style='font-size: .8em'>{$loc.ipa}</div>
+                                <div style='font-size: .5em; font-weight: normal'>{$loc.location}</div>
+                            {else}
                                 {if (($appl) && (isset($appl.appellation)))}{$appl.appellation}{/if}
                                 {if ($member->getUsePreferredName() == 'Y')}
                                     {$member->getPreferredName()}
                                 {else}
                                     {$member->getFirstName()}
                                 {/if}
-                             {$member->getLastName()}
-                             {/if}
+                            {/if}
                         </div>
                         <div id='user-email'>{$user->getEmail()}</div>
                     </div>

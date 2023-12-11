@@ -5,7 +5,7 @@ A portal for our patients
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="portal" use="Twig" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="portal" use="Twig" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="create" event="newUserPortal" comment="A user portal page was created">

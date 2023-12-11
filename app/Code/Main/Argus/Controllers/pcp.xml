@@ -5,7 +5,7 @@ Generic PCP Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="pcp" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="pcp" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="query">
             <description>Retrieves and maybe caches PCP data</description>

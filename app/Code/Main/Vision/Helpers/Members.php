@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2005-present Argus Dashboard
  * @since      File available since Release 1.0.0
  */
@@ -54,7 +54,7 @@ class Members extends Helper
             $arr        = [];
             $obs        = [];
             $data       = $helper->toHashTable($stuff['path']);
-            $member_orm = Argus::getEntity('vision/event/members');
+            $member_orm = Argus::getEntity('vision/event_members');
             foreach ($data as $member) {
                 if ($member['MBR ID']){
                     $member_orm->reset();

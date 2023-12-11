@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Client
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://jarvis.enicity.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />

@@ -7,6 +7,7 @@
         <ipa use="client" />
         <scannable />
         <readable />
+        <reviewer />
         <start_date />
         <end_date />
     </selection>
@@ -20,7 +21,8 @@
         <column source="member_id"         name="Member ID"   format="" onempty="" />        
         <column source="member_name"       name="Member Name" format="" onempty="" />   
         <column source="status"            name="Form Status" format="" onempty="" />        
-        <column source="claim_status"      name="Claim Status" format="" onempty="" />                
+        <column source="claim_status"      name="Claim Status" format="" onempty="" />      
+        <column source="reviewer_name"     name="OD Reviewer"  format="" onempty="Some Dude" />          
         <column source="technician_name"   name="Technician Name" format="" onempty="N/A" />
         <column source="member_unscannable" name="Unscannable" format="" onempty="" />
         <column source="images_unreadable"  name="Unreadable" format="" onempty="" />

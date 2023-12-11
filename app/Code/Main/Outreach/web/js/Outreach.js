@@ -43,6 +43,12 @@ Argus.outreach = (function () {
                 })(campaign_id);
                 Argus.outreach.listeners.ref['coordinator'+Branding.id+'Campaign'+campaign_id+'ContactsAssigned'] = Argus.dashboard.socket.on('coordinator'+Branding.id+'Campaign'+campaign_id+'ContactsAssigned',f);
                 f = (function (data) {
+                    Argus.outreach.queues.refresh(campaign_id,'assigned');
+                    Argus.outreach.queues.refresh(campaign_id,'returned');
+                    
+                });
+                Argus.outreach.listeners.ref['coordinator'+Branding.id+'Campaign'+campaign_id+'ContactReassigned'] = Argus.dashboard.socket.on('coordinator'+Branding.id+'Campaign'+campaign_id+'ContactReassigned',f);
+                f = (function (data) {
                     console.log(data);
                     if ($E('outreach_coordinator_'+data.user_id)) {
                         $E('outreach_coordinator_'+data.user_id).style.opacity = '1.0';
@@ -67,7 +73,7 @@ Argus.outreach = (function () {
             Argus.outreach.queues.templates.returned    = Handlebars.compile((Humble.template('outreach/ReturnedQueue')));            
             Argus.outreach.queues.templates.completed   = Handlebars.compile((Humble.template('outreach/CompletedQueue')));            
         },
-        RPC: function () {
+        RTC: function () {
             //all real time stuff will be set when this app is opened so nothing is needed here
         },
         queues: {
@@ -97,7 +103,11 @@ Argus.outreach = (function () {
             },
             refresh: function (campaign_id,whichOne) {
                 (new EasyAjax('/outreach/queues/refresh')).add('status',Argus.outreach.queues.status[whichOne]).add('page',Argus.outreach.queues.page[whichOne].current).add('campaign_id',campaign_id).then(function (response) {
-                    $(Argus.outreach.queues.ref[whichOne]).html(Argus.outreach.queues.templates[whichOne]({ "data": JSON.parse(response) }).trim());
+                    let data = JSON.parse(response);
+                    for (let i=0; i<data.length; i++) {
+                        data[i].color = (data[i].assignee === Branding.id) ? "180,180,180" : "222,222,222";
+                    }
+                    $(Argus.outreach.queues.ref[whichOne]).html(Argus.outreach.queues.templates[whichOne]({ "data": data }).trim());
                     let p = this.getPagination() ;
                     $('#outreach_rows_'+whichOne).html(p.rows.from+'-'+p.rows.to+'/'+p.rows.total);
                     $('#outreach_pages_'+whichOne).html(p.pages.current+'/'+p.pages.total);

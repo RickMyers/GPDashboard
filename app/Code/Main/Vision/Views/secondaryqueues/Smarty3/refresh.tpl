@@ -31,7 +31,7 @@
     },
     "failed_claims": { 
         "data":
-            {$failures->fetch()},
+            {$failures->failedClaims()},
         "pagination": {
             "rows": {
                 "total": "{$failures->_rowCount()}",

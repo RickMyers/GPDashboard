@@ -6,7 +6,7 @@
         <description>A collection of tools that can be run from the command line</description>
         <author>
             <name>Rick Myers</name>
-            <email>rmyers@argusdentalvision.com</email>
+            <email>rmyers@aflacbenefitssolutions.com</email>
         </author>
         <module>
             <name>Tools</name>
@@ -14,7 +14,7 @@
             <use>Smarty3</use>
             <package>Main</package>
             <workflow>Y</workflow>
-            <required>Y</required>
+            <required>N</required>
         </module>
         <structure>
             <models>
@@ -60,7 +60,7 @@
             <prefix>argustools_</prefix>
             <mongodb>argustools</mongodb>
             <entities>
-
+                <inventory polyglot='Y' />
             </entities>
         </orm>
 

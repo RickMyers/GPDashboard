@@ -5,7 +5,7 @@ Configuration pages for vision workflows
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="forms" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="forms" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="unassigned" passalong="windowId">
             <description>Configuration for calculating the number of new (unassigned) retina scans</description>

@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Client
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @link       https://jarvis.enicity.com/docs/class-&&MODULE&&.html
  * @since      File available since Release 1.0.0
  */

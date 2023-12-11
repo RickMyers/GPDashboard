@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Client
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2005-Present Jarvis Project
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -35,14 +35,14 @@ class Demographics extends \Code\Main\Argus\Entities\MSEntity
      *
      * @return iterator
      */
-    public function information($member_id = false,$date=false) {
+public function information($member_id = false,$date=false) {
         $member_id_clause = ($id = $member_id ? $member_id : ($this->getMemberId() ? $this->getMemberId() : ($this->getId() ? $this->getId() : false ))) ? "and ec.member_id = '".$id."'" : "";
         $date             = $date ? $date : ($this->getDateOfService() ? $this->getDateOfService() : date('Y-m-d'));
         $query = <<<SQL
             SELECT DISTINCT
             g.group_id group_id,
             ec.default_lob,
-            ec.member_id,																					
+            ec.member_id,
             co.last_name,
             co.first_name,
             co.middle_name,
@@ -58,32 +58,39 @@ class Demographics extends \Code\Main\Argus\Entities\MSEntity
             ec.effective_date,
             ec.termination_date,
             ec.record_status,
-            email_address
+           email_address
             FROM [ArgusApp].dbo.Groups G WITH (NOLOCK)
             JOIN [ArgusApp].dbo.[Eligibility_Coverage] EC with (nolock)
                     on g.group_gid = ec.group_gid and
-                    ec.default_lob = 'VIS' 
-                    and	cast('{$date}' as date) between cast(ec.effective_date as date) and cast(ec.termination_date as date) and
-                    cast(ec.effective_date as date) <> cast(ec.termination_date as date) and
+                    ec.default_lob = 'VIS'
+                    and cast('{$date}' as date) >  cast(ec.effective_date as date)  and
                     ec.record_status = 'A'
-            join [ArgusApp].dbo.Contacts co with (nolock) 
-                    on EC.child_gid = CO.contact_gid 
+            join [ArgusApp].dbo.Contacts co with (nolock)
+                    on EC.child_gid = CO.contact_gid
                     and co.record_status = 'A'
-            join [ArgusApp].dbo.Contact_Relation cr with (nolock) 
+            join [ArgusApp].dbo.Contact_Relation cr with (nolock)
                     on co.contact_gid = cr.contact_gid and
                     cr.entity_identifier = 'MEMBER' and
                     cr.contact_purpose_flag = 'PHYS' and
                     cr.record_status = 'A'
-            join [ArgusApp].dbo.Demographics d with (nolock) 
-                    on d.demographic_gid = cr.demographic_gid 
+            join [ArgusApp].dbo.Demographics d with (nolock)
+                    on d.demographic_gid = cr.demographic_gid
                     and d.record_status = 'A'
-            WHERE 
+            WHERE
                     g.group_id in ('Freedom','Optimum','CarePlus','Ultimate HP','DHCP') and
-                    g.record_status = 'A' 
+                    g.record_status = 'A'
             {$member_id_clause}
 SQL;
-        return $this->query($query);
-    }
+        $x= $this->query($query);
+        if (count($x)) {                                                        //What we are doing here is if more than one record shows up, we are only going to get the last one which should be most recent
+                $y = $x->toArray();
+                $y = $y[count($y)-1];
+                $t = [];
+                $t[] = $y;
+                $x->override($t);
+        }
+        return $x;
+    }    
     
     public function groups() {
         $query = <<<SQL

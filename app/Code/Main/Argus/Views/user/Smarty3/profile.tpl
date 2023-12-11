@@ -135,6 +135,21 @@
     {else}
        <input type="hidden" name="waiting_room_name" id="waiting_room_name" value="{$settings->getWaitingRoomName()}" />
     {/if}
+    {if ($roles->userHasRole('Market Level'))}
+    <div style="clear: both"></div>        
+        <div style="padding: 10px 0px; border-top: 1px solid ghostwhite">
+           <p>As a Market Level administrator, please choose the applicable market from the choice below:</p><br />
+           <select name="market_level" id="market_level" style="width: 200px; background-color: lightcyan; border: 1px solid #333; padding: 2px">
+               <option value=""></option>
+               <option value="111"> CarePlus </option>
+           </select>
+        </div>
+        {if ($settings->getMarketLevel())}
+            <script type="text/javascript">
+                $('#market_level').val('{$settings->getMarketLevel()}');
+            </script>
+        {/if}
+    {/if}
     {if ($roles->userHasRole('O.D.'))}
         <div style="padding-bottom: 5px; padding-top: 5px; border-top: 1px solid ghostwhite"><b>Claiming Information</b><br /><br />
             If you are providing services that can be claimed, please fill out the following information so that we can generate the claim files for you:<br /><br />
@@ -161,8 +176,8 @@
             <table>
                 <tr>
                     <td style="padding-right: 2px"><input type="text" value="{$user->getOfficeAddress()}" name="office_address" id="office_address" class="argus-settings-form-field" style="width: 250px" /></td>
-                    <td style="padding-right: 2px"><input type="text" value="{$user->getOfficeCity()}" name="office_city" id="office_city" value="" class="argus-settings-form-field" style="width: 100px"  /></td>
-                    <td style="padding-right: 2px"><input type="text" value="{$user->getOfficeState()}" name="office_state" id="office_state" value="" class="argus-settings-form-field" style="width: 50px; text-transform: uppercase"  /></td>
+                    <td style="padding-right: 2px"><input type="text" value="{$user->getOfficeCity()}"    name="office_city"    id="office_city" value="" class="argus-settings-form-field" style="width: 100px"  /></td>
+                    <td style="padding-right: 2px"><input type="text" value="{$user->getOfficeState()}"   name="office_state"   id="office_state" value="" class="argus-settings-form-field" style="width: 50px; text-transform: uppercase"  /></td>
                     <td style="padding-right: 2px"><input type="text" value="{$user->getOfficeZipcode()}" name="office_zipcode" id="office_zipcode" value="" class="argus-settings-form-field" style="width: 100px"  /></td>
                 </tr>
                 <tr>

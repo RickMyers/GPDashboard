@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <component>
     <name>Event List</name>
-    <description>A list of events have</description>
+    <description>A list of all events scheduled</description>
     <type>Select</type>
     <resource action="/scheduler/event/list" id="event_id" text="summary" value="id" /> 
 </component>

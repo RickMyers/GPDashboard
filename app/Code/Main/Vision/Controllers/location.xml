@@ -5,7 +5,7 @@ Location actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="location" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="location" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="list" output="JSON">
             <description>Creates a list of available IPAs relative to a client id</description>
@@ -60,5 +60,48 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
                 <parameter name="location_id" source="request" optional="true" />
             </entity>
         </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="attach" passalong='windowId'>
+            <description>Workflow configuration widget for attaching location information to the Event</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>             
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="init" blocking="OFF">
+            <description>Initial layout of a Location portal</description>
+            <entity namespace="vision" class="consultation/forms" id="pcps" />
+            <entity namespace="vision" class="ipa/locations" id="locations" method="nonkeysload" assign="location">
+                <parameter name="user_id" value="uid" source="session" required="true" />
+            </entity>
+            <entity namespace="vision" class="ipa/locations" id="pcps">
+
+            </entity>
+        </action>
+        
+        <!-- ############################################################### -->        
+
+        <action name="refresh" output='JSON'>
+            <description>Refreshes the location (business office) form queue</description>
+            <entity namespace="vision" class="consultation_forms" rows="rows" page="location_clients"  id="clients"  defaultRows='24' defaultPage='1'  orderby="event_date=desc">
+                <parameter name='user_id' source='session' value='uid' />
+            </entity>
+       
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name='queue' output='JSON'>        
+            <description>Populates the location form queue</description>
+            <entity response="true" namespace="vision" class="consultation/forms" rows="rows" page="page" defaultRows='50' defaultPage='1' method='sortedLocationForms'>
+                <parameter name='user_id' source='session' value='uid' required='true' />
+                <parameter name='physician_npi' source='post' optional="true" />
+                <parameter name='health_plan' source='post' optional="true" />
+            </entity>
+        </action>             
     </actions>
 </controller>

@@ -5,7 +5,7 @@ Uploading DM list action
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="upload" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="upload" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="form">

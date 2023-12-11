@@ -3,6 +3,7 @@
 {assign var=print           value=$form->getPrint()}
 {assign var=pcp             value=$role->userHasRole('Primary Care Physician')}
 {assign var=IPA             value=$role->userHasRole('IPA')}
+{assign var=location        value=$role->userHasRole('Location')}
 {assign var=current_user    value=$role->getUserId()}
 {assign var=hedis_manager   value=$role->userHasRole('HEDIS Manager')}
 {assign var=pcp_staff       value=$role->userHasRole('PCP Staff')}
@@ -222,7 +223,7 @@
                             <div id="refer_for_administration" onclick="Argus.vision.consultation.refer()" title="Refer for Administration" style="display: none; vertical-align: middle; cursor: pointer; border: 1px solid #0877BA; border-radius: 20px; margin-right: 8px; overflow: hidden">
                                 <img src="/images/vision/refer_admin.png" style="height: 20px" />
                             </div>
-                            <img id="return_referral" src="/images/vision/return_to.png" style="height: 22px; margin-right: 8px; display: none; cursor: pointer" onclick="Argus.vision.consultation.returnReferral()" title="Return form" />
+                            <img id="return_referral" src="/images/vision/return_to.png" style="height: 22px; margin-right: 8px; display: none; cursor: pointer" onclick="Argus.vision.consultation.returnReferral()" title="Return form to the queue it was referred from" />
                             Form #: {$form_id}<div style="display: inline-block" id="form-version-number"></div>
                     </div>
                     <img src="/images/vision/lock.png" onclick="Argus.vision.consultation.lock.toggle(this)" title="Lock/Unlock Fields" style="width: 14px; cursor: pointer; float: left; margin-right: 3px" /><b>Diabetic  <span id="form_type_label" value="Scanning"></span> Form</b>
@@ -1240,11 +1241,11 @@
                        <div id="form_admin_panel" style="display: none;  border: 2px solid silver; height: 16px; overflow: visible; position: relative; border-top-right-radius: 8px; border-bottom-right-radius: 8px; background-color: bisque; text-align: right; padding-left: 40px">
                             <img src="/images/vision/icon_release_to_pcp.png"  style="height: 32px; float: left; cursor: pointer; top: -10px; position: relative;" id="release_to_pcp_portal" onclick="Argus.vision.pcp.release('{$form_id}')" title="Release To PCP Portal"/>
                             <img src="/images/vision/icon_clear_signature.png" style="height: 32px; float: left; cursor: pointer; top: -10px; position: relative;" id="clear_signature_button" onclick="Argus.vision.signature.clear()" title="Clear Signature and Return to OD "/>                            
-                            <img src="/images/vision/icon_reset_claim.png"    style="height: 32px; float: left; cursor: pointer; top: -10px; position: relative;" id="form_reset_claim" onclick="Argus.vision.claim.reset()" title="Reset Claim Status "/>
-                            <img src="/images/vision/icon_mark_claimed.png"   style="height: 32px; float: left; cursor: pointer; top: -10px; position: relative;" id="mark_form_as_claimed_button" onclick="Argus.vision.claim.clear()" title="Mark Form As Claimed"/>
-                            <img src="/images/vision/icon_return_form.png"    style="height: 32px; display: inline-block; cursor: pointer; top: -10px; margin-right: 10px; position: relative;" title='Return Form' onclick="Argus.vision.consultation.returnReferral()"/>
+                            <img src="/images/vision/icon_reset_claim.png"    style="height: 32px; float: left; cursor: pointer; top: -10px; position: relative;" id="form_reset_claim" onclick="Argus.vision.claim.reset()" title="Reset Claim Status So That The Form Can Run Through Claims Again "/>
+                            <img src="/images/vision/icon_mark_claimed.png"   style="height: 32px; float: left; cursor: pointer; top: -10px; position: relative;" id="mark_form_as_claimed_button" onclick="Argus.vision.claim.clear()" title="Mark Form As Claimed And Completed"/>
+                            <img src="/images/vision/icon_return_form.png"    style="height: 32px; display: inline-block; cursor: pointer; top: -10px; margin-right: 10px; position: relative;" title='Return Form To The Queue It Was Referred From' onclick="Argus.vision.consultation.returnReferral()"/>
                        </div>
-                            <div style="clear: both"></div>
+                        <div style="clear: both"></div>
                         <input tabindex="1" type="button" id="doctor_sign_and_complete_button" class="" style="float: right; display: none; margin-right: 10px; clear: both; margin-top: 5px" value="  Doctor Sign and Complete Form  " />
                         <input tabindex="1" id="form_recall_button" type="button" value=" Recall Form Prior To Review " style="display: none; font-size: 10pt; float: right; color: #333" onclick="CurrentForm.recall()" />
                         <input tabindex="1" id="submit_for_review_button" type="button" value="  Submit For O.D. Review  " style="display: none"/>
@@ -1267,7 +1268,7 @@
                 <div style='clear: both'></div>        
                 <div style="text-align: center; margin-top: 5px; border-top: 1px solid #333">
                     <div style="float: right; margin-right: 5px">(rev 04.11.22)</div>
-                    <b>Argus Dental &amp; Vision, Inc.</b>, 4919 W. Laurel Street, Tampa, FL, 33607 (Toll Free 877-710-5174)
+                    <b>Aflac Benefits Solutions, Inc.</b>, 4211 West Boy Scout Blvd, Suite 295, Tampa, FL, 33607 (Toll Free 877-710-5174)
                 </div>                            
             </div>
             <div style="clear: both"></div>
@@ -1314,7 +1315,7 @@
 <script type='text/javascript'>
 
     //To make things easier, we are going to limit ourselves to editing one form at a time.
-    var CurrentForm = Argus.vision.consultation.get('{$print}','{$tag}','{$form_id}','{$window_id}','{$current_user}','{$doctor}','{$pcp_staff}','{$pcp}','{$IPA}');
+    var CurrentForm = Argus.vision.consultation.get('{$print}','{$tag}','{$form_id}','{$window_id}','{$current_user}','{$doctor}','{$pcp_staff}','{$pcp}','{$IPA}','{$location}');
     {if ($print)}
         Humble.init(function () {
             CurrentForm.init(function () { window.setTimeout(window.print,1500) });

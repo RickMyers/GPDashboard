@@ -5,7 +5,7 @@ High-levl Actions for Clients
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="client" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="client" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="list" response="true" output="JSON">

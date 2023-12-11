@@ -14,7 +14,7 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    1.0.0
@@ -227,118 +227,14 @@ class Event extends Helper
         }
     }*/
     
-    /**
-     * This is the "old" upload method... when we processed just a normal CSV.  Refer to "newUpload" method for the current formatted CSV handling
-     * @return type
-     */
-    public function upload() {
-        $report             = [
-            'members_processed' => 0,
-            'members_skipped' => 0
-        ];
-        $member_file        = $this->getMemberList();
-        $extract_fields     = [
-            'location_npi' => false
-        ];
-        $attendees          = [];     
-        $client_xref        = [];
-        foreach (Argus::getEntity('vision/clients') as $client) {
-            $client_xref[strtoupper($client['client'])] = $client['id'];
-        }        
-        //make the XREF uppercase, because we can't trust anyone anymore
-        $x = [];
-        foreach ($this->xref as $field => $value) {
-            $x[trim(strtoupper($field))] = $value;
-        }
-        $this->xref = $x;
-        if ($member_file && isset($member_file['path']) && file_exists($member_file['path'])) {
-            //We are going to find out information about the health plan this event is for.  We do allow health plan to be overriden at the row level though
-            $event_id    = $this->getEventId();
-            $health_plan = $this->getClientId();
-            $hp_xref     = [];
-            $aldera      = Argus::getModel('vision/aldera');
-            $event_orm   = Argus::getEntity('vision/event_members');
-            if (!is_numeric($health_plan)) {                                    //If it is numeric, the variable health_plan actually contains the health_plan_id
-                $this->default['health_plan'] = $health_plan;
-                $health_plan_data = Argus::getEntity('vision/clients')->setClient($health_plan)->load(true);
-                $this->default['health_plan_id'] = $health_plan_id =  $health_plan_data ? $health_plan_data['id'] : Argus::getEntity('vision/clients')->setClient($health_plan)->save();
-            } else {
-                $this->default['health_plan_id'] = $health_plan_id = $health_plan;
-                $health_plan_data = Argus::getEntity('vision/clients')->setId($health_plan_id)->load();
-                $this->default['health_plan'] = $health_plan_data['client'];
-            }
-            foreach ($data        = Argus::getHelper('argus/CSV')->toHashTable($member_file['path']) as $member) {
-                //$result = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $string)
-                $m = [];
-                foreach ($member as $field => $value) {                         //The HEDIS folks changed the column names to a format that I can't read properly using CSV tool
-                    if ($field) {
-                       $m[$this->xref[trim($field)]] = $value;                     //This changes them back to how I need them to process.  It's a klugey fix
-                    }
-                }
-                $member = $m;
-                if (isset($member['MEMBER ID']) && $member['MEMBER ID']) {
-                    $member_number  = explode('*',$member['MEMBER ID']);        //this is done because Freedom tends to add an *01/-01 to the end of the member number
-                    $member_number  = explode('-',$member_number[0]);
-                    $member_number  = $member_number[0];
-                    if ($member_dmg = json_decode($aldera->setMemberId($member_number)->memberDemographicInformation(),true)) {
-                        $report['members_processed']++;
-                        foreach ($member as $field => $value) {                 //This routine replaces spaces with underscores in the keys to keep it consistent
-                            unset($member[$field]);
-                            $member[str_replace(' ','_',strtolower(trim($field)))] = (strpos($field,'DATE') && $value) ? date('Y-m-d',strtotime($value))  : $value;
-                        }
-                        foreach ($member_dmg[0] as $field => $value) {          //This routine capitalizes the keys to keep it consistent
-                            unset($member_dmg[0][$field]);
-                            $member_dmg[0][$field] = ($field=="date_of_birth") ? date('Y-m-d',strtotime($value['date'])) : $value;
-                        }
-                        $member = array_merge($member, $member_dmg[0]);
-                        if (!isset($hp_xref[$member['health_plan']])) {
-                            $hp_xref[$member['health_plan']] = Argus::getEntity('vision/clients')->setClient($member['health_plan'])->load(true);
-                        }
-                        //we try to get the client id from 
-                        if (!$health_plan_id = isset($client_xref[strtoupper($member['health_plan'])]) ? $client_xref[strtoupper($member['health_plan'])] : false) {
-                            $health_plan_id = isset($hp_xref[$member['health_plan']]) ? $hp_xref[$member['health_plan']]['id'] : $this->default['health_plan'];
-                        }
-                        $event_orm->reset();
-                        foreach ($member as $field => $value) {
-                            if (isset($extract_fields[$field]) && !$extract_fields[$field]) {
-                                $extract_fields[$field] = $value;
-                            }
-                            if (!$field = trim($field)) {
-                                continue;   //gets rid of any blank rows
-                            };
-                            $method = 'set'.$this->underscoreToCamelCase($field,true);
-                            $event_orm->$method($value);
-                        }
-                        if ($event_id && $health_plan_id && $member_number) {
-                            $attendees[] = $event_orm->setEventId($event_id)->setHealthPlanId($health_plan_id)->setMemberNumber($member_number)->save();                            
-                        }
-                    } else {
-                        $report['members_skipped']++;
-                        //this is where we add the missing member info
-                    }
-                }
-            }
-            $event       = Argus::getEntity('scheduler/events')->setId($event_id);
-            foreach ($extract_fields as $field => $value) {                     //We now add any extracted fields from the upload to the actual event
-                if ($value) {
-                    $method = 'set'.$this->underscoreToCamelCase($field);
-                    $event->$method($value);
-                }
-            }
-            $event->save();
-            $this->_notices("Members Added To Event: ".$report['members_processed']."<br><br>Members Skipped (no member information): ".$report['members_skipped']."<br><br>");
-        }
-        return $attendees;
-   }
-   
-    /**
+     /**
      * 
      * @param type $members
      * @param type $report
      * @return type
      */
     protected function processUploadedMembers($members=[],$report) {
-        $aldera      = Argus::getModel('vision/aldera');
+        $aldera      = Argus::getModel('vision/aldera');                        
         $event_orm   = Argus::getEntity('vision/event/members');
         $event_id    = $report['event_id'];
         foreach ($members as $member) {
@@ -353,17 +249,13 @@ class Event extends Helper
                 $member_number  = explode('*',$member['MEMBER ID']);            //this is done because Freedom tends to add an *01/-01 to the end of the member number
                 $member_number  = explode('-',$member_number[0]);
                 $member_number  = $member_number[0];
-                if ($member_dmg = json_decode($aldera->setMemberId($member_number)->memberDemographicInformation(),true)) {
+                if ($member_dmg = json_decode($aldera->setMemberId($member_number)->emographicInformation(),true)) {
                     $report['members_processed']++; $report['members']['added'][] = $member;
                     foreach ($member as $field => $value) {                 //This routine replaces spaces with underscores in the keys to keep it consistent
                         unset($member[$field]);
                         $member[str_replace(' ','_',strtolower(trim($field)))] = (strpos($field,'DATE') && $value) ? date('Y-m-d',strtotime($value))  : $value;
                     }
-                    foreach ($member_dmg[0] as $field => $value) {          //This routine capitalizes the keys to keep it consistent
-                        unset($member_dmg[0][$field]);
-                        $member_dmg[0][$field] = ($field=="date_of_birth") ? date('Y-m-d',strtotime($value['date'])) : $value;
-                    }
-                    $member = array_merge($member, $member_dmg[0]);
+                    $member = array_merge($member, $member_dmg['demographics']);
                     if (!isset($hp_xref[$member['health_plan']])) {
                         $hp_xref[$member['health_plan']] = Argus::getEntity('vision/clients')->setClient($member['health_plan'])->load(true);
                     }

@@ -6,7 +6,7 @@
         <description>Dashboard related stuff</description>
         <author>
             <name>Rick Myers</name>
-            <email>rmyers@argusdentalvision.com</email>
+            <email>rmyers@aflacbenefitssolutions.com</email>
         </author>
         <module>
             <name>Dashboard</name>
@@ -68,9 +68,9 @@
                 <chart_locations />                
                 <chart_packages />
                 <chart_roles />
-                <chatrooms />
+                <!--chatrooms />
                 <chatroom_logs />
-                <chatroom_participants />
+                <chatroom_participants /-->
                 <controls />
                 <control_roles />
                 <desktop_available_apps />

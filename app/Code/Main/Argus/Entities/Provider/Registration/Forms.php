@@ -14,7 +14,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @since      File available since Release 1.0.0
  */
 class Forms extends \Code\Main\Argus\Entities\Entity
@@ -65,7 +65,7 @@ class Forms extends \Code\Main\Argus\Entities\Entity
         $rain->assign('host',Environment::getHost());
         $rain->assign('form_id',$this->getFormId());
         $emailer = Argus::getModel('argus/email');
-        return $emailer->sendEmail($email,'ARGUS Provider Registration Link',$rain->draw($template,true),"registrar@argusdentalvision.com","noreply@argusdentalvision.com");
+        return $emailer->sendEmail($email,'ARGUS Provider Registration Link',$rain->draw($template,true),"registrar@aflacbenefitssolutions.com","noreply@aflacbenefitssolutions.com");
     }
     
     /**

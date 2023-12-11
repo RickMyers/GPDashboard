@@ -5,7 +5,7 @@ Analytical displays and charts
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="analytics" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="analytics" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
             <description>The main page</description>

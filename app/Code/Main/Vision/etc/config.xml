@@ -6,7 +6,7 @@
         <description>Module for vision related apps</description>
         <author>
             <name>Rick Myers</name>
-            <email>rmyers@argusdentalvision.com</email>
+            <email>rmyers@aflacbenefitssolutions.com</email>
         </author>
         <module>
             <name>Vision</name>
@@ -73,6 +73,7 @@
                 <event_locations />
                 <event_npi polyglot='Y'/>
                 <event_members polyglot='Y' />
+                <gaps polyglot='Y' />
                 <invoices polyglot='Y' />
                 <invoice_forms polyglot='Y' />
                 <ipas polyglot='Y' />
@@ -109,6 +110,7 @@
                 <editlocation>Vision/web/edits/editlocation.json</editlocation>
                 <locationnpi>Vision/web/edits/locationnpi.json</locationnpi>
                 <ipagrouping>Vision/web/edits/ipagrouping.json</ipagrouping>
+                <marketfilter>Vision/web/edits/marketfilter.json</marketfilter>
             </edits>
             <print>
                 <js>

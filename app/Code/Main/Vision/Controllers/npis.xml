@@ -5,7 +5,7 @@ NPI related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="npis" use="Twig" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="npis" use="Twig" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="list" passalong="window_id">
             <description>Lists the NPIs associated to an address</description>

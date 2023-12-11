@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @since      File available since Release 1.0.0
  */
 class Scans extends Model

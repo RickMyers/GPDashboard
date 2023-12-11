@@ -11,7 +11,7 @@ namespace Code\Main\Outreach\Entities;
  *
  * @category   Entity
  * @package    Outreach
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  */
 class Entity extends \Code\Main\Argus\Entities\Entity
 {

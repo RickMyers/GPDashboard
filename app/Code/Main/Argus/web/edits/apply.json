@@ -47,7 +47,7 @@
 			style:			"padding: 2px 10px; color: #333",
                         onclick:                function (evt) {
                             if (Edits['apply-file-&&win_id&&'].validate()) {
-                                (new EasyAjax('/argus/import/apply')).packageForm('environment_apply_form-&&win_id&&').then(function (response) {
+                                (new EasyAjax('/argus/import/apply')).addForm('environment_apply_form-&&win_id&&').then(function (response) {
                                     alert(response);
                                 }).post();
                             }

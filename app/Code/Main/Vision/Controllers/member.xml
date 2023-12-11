@@ -5,7 +5,7 @@ Member related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="member" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="member" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="info" passalong="id,window_id">
             <description>Member input form</description>
@@ -52,6 +52,15 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
                 <parameter name="*" source="post" />
             </model>
         </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="demographics" blocking="off" output="JSON">
+            <description>Fetches member demographics from either EIS or Aldera</description>
+            <model namespace='vision' class='demographics' method='memberData' response="true">
+                <parameter name="member_id" source="request" required="true" />
+            </model>
+        </action>           
 
     </actions>
 </controller>

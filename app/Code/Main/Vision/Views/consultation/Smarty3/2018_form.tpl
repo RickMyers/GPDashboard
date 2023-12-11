@@ -1274,7 +1274,7 @@
                 <div style='clear: both'></div>        
                 <div style="text-align: center; margin-top: 5px; border-top: 1px solid #333">
                     <div style="float: right; margin-right: 5px">(rev 04.16.18)</div>
-                    <b>Argus Dental &amp; Vision, Inc.</b>, 4919 W. Laurel Street, Tampa, FL, 33607 (Toll Free 877-710-5174)
+                    <b>Aflac Benefits Solutions, Inc.</b>, 4211 West Boy Scout Blvd, Suite 295, Tampa, FL, 33607 (Toll Free 877-710-5174)
                 </div>                            
             </div>
             <div style="clear: both"></div>

@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -287,5 +287,28 @@ SQL;
                AND c.ipa IS NOT NULL                
 SQL;
         return $this->query($query);
+    }
+    
+    /**
+     * Returns extended information about an IPA or lists extended information for all IPAs
+     * 
+     * @param type $ipa_id
+     * @return type
+     */
+    public function information($ipa_id=false) {
+        $ipa_clause = ($ipa_id) ? " and a.id = ".$ipa_id : ($this->getIpaId() ? " and a.id = ".$this->getIpaId() : "");
+        $query = <<<SQL
+            SELECT aa.id AS ipa_id, aa.ipa, location, b.id AS address_id, b.address, c.id AS npi_id, c.npi
+              FROM vision_ipas AS aa
+              LEFT OUTER JOIN vision_ipa_locations AS a
+                ON aa.id = a.ipa_id
+              LEFT OUTER JOIN vision_ipa_location_addresses AS b
+                ON a.id = b.location_id
+              LEFT OUTER JOIN vision_address_npis AS c
+                ON b.id = c.address_id
+             WHERE a.legacy = 'N'
+                {$ipa_clause}
+SQL;
+        return $this->on('npi_id')->with('vision/address_npis')->query($query);
     }
 }

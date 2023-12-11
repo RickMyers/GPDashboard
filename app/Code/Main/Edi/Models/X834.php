@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  */
 class X834 extends Model
 {

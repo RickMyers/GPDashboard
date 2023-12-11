@@ -191,7 +191,7 @@
             force:		false,
             onclick:            function (evt) {
                 if (Edits['hedis-call-log-&&win_id&&'].validate()) {
-                   (new EasyAjax('/dental/hedis/logcall')).packageForm('hedis-call-&&win_id&&').then(function (response) {
+                   (new EasyAjax('/dental/hedis/logcall')).addForm('hedis-call-&&win_id&&').then(function (response) {
                        Desktop.window.list['&&win_id&&']._close();
                    }).post();   
                 }
@@ -209,7 +209,7 @@
             force:		false,
             onclick:            function (evt) {
                 if (Edits['hedis-call-log-&&win_id&&'].validate()) {
-                    (new EasyAjax('/dental/hedis/reset')).packageForm('hedis-call-&&win_id&&').add('assignee','').then(function (response) {
+                    (new EasyAjax('/dental/hedis/reset')).addForm('hedis-call-&&win_id&&').add('assignee','').then(function (response) {
                        Desktop.window.list['&&win_id&&']._close();
                     }).post();                
                 }

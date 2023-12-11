@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Mark Sarno, O.D. <msarno@argusdentalvision.com>
+ * @author     Mark Sarno, O.D. <msarno@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />

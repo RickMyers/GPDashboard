@@ -70,7 +70,7 @@
 <script>
     $("#news_article_submit").on('click', function(){
         if($("#news_article_title").val() && $("#news_article_content").val()) {
-            (new EasyAjax("/hedis/news/save")).packageForm("news_article_form").then(function(response) {
+            (new EasyAjax("/hedis/news/save")).addForm("news_article_form").then(function(response) {
                 $("#office-news-data").html(response);
             }).post();
         }

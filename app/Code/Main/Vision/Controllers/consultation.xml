@@ -3,9 +3,9 @@
 
 Retina Consultation Actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="consultation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="consultation" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="new" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">

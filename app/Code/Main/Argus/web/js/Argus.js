@@ -40,7 +40,7 @@ var Argus = function ($) {
                 } else {
                     Argus.claims.page = page;
                 }
-                (new EasyAjax('/argus/claims/list')).add('verified',$('#claim_status').val()).add('rows',$('#rows').val()).add('member_name',$('#claim_member_name').val()).add('provider',$('#claim_provider').val()).add('member_number',$('#claim_member_number').val()).add('event_id',$('#claim_event_id').val()).add('event_date',$('#claim_event_date').val()).add('claim_date',$('#claim_date').val()).add('page',Argus.claims.page).then(function (response) {
+                (new EasyAjax('/argus/claims/list')).add('year',$('#claim_year').val()).add('verified',$('#claim_status').val()).add('rows',$('#rows').val()).add('member_name',$('#claim_member_name').val()).add('provider',$('#claim_provider').val()).add('member_number',$('#claim_member_number').val()).add('event_id',$('#claim_event_id').val()).add('event_date',$('#claim_event_date').val()).add('claim_date',$('#claim_date').val()).add('page',Argus.claims.page).then(function (response) {
                     $('#claims-list-container').html(response);
                 }).post();
             },

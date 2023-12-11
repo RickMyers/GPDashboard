@@ -13,9 +13,9 @@ use Environment;
  *
  * @category   Apps
  * @package    Desktop
- * @author     Rick Myers <rmyers@argusdentalvision.com>
+ * @author     Rick Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2016-present Hedis Dashboard
- * @license    https://hedis.argusdentalvision.com/license.txt
+ * @license    https://hedis.aflacbenefitssolutions.com/license.txt
  * @since      File available since Release 1.0.0
  */
 class Apps extends Model

@@ -48,7 +48,7 @@
                         onclick:                function (evt) {
                             if (Edits['import-environment-&&win_id&&'].validate()) {
                                 Heartbeat.stop();
-                                (new EasyAjax('/argus/import/service')).packageForm('environment_copy_form-&&win_id&&').then(function (response) {
+                                (new EasyAjax('/argus/import/service')).addForm('environment_copy_form-&&win_id&&').then(function (response) {
                                     var file = JSON.parse(response);
                                     $('#latest_file-&&win_id&&').val(file.filename).trigger('change');
                                 }).post();

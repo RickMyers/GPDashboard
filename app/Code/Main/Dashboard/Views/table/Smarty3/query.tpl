@@ -34,7 +34,7 @@
 <script type="text/javascript">
     $('.query-icon-{$window_id}').on('click',function (evt) {
         var win = Desktop.window.list['{$window_id}'];
-        (new EasyAjax('/dashboard/table/edit')).add('window_id','{$window_id}').packageForm('table_select_and_edit_form_{$window_id}').add('id',evt.target.getAttribute('row_id')).then(function (response) {
+        (new EasyAjax('/dashboard/table/edit')).add('window_id','{$window_id}').addForm('table_select_and_edit_form_{$window_id}').add('id',evt.target.getAttribute('row_id')).then(function (response) {
             win.splashScreen(response);
         }).post();
     });

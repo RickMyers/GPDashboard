@@ -137,8 +137,8 @@
                 var loginMessage = window.location.href.split('?');
                 if (loginMessage[1]) {
                     $('#error-lightbox').css('display','block');
-                    loginMessage[1] = decodeURI(loginMessage[1]);
-                    $('#login-error').html(loginMessage[1].substr(8).toString().replace('<', "&lt;").replace('>', "&gt;").replace("'", "&#39;").replace('"', "&#34;"));   
+                    var message = decodeURI(loginMessage[1]).split('=');
+                    $('#login-error').html(message[1].toString().replace('<', "&lt;").replace('>', "&gt;").replace("'", "&#39;").replace('"', "&#34;"));                     
                 }
             }
             
@@ -179,7 +179,7 @@
                     <center>
                         <div style=''>
                             <div>
-                                <div><img style="height: 62px; position: relative; " src="/images/argus/argus_logo.png" /></div>
+                                <div><img style="height: 62px; position: relative; " src="/images/dashboard/aflac_logo.png" /></div>
                             </div>
                         </div>
                         <div style='clear: both; margin-bottom: 20px'></div>

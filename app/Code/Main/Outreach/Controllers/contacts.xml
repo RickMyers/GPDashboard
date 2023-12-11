@@ -5,7 +5,7 @@ Individual Contact actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="contacts" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="contacts" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="open" blocking="off" passalong="window_id,contact_id">
@@ -36,6 +36,16 @@ For Controller reference, please see "Anatomy of a Controller" at https://www.hu
             <chain>
                 <action name="assignments" />
             </chain>
+        </action>
+
+        <!-- ############################################################### -->
+
+        <action name="reassign" blocking="off">
+            <description>Reassigns a contacts to someone else</description>
+            <entity namespace="outreach" class="campaign/members" id='contacts' method='save'>
+                <parameter name='id' source='post' value='contact_id' required="true" />
+                <parameter name='assignee' source='post' required="true" />
+            </entity>
         </action>
 
         <!-- ############################################################### -->

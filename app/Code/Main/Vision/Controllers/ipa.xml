@@ -5,7 +5,7 @@ High-level Actions for Ipas
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="ipa" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="ipa" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="offices" output="JSON">
             <description>List of offices associated to the ipa</description>
@@ -100,7 +100,7 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
         <!-- ############################################################### -->
         
         <action name="validate" blocking="off" output="JSON">
-            <description></description>
+            <description>Not sure what this does</description>
             <model namespace="vision" class="ipa" method="validate" response="true">
                 <parameter name="ipa_name" source="post" required="true" />
             </model>
@@ -153,6 +153,15 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
             <entity namespace="vision" class="ipa/groups" id="groups" orderby="group=ASC" />
             <entity namespace="vision" class="ipas" id="ipas" orderby="ipa=ASC" />
         </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="attach" passalong='windowId'>
+            <description>Workflow configuration widget for attaching IPA information to the Event</description>
+            <mongo namespace='paradigm' class='elements' id='element'>
+                <parameter name="id" source="post" default="" required="true" />
+            </mongo>             
+        </action>        
         
     </actions>
 </controller>

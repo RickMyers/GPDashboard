@@ -174,6 +174,8 @@
             {if ($chart.layer)}
             $('#{$chart.layer}-label').html("{$chart.description}");
             {/if}
-            {$chart_data|unescape}
+            {if ($chart_data)}
+                {$chart_data|unescape}
+            {/if}
         {/foreach}
     </script>

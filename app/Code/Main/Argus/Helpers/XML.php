@@ -13,8 +13,8 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
- * @copyright  2005-present Argus Dental & Vision
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
+ * @copyright  2005-present Aflac Benefits Solutions
  * @version    1.0.0
  * @since      File available since Release 1.0.0
  */

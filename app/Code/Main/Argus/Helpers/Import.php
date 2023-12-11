@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    1.0.0

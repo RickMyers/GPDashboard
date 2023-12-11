@@ -69,7 +69,7 @@
             longname:	"New Dashboard Bug Submit Button",
             onclick:    function () {
                 if (Edits['dashboard-bug-report'].validate()) {
-                    (new EasyAjax('/dashboard/feature/bugreport')).packageForm('dashboard_bug_form').add('screenshot',$E('dashboard_bug_screenshot').src).then(function (response) {
+                    (new EasyAjax('/dashboard/feature/bugreport')).addForm('dashboard_bug_form').add('screenshot',$E('dashboard_bug_screenshot').src).then(function (response) {
                         Argus.dashboard.feature.win._close();
                     }).post();
                 }

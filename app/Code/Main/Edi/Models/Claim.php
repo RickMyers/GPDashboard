@@ -10,7 +10,7 @@ namespace Code\Main\Edi\Models;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @since      File available since Release 1.0.0
  */
 class Claim extends EDIModel implements \Iterator

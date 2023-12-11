@@ -59,7 +59,7 @@
 			style:			"padding: 2px 10px; color: #333; color: #333",
                         onclick:                function (evt) {
                             if (Edits['new-report-form-&&pid&&'].validate()) {
-                                (new EasyAjax('/argus/reports/new')).packageForm('new-project-report-form-&&pid&&').then(function (response) {
+                                (new EasyAjax('/argus/reports/new')).addForm('new-project-report-form-&&pid&&').then(function (response) {
                                     $('#sub-container').html(response);
                                 }).post();
                             }

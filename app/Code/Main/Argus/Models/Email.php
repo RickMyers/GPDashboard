@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Aaron Binder <abinder@argusdentalvision.com>
+ * @author     Aaron Binder <abinder@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -49,8 +49,8 @@ class Email extends Model
      */ 
     public function sendEmail($to=false,$subject=false,$body=false,$from=false,$reply=false,$attachment=false) {
         $settings = \Environment::settings();
-        $from = ($from ? $from : 'noreply@argusdentalvision.com');
-        $reply = ($reply ? $reply : 'noreply@argusdentalvision.com');
+        $from = ($from ? $from : 'noreply@aflacbenefitssolutions.com');
+        $reply = ($reply ? $reply : 'noreply@aflacbenefitssolutions.com');
         $mailer = new \PHPMailer;
         $mailer->isSMTP();
         $mailer->Host = $settings->getSmtpHost();

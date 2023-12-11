@@ -13,14 +13,14 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
- * @copyright  2005-present Argus Dental & Vision
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
+ * @copyright  2005-present Aflac Benefits Solutions
  * @version    1.0.0
  * @since      File available since Release 1.0.0
  */
 class CSV extends Helper
 {
-
+    
     /**
      * Constructor
      */
@@ -93,7 +93,47 @@ class CSV extends Helper
         }
         return $arr;
     }
+
     
+    /**
+     * Different version of loading a CSV
+     * 
+     * @param type $filename
+     * @param type $stripchars
+     * @param type $separator
+     * @return type
+     */
+    public function loadCSV($filename=false,$stripchars=false,$separator=',') {
+        $arr = [];
+        if ($filename && file_exists($filename)) {
+            $fields = [];
+            $first  = true;
+            if (($handle = fopen($filename, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle, 0, $separator)) !== FALSE) {
+                    if ($first) {
+                        if ($stripchars) {
+                            foreach ($data as $key => $val) {
+                                $val    = str_replace(' ','_',$val);
+                                $data[] = preg_replace("/[^A-Za-z0-9_]/", '', $val);  //strip non alphanumeric chars
+                            }
+                        }
+                        $fields = $data; 
+                        $first  = false;
+                        continue;
+                    }
+                    $row = [];
+                    foreach ($data as $idx => $value) {
+                        $row[strtolower(isset($fields[$idx]) ? $fields[$idx] : 'field_'.$idx)] = $value;
+                    }
+                    $arr[] = $row;
+                }
+                fclose($handle);
+            }
+            $this->setFields($fields);
+        }
+        return $arr;
+        
+    }
     /**
      * 
      * @param type $filename

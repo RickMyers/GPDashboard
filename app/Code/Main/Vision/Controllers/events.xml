@@ -5,7 +5,7 @@ Scanning Event actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="events" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="events" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="add">
             <description>Add a member to an event</description>
@@ -31,13 +31,13 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
             <description>We are uploading a list of members into an event</description>
             <helper namespace="vision" class="event" method="newUpload">
                 <parameter name="event_id"    source="post" required="true" />
-                <parameter name="client_id" source="post" required="true" />
+                <parameter name="client_id"   source="post" required="true" />
                 <parameter name="member_list" source="file"  />
             </helper>
             <entity namespace="vision" class="event/attachments" method="save">
-                <parameter name="event_id" source="post" required="true" />
-                <parameter name="attachment" source="file" value="member_list" />
-                <parameter name="author_id" source="session" value="uid" required="true" />
+                <parameter name="event_id"    source="post" required="true" />
+                <parameter name="attachment"  source="file" value="member_list" />
+                <parameter name="author_id"   source="session" value="uid" required="true" />
                 <parameter name="description" source="post" default="Uploaded Member List"/>
             </entity>            
             <chain>

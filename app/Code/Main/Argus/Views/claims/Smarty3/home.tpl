@@ -99,12 +99,12 @@
                     </select>
                 </td>
                 <td>
-                    <select name="status" id="batching_status"  class="claim-search-criteria">
+                    <select name="verified" id="batching_status"  class="claim-search-criteria">
                         <option value=""></option>
-                        <option value="N">Not-Paid</option>
-                        <option value="P">Pending</option>
+                        <option value="R">Denied/Rejected</option>
+                        <option value="F">Failed</option>
                         <option value="M">Missing</option>
-                        <option value="E">Error (Unknown)</option>
+                        <option value="Z">Voided</option>
                     </select>                    
                 </td>
                 <td>
@@ -181,26 +181,6 @@
     </script>        
 </div>
 {/if}
-<script type='text/javascript'>
-    (function () {
-        var tabs = new EasyTab('claiming_nav',175);
-        tabs.add('Review',false,'claiming_review');
-        {if ($claiming)}
-            tabs.add('Batching',false,'claiming_batching');
-        {/if}
-        {if ($od)}        
-            var f = (function () {
-                return function () {
-                    (new EasyAjax('/argus/claims/analytics')).add('year',new Date().getFullYear()).then(function (response) {
-                        $('#claiming_analytics').html(response);
-                    }).get();
-                }
-            })();
-            tabs.add('Analytics',f,'claiming_analytics');
-        {/if}
-        tabs.tabClick(0);
-    })();     
-</script>
 <div id="claiming_review">
     <div id="claims-top" style="position: relative">
         <hr style='opacity: .4' />
@@ -235,6 +215,18 @@
                             </select>
                         </td>                    
                         <td>
+                            <select name="year" id="claim_year" class="claim-search-criteria">
+                                <option value=""></option>
+                                <option value="2020"> 2020 </option>
+                                <option value="2021"> 2021 </option>
+                                <option value="2022"> 2022 </option>
+                                <option value="2023"> 2023 </option>
+                                <option value="2024"> 2024 </option>
+                                <option value="2025"> 2025 </option>
+                            </select>
+                        </td>                    
+                        
+                        <td>
                             <input type="text" name="member_number" id="claim_member_number" class="claim-search-criteria" />
                         </td>
                         <td>
@@ -262,14 +254,14 @@
                             <input type="text" name="claim_date" id="claim_date" class="claim-search-criteria" />
                         </td>
                         <td>
-                            <select name="status" id="claim_status"  class="claim-search-criteria">
+                            <select name="verified" id="claim_status"  class="claim-search-criteria">
                                 <option value=""></option>
-                                <option value="Y">Paid</option>
-                                <option value="A">Accepted</option>
-                                <option value="D">Denied</option>
-                                <option value="P">In-Process</option>
-                                <option value="I">Pending</option>
+                                <option value="">Not-Paid</option>
+                                <option value="P">Paid</option>
+                                <option value="R">Denied/Rejected</option>
+                                <option value="F">Failed</option>
                                 <option value="M">Missing</option>
+                                <option value="Z">Voided</option>
                             </select>
                         </td>                    
                         <td>
@@ -293,6 +285,9 @@
                         <td class="claim-search-criteria-desc">
                             Claim Type
                         </td>                    
+                        <td class="claim-search-criteria-desc">
+                            Year
+                        </td>                        
                         <td class="claim-search-criteria-desc">
                             Member ID
                         </td>
@@ -342,7 +337,25 @@
 
     </div>
 {/if}
-<script>
+<script type='text/javascript'>
+    (function () {
+        var tabs = new EasyTab('claiming_nav',175);
+        tabs.add('Review',false,'claiming_review');
+        {if ($claiming)}
+            tabs.add('Batching',false,'claiming_batching');
+        {/if}
+        {if ($od || $claiming)}        
+            var f = (function () {
+                return function () {
+                    (new EasyAjax('/argus/claims/analytics')).add('year',new Date().getFullYear()).then(function (response) {
+                        $('#claiming_analytics').html(response);
+                    }).get();
+                }
+            })();
+            tabs.add('Analytics',f,'claiming_analytics');
+        {/if}
+        tabs.tabClick(0);
+    })();     
     $('#claims-search-field').on('keypress',Argus.claims.scan);
     $('#claims-list-previous').on('click',function () {
         Argus.claims.list(--Argus.claims.page);

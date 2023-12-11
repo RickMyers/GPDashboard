@@ -3,9 +3,9 @@
 
 Actions supporting provider reconciliation
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="reconciliation" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="reconciliation" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="form" passalong="window_id">
             <description>The form that allows you to upload provider files</description>

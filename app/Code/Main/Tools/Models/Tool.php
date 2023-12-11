@@ -25,7 +25,7 @@ interface ArgusTool {
  *
  * @category   Logical Model
  * @package    Client
- * @author     Rick Myers <rmyers@argusdentalvision.com>
+ * @author     Rick Myers <rmyers@aflacbenefitssolutions.com>
  * @since      File available since Release 1.0.0
  * 
  */

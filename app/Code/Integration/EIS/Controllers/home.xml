@@ -5,7 +5,7 @@ Core EIS actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="open" passalong='window_id'>
             <description>The start page</description>

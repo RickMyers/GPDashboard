@@ -124,7 +124,7 @@
             </div>
         </div>
         <div id="argus-provider-footer">
-            &copy; 2017-present, Argus Dental &amp; Vision, all rights reserved
+            &copy; 2017-present, Aflac Benefits Solutions, all rights reserved
         </div>
         
     </body>

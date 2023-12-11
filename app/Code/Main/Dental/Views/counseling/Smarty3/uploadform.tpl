@@ -36,7 +36,7 @@
             $('#counseling-upload-submit-{$window_id}').fadeOut();
             $('#counseling-upload-message-{$window_id}').fadeIn();
             (function (win) {
-                (new EasyAjax('/dental/counseling/upload')).packageForm('hedis-calllist-upload-form-{$window_id}').addFiles('schedule',$E('counseling-schedule-{$window_id}')).then(function (response) {
+                (new EasyAjax('/dental/counseling/upload')).addForm('hedis-calllist-upload-form-{$window_id}').addFiles('schedule',$E('counseling-schedule-{$window_id}')).then(function (response) {
                     if (Argus.dental.upload.timer) {
                         window.clearTimeout(Argus.dental.upload.timer);
                     }

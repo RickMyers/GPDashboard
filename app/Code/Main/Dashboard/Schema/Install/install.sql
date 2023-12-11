@@ -2,7 +2,8 @@
 SQLyog Community v12.3.2 (64 bit)
 MySQL - 5.7.16-log : Database - argus_dashboard
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -73,8 +74,8 @@ CREATE TABLE `dashboard_chart_locations` (
   `description` char(255) DEFAULT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `focos_chart_locations_uidx` (`namespace`,`controller`,`action`,`layer`),
-  KEY `focos_chart_locations_idx` (`namespace`,`controller`,`action`)
+  UNIQUE KEY `argus_chart_locations_uidx` (`namespace`,`controller`,`action`,`layer`),
+  KEY `argus_chart_locations_idx` (`namespace`,`controller`,`action`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `dashboard_chart_packages` */

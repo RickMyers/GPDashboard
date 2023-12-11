@@ -6,7 +6,7 @@
         <description>EIS Integration</description>
         <author>
             <name>Rick Myers</name>
-            <email>rmyers@argusdentalvision.com</email>
+            <email>rmyers@aflacbenefitssolutions.com</email>
         </author>
         <module>
             <name>EIS</name>
@@ -75,7 +75,8 @@
         </events>
         <web>
             <edits>
-                <edit1>EIS/web/edits/edit.json</edit1>
+                <membersearch>EIS/web/edits/membersearch.json</membersearch>
+                <claimsearch>EIS/web/edits/claimsearch.json</claimsearch>
             </edits>
             <dashboard>
                 <js>

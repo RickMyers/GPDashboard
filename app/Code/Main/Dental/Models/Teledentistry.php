@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -49,7 +49,7 @@ class Teledentistry extends Model
         $image = Argus::getHelper('humble/image');
         $t = explode('.',$xray['name']);
         $ext   = $image->getExtension($xray['name']);
-        $form  = Argus::getEntity('dental/consultation/xrays');
+        $form  = Argus::getEntity('dental/consultation_xrays');
         $image->fetch($xray['path']);
         $image->generateThumbnail($xray['name'],$ext);
         $form->setThumbnail('data:image/png;base64,'.base64_encode(file_get_contents($xray['name'])));

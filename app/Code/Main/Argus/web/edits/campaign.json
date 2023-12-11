@@ -78,7 +78,7 @@
                                 $('#counseling-upload-submit-&&win_id&&').fadeOut();
                                 $('#counseling-upload-message-&&win_id&&').fadeIn();
                                 (function (win) {
-                                    (new EasyAjax('/dental/counseling/upload')).packageForm('hedis-calllist-upload-form-&&win_id&&').addFiles('schedule',$E('counseling-schedule-&&win_id&&')).then(function (response) {
+                                    (new EasyAjax('/dental/counseling/upload')).addForm('hedis-calllist-upload-form-&&win_id&&').addFiles('schedule',$E('counseling-schedule-&&win_id&&')).then(function (response) {
                                         Argus.hedis.manager.unassigned.callqueue(25,1,win);
                                     }).post()
                                 })(Desktop.window.list['&&win_id&&']);

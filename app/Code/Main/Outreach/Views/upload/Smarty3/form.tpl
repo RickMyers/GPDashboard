@@ -21,7 +21,7 @@
     (function () {
         $('#outreach_member_upload').on('click',function (evt) {
             if ($('#outreach_campaign').val()) {
-                (new EasyAjax('/outreach/upload/members')).add('campaign_id',$('#outreach_campaign').val()).packageForm('outreach_member_upload_form').then(function (response) {
+                (new EasyAjax('/outreach/upload/members')).add('campaign_id',$('#outreach_campaign').val()).addForm('outreach_member_upload_form').then(function (response) {
                     console.log(response);
                     Argus.outreach.win.splashScreen('');
                 }).post();

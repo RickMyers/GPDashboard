@@ -5,7 +5,7 @@ Retina Scan actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="scans" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="scans" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="upload">
             <description>Processes the retina scan files</description>

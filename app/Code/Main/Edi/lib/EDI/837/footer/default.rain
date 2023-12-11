@@ -1,2 +1,2 @@
-GE*1*{$group_control_number}~
+GE*{$number_of_transactions}*{$group_control_number}~
 IEA*1*{$group_number}~

@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -31,7 +31,7 @@ class Claims extends Entity
     }
 
     public function exportClaims() {
-        $healthplan_clause  = ($this->getClientId()) ? "and a.health_plan_id = '".$this->getClientId()."'" : "";
+        $healthplan_clause  = ($this->getClientId())     ? "and a.health_plan_id = '".$this->getClientId()."'" : "";
         $member_clause      = ($this->getMemberNumber()) ? "and b.member_id = '".$this->getMemberNumber()."'" : "";
         $event_id_clause    = ($this->getEventId())      ? "and b.event_id = '".$this->getEventId()."'" : "";
         $event_date_clause  = ($this->getEventDate())    ? "and b.event_date = '".date('Y-m-d',strtotime($this->getEventDate()))."'" : "";
@@ -55,7 +55,6 @@ class Claims extends Entity
            {$name_clause}
 SQL;
         return $this->with('argus/claims')->on('id')->query($query);
-        
     }
     
     /**
@@ -64,14 +63,15 @@ SQL;
      * @return iterator
      */
     public function listClaims() {
-        $healthplan_clause  = ($this->getHealthPlanId()) ? "and a.health_plan_id = '".$this->getHealthPlanId()."'" : "";
-        $member_clause      = ($this->getMemberNumber()) ? "and b.member_id = '".$this->getMemberNumber()."'" : "";
-        $event_id_clause    = ($this->getEventId())      ? "and b.event_id = '".$this->getEventId()."'" : "";
-        $event_date_clause  = ($this->getEventDate())    ? "and b.event_date = '".date('Y-m-d',strtotime($this->getEventDate()))."'" : "";
-        $claim_date_clause  = ($this->getClaimDate())    ? "and date(a.modified) = '".date('Y-m-d',strtotime($this->getClaimDate()))."'" : "";
-        $provider_clause    = ($this->getProvider())     ? "and a.provider_id = '".$this->getProvider()."'" : "";
-        $name_clause        = ($this->getMemberName())   ? "and b.member_name like '%".$this->getMemberName()."%'" : "";
-        $verified_clause    = ($this->getVerified())     ? "and a.verified = '".$this->getVerified()."'" : "";
+        $healthplan_clause  = ($this->getHealthPlanId())    ? "and a.health_plan_id = '".$this->getHealthPlanId()."'" : "";
+        $member_clause      = ($this->getMemberNumber())    ? "and b.member_id = '".$this->getMemberNumber()."'" : "";
+        $event_id_clause    = ($this->getEventId())         ? "and b.event_id = '".$this->getEventId()."'" : "";
+        $event_date_clause  = ($this->getEventDate())       ? "and b.event_date = '".date('Y-m-d',strtotime($this->getEventDate()))."'" : "";
+        $claim_date_clause  = ($this->getClaimDate())       ? "and date(a.`date`) = '".date('Y-m-d',strtotime($this->getClaimDate()))."'" : "";
+        $provider_clause    = ($this->getProvider())        ? "and a.provider_id = '".$this->getProvider()."'" : "";
+        $name_clause        = ($this->getMemberName())      ? "and b.member_name like '%".$this->getMemberName()."%'" : "";
+        $verified_clause    = ($this->getVerified())        ? "and a.verified = '".$this->getVerified()."'" : "";
+        $year_clause        = ($this->getYear())            ? "and b.event_date between '".$this->getYear()."-01-01' and '".$this->getYear()."-12-31'" : "";
         $query = <<<SQL
         SELECT a.*, 
                b.event_id, b.event_date, b.event_address, b.form_type, b.screening_client, b.member_name, b.tag
@@ -87,6 +87,7 @@ SQL;
            {$event_date_clause}
            {$event_id_clause}
            {$name_clause}
+           {$year_clause}
 SQL;
         return $this->with('vision/consultation_forms')->on('form_id')->query($query);
     }
@@ -97,9 +98,9 @@ SQL;
      * @return iterator
      */
     public function extendedData() {
-        $id = $this->getId();
-        $claim = $this->load();
-        $query = <<<SQL
+        $id     = $this->getId();
+        $claim  = $this->load();
+        $query  = <<<SQL
                 select a.*, b.*, concat(c.last_name,', ',c.first_name) as reviewer, concat(d.last_name,', ',d.first_name) as technician_name
                   from argus_claims as a
                   left outer join vision_consultation_forms as b
@@ -120,7 +121,7 @@ SQL;
     }
     
     /**
-     * XREF for the claim status
+     * XREF for the claim status, from Aldera -- DEPRECATED!
      * 
      * @param string $status
      * @return string
@@ -302,6 +303,27 @@ SQL;
               LEFT OUTER JOIN vision_clients AS b 
                 ON a.health_plan_id = b.id
               ORDER BY b.client                
+SQL;
+        return $this->query($query);
+    }
+    
+
+    /**
+     * This query is used for a variety of claims related graphs... the data is manipulated elsewhere in a claims model
+     * 
+     * @param int $year
+     * @return iterator
+     */
+    public function yearlyClaimData($year=false) {
+        $year = ($year) ? $year : date('Y');
+        $query = <<<SQL
+            SELECT provider_id, health_plan_id, c.event_date, MONTH(c.event_date) AS mm, CONCAT(b.first_name,' ',b.last_name) AS provider_name, CONCAT(UCASE(SUBSTR(c.form_type,1,1)),SUBSTR(c.form_type,2)) AS form_type, a.total AS cost, a.verified AS `status`
+              FROM argus_claims AS a
+              LEFT OUTER JOIN humble_user_identification AS b
+                ON a.provider_id = b.id
+              LEFT OUTER JOIN vision_consultation_forms AS c
+                ON a.form_id = c.id
+             WHERE c.event_date BETWEEN '{$year}-01-01' AND '{$year}-12-31'                
 SQL;
         return $this->query($query);
     }

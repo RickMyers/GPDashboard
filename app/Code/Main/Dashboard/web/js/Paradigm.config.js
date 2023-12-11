@@ -6,12 +6,12 @@ var ParadigmConfig = {
         default: {
             window: {
                 icon: "/images/paradigm/icons/humble_icon.png",
-                name: "Argus Dental &amp; Vision"
+                name: "Aflac Benefits Solutions"
             }
         },
         window: {
             icon: false,
-            name: "Argus"
+            name: "ABS"
             
         }
     },

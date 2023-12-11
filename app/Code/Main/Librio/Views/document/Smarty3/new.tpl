@@ -23,7 +23,7 @@
     </div>
 </div>
 <div id="librio-document-upload-footer">
-    &copy; 2017, Argus Dental &amp; Vision
+    &copy; 2017, Aflac Benefits Solutions
 </div>
 <script type="text/javascript">
     (function () {

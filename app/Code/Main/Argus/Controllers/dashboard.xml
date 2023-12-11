@@ -5,7 +5,7 @@ Basic Controller
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="dashboard" use="Smarty3" author=" " email="rmyers@argusdentalvision.com">
+<controller name="dashboard" use="Smarty3" author=" " email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="connection" blocking="off" output="JSON">

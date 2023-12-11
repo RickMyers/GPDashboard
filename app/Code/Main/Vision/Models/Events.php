@@ -12,7 +12,7 @@ use Environment;
  *
  * @category   Utility
  * @package    Other
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @since      File available since Release 1.0.0
  */
 class Events extends Model
@@ -182,9 +182,32 @@ class Events extends Model
             $templater->assign('incomplete',2);
             $templater->assign('total',count($forms));
             $x = $templater->draw($template,true);
-            //$n = $this->sendEmail('rmyers@argusdentalvision.com','Diabetic screening results from "'.$data['start_date'].'" are available via Hedis portal.',$x,'noreply@argusdentalvision.com');
-                    
-            
+            //$n = $this->sendEmail('rmyers@aflacbenefitssolutions.com','Diabetic screening results from "'.$data['start_date'].'" are available via Hedis portal.',$x,'noreply@aflacbenefitssolutions.com');    
+        }
+    }
+
+    /**
+    * Those people who werent seen at event (gaps) are added to our Outreach app
+    *
+    * @workflow use(process)
+    */
+    public function moveRemainingGapsToOutreach($EVENT=false) {
+        if ($EVENT) {
+            $data = $EVENT->load();
+        }
+    }
+
+    /**
+    * Mark the event closed
+    *
+    * @workflow use(process)
+    */
+    public function markClosed($EVENT=false) {
+        if ($EVENT) {
+            $data = $EVENT->load();
+            if (isset($data['event_id']) && $data['event_id']) {
+                Argus::getEntity('scheduler/events')->setId($data['event_id'])->setActive('C')->save();
+            }
         }
     }
 }

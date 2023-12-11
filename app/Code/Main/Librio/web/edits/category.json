@@ -56,7 +56,7 @@
                 classname:	"",
                 onclick:        function () {
                     if (Edits['new-librio-category'].validate()) {
-                        (new EasyAjax('/librio/category/add')).packageForm('librio-new-category-form').then(function (response) {
+                        (new EasyAjax('/librio/category/add')).addForm('librio-new-category-form').then(function (response) {
                             Argus.librio.category.win._close();
                             //A different place to hook...
                             $('#sub-container').html(response);

@@ -5,8 +5,8 @@ Claims related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="claims" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
-    <actions>
+<controller name="claims" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
+    <actions blocking="off">
         
         <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
             <description>The home page</description>
@@ -25,6 +25,7 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
             <entity namespace="argus" class="claims" id="claims">
                 <parameter name="year" source="request" required="true" />
             </entity>
+            <model namespace='argus' class='charts' id='charts' />
             <entity namespace="argus" class="user/roles" id="role">
                 <parameter name="user_id" source="session" value="uid" required="true" />
             </entity>
@@ -69,6 +70,7 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
                     </model>
                 </then>
                 <else>
+                    <!-- NOP, since we only support Vision claims at this time, and likely will lose careplus in 2023 so no need for future proofing... Darth Duck strikes again!!! -->
                 </else>
             </if>
         </action>
@@ -79,15 +81,16 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
             <description>Lists claims</description>
             <entity namespace="argus" class="claims" id='claims' page="page" rows="rows" orderby="event_date=DESC" defaultPage="1" >
                 <parameter name='uid' source='session' value='uid' default='' />
-                <parameter name='claim_type' source='post' optional="true" />
-                <parameter name='client_id' source='post' optional="true" />
-                <parameter name='provider' source='post' optional="true" />
-                <parameter name='claim_date' format="date" source='post' optional="true" />
-                <parameter name='event_date' format="date" source='post' optional="true" />
-                <parameter name='event_id' source='post' optional="true" />
+                <parameter name='claim_type'    source='post' optional="true" />
+                <parameter name='client_id'     source='post' optional="true" />
+                <parameter name='provider'      source='post' optional="true" />
+                <parameter name='claim_date'    format="date" source='post' optional="true" />
+                <parameter name='event_date'    format="date" source='post' optional="true" />
+                <parameter name='event_id'      source='post' optional="true" />
                 <parameter name='member_number' source='post' optional="true" />
-                <parameter name='member_name' source='post' optional="true" />
-                <parameter name='verified' source='post' optional="true" />
+                <parameter name='member_name'   source='post' optional="true" />
+                <parameter name='verified'      source='post' optional="true" />
+                <parameter name='year'          source='post' optional="true" />
             </entity>
         </action>
 

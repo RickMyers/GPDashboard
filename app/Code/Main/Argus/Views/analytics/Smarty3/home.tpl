@@ -75,7 +75,7 @@
 
 <script>
     $('#analytics_add_button').on('click',function () {
-        (new EasyAjax('/argus/analytics/add')).packageForm('analytics_chart_form').then(function (response) {
+        (new EasyAjax('/argus/analytics/add')).addForm('analytics_chart_form').then(function (response) {
               $('#container').html(response);
         }).post();
     });    

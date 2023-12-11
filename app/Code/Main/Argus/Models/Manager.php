@@ -55,7 +55,7 @@ class Manager extends Model
      * @return string
      */
     public function getSocketServer() : string {
-        $server = 'https://dev.argusdentalvision.com:3000';
+        $server = 'https://dev.aflacbenefitssolutions.com:3000';
         if (file_exists('../../socketserver.txt')) {
             $server = str_replace(["\n","\r","\t"," "],["","","",""],file_get_contents('../../socketserver.txt'));
         }

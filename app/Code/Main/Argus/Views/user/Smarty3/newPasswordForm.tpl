@@ -132,16 +132,24 @@
             }
             window.onload = function () {
                 new EasyEdits('/edits/argus/newpassword','newpassword');
-                var loginMessage = window.location.href.split('?message=');
-                if (loginMessage[1]) {
-                    loginMessage[1] = decodeURI(loginMessage[1]);
-                    $('#login-error').html(loginMessage[1]).substr(8).toString().replace('<', "&lt;").replace('>', "&gt;").replace("'", "&#39;").replace('"', "&#34;");
+                var args = { };
+                var loginMessage = window.location.href.split('?');
+                var parts = loginMessage[1].split('&');
+                var segs = '';
+                for (var i=0; i<parts.length; i++) {
+                    segs = parts[i].split('=');
+                    args[segs[0]]=segs[1];
                 }
-                resizeWindow();
+                $('#next_page').val((args['then']) ? args['then'] : '/index.html');
+                if (args['message']) {
+                    $('#login-error').html(args['message'].toString().replace('<', "&lt;").replace('>', "&gt;").replace("'", "&#39;").replace('"', "&#34;"));   
+                }
+
                 window.setTimeout(rollSlides,slides.speed);
                 window.setTimeout(function () {
                     alert("Hello!\n\nYou need to change your password. Please use the form on this page to set your new password.\n\nThe password must be at least 8 characters long and contain both letters and numbers.\n\nThank You!");
                 },500);
+                resizeWindow();
             }
             $(window).resize(function () {
                 resizeWindow();
@@ -167,6 +175,7 @@
                 </div>
                 <form name='argus-new-password-form' id='argus-new-password-form' onsubmit='return false'  action='/argus/user/newpassword' method='POST'>
                     <input type="hidden"   name="token" id="token" value="{$token}" />
+                    <input type="hidden"   name="next_page" id="next_page" value="/index.html" />
                     {if (isset($clearReset))}
                         <input type="hidden"   name="clearReset" id="clearReset" value="{$clearReset}" />
                     {/if}

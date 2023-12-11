@@ -134,8 +134,15 @@
             new EasyEdits('/edits/dashboard/ipalogin','login');
             var loginMessage = window.location.href.split('?');
             if (loginMessage[1]) {
-                loginMessage[1] = decodeURI(loginMessage[1]);
-                $('#login-error').html(loginMessage[1]).substr(8).toString().replace('<', "&lt;").replace('>', "&gt;").replace("'", "&#39;").replace('"', "&#34;");   
+                var parts = loginMessage[1].split('&');
+                var message = decodeURI(parts[0]).split('=');
+                var next_page  = '/index.html';
+                if (parts[1]) {
+                    parts = parts[1].split('=');
+                    next_page = parts[1];
+                }
+                $('#login-error').html(message[1].toString().replace('<', "&lt;").replace('>', "&gt;").replace("'", "&#39;").replace('"', "&#34;"));   
+                $('#next_page').val(next_page);
             }
             resizeWindow();
             window.setTimeout(rollSlides,slides.speed);
@@ -159,21 +166,25 @@
         </div>
         <div id='login-card' class="login-card" style="display: inline-block">
             <center>
-            <img style="height: 62px; position: relative; " src="/images/argus/argus_logo.png" />
+            <img style="height: 62px; position: relative; " src="/images/dashboard/aflac_logo.png" />
             <!--img id='site_logo' src=''  height='100' alt='logo' /--><br /><br />
             </center>
-            <form name='jarvis-login-form' id='jarvis-login-form' onsubmit='return false'  action='/dashboard/ipa/authenticate' method='POST'>
+            <form name='excedis-login-form' id='excedis-login-form' onsubmit='return false'  action='/dashboard/ipa/authenticate' method='POST'>
               <select name="ipa_id" id='ipa_id'>
                   <option value="">Select IPA</option>
                   {foreach from=$ipas->fetch() item=ipa}
                       <option value="{$ipa.id}">{$ipa.ipa}</option>
                   {/foreach}
               </select>
+              <select name="location_id" id='location_id' >
+                  <option value="">Select Location (Optional)</option>
+              </select> <i></i>
               <input type="password" name="user_password" id='user_password' placeholder="Password"  autocomplete="off">
+              <input type='hidden' name='then' id='next_page' value='' />
               <input type="submit" name="login-submit" id='login-submit' class="login login-submit" value="login">
             </form>
             <div class="login-help">
-              <a href="mailto:support@argusdentalvision.com" onclick='' style='color: #990000'>Support Request</a> • <a href="/argus/user/recoverForm">Forgot Password</a>
+              <a href="mailto:support@aflacbenefitssolutions.com" onclick='' style='color: #990000'>Support Request</a> • <a href="/argus/user/recoverForm">Forgot Password</a>
             </div>
         </div><div id="slide" style="position: relative; display: inline-block; width: 626px;   overflow: hidden; ">
             <img id='slide1' src='/images/argus/slide_1.jpg' style='position: absolute; top: 0px; left: 0px; height: 100%; box-shadow: 0 2px 2px rgba(0,0,0,0.3); border-radius: 0px 2px 2px 0px;'/>

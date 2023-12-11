@@ -45,7 +45,7 @@
             classname:	"",
             onclick:        function () {
                 if (Edits['new-librio-project'].validate()) {
-                    (new EasyAjax('/librio/project/add')).packageForm('librio-new-project-form').then(function (response) {
+                    (new EasyAjax('/librio/project/add')).addForm('librio-new-project-form').then(function (response) {
                         Argus.librio.project.win._close();
                         $('#sub-container').html(response);
                     }).post();

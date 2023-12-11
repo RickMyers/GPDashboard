@@ -5,18 +5,29 @@ Queue Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="queues" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="queues" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="refresh" blocking="off" output='JSON'>
             <description>Fetches initial status of all queues</description>
+            <entity namespace="outreach" class="participant/roles" method='nonkeysload' id='role'>
+                <parameter name='campaign_id' source='request' required='true' />
+                <parameter name='participant_id' source='session' value='uid' required='true' />
+            </entity>
             <entity namespace="outreach" class="campaign/members" response="true" method="fetch" page="page" defaultRows="25" rows='rows'>
                 <parameter name="campaign_id" source="request" required="true" />
-                <if var="status" eq="A">
+                <if id="role" method="getManager" eq='Y'>
                     <then>
-                        <parameter name='assignee' source='session' value='uid' required='true' />
+                        <comment>You are an admin, so no restrictions</comment>
                     </then>
-                </if>
+                    <else>
+                        <if var="status" eq="A">
+                            <then>
+                                <parameter name='assignee' source='session' value='uid' required='true' />
+                            </then>
+                        </if>
+                    </else>
+                 </if>
                 <parameter name="status" source="request" required="true" />
             </entity>
         </action>

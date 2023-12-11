@@ -116,7 +116,7 @@
             "type":     "button",
             "onclick":  function () {
                 if (Edits['vision_schedule_add_member_form_&&event_id&&'].validate()) {
-                    (new EasyAjax('/vision/schedule/addmember')).add('event_id','&&event_id&&').packageForm('vision_screening_new_attendee_&&event_id&&').then(function (response) {
+                    (new EasyAjax('/vision/schedule/addmember')).add('event_id','&&event_id&&').addForm('vision_screening_new_attendee_&&event_id&&').then(function (response) {
                         $('#new-event-member-list').html(response);
                         $E('vision_screening_new_attendee_&&event_id&&').reset();
                     }).post();

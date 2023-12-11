@@ -156,7 +156,7 @@
                 <input type="submit" name="create-password-submit" id='create-password-submit' class="login create-password-submit" value="Create Password">
             </form>
             <div class="create-password-help">
-              • <a href="mailto:support@argusdentalvision.com" onclick='' style='color: #990000'>Support Request</a> •
+              • <a href="mailto:support@aflacbenefitssolutions.com" onclick='' style='color: #990000'>Support Request</a> •
             </div>
         </div><div id="slide" style="position: relative; display: inline-block; width: 626px;   overflow: hidden; ">
             <img id='slide1' src='/images/argus/slide_1.jpg' style='position: absolute; top: 0px; left: 0px; height: 100%; box-shadow: 0 2px 2px rgba(0,0,0,0.3); border-radius: 0px 2px 2px 0px;'/>

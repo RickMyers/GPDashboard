@@ -17,7 +17,7 @@ function WindowAttributeClass(id,x,y,w,h) {
     this.width  = w+"px";
     this.height = h+"px";
     this.save   = function () {
-         if (!virtualWindows.application.user)
+         if (!Desktop.virtualWindows.application.user)
             return false;   //no userid
         (new EasyAjax("/desktop/attributes/save")).add("dimensions",JSON.stringify(this)).then(function () {}).post();
     };
@@ -32,7 +32,7 @@ function IconAttributeClass(id,x,y) {
     this.left   = x+"px";
     this.top    = y+"px";
     this.save   = function () {
-         if (!virtualWindows.application.user)
+         if (!Desktop.virtualWindows.application.user)
             return false;   //no userid
         (new EasyAjax("/desktop/attributes/save")).add("dimensions",JSON.stringify(this)).then(function () {}).post();
     };
@@ -344,6 +344,47 @@ DesktopWindow.corner = function () {
 //
 //------------------------------------------------------------------------------
 var Desktop = {
+    virtualWindows: (function () {
+        let icons = [];
+        for (var i=0; i<100; i++) {
+            icons[icons.length] = {
+                "id":       "paradigm-window-"+i,
+                "image":    "",
+                "text":     "Website | Paradigm",
+                "namespace":"paradigm",
+                "security": "public",
+                "top":      false,
+                "left":     false,
+                "width":    false,
+                "height":   false,
+                "minimize": false,
+                "maximize": false,
+                "close":    false,
+                "open":     function (win) {
+                    if (win._front) {
+                        win._front();
+                    }
+                    return true;
+                },
+                "resize":   false,
+                "handler":  false
+            }
+        }
+        return {
+            "application": {
+                windowStyle: "solid",
+                desktop: {
+                },
+                owner: {
+                },
+                appearance: {
+                }
+            },
+            "controls": [
+            ],
+            "icons": icons
+        }
+    })(),
     /*  --------------------------------------------------------------------
      *  A semaphore is a style of programming involving the management of a
      *    fixed number of resources, in this case, the dynamic windows
@@ -466,17 +507,11 @@ var Desktop = {
         Desktop.refreshing = true;
         window.location.reload();
     },
-    toFront: function (win) {
-        if (win._front) {
-            win._front();
-        }
-        return true;
-    },
     promptBeforeLeaving: function (evt) {
         var win     = null;
         var status  = true;
         if ((!Desktop.refreshing) && (Desktop.logoffOnReload)) {
-           /* if (virtualWindows.application.user) {
+           /* if (Desktop.virtualWindows.application.user) {
                 for (var i in Desktop.window.list) {
                     win = Desktop.window.list[i];
                     if ((win.state === 1) || (win.state === 2) || (win.state === 3)) {
@@ -496,7 +531,7 @@ var Desktop = {
         }
     },
     logoff:  function () {
-  /*      if (virtualWindows.application.user)	{
+  /*      if (Desktop.virtualWindows.application.user)	{
             Desktop.logoffOnReload  = false;
             Desktop.refreshing      = true;
             (new EasyAjax("/desktop/actions/logoff")).then(function () {
@@ -677,6 +712,27 @@ var Desktop = {
         Desktop.ref.iebody = (document.documentElement) ? document.documentElement : document.body; //blah for older IE
         (new EasyAjax('/dashboard/desktop/initialize')).then(function (appList) {
             Desktop.elements = JSON.parse(appList);
+            let windows = [];
+            for (var i=0; i<100; i++) {
+                windows[windows.length] = {
+                    "id": 	"paradigm-window-"+i,
+                    "image":	"",
+                    "text":	"Website | Paradigm",
+                    "namespace":"paradigm",
+                    "security": "public",
+                    "top":      false,
+                    "left":     false,
+                    "width":    false,
+                    "height":   false,
+                    "minimize":	false,
+                    "maximize":	false,
+                    "close":    false,
+                    "open":     Desktop.toFront,
+                    "resize":   false,
+                    "handler":  false
+                }
+            }            
+            Desktop.elements.windows = windows;
             if (doAfter) {
                 doAfter();
             }
@@ -687,7 +743,7 @@ var Desktop = {
         Desktop.render().activate().position();
         try {
             if (UseTranparentWindows) {
-                virtualWindows.application.windowStyle = 'transparent';
+                Desktop.virtualWindows.application.windowStyle = 'transparent';
             }
         } catch (ex) {
             console.log(ex);
@@ -935,7 +991,7 @@ var Desktop = {
                     if (win.frame.style.display === "block")	{
                         win.frame.style.zIndex  = 6;
                         win.content.style.zIndex = 7;
-                        if ((virtualWindows.application.windowStyle == "transparent") && (Desktop.isModern)) {
+                        if ((Desktop.virtualWindows.application.windowStyle == "transparent") && (Desktop.isModern)) {
                             win.frame.style.opacity = 0.65;
                         }
                     }

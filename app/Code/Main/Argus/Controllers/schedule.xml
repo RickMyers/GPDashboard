@@ -5,7 +5,7 @@ Scheduling general Argus events
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="schedule" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="schedule" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="available">
             <description>A person is scheduling that they will be available at a particular time</description>

@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @since      File available since Release 1.0.0
  */
 class User extends Model
@@ -114,6 +114,9 @@ class User extends Model
             $user->setLoginAttempts(0);
             $user->save();
             $changed = true;
+            if ($this->getNextPage()) {
+                header('location: '.$this->getNextPage().'?message=Successful Password Change!  Please Login');
+            }
         }
         return $changed;
     }    
@@ -143,7 +146,7 @@ class User extends Model
             $rain->assign('name',$user_data['first_name'].' '.$user_data['last_name']);
             $rain->assign('host',Environment::getHost());
             $emailer = Argus::getModel('argus/email');
-            $result = $emailer->sendEmail($email,'HEDIS Portal Reset Password',$rain->draw($template,true),"support@argusdentalvision.com","noreply@argusdentalvision.com");            
+            $result = $emailer->sendEmail($email,'HEDIS Portal Reset Password',$rain->draw($template,true),"support@aflacbenefitssolutions.com","noreply@aflacbenefitssolutions.com");            
         }
         $this->trigger('recover-password-email-sent',__CLASS__,__METHOD__,array('email'=>$email,'result'=>$result,"sent"=>date('Y-m-d H:i:s')));
         return $result;
@@ -311,9 +314,7 @@ class User extends Model
             }
         }
         if ($result) {
-            if (!session_id()) {
-                session_start();
-            }
+            session_start();
             $_SESSION['uid']    = $data[$cfg['node_field']]['uid'];
             $_SESSION['began']  = time();
             $_SESSION['login']  = $data[$cfg['node_field']]['uid']; //This is the id that was actually authenticated... it lets admins jump around posing as other users
@@ -322,6 +323,7 @@ class User extends Model
         return $result;
     }
     /**
+     * Will lookup a user either using the email or username and attach it to the event
      * 
      * @workflow use(PROCESS) configuration(/argus/user/information)
      * @param type $EVENT
@@ -334,6 +336,10 @@ class User extends Model
                 $u = (filter_var($data[$cfg['source']], FILTER_VALIDATE_EMAIL)? Argus::getEntity('humble/users')->setEmail($data[$cfg['source']])->load(true) : Argus::getEntity('humble/users')->setUserName($data[$cfg['source']])->load(true) );
                 $EVENT->update([$cfg['field']=>$u]);
             }
+            $EVENT->update([
+                'login_page' => '/index.html'
+            ]);
+            
         }
     }
     
@@ -348,11 +354,9 @@ class User extends Model
             $data   = $EVENT->load();
             $cfg    = $EVENT->fetch();
             if (isset($data[$cfg['node']])) {
-                $t = $data[$cfg['node']][$cfg['field']];
                 $user   = Argus::getEntity('humble/users')->setUserName($data[$cfg['node']][$cfg['field']]);
                 if (count($user->load(true))) {
-                    $user->setLoginAttempts($user->getLoginAttempts()+1);
-                    $x = $user->save();
+                    $user->setLoginAttempts($user->getLoginAttempts()+1)->save();
                 }
             } else {
                 //throw an exception for insufficient data
@@ -375,8 +379,8 @@ class User extends Model
              * First we check to see if we are checking the current user for role, or using a value from the EVENT that has the userid
              * Get Role
              */
-            //$user_id = $cfg['option']=='field' ? $data[$cfg['field']] : Environment::whoAmI(); 
-            //$hasRole = Argus::getEntity('argus/user_roles')->setId($user_id)->hasRole($cfg['role']);
+            $user_id = $cfg['option']=='field' ? $data[$cfg['field']] : Environment::whoAmI(); 
+            $hasRole = Argus::getEntity('argus/user_roles')->setId($user_id)->hasRole($cfg['role']);
         }
         return $hasRole;
     }
@@ -410,22 +414,23 @@ class User extends Model
         }
     }
     
+    
     /**
      * Will route the user to a page where they can set their new password (which should be their first password)
      * 
      * @workflow use(process)
      * @param type $EVENT
      */
-    public function forwardToChangePasswordPage($EVENT=false) {
+    public function forwardToResetPasswordPage($EVENT=false) {
         if ($EVENT!==false) {
             $data = $EVENT->load();
-            if ($user = Argus::getEntity('humble/users')->setUid(Environment::whoAmIReally()->load())) {
-                if (isset($user['change_password_token']) && $user['change_password_token']) {
-                    header('location: /argus/user/changepassword?token='.$user['change_password_token']);
+            if ($user = Argus::getEntity('humble/users')->setUid(Environment::whoAmIReally())->load()) {
+                if (isset($user['reset_password_token']) && $user['reset_password_token']) {
+                    header('location: /argus/user/newPasswordForm?token='.$user['reset_password_token'].'&clearReset=true&then='.(isset($data['login_page']) ? $data['login_page'] : '/index.html'));
                 }
             }
         }
-    }
+    }    
     
     /**
      * Will route the user to a page where they can set their new password (which should be their first password)
@@ -438,9 +443,25 @@ class User extends Model
             $data = $EVENT->load();
             if ($user = Argus::getEntity('humble/users')->setUid(Environment::whoAmIReally())->load()) {
                 if (isset($user['reset_password_token']) && $user['reset_password_token']) {
-                    header('location: /argus/user/firstpassword?token='.$user['reset_password_token']);
+                    header('location: /argus/user/firstpassword?token='.$user['reset_password_token'].'&then='.(isset($data['login_page']) ? $data['login_page']:'/index.html'));
                 }
             }
+        }
+    }
+    
+    /**
+     * Will send you back to the login page, which is passed in on the event, to try again
+     * 
+     * @workflow use(process)
+     * @param type $EVENT
+     */
+    public function invalidAttemptTryReLogin($EVENT=false) {
+        if ($EVENT) {
+            $data   = $EVENT->load();
+            $cfg    = $EVENT->fetch();
+            $msg    = isset($cfg['message']) ? $cfg['message'] : 'Invalid UserID Or Password';
+            $login_page = isset($data['login_page']) ? $data['login_page']:'/index.html';
+            header('location: '.$login_page.'?message='.$msg);
         }
     }
     

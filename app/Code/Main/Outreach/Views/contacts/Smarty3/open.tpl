@@ -176,12 +176,13 @@
 <br /><br /><br /><br /><br /><br />
 <script type="text/javascript">
     (function () {
-        let data = { 'user_id': Branding.id,
-                     "member": "{$contact.member_name}",
-                     'message': 'outreachContactOpened'};
-        Argus.dashboard.socket.emit('messageRelay',data);        
+        let campaign_id = $("#outreach_campaign").val();
+    
+        Argus.dashboard.socket.emit('messageRelay',{ 'user_id': Branding.id, "member": "{$contact.member_name}", 'message': 'outreachContactOpened'});        
         $('#outreach_assignee_{$contact_id}').on('change',function (evt) {
-            (new EasyAjax('/outreach/contacts/assign')).add('contact_id',evt.target.getAttribute('contact_id')).add('assignee'.$(evt.target).val()).then(function (response) {
+            (new EasyAjax('/outreach/contacts/reassign')).add('contact_id',evt.target.getAttribute('contact_id')).add('assignee',$(evt.target).val()).then(function (response) {
+                Argus.dashboard.socket.emit('RTCUserMessage', { 'user_id': "{$contact.assignee}",'message': 'coordinator'+"{$contact.assignee}"+'Campaign'+campaign_id+'ContactReassigned' });
+                Argus.dashboard.socket.emit('RTCUserMessage', { 'user_id': $("#outreach_assignee_{$contact_id}").val(),'message': 'coordinator'+$("#outreach_assignee_{$contact_id}").val()+'Campaign'+campaign_id+'ContactReassigned' });
             }).post();
         });
         $('#outreach_assignee_{$contact_id}').val({$contact.assignee});

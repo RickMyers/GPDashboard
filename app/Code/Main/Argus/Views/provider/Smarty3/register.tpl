@@ -2386,11 +2386,11 @@
                             <div class="provider-cell-field">
                                 By submitting this authorization and release of information form, I understand and agree as follows:
                                 <br /><br />
-                                I understand and acknowledge that, as an applicant for participating status with Argus Dental & Vision, Inc. for initial credentialing or re-credentialing, I have the burden of producing adequate information for proper evaluation of my competence, character, ethics, mental and physical health status, and/or other qualifications.
+                                I understand and acknowledge that, as an applicant for participating status with Aflac Benefits Solutions, Inc. for initial credentialing or re-credentialing, I have the burden of producing adequate information for proper evaluation of my competence, character, ethics, mental and physical health status, and/or other qualifications.
                                 <br /><br />
-                                I further understand and acknowledge that Argus Dental & Vision, Inc. or designated agent will investigate the information in this application. By submitting this application, I agree to such investigation and to the disciplinary reporting and information exchange activities of Argus Dental & Vision, Inc. as part of the verification and credentialing process.
+                                I further understand and acknowledge that Aflac Benefits Solutions, Inc. or designated agent will investigate the information in this application. By submitting this application, I agree to such investigation and to the disciplinary reporting and information exchange activities of Aflac Benefits Solutions, Inc. as part of the verification and credentialing process.
                                 <br /><br />
-                                I authorize Argus Dental & Vision, Inc., and its subsidiaries, affiliates, successors, employees, agents, authorized representatives, and third parties (hereinafter “ADV”), to consult with hospitals, members of hospital medical staffs, professional liability carriers, managed care organizations and other persons or entities to obtain information concerning my professional credentials and qualifications, including without limitation my professional competence and conduct. Such authorization to obtain information includes but is not limited to information about my quality of care and utilization statistics from chiefs of the clinical departments of a hospital in which I have staff privileges, professional state boards, applicable state and federal agencies, and primary care and specialist physician colleagues participating with ADV.
+                                I authorize Aflac Benefits Solutions, Inc., and its subsidiaries, affiliates, successors, employees, agents, authorized representatives, and third parties (hereinafter “ADV”), to consult with hospitals, members of hospital medical staffs, professional liability carriers, managed care organizations and other persons or entities to obtain information concerning my professional credentials and qualifications, including without limitation my professional competence and conduct. Such authorization to obtain information includes but is not limited to information about my quality of care and utilization statistics from chiefs of the clinical departments of a hospital in which I have staff privileges, professional state boards, applicable state and federal agencies, and primary care and specialist physician colleagues participating with ADV.
                                 <br /><br />
                                 I authorize all individuals, institutions and entities of organization with which I am currently or have been associated with which I am currently or have been associated and all professional liability insurers with which I have had or currently have professional liability insurance, who may have information bearing on my professional qualifications, ethical standing, competence, and mental and physical health status to release the aforementioned information to ADV.
                                 <br /><br />
@@ -2404,7 +2404,7 @@
                                 <br /><br />
                                 I understand and agree that any misstatement or material omission in this application will constitute grounds for rejection of my application or summary dismissal as a participating provider in any and all managed care products or plans maintained or managed by ADV. If any material changes occur in the information I have provided in this application making such information no longer correct and complete or affecting my professional status, I understand and agree that it is my obligation to notify ADV within ten (10) days of said occurrence. Failure to comply with this obligation may constitute grounds for rejection of my application or summary dismissal as a participating provider in any and all managed care products or plans maintained or managed by ADV.
                                 <br /><br />
-                                I understand that completion and submission of this application and Attestation and Release of Information Form (“Release”) does not automatically grant me membership or participating status with Argus Dental & Vision, Inc.
+                                I understand that completion and submission of this application and Attestation and Release of Information Form (“Release”) does not automatically grant me membership or participating status with Aflac Benefits Solutions, Inc.
                                 <br /><br />
                                 I further acknowledge that I have read and understand this Release. A photocopy of this Release shall be as effective as the original and authorization constitutes my written authorization and request to communicate any relevant information and to release any and all supportive documentation regarding this application.
                                 <br /><br />
@@ -2750,7 +2750,7 @@
         </div>
                             
         <div id="argus-provider-footer">
-            &copy; 2017-present, Argus Dental &amp; Vision, all rights reserved
+            &copy; 2017-present, Aflac Benefits Solutions, all rights reserved
         </div>
         <script type="text/javascript">
             $('#new-provider-registration-form').on('change',function (evt) {

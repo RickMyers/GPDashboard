@@ -1,4 +1,15 @@
 <div id="claim_charts" style="padding-top: 40px">
+    <form name="hedis_claims_analytics_form" id="hedis_claims_analytics_form" onsubmit="return false">
+    Choose Year: <select name="yyyy" id='claims_analytics_yyyy'>
+                    <option value=''> </option>
+                    <option value='2020'> 2020 </option>
+                    <option value='2021'> 2021 </option>
+                    <option value='2022'> 2022 </option>
+                    <option value='2023'> 2023 </option>
+                    <option value='2024'> 2024 </option>
+                    <option value='2025'> 2025 </option>
+                 </select>
+    </form>
     <div class='dashboard-graph' style="float: right; width: 45%; margin-right: 3%">
         <div id="claim_chart_1_label" style="background-color: rgba(202,202,202,.3)">&nbsp;</div>
         <div style="height: 140px; position: relative">
@@ -27,6 +38,7 @@
 </div>
 <script type='text/javascript'>
     (function () {
+        new EasyEdits('/edits/argus/analytics');
         let options = {
             pointLabelFontColor : "#F7F7F7",
             scaleFontColor: "#F7F7F7",
@@ -42,8 +54,9 @@
             }
         };
         {if ($role->userHasRole('O.D.'))}
+        $('#claim_chart_1_label').html('Form Volumes By Month');
         let data = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [{$charts->monthNames()}],
             datasets: [
                 7,4,7,9,2,3
             ]
@@ -51,7 +64,7 @@
         let ctx = $("#claim_chart_1").get(0).getContext("2d");
         let myBarChart = new Chart(ctx).Bar(data, options);    
          data = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [{$charts->monthNames()}],
             datasets: [
                 7,4,7,9,2,3
             ]

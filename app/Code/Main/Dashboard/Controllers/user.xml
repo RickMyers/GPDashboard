@@ -3,9 +3,9 @@
 
 Specific User Dashboard actions 
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="user" use="Smarty3" author=" " email="rmyers@argusdentalvision.com">
+<controller name="user" use="Smarty3" author=" " email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="login" passalong="user_name:required=true,user_password:format=password:required=true:value=password" event='userLogin' comment='Triggers the login workflow'>
@@ -35,6 +35,9 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
         
         <action name="home" CSRF_PROTECTION="csrf_token=csrf_buster,csrf_session_variable=BROWSER_TABS,csrf_tab_id=browser_tab_id">
             <description>Gets the users default dashboard</description>
+            <model namespace="dashboard" class="model" method="console">
+                
+            </model>
             <entity namespace="humble" class="users" id='user' method='load'>
                 <parameter name='uid' source='session' value='uid' default='' />
             </entity>

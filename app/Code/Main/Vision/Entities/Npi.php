@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Client
- * @author     Aaron Binder abinder@argusdentalvision.com
+ * @author     Aaron Binder abinder@aflacbenefitssolutions.com
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />

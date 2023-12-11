@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -599,6 +599,7 @@ class Claims extends Model
             $x837->setTransactionManager(Argus::getModel('edi/transaction'));
             $x837->setReceiver(Argus::getModel('edi/receiver')->create(Argus::getEntity('edi/receivers')->setId(1)->load()));
             $x837->setFooter(Argus::getModel('edi/footer')->create([
+                'number_of_transactions'        => $number_to_run,
                 'group_number'                  => $num_num,
                 'group_control_number'          => $num_num
             ]));

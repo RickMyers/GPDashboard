@@ -29,7 +29,7 @@
             longname:	"New Navigation Role Submit",
             onclick:    function () {
                 if (Edits['navigation-&&id&&-form'].validate()) {
-                    (new EasyAjax('/argus/navigation/addrole')).packageForm('navigation-&&id&&-form').then(function (response) {
+                    (new EasyAjax('/argus/navigation/addrole')).addForm('navigation-&&id&&-form').then(function (response) {
                         $('#navigation-edit-row-&&nav_id&&').html(response);
                     }).post();
                 }

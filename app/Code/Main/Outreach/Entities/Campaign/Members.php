@@ -13,14 +13,14 @@ use Environment;
  *
  * @category   Entity
  * @package    Desktop
- * @author     Rick Myers rmyers@argusdentalvision.com
+ * @author     Rick Myers rmyers@aflacbenefitssolutions.com
  */
 class Members extends \Code\Main\Outreach\Entities\Entity
 {
 
-    private int $red    = 0;
-    private int $green  = 0;
-    private int $blue   = 0;
+    private  $red    = 0;
+    private  $green  = 0;
+    private  $blue   = 0;
     /**
      * Constructor
      */
@@ -132,8 +132,8 @@ SQL;
                      {$campaign_clause}
                      {$status1_clause}
                      {$status2_clause}
-    SQL;
-            $results = $this->query($query)->toArray();
+SQL;
+       $results = $this->query($query)->toArray();
 
         return isset($results[0]) ? $results[0]['total'] : 0;
     }

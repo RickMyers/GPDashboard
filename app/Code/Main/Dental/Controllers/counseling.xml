@@ -3,9 +3,9 @@
 
 Nutritional Counseling Actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="counseling" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="counseling" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="log" passalong="window_id">
             <description>Views a particular attempt to reach a client</description>

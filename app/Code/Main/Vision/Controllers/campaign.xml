@@ -3,9 +3,9 @@
 
 Campaign queries and actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="campaign" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="campaign" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="participants">
             <description>Lists the IPAs in a particular campaign</description>

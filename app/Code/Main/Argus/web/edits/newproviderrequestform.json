@@ -98,7 +98,7 @@
 			style:			"padding: 2px 10px; color: #333",
                         onclick:                function (evt) {
                             if (Edits['new-provider-request-form'].validate()) {
-                               (new EasyAjax('/argus/provider/email')).packageForm('new-provider-registration-request').then(function (response) {
+                               (new EasyAjax('/argus/provider/email')).addForm('new-provider-registration-request').then(function (response) {
                                     $('#registration-form-layer').html(response);
                                }).post();
                             }

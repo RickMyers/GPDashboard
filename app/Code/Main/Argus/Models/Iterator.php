@@ -14,7 +14,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Client
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -24,6 +24,11 @@ use Environment;
 class Iterator extends \Code\Base\Humble\Models\Iterator
 {
 
+    
+    public function override($dataset=[]) {
+        $this->array = $dataset;
+    }
+    
     public function set($dataset=false) {
         $rows = [];
         while ($row = sqlsrv_fetch_array( $dataset, SQLSRV_FETCH_ASSOC)) {

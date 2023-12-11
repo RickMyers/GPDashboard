@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -132,7 +132,7 @@ class Application extends Model
      * @return array
      */
     private function mapPlan($app=false) {
-        return (!$app) ? [] : isset($app['plan']) ? $app['plan'] : [];
+        return (!$app) ? [] : ((isset($app['plan']) ? $app['plan'] : []));
     }
 
     /**
@@ -147,8 +147,8 @@ class Application extends Model
                     'billing'       => (isset($app['addresses']['billing']) ? $app['addresses']['billing'] : []),
                     'mailing'       => []
                 ];
-        $addresses['home']['zip-code'] = (isset($app['addresses']['home']['zip-code'])) ? $app['addresses']['home']['zip-code'] : (isset($app['addresses']['home']['zip']) ? $app['addresses']['home']['zip']: '');
-        $addresses['billing']['zip-code'] = (isset($app['addresses']['billing']['zip-code'])) ? $app['addresses']['billing']['zip-code'] : (isset($app['addresses']['billing']['zip']) ? $app['addresses']['billing']['zip']: '');
+        $addresses['home']['zip-code']    = (isset($app['addresses']['home']['zip-code']))    ? $app['addresses']['home']['zip-code']    : ((isset($app['addresses']['home']['zip']) ? $app['addresses']['home']['zip']: ''));
+        $addresses['billing']['zip-code'] = (isset($app['addresses']['billing']['zip-code'])) ? $app['addresses']['billing']['zip-code'] : ((isset($app['addresses']['billing']['zip']) ? $app['addresses']['billing']['zip']: ''));
         return $addresses;
     }    
     

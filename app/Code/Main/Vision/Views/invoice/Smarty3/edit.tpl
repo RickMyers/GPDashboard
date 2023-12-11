@@ -51,12 +51,12 @@
     {/if}
     <div style="overflow: auto" id="invoice_body_{$window_id}">
         <div style="width: 820px; border: 1px solid #333; margin-left: auto; margin-right: auto; margin-top: 20px; margin-bottom: 20px; padding: 10px">
-            <img src="/images/vision/argus_invoice_logo.png" style='margin-bottom: 10px'/>
+            <img src="/images/dashboard/aflac_logo.png" style='margin-bottom: 10px'/>
             <div style="padding: 20px 60px; font-weight: bold; color: white; background-color: #44546A; width: 25%; text-align: center; margin-bottom: 30px">
                 INVOICE
             </div>
             <div style="border-bottom: 1px solid black; font-family: monospace; font-size: 1.0em; padding-bottom: 10px; display: inline-block; padding-right: 20px; padding-left: 10px; width: 35%">
-                <div>4919 W Laurel St</div>
+                <div>4211 West Boy Scout Blvd, Suite 295</div>
                 <div>Tampa, FL, 33607</div>
                 <div>Ph: 877.710.5174</div>
                 <div>Fax: 813.425.1951</div>
@@ -145,13 +145,13 @@
                 </table>
                 <div style="font-family: sans-serif; margin-top: 20px; color: #333; font-size: 1em">
                     Make all checks payable to:<br />
-                    Argus Dental and Vision, Inc<br />
-                    ATTN: Argus Dental & Vision, Inc, Accounts Receivable<br />
+                    Aflac Benefits Solutions, Inc<br />
+                    ATTN: Aflac Benefits Solutions, Inc, Accounts Receivable<br />
                     Payment is due within 15 days.<br />
                 </div>
                 <div style="margin-top: 20px; text-align: center; font-size: 1em; font-family: sans-serif; color: #333">
                     If you have any questions concerning this invoice, contact HEDIS representative@ 1.877.710.5174<br /><br />
-                    HEDIS@argusdentalvision.com<br /><br />
+                    HEDIS@aflacbenefitssolutions.com<br /><br />
                     <br />
                     <span style="color: #44546A; font-weight: bolder">Thank you for your business!</span>
                 </div>

@@ -12,7 +12,7 @@ namespace Code\Main\Outreach\Helpers;
  *
  * @category   Utility
  * @package    Outreach
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  */
 class Helper extends \Code\Main\Argus\Helpers\Helper
 {

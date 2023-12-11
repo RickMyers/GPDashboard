@@ -5,7 +5,7 @@ Outreach campaign related services
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="campaign" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="campaign" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="add" blocking="off">

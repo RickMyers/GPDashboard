@@ -3,9 +3,9 @@
 
 Initial Action Controller
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="admin" use="Smarty3" author="rmyers@argusdentalvision.com">
+<controller name="admin" use="Smarty3" author="rmyers@aflacbenefitssolutions.com">
     <actions>
 
         <action name="adduserform" passalong='window_id'>

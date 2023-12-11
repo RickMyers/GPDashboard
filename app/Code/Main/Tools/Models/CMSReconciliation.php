@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Client
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @since      File available since Release 1.0.0
  */
 class CMSReconciliation extends Tool implements ArgusTool
@@ -67,7 +67,7 @@ class CMSReconciliation extends Tool implements ArgusTool
         $xref = [];
         foreach ($rows as $row) {
             $ind        = substr($row,1,3);
-            $col        = ($ind==='___') ? null : (trim($ind) === '') ? false : ( (trim($ind) === '###') ? 'Accumulator' : (int)$ind);
+            $col        = ($ind==='___') ? null : ((trim($ind) === '') ? false : ( (trim($ind) === '###') ? 'Accumulator' : (int)$ind));
             $name       = trim(substr($row,8,35));
             $layout     = explode(',',str_replace(['[',']'],['',''],trim(substr($row,44,28))));
             $xref[]     = [

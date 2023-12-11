@@ -67,7 +67,7 @@
             <prefix>google_</prefix>
             <mongodb>google</mongodb>
             <entities>
-
+                <cache polyglot='Y' />
             </entities>
         </orm>
         <events>

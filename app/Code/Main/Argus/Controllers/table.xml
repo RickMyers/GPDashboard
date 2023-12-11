@@ -5,7 +5,7 @@ Import and Export related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="table" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="table" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="home" blocking="off">
@@ -42,6 +42,24 @@ For Controller reference, please see "Anatomy of a Controller" at https://www.hu
             <entity namespace='humble' class='entities' id='entities'>
                 <parameter name='namespace' source='request' required='true' />
             </entity>
+        </action>
+        
+        <!-- ############################################################### -->
+        
+        <action name="creator" blocking="off" passalong="window_id">
+            <description> The DB Creator App for building tables based on uploaded CSV </description>
+            <entity namespace='humble' class='modules' id='namespaces' orderby='namespace=ASC' />
+        </action>
+        
+        <!-- ############################################################### -->        
+        
+        <action name="create" blocking="off" passalong="window_id">
+            <description> Creates the actual table based on an uploaded CSV </description>
+            <model namespace='argus' class='DBCreator' method="create">
+                <parameter name="namespace" required="true" source="post" />
+                <parameter name="table_name" required="true" source="post" />
+                <parameter name="csv" required="true" source="file" />
+            </model>
         </action>
         
     </actions>

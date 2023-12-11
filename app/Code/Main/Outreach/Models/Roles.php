@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Desktop
- * @author     Rick Myers <rmyers@argusdentalvision.com>
+ * @author     Rick Myers <rmyers@aflacbenefitssolutions.com>
  */
 class Roles extends Model
 {

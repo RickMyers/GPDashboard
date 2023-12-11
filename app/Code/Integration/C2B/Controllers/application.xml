@@ -3,9 +3,9 @@
 
 Online Application related actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="application" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="application" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="extract" passalong="windowId">
             <description>The workflow configuration page for extracting online application data and formating into our internal structure</description>

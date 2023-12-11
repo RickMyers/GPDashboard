@@ -1448,7 +1448,7 @@
                                 By submitting this authorization and release of information form, I understand and agree as follows:
                             </div>
                             <div class="provider-cell-field">
-                                I authorize Argus Dental & Vision, Inc., and its subsidiaries, affiliates, successors, employees, agents, authorized representatives, and third
+                                I authorize Aflac Benefits Solutions, Inc., and its subsidiaries, affiliates, successors, employees, agents, authorized representatives, and third
                                 parties (hereinafter “ADV”), to consult with hospitals, members of hospital medical staffs, professional liability carriers, managed care
                                 organizations and other persons or entities to obtain information concerning my professional credentials and qualifications, including without
                                 limitation my professional competence and conduct.
@@ -1464,7 +1464,7 @@
                                 application or credentialing status.
                                 <br /><br />
                                 I understand that completion and submission of this application and Attestation and Release of Information Form (“Release”) does not
-                                automatically grant me membership or participating status with Argus Dental & Vision, Inc.
+                                automatically grant me membership or participating status with Aflac Benefits Solutions, Inc.
                                 I attest that the information in this application is complete, accurate, and current. A photocopy of this application has the same force and effect
                                 as the original. I have reviewed this information as of the most recent date listed below.
                                 <br /><br />
@@ -1488,7 +1488,7 @@
         </div>
                             
         <div id="argus-provider-footer">
-            &copy; 2017-present, Argus Dental &amp; Vision, all rights reserved
+            &copy; 2017-present, Aflac Benefits Solutions, all rights reserved
         </div>
         <script type="text/javascript">
             $('#new-provider-registration-form').on('change',function (evt) {

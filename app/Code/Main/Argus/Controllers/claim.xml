@@ -5,7 +5,7 @@ Interacts with and retrieves data from Aldera
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="claim" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="claim" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="lookup" passalong="window_id">
             <description>The lookup claim VUE component</description>

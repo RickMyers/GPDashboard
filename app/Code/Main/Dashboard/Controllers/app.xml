@@ -3,10 +3,20 @@
 
 App Install or Un-install
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="app" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="app" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
+        
+        <action name='testenc'>
+            <description>Testing the new encryption feature</description>
+            <helper namespace='humble' class='users' id='user'>
+                <parameter name='uid' source='request' required='true' />
+                <parameter name='user_name' source='request' format='encrypt' />
+            </helper>
+        </action>
+        
+        <!-- ############################################################### -->
         
         <action name="install">
             <description>Subscribes to an app</description>

@@ -5,7 +5,7 @@ Addresses
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="addresses" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="addresses" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="list" output="JSON">
             <description>Creates a list of available Addresses relative to a location id</description>
@@ -16,7 +16,7 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
 
         <!-- ############################################################### -->
         
-        <action name="new">
+        <action name="new" blocking="off">
             <description>Adds a new address to a client</description>
             <entity assign="address_id" namespace="vision" class="ipa_location_addresses" method="save">
                 <parameter name="location_id"    source="post" required="true" />

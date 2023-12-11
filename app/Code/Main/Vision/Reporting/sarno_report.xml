@@ -7,6 +7,7 @@
         <event />
         <start_date />
         <end_date />
+        <hidden name="include_note" value="Y" />
     </selection>
     <resource method="formsExtendedInformation" />
     <columns>
@@ -29,6 +30,7 @@
         <column source="diag_code_e10_9"    name="Dx=E10.9"                 format="" onempty=" " style="text-align: center;" />
         <column source="claim_submitted"    name="Claim Submitted"          format="date" onempty=" " style="text-align: center;" />
         <column source="claim_paid"         name="Claim Paid"               format="" onempty=" " style="text-align: center;" />
-        <column source="claim_amount"       name="Claim Amount"               format="" onempty=" " style="text-align: center;" />
+        <column source="claim_amount"       name="Claim Amount"             format="" onempty=" " style="text-align: center;" />
+        <column source="note"               name="Image Note"               format="" onempty=" " style="text-align: center;" />
     </columns>
 </report>

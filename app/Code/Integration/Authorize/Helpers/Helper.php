@@ -12,7 +12,7 @@ namespace Code\Integration\Authorize\Helpers;
  *
  * @category   Utility
  * @package    Authorize
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    3.0.1

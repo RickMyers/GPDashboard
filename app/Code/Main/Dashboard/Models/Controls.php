@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Framework
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://jarvis.enicity.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />

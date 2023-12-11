@@ -3,9 +3,9 @@
 
 Dashboard actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="home" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="page">
             <description>The starting dashboard page</description>
@@ -39,6 +39,9 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
             <entity namespace='argus' class='user/roles' id='role'>
                 <parameter name='user_id' source='session' value='uid' default='' />
             </entity>
+            <entity namespace='vision' class='ipa/locations' id='location'>
+                <parameter name='user_id' source='session' value='uid' default='' />
+            </entity>
         </action>
 
         <!-- ############################################################### -->
@@ -49,5 +52,6 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
                 <parameter name='app' source='request' required='true' />
             </model>
         </action>
+        
     </actions>
 </controller>

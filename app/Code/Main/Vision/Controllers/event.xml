@@ -5,7 +5,7 @@ Vision Scanning/Screening Event Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="event" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="event" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="generate">
             <description>Generates the consultation screening forms for attendees to an event</description>
@@ -24,19 +24,6 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
             </entity>
         </action>
 
-        <!-- ############################################################### -->
-        
-        <action name="close" event="closedAnEvent" comment="OD, Technician, or Manager has closed an event">
-            <description>Logs the event and sends a report to the HEDIS Staff</description>
-            <entity namespace="scheduler" class="events" method="save">
-                <parameter name="id" value="event_id" source="post" required="true" />
-                <parameter name="closed" default="Y" source="post" />
-            </entity>
-            <model namespace='vision' class='events' method='updateOutreach'>
-                <parameter name="event_id" source="post" required="true" />
-            </model>
-        </action>                
-        
         <!-- ############################################################### -->
        
         <action name="update" blocking="off">
@@ -111,13 +98,13 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
         
         <!-- ############################################################### -->
         
-        <action name="close" blocking="off" event="visionEventCompleted" comment="A vision event has completed">
+        <action name="close" blocking="off" event="visionEventCompleted" comment="A vision event has completed" passalong="event_id">
             <description>Marks the event closed (inactive) and sends out the notifications</description>
             <entity namespace="scheduler" class="events" method="save">
                 <parameter name="id" value="event_id" source="post" required="true" />
                 <parameter name="active" default='C' source='post' />
             </entity>
-            <model namespace="vision" class="events"  method="close">
+            <model name="vision" class="eventMembers" method="addToOutreach">
                 <parameter name="event_id" source="post" required="true" />
             </model>
         </action>

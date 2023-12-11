@@ -1,21 +1,20 @@
 ---
 geocodeLocation   :
   url             : https://maps.googleapis.com/maps/api/geocode/json
+  #url             : https://dev.argusdentalvision.com/google/geocode/location
   secure          : true
   api-key         : SM://geocodeApiKey
   api-var         : key
-  blocking        : false
   method          : GET 
-  cache           : 0                                                           # 0 means that the cache does not expire
+ # cache           : 0                            # 0 means that the cache does not expire
   arguments       : 
       address     :  
 geocodeLocationLite   :
-  url             : /google/geocode/location
+  url             : https://hedis.argusdentalvision.com/google/geocode/location
   secure          : true
   api-key         : SM://geocodeApiKey
   api-var         : key
-  blocking        : false
-  cache           : 0                                                           # 0 means that the cache does not expire
+  cache           : 0                           # 0 means that the cache does not expire
   method          : GET 
   arguments       : 
       address     :            

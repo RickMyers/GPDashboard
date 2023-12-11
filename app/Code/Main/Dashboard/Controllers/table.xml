@@ -5,7 +5,7 @@ Table Editing Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://www.humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="table" use="Smarty3" author="Rick Myers" email="rmyers@argusdentalvision.com">
+<controller name="table" use="Smarty3" author="Rick Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="home" blocking="off" passalong="window_id">

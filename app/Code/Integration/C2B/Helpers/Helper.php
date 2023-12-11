@@ -12,7 +12,7 @@ namespace Code\Integration\C2B\Helpers;
  *
  * @category   Utility
  * @package    C2B
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://license.enicity.com
  * @version    3.0.1

@@ -67,7 +67,7 @@
 			force:			false,
                         onclick:        function (evt) {
                             if (Edits['argus-new-user-&&win_id&&'].validate()) {
-                                (new EasyAjax('/argus/admin/adduser')).packageForm('argus-new-user-form-&&win_id&&').then(function (response) {
+                                (new EasyAjax('/argus/admin/adduser')).addForm('argus-new-user-form-&&win_id&&').then(function (response) {
                                     alert(response);
                                     Desktop.window.list['&&win_id&&']._close();
                                 }).post();

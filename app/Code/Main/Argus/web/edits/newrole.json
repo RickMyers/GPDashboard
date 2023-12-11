@@ -36,7 +36,7 @@
 			style:			"",
                         onclick:                function (evt) {
                             if (Edits['new-role-form'].validate()) {
-                                (new EasyAjax('/argus/roles/new')).packageForm('argus-current-roles').then(function (response) {
+                                (new EasyAjax('/argus/roles/new')).addForm('argus-current-roles').then(function (response) {
                                     $('#sub-container').html(response);
                                 }).post();
                             }

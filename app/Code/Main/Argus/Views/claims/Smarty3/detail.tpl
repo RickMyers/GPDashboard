@@ -290,7 +290,7 @@
         </div>
     </div>    
 {/if}
-</div>{debug}
+</div>
 <div class="claim-data-section" id="claim-data-tab-4-{$window_id}">
     Loading...
 </div>

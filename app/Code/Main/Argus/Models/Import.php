@@ -13,9 +13,9 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Dashboard
- * @author     Rick Myers <rmyers@argusdentalvision.com>
+ * @author     Rick Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2016-present Hedis Dashboard
- * @license    https://hedis.argusdentalvision.com/license.txt
+ * @license    https://hedis.aflacbenefitssolutions.com/license.txt
  * @since      File available since Release 1.0.0
  */
 class Import extends Model
@@ -73,15 +73,13 @@ class Import extends Model
                                 $orm->save();
                             }
                         }
-
                     }
-                    
-                    $a = 1;
                 }
                 unlink('import_extract/entities.json');
             }
         }
     }
+    
     /**
      * 
      */
@@ -106,7 +104,8 @@ class Import extends Model
                             $this->setFilename($parts[0].'_'.date('YmdHis').'.zip');
                             file_put_contents('import_tmp/'.$this->getFilename(),ob_get_flush());
                         } else {
-                            $this->_notices(print_r($auth,true));
+                            
+                            //$this->_notices(print_r($auth,true));
                         }
                     }
                 }

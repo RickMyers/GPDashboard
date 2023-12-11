@@ -6,7 +6,7 @@
         <description>The Primary Argus App Module</description>
         <author>
             <name>Rick Myers</name>
-            <email>rmyers@argusdentalvision.com</email>
+            <email>rmyers@aflacbenefitssolutions.com</email>
         </author>
         <module>
             <name>Argus</name>
@@ -66,6 +66,7 @@
                 <appellations />
                 <apps_role_required />
                 <aldera_locations />
+                <cache polyglot='Y' />
                 <claims polyglot="Y" />
                 <claim_services polyglot="Y"/>
                 <claims_log />
@@ -113,6 +114,8 @@
         </orm>
         <web>
             <edits>
+                <analytics>Argus/web/edits/claimanalytics.json</analytics>
+                <dbcreator>Argus/web/edits/dbcreator.json</dbcreator>
                 <profile>Argus/web/edits/profile.json</profile>
                 <password>Argus/web/edits/password.json</password>
                 <calllog>Argus/web/edits/calllog.json</calllog>

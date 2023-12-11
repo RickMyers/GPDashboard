@@ -5,7 +5,7 @@ Project related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="project" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="project" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="new">

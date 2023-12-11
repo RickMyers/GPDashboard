@@ -11,7 +11,7 @@ namespace Code\Integration\EIS\Entities;
  *
  * @category   Entity
  * @package    EIS
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  */
 class Entity extends \Code\Main\Argus\Entities\Unity
 {

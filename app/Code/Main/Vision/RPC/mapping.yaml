@@ -24,6 +24,12 @@ visionIpaQueues    :
   api-var         :
   method          : POST
   arguments       : [ ipa_clients,ipa_physicians,rows ]    
+visionLocationQueues    :  
+  url             : /vision/location/refresh
+  api-key         :
+  api-var         :
+  method          : POST
+  arguments       : [ location_clients,rows ]      
 visionSecondaryQueues    :  
   url             : /vision/secondaryqueues/refresh
   api-key         :
@@ -42,8 +48,8 @@ visionAdminQueues :
   api-var         :
   method          : POST
   arguments       : [ admin_required,referral_reason,rows ]  
-visionArchiveQueues:
-  url             : /vision/queue/archiverefresh
+visionArchiveQueue:
+  url             : /vision/archive/refresh
   api-key         :
   api-var         :
   method          : POST
@@ -127,6 +133,34 @@ ipaFormsByPhysician:
   arguments       : 
             layer :
   method          : GET    
+locationFormsByHealthPlan:
+  url             : /vision/charts/locationhealthplans
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET  
+locationFormsByTechnician:
+  url             : /vision/charts/locationtechnicians
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET  
+locationFormsByLocation:
+  url             : /vision/charts/locationlocations
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET    
+locationFormsByPhysician:
+  url             : /vision/charts/locationphysicians
+  api-key         : 
+  api-var         : 
+  arguments       : 
+            layer :
+  method          : GET      
 readableScreeningForms:
   url             : /vision/charts/readableforms
   api-key         : 
@@ -173,7 +207,19 @@ registerPcps:
   api-key         : 
   api-var         : 
   arguments       :
-  method          : GET  
+  method          : GET
+demographicInformation:
+  url             : https://hedis.argusdentalvision.com/vision/members/demographics
+  api-key         : 
+  api-var         : 
+  CURL            : true
+  secure          : true
+  blocking        : false
+  camel-case      : true
+  arguments       : 
+            member_id :
+            date_of_service :
+  method          : GET     
 memberDemographicInformation:
   url             : /vision/members/demographics
   api-key         : 
@@ -185,6 +231,19 @@ memberDemographicInformation:
             member_id :
             date_of_service :
   method          : GET 
+membersDemographicInformation:
+  url[PRODUCTION] : /vision/prod/demographics
+  url[DEVELOPMENT]: /vision/dev/demographics
+  url[DEFAULT]    : /vision/default/demographics
+  api-key         : 
+  api-var         : 
+  secure          : true
+  blocking        : false
+  camel-case      : true
+  arguments       : 
+            member_id :
+            date_of_service :
+  method          : GET   
 completedEvents :
   url           : /vision/events/completed
   secure        : true
@@ -250,7 +309,7 @@ formsExtendedInformation :
   url           : /vision/reports/extendedinformation
   secure        : true
   blocking      : false
-  method        : POST
+  method        : post
   camel-case    : true
   arguments     :
       sessionId :
@@ -273,3 +332,4 @@ formsExtendedInformation :
       member_name :
       technician :
       office :
+      include_note: N

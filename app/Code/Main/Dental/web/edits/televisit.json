@@ -69,7 +69,7 @@
             style:	"",
             onclick:    function (evt) {
                 if (Edits['televisit'].validate()) {
-                    (new EasyAjax('/dental/consultation/start')).packageForm('newTeledentistrySessionForm').then(function (response) {
+                    (new EasyAjax('/dental/consultation/start')).addForm('newTeledentistrySessionForm').then(function (response) {
                        Argus.dashboard.socket.emit('patientEnteredWaitingRoom',{'patient': 'someguy'});
                        Argus.teledentistry.waitingRoom.refresh(response);
                        Argus.dashboard.socket.on('dentistStartedFacetime',function (data) {

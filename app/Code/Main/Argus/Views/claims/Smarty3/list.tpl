@@ -12,18 +12,19 @@
         font-family: monospace; font-size: .9em; letter-spacing: 1px; padding-left: 10px
     }
 </style>
-
-<div class="claim_cell claim_header_cell" style="width: 7%"> &diams;    </div>
-<div class="claim_cell claim_header_cell" style="width: 7%"> Health Plan  </div>
-<div class="claim_cell claim_header_cell" style="width: 18%"> Claim File </div>
-<div class="claim_cell claim_header_cell" style="width: 13%"> Claim Number </div>
-<div class="claim_cell claim_header_cell" style="width: 5%"> Event ID </div>
-<div class="claim_cell claim_header_cell" style="width: 7%"> Member ID</div>
-<div class="claim_cell claim_header_cell" style="width: 15%"> Member Name </div>
-<div class="claim_cell claim_header_cell" style="width: 5%"> Service Date </div>
-<div class="claim_cell claim_header_cell" style="width: 7%"> Claim Total </div>
-<div class="claim_cell claim_header_cell" style="width: 7%"> Claim Submitted </div>
-<div class="claim_cell claim_header_cell" style="width: 5%"> Aldera Status </div>
+<div style='background-color: rgba(202,202,202,.1)'>
+    <div class="claim_cell claim_header_cell" style="width: 7%"> &diams;    </div>
+    <div class="claim_cell claim_header_cell" style="width: 7%"> Health Plan  </div>
+    <div class="claim_cell claim_header_cell" style="width: 18%"> Claim File </div>
+    <div class="claim_cell claim_header_cell" style="width: 13%"> Claim Number </div>
+    <div class="claim_cell claim_header_cell" style="width: 5%"> Event ID </div>
+    <div class="claim_cell claim_header_cell" style="width: 7%"> Member ID</div>
+    <div class="claim_cell claim_header_cell" style="width: 15%"> Member Name </div>
+    <div class="claim_cell claim_header_cell" style="width: 5%"> Service Date </div>
+    <div class="claim_cell claim_header_cell" style="width: 7%"> Claim Total </div>
+    <div class="claim_cell claim_header_cell" style="width: 7%"> Claim Submitted </div>
+    <div class="claim_cell claim_header_cell" style="width: 5%"> Aldera Status </div>
+</div>
 {foreach from=$claim_data item=claim}
 {if ($totals)}
     {assign var=total value=$total+$claim.total}
@@ -43,25 +44,23 @@
         <div class="claim_cell claim_data_cell" style="width: 7%; text-align: center"> {$claim.total} </div>
         <div class="claim_cell claim_data_cell" style="width: 7%"> {$claim.modified|date_format:'m/d/Y'} </div>
         <div class="claim_cell claim_data_cell" style="width: 5%; text-align: center"> 
-                    {if ($claim.verified == 'Y')}
+                    {if ($claim.verified == 'P')}
                         <img src="/images/argus/paid.png" style="height: 20px" />
-                    {elseif ($claim.verified == 'E')}
+                    {elseif ($claim.verified == 'M')}
                         <img src="/images/vision/cancel.png" title="Missing Claim in Aldera" style="height: 16px" />
-                    {elseif ($claim.verified == 'I')}
-                        <img src="/images/argus/pending.png" title="Pending, Requires Action" style="height: 16px" />
-                    {elseif ($claim.verified == 'D')}
-                        <img src="/images/argus/denied.png" title="Denied Claim in Aldera" style="height: 16px" />
+                    {elseif ($claim.verified == 'R')}
+                        <img src="/images/argus/denied.png" title="Rejected Claim in Aldera" style="height: 16px" />
+                    {elseif ($claim.verified == 'F')}
+                        <img src="/images/argus/red_x.png" title="Failed Claim in Aldera" style="height: 16px" />                        
                     {elseif ($claim.verified == 'M')}
                         <img src="/images/argus/missing.png" title="Likely Claim File Error" style="height: 16px" />                        
-                    {elseif ($claim.verified == 'V')}
+                    {elseif ($claim.verified == 'Z')}
                         <img src="/images/vision/cancel.png" title="Voided Claim in Aldera" style="height: 20px" />
                     {else}
                         &nbsp;
                     {/if}
-        </div>
-        <!--div style="clear: both"></div-->
-
-    </div>
+        </div
+    ></div>
     <div style="display: none; clear: both" id="claim_{$claim.id}_services"></div>                                                                       
 {foreachelse}
     <div style="padding: 10px">

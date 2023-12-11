@@ -69,7 +69,7 @@
             longname:	"Filter Submit",
             onclick:    function () {
                 if (Edits['dashboard-feature-filter'].validate()) {
-                    (new EasyAjax('/dashboard/feature/bugreport')).packageForm('feature-filter-form').then(function (response) {
+                    (new EasyAjax('/dashboard/feature/bugreport')).addForm('feature-filter-form').then(function (response) {
                         console.log(response);
                     }).post();
                 }

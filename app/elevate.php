@@ -2,8 +2,8 @@
 
 require "Argus.php";
 
-$entity = 'vision/consultation_forms';                                          //Table to operate on
-$field  = 'images_unreadable';                                                    //Field to elevate
+$entity = 'argus/claims';                                          //Table to operate on
+$field  = 'claim_status';                                                    //Field to elevate
 
 $entity = Argus::getEntity($entity);                        
 $rows   = $entity->fetch();

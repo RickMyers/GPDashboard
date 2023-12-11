@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Framework
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @since      File available since Release 1.0.0
  */
@@ -123,7 +123,7 @@ class Charts extends Model
      *
      * @param type $chart_id
      */
-    private function fetchData($chart_id=false,$palette) {
+    private function fetchData($chart_id=false,$palette=false) {
         $dataset = '';
         if ($chart_id) {
             switch ($chart_id) {

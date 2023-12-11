@@ -5,7 +5,7 @@ Secondary queue actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="secondaryqueues" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="secondaryqueues" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="init">
@@ -25,10 +25,7 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
                 <else>
                     <if var="queue_id" eq="failed_claims">
                         <then>
-                            <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="failures"  defaultRows='15' defaultPage='1' method="fetch">
-                                <parameter name="claim_status" source="request" default="E" />
-                                <parameter name="status" source="request" default="C" />
-                            </entity>                                
+                            <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation/forms" rows="rows" page="page"  id="failures"  defaultRows='15' defaultPage='1' method="failedClaims" />
                         </then>
                         <else>
                             <entity orderby="event_date=desc" response="true" namespace="vision" class="consultation_forms" rows="rows" page="page"  id="referrals"  defaultRows='15' defaultPage='1' method="formsRequiringReferral">
@@ -46,11 +43,7 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
             <description>Refreshes the administration queues</description>
             <entity namespace="vision" class="consultation/forms" rows="rows" page="non_contracted"  id="noncon"  defaultRows='15' defaultPage='1' />
             <entity namespace="vision" class="consultation/forms" rows="rows" page="referral_required"  id="referrals"  defaultRows='15' defaultPage='1' />
-            <entity namespace="vision" class="consultation_forms" rows="rows" page="failed_claims"  id="failures"  defaultRows='15' defaultPage='1'>
-                <parameter name='claim_status' source='request' default='E' />
-                <parameter name='status' source='request' default='C' />
-            </entity>            
-            
+            <entity namespace="vision" class="consultation/forms" rows="rows" page="failed_claims"  id="failures"  defaultRows='15' defaultPage='1' />
          </action>
         
     </actions>

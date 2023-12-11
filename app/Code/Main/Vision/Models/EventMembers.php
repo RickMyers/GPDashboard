@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -53,13 +53,25 @@ class EventMembers extends \Code\Main\Vision\Models\Model
         if ($this->getHealthPlan() && (count($health_plan = Argus::getEntity('vision/clients')->setClient($this->getHealthPlan())->load(true)))) {
             $health_plan_id = $health_plan['id'];
         }
-        $mem_data       = json_decode(Argus::getModel('vision/aldera')->setMemberId($member_number)->memberDemographicInformation(),true);
+        $mem_data       = json_decode(Argus::getModel('vision/aldera')->setMemberId($member_number)->demographicInformation(),true);
         if ($mem_data) {
-            $member->setLastName($mem_data[0]['last_name'])->setFirstName($mem_data[0]['first_name'])->setMemberName($mem_data[0]['last_name'].", ".$mem_data[0]['first_name'])->setDateOfBirth(date('Y-m-d',strtotime($mem_data[0]['date_of_birth']['date'])))->setGender($mem_data[0]['gender'])->setMemberNumber($member_number)->setHealthPlanId($health_plan_id)->save();
+            $member->setLastName($mem_data['demographics']['last_name'])->setFirstName($mem_data['demographics']['first_name'])->setMemberName($mem_data['demographics']['last_name'].", ".$mem_data['demographics']['first_name'])->setDateOfBirth(date('Y-m-d',strtotime($mem_data['demographics']['date_of_birth'])))->setGender($mem_data['demographics']['gender'])->setMemberNumber($member_number)->setHealthPlanId($health_plan_id)->save();
         } else {
             $this->_notices("The member number was not found in Aldera");
         }
         
     }
 
+    /**
+     * This method will automatically add a member to the Outreach when he/she didn't get scanned when the event is closed.
+     */
+    public function addToOutreach() {
+        $event_id = $this->getEventId();
+        foreach(Argus::getEntity('vision/event/members')->setEventId($event_id)->fetch() as $member) {
+            if($member['result'] !== 'S') {
+                // Add to Outreach
+                Argus::getEntity('outreach/campaign/members')->setMemberNumber($member['member_id'])->setStatus('N')->setCampaignId(7)->save();
+            }
+        }
+    }
 }

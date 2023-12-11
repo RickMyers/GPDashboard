@@ -12,7 +12,7 @@ namespace Code\Integration\EIS\Helpers;
  *
  * @category   Utility
  * @package    EIS
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  */
 class Helper extends \Code\Main\Argus\Helpers\Helper
 {

@@ -5,7 +5,7 @@ IPA Grouping Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="ipagroup" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="ipagroup" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="list" blocking="off" passalong="window_id">

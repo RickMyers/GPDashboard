@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @since      File available since Release 1.0.0
  */
 class Manager extends Model
@@ -792,7 +792,7 @@ class Manager extends Model
             $street     = ($home['address1'])   ? $home['address1'] : $bill['address1'];                //use credit card address if available, else use person address
             $city       = ($home['city'])       ? $home['city']     : $bill['city'];                    //use credit card address if available, else use person address
             $state      = ($home['state'])      ? $home['state']    : $bill['state'];                   //use credit card address if available, else use person address
-            $zip        = (isset($home['zip-code']))   ? $home['zip-code'] : isset($bill['zip-code']) ? $bill['zip-code'] : '';                     //use credit card address if available, else use person address
+            $zip        = (isset($home['zip-code']))   ? $home['zip-code'] : (isset($bill['zip-code']) ? $bill['zip-code'] : '');                     //use credit card address if available, else use person address
             $subscriber = $app['subscriber'];
             
             $this->_mode($mode)->setCredentials($cfg['merchant_id'],$cfg['transaction_key'])->setBillTo($subscriber['first-name'],$subscriber['last-name'],'',$street,$city,$state,$zip)->setPayment($card['number'],$mm.$yy,'123')->setLineItems($app_id,'Insurance','Dental Insurance','1',$app['payment']['charges']['initial'])->setUserFields('alderaId','')->setReferenceId($app_id)->setCustomer($app_id)->setPoNumber($app_id);

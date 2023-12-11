@@ -1,11 +1,4 @@
 CLM*{$claim_number}*{$total}***{$location_information}*Y*C*Y*Y~
 REF*D9*{$claim_number}~
 HI{loop="$diagnosis_codes"}{$value}{/loop}~
-NM1*82*{$entity_code}*{$last_name}*{$first_name}****XX*{$npi}~
-{if="$specialty_code"}PRV*PE*PXC*{$specialty_code}~{/if}
-{if="$location_id && $location_npi && $address_id"}
-NM1*77*2*{$location_id}*****XX{if="$location_npi"}*{$location_npi}{/if}~
-N3*{$address_id}{if="$address_id_2"}*{$address_id_2}{/if}~
-N4*{$event_city}*{$event_state}*{$event_zipcode}~
-{/if}
 

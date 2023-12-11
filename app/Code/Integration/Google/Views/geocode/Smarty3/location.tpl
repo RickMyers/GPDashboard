@@ -1,4 +1,4 @@
-{assign var=geocode value=$google->geocodeLocation()|json_decode:"true"}
+{assign var=geocode value=$google->locationData()|json_decode:"true"}
 {if (isset($geocode['status']) && ($geocode['status'] == "OK"))}
 {
     "latitude": "{$geocode.results.0.geometry.location.lat}",

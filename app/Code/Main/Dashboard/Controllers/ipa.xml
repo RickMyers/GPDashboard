@@ -5,8 +5,9 @@ IPA Login Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="ipa" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
-    <actions>
+<controller name="ipa" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
+    <actions blocking='off'>
+        
         <action name="login">
             <description>The login page</description>
             <entity namespace="vision" class="ipas" id='ipas' orderby="ipa=ASC">
@@ -16,10 +17,19 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
 
         <!-- ############################################################### -->
 
-        <action name="authenticate" passalong="ipa_id,user_password" event="ipaAuthentication" comment="Validate the IPA ID and the password">
-            <description>A trigger for the IPA login process </description>
+        <action name="authenticate" passalong="ipa_id,location_id,user_password:format=password:value=password,user_name,then" event="userLogin" comment="Validate the IPA ID (and optionally the location id) and the password">
+            <description>A trigger for the login process for Users and Entities </description>
         </action>
 
+        <!-- ############################################################### -->
+        
+        <action name='locations'> 
+            <description>Gets a list of locations for an IPA</description>
+            <entity namespace='vision' class='ipa/locations' id='locations'>
+                <parameter name='ipa_id' source='request' required='true' />
+            </entity>
+        </action>
+        
         <!-- ############################################################### -->
         
         <action name="userid" passalong="windowId">
@@ -28,5 +38,6 @@ For Controller reference, please see "Anatomy of a Controller" at https://humble
                 <parameter name="id" source="post" default="" required="true" />
             </mongo>            
         </action>
+        
     </actions>
 </controller>

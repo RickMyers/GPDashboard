@@ -3,9 +3,9 @@
 
 Template maintenance related actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="templates" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="templates" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="load" output='JSON'>
             <description>Fetches all of the current set of templates</description>

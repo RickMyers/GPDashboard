@@ -12,7 +12,7 @@ namespace Code\Integration\EIS\Models;
  *
  * @category   Model
  * @package    EIS
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  */
 class Model extends \Code\Main\Argus\Models\Model
 {

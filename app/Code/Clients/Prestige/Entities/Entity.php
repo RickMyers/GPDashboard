@@ -11,7 +11,7 @@ namespace Code\Clients\Prestige\Entities;
  *
  * @category   Entity
  * @package    Prestige
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    3.0.0

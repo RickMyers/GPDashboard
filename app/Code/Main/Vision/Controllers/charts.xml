@@ -3,9 +3,9 @@
 
 Dashboard Chart Actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="charts" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="charts" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="workloads" passalong='layer' >
             <description>Shows the current status of vision package workloads</description>
@@ -77,7 +77,49 @@ For Controller reference, please see "Anatomy of a Controller" at http://jarvis.
             <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByLocation">
             </entity>
         </action> 
+
                 
+        <!-- ############################################################### -->  
+        <!-- ############################################################### -->  
+        <!-- ############################################################### -->  
+        
+              
+        <action name="locationtechnicians" passalong='layer'>
+            <description>Lists the forms in an IPA queue by technician and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByTechnician">
+            </entity>
+        </action>   
+
+        <!-- ############################################################### -->  
+              
+        <action name="locationhealthplans" passalong='layer'>
+            <description>Lists the forms in an IPA queue by health plan and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByHealthPlan">
+            </entity>
+        </action>   
+        
+        <!-- ############################################################### -->  
+              
+        <action name="locationphysicians" passalong='layer'>
+            <description>Lists the forms in an IPA queue by physician and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByPhysician">
+            </entity>
+        </action>                                           
+        
+        <!-- ############################################################### -->  
+              
+        <action name="locationaddresses" passalong='layer'>
+            <description>Lists the forms in an IPA queue by physician and quantity</description>
+            <entity assign="data" namespace="vision" class="ipas" id='forms' method="formsByLocation">
+            </entity>
+        </action> 
+
+                                                
+                                                                                                
+                                                                                                                                                
+                                                                                                                                                                                                
+                                                                                                                                                                                                                                                
+        <!-- ############################################################### -->                                                                                                                                                                                                                                                                                                                                                  
         <!-- ############################################################### -->  
         
         <action name="technicianphysicians" passalong="layer">

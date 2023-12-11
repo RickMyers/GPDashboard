@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Apps
  * @package    Desktop
- * @author     Rick Myers rmyers@argusdentalvision.com
+ * @author     Rick Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2005-present Hedis Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    1.0.0

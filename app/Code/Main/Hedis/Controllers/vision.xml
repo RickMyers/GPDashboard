@@ -5,7 +5,7 @@ Vision Administration
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="vision" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="vision" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         
         <action name="newclient"> 

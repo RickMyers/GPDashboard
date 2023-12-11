@@ -5,7 +5,7 @@ General event actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="events" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="events" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="open" passalong="mm,dd,yyyy,user_id">
             <description>Opens a day to either schedule or review events</description>

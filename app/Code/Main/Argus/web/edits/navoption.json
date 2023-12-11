@@ -91,7 +91,7 @@
             force:		false,
             onclick:            function (evt) {
                 if (Edits['new-nav-option-form'].validate()) {
-                    (new EasyAjax('/argus/navigation/navoption')).packageForm('new-navigation-option-form').then(function (response) {
+                    (new EasyAjax('/argus/navigation/navoption')).addForm('new-navigation-option-form').then(function (response) {
                         $('#sub-container').html(response);
                     }).post();
                 }

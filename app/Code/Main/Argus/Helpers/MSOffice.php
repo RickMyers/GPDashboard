@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Utility
  * @package    Application
- * @author     Richard Myers rmyers@argusdentalvision.com
+ * @author     Richard Myers rmyers@aflacbenefitssolutions.com
  * @copyright  2005-present Hedis Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    1.0.0

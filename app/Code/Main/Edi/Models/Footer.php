@@ -11,7 +11,7 @@ use Argus;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @since      File available since Release 1.0.0
  */
 class Footer extends EDIModel
@@ -27,10 +27,10 @@ class Footer extends EDIModel
    
     public function defaults() {
         return [
-            'number_of_segments' => '0',
+            'number_of_transactions'     => '0',
             'transaction_control_number' => '',
-            'control_group_number' => '',
-            'group_number' => ''
+            'control_group_number'       => '',
+            'group_number'               => ''
         ];
     }
     

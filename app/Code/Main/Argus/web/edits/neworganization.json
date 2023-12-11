@@ -58,7 +58,7 @@
 			style:			"padding: 2px 10px; color: #333",
                         onclick:                function (evt) {
                             if (Edits['new-organization-form'].validate()) {
-                                (new EasyAjax('/argus/organizations/new')).packageForm('new-organization-form').then(function (response) {
+                                (new EasyAjax('/argus/organizations/new')).addForm('new-organization-form').then(function (response) {
                                     $('#sub-container').html(response);
                                 }).post();
                             }

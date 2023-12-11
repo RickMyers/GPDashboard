@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Entity
  * @package    Other
- * @author     Rick Myers rmyers@argusdentalvision.com
+ * @author     Rick Myers rmyers@aflacbenefitssolutions.com
  * @since      File available since Release 3.0.0
  */
 class Apps extends \Code\Main\Dashboard\Entities\Entity

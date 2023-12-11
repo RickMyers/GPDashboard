@@ -5,7 +5,7 @@ General event actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="event" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="event" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="create">
             <description>Creates the event and redirects to the event type resource</description>

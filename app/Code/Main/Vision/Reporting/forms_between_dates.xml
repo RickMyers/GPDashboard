@@ -25,5 +25,8 @@
         <column source="reviewer_name"     name="Reviewed By" format="" onempty="" />
         <column source="member_unscannable" name="Unscannable" format="" onempty="" />
         <column source="images_unreadable"  name="Unreadble" format="" onempty="" />
+        <column source="pcp_name"  name="PCP" format="" onempty="" />
+        <column source="pcp_addr_1" name="Address" format="" onempty="N/A" />
+        <column source="pcp_city" name="City" format="" onempty="" />
     </columns>
 </report>

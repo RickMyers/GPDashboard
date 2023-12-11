@@ -5,7 +5,7 @@ Snapshot Actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="snapshot" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="snapshot" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="analyze" passalong="window_id" blocking="no">
             <description>Analyze a snapshot</description>

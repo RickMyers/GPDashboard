@@ -13,7 +13,7 @@ use Environment;
  *
  * @category   Logical Model
  * @package    Other
- * @author     Richard Myers <rmyers@argusdentalvision.com>
+ * @author     Richard Myers <rmyers@aflacbenefitssolutions.com>
  * @copyright  2005-present Argus Dashboard
  * @license    https://humbleprogramming.com/license.txt
  * @version    <INSERT VERSIONING MECHANISM HERE />
@@ -26,6 +26,7 @@ class Transaction extends EDIModel
     protected $parameters           = [
         'group_control_number'              => '0000',
         'transaction_control_number'        => '0000',
+        'number_of_transactions'            => 0,
         'number_of_segments'                => 1,
         'create_date'                       => false,
         'create_time'                       => false
@@ -37,7 +38,16 @@ class Transaction extends EDIModel
     private $rows                   = [
         
     ];
-
+    
+    /**
+     * How many transactions did we process?
+     * 
+     * @return type
+     */
+    public function transactions() {
+        return $this->parameters['number_of_transactions'];
+    }
+    
     /**
      * Constructor
      */
@@ -85,8 +95,14 @@ class Transaction extends EDIModel
         return $segments;
     }
     
+    /**
+     * Returns the name of the template to use for the end transaction loop and also increments the number of transactions processed
+     * 
+     * @return $this
+     */
     public function close() {
         $this->name = 'transactionend';
+        $this->parameters['number_of_transactions']++;
         return $this;
     }
     

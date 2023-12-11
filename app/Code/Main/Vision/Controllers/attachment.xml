@@ -5,7 +5,7 @@ Attachment related actions
 
 For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="attachment" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="attachment" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="open">
             <description>Opens an attachment</description>

@@ -12,7 +12,7 @@ namespace Code\Main\Edi\Models;
  *
  * @category   Model
  * @package    Edi
- * @author     Original Author <rmyers@argusdentalvision.com>
+ * @author     Original Author <rmyers@aflacbenefitssolutions.com>
  * @copyright  2007-present, Humbleprogramming.com
  * @license    https://humbleprogramming.com/license.txt
  * @version    3.0.1

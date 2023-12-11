@@ -3,9 +3,9 @@
 
 Roles Actions
 
-For Controller reference, please see "Anatomy of a Controller" at http://jarvis.enicity.com/docs/controller.html
+For Controller reference, please see "Anatomy of a Controller" at https://humbleprogramming.com/pages/Controllers.htmls
 -->
-<controller name="roles" use="Smarty3" author="Richard Myers" email="rmyers@argusdentalvision.com">
+<controller name="roles" use="Smarty3" author="Richard Myers" email="rmyers@aflacbenefitssolutions.com">
     <actions>
         <action name="display">
             <description>Lists current roles</description>
