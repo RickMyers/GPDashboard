@@ -1,0 +1,22 @@
+{
+  "name": "Demo",
+  "version": "1.0.0",
+  "keywords": [
+    "util",
+    "functional",
+    "server",
+    "client",
+    "browser"
+  ],
+  "author": "rmyers",
+  "contributors": [],
+  "dependencies": {
+    "multer": "^1.3.0"
+  },
+  "devDependencies": {
+    "express": "^4.17.2",
+    "https": "^1.0.0",
+    "mysql": "^2.18.1",
+    "socket.io": "^2.4.1"
+  }
+}
